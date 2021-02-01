@@ -9,6 +9,7 @@
 
 //INCLUDE
 #include	"GameApp.h"
+#include	"ResourceManager.h"
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -22,6 +23,7 @@ MofBool CGameApp::Initialize(void){
 	//素材フォルダの指定
 	CUtilities::SetCurrentDirectory("Resource");
 	
+	CResourceManager::Singleton().LoadTexture("t1","pipo-xmaschara01.png");
 
 	return TRUE;
 }
@@ -53,7 +55,7 @@ MofBool CGameApp::Render(void){
 	//画面のクリア
 	g_pGraphics->ClearTarget(0.0f,0.0f,1.0f,0.0f,1.0f,0);
 
-
+	CResourceManager::Singleton().GetTextureList()->at("t1").Render(0,0);
 
 	//描画の終了
 	g_pGraphics->RenderEnd();
@@ -68,5 +70,7 @@ MofBool CGameApp::Render(void){
 *//**************************************************************************/
 MofBool CGameApp::Release(void){
 	
+	CResourceManager::Singleton().Release();
+
 	return TRUE;
 }
