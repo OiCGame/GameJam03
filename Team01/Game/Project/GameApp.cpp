@@ -73,6 +73,7 @@ MofBool CGameApp::Update(void) {
 MofBool CGameApp::Render(void) {
 	g_pGraphics->RenderStart();
 
+
 	g_pGraphics->ClearTarget(0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0);
 
 
