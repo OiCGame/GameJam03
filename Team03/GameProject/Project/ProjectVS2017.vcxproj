@@ -95,11 +95,31 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBulletManager.cpp" />
     <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="SceneGameClear.cpp" />
+    <ClCompile Include="SceneGameOver.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBulletManager.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="GameApp.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBulletManager.h" />
+    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="SceneGameClear.h" />
+    <ClInclude Include="SceneGameOver.h" />
+    <ClInclude Include="SceneTitle.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
