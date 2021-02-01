@@ -31,7 +31,7 @@ CCharacter::CCharacter() :
 	_position(),
 	_texture(nullptr),
 	_bullet_texture(nullptr),
-	_hp(10),
+	_hp(4),
 	_show(true) {
 
 }
