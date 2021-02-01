@@ -1,5 +1,7 @@
 #pragma once
 #include "SceneDefine.h"
+#include "Button.h"
+#include "Setting.h"
 
 // ********************************************************************************
 /// <summary>
@@ -9,6 +11,22 @@
 class CTitle : public MyApp::CScene
 {
 private:
+
+    CTexture m_StartTexture;  //! 始める画像
+    CTexture m_EndTexture;    //! 終わる画像
+    CTexture m_OptionTexture; //! オプション画像
+    CTexture m_PlateTexture;  //! ボタンプレート画像
+    CTexture m_SelectTexture; //! 選択画像
+    CTexture m_TitleTexture;  //! タイトル画像
+    CTexture m_BackTexture;   //! 背景画像
+
+    CButton  m_btnStart;      //! 始めるボタン
+    CButton  m_btnOption;     //! オプションボタン
+    CButton  m_btnEnd;        //! 終わるボタン
+                             
+    int      m_SelectNo;      //! 選択番号 0:始める 1:オプション 2:終わる
+
+    CSetting m_OptionWindow;  //! オプション画面
 
 public:
 

@@ -95,8 +95,10 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RoundRect.cpp" />
     <ClCompile Include="Setting.cpp" />
@@ -105,8 +107,10 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameApp.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RoundRect.h" />
     <ClInclude Include="SceneDefine.h" />

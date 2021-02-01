@@ -11,9 +11,6 @@
 CSetting::CSetting(void)
     : m_bShow(false)
 {
-    m_VolumeBarTexture.Load("UI(山岡)/サウンドUI/サウンドUI バー.png");
-    m_VolumeButtonTexture.Load("UI(山岡)/サウンドUI/サウンドUI　ボタン.png");
-    m_BackTexture.Load("UI(山岡)/サウンドUI/戻るアイコン.png");
 }
 
 // ********************************************************************************
@@ -78,6 +75,12 @@ bool CSetting::Load(void)
 
     // 開けたらしめようホトトギス
     fclose(fp);
+
+
+    m_VolumeBarTexture.Load("Resource/UI(山岡)/サウンドUI/サウンドUI バー.png");
+    m_VolumeButtonTexture.Load("Resource/UI(山岡)/サウンドUI/サウンドUI　ボタン.png");
+    m_BackTexture.Load("/Resource/UI(山岡)/サウンドUI/戻るアイコン.png");
+
     return true;
 }
 
@@ -155,7 +158,23 @@ void CSetting::Render(void)
     // BGMVolume
 
     // 戻るボタン
+    m_BtnBack.Render();
 
+}
+
+// ********************************************************************************
+/// <summary>
+/// 解放
+/// </summary>
+/// <created>いのうえ,2021/02/01</created>
+/// <changed>いのうえ,2021/02/01</changed>
+// ********************************************************************************
+void CSetting::Release(void)
+{
+    m_BtnBack.Release();
+    m_VolumeBarTexture.Release();
+    m_VolumeButtonTexture.Release();
+    m_BackTexture.Release();
 }
 
 // ********************************************************************************
