@@ -1,7 +1,11 @@
 #pragma once
 
 
+#include <array>
+
 #include <Mof.h>
+
+#include "Bullet.h"
 
 
 class Character {
@@ -10,6 +14,8 @@ private:
     Mof::CVector2 _position;
     //! テクスチャ
     Mof::CTexture* _texture;
+    //! Bulletテクスチャ
+    Mof::CTexture* _bullet_texture;
 protected:
     /// <summary>
     /// 移動
@@ -20,7 +26,7 @@ protected:
     /// 撃つ
     /// </summary>
     /// <param name=""></param>
-    void Shot(void);
+    bool Shot(std::array<Bullet, 256>& bullet_container);
 public:
     /// <summary>
     /// コンストラクタ
@@ -34,6 +40,7 @@ public:
     /// セッター
     /// </summary>
     void SetTexture(Mof::CTexture* ptr);
+    void SetBulletTexture(Mof::CTexture* ptr);
     /// <summary>
     /// 初期化
     /// </summary>
@@ -45,7 +52,7 @@ public:
     /// </summary>
     /// <param name=""></param>
     /// <returns></returns>
-    bool Update(void);
+    bool Update(std::array<Bullet, 256>& bullet_container);
     /// <summary>
     /// 描画
     /// </summary>
