@@ -44,6 +44,12 @@ public:
     /// </summary>
     void SetTexture(Mof::CTexture* ptr);
     void SetBulletTexture(Mof::CTexture* ptr);
+	/// <summary>
+	/// ゲッター
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	Mof::CVector2 GetPosition(void) const;
     /// <summary>
     /// ゲッター
     /// </summary>

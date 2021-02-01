@@ -9,6 +9,7 @@
 #include "Character.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Effect.h"
 
 
 class CGame {
@@ -16,10 +17,12 @@ private:
 	Mof::CTexture _player_texture;
 	Mof::CTexture _enemy_texture;
 	Mof::CTexture _bullet_texture;
+	Mof::CTexture _effect_texture;
+
 	CCharacter _player;
 	std::vector<CEnemy> _enemies;
+	CEffect _effect;
 	std::array<CBullet, 256>_bullet_container;
-
 	/// <summary>
 	/// •`‰æ
 	/// </summary>

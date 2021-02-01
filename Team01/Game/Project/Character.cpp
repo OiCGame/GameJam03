@@ -47,6 +47,10 @@ void CCharacter::SetBulletTexture(Mof::CTexture* ptr) {
 	_bullet_texture = ptr;
 }
 
+Mof::CVector2 CCharacter::GetPosition(void) const {
+	return this->_position;
+}
+
 Mof::CRectangle CCharacter::GetCollisionRectangle(void) const {
 	auto rect = Mof::CRectangle(0.0f, 0.0f,
 		_texture->GetWidth(), _texture->GetHeight());
