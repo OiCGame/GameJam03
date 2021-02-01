@@ -10,6 +10,10 @@
 //INCLUDE
 #include	"GameApp.h"
 
+//SCENE
+#include    "Game.h"
+#include    "Title.h"
+
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
 		@param			None
@@ -18,6 +22,16 @@
 						それ以外	失敗、エラーコードが戻り値となる
 *//**************************************************************************/
 MofBool CGameApp::Initialize(void) {
+
+    m_SceneManager
+        .Add<CTitle>(SceneName::Title)
+        .Add<CGame>(SceneName::Game)
+        .SetFadeColor(MOF_COLOR_WHITE);
+
+    // DEBUG : デバッグ用でゲームシーンからスタートする
+    //m_SceneManager.Initialize(SceneName::Title);
+    m_SceneManager.Initialize(SceneName::Game);
+
 	return TRUE;
 }
 /*************************************************************************//*!
@@ -30,6 +44,12 @@ MofBool CGameApp::Initialize(void) {
 MofBool CGameApp::Update(void) {
 	//キーの更新
 	g_pInput->RefreshKey();
+
+    if (!m_SceneManager.Update())
+    {
+        return FALSE;
+    }
+
 	return TRUE;
 }
 /*************************************************************************//*!
@@ -44,6 +64,12 @@ MofBool CGameApp::Render(void) {
 	g_pGraphics->RenderStart();
 	//画面のクリア
 	g_pGraphics->ClearTarget(0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0);
+
+
+    if (!m_SceneManager.Render())
+    {
+        return FALSE;
+    }
 
 	//描画の終了
 	g_pGraphics->RenderEnd();
