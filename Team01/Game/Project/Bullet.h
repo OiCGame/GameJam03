@@ -34,6 +34,10 @@ public:
     /// </summary>
     void SetTexture(Mof::CTexture* ptr);
 	/// <summary>
+	/// セッター
+	/// </summary>
+	void Hide(void);
+	/// <summary>
 	/// ゲッター
 	/// </summary>
 	Mof::CVector2 GetTextureSize(void) const;

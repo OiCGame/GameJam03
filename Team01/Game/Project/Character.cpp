@@ -31,7 +31,7 @@ CCharacter::CCharacter() :
 	_position(),
 	_texture(nullptr),
 	_bullet_texture(nullptr),
-	_hp(256),
+	_hp(10),
 	_show(true) {
 }
 
@@ -51,6 +51,10 @@ Mof::CRectangle CCharacter::GetCollisionRectangle(void) const {
 		_texture->GetWidth(), _texture->GetHeight());
 	rect.Translation(_position);
 	return rect;
+}
+
+bool CCharacter::IsShow(void) const {
+	return this->_show;
 }
 
 bool CCharacter::Initialize(Mof::CVector2 init_pos) {
@@ -76,6 +80,12 @@ bool CCharacter::Render(void) {
 		return false;
 	} // if
 
+#ifdef _DEBUG
+	::CGraphicsUtilities::RenderRect(
+		this->GetCollisionRectangle(),
+		MOF_ARGB(100, 100, 100, 100)
+	);
+#endif // _DEBUG
 	_texture->Render(_position.x, _position.y);
 	return true;
 }

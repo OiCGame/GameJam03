@@ -16,6 +16,10 @@ void CBullet::SetTexture(Mof::CTexture* ptr) {
 	this->_texture = ptr;
 }
 
+void CBullet::Hide(void) {
+	this->_show = false;
+}
+
 Mof::CVector2 CBullet::GetTextureSize(void) const {
 	auto tex = _texture;
 	if (tex) {
@@ -36,18 +40,17 @@ bool CBullet::IsShow(void) const {
 }
 
 bool CBullet::Update(void) {
-	if (!this->_show) {
-		return false;
-	} // if
-
 	_position += _move;
 	return true;
 }
 
 bool CBullet::Render(void) {
-	if (!this->_show) {
-		return false;
-	} // if
+#ifdef _DEBUG
+	::CGraphicsUtilities::RenderRect(
+		this->GetCollisionRectangle(),
+		MOF_ARGB(100, 100, 100, 100)
+	);
+#endif // _DEBUG
 
 	auto tex = _texture;
 	if (tex) {

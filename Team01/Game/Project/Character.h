@@ -49,6 +49,10 @@ public:
     /// </summary>
 	Mof::CRectangle GetCollisionRectangle(void) const;
 	/// <summary>
+    /// ƒQƒbƒ^[
+    /// </summary>
+	bool IsShow(void) const;
+	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
 	/// <param name=""></param>
