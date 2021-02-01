@@ -1,8 +1,7 @@
 #include "Enemy.h"
 
 CEnemy::CEnemy() :
-	super()
-{
+	super() {
 }
 
 bool CEnemy::Update(std::array<CBullet, 256>& bullet_container) {
