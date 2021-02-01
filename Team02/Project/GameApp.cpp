@@ -11,8 +11,8 @@
 #include	"GameApp.h"
 
 //SCENE
-#include    "Game.h"
 #include    "Title.h"
+#include    "Game.h"
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -23,6 +23,7 @@
 *//**************************************************************************/
 MofBool CGameApp::Initialize(void) {
 
+    // SceneManagerに各シーンの追加とフェードカラーの設定
     m_SceneManager
         .Add<CTitle>(SceneName::Title)
         .Add<CGame>(SceneName::Game)
@@ -45,6 +46,7 @@ MofBool CGameApp::Update(void) {
 	//キーの更新
 	g_pInput->RefreshKey();
 
+    // シーンマネージャーの更新
     if (!m_SceneManager.Update())
     {
         return FALSE;
@@ -66,6 +68,7 @@ MofBool CGameApp::Render(void) {
 	g_pGraphics->ClearTarget(0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0);
 
 
+    // シーンマネージャーの描画
     if (!m_SceneManager.Render())
     {
         return FALSE;
