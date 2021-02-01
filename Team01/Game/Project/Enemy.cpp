@@ -5,6 +5,5 @@ CEnemy::CEnemy() :
 }
 
 bool CEnemy::Update(std::array<CBullet, 256>& bullet_container) {
-
 	return true;
 }
