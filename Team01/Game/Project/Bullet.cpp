@@ -24,6 +24,13 @@ Mof::CVector2 CBullet::GetTextureSize(void) const {
     return Mof::CVector2();
 }
 
+Mof::CRectangle CBullet::GetCollisionRectangle(void) const {
+	auto rect = Mof::CRectangle(0.0f, 0.0f,
+		_texture->GetWidth(), _texture->GetHeight());
+	rect.Translation(_position);
+	return rect;
+}
+
 bool CBullet::IsShow(void) const {
 	return this->_show;
 }
@@ -49,6 +56,11 @@ bool CBullet::Render(void) {
 	return true;
 }
 
+bool CBullet::Shot(Mof::CVector2 init_pos, CBullet::TeamType type) {
+	_show = true;
+	_position = init_pos;
+	_team_type = type;
+	return true;
 bool CBullet::Shot(Mof::CVector2 init_pos, CBullet::TeamType type) {
     _show = true;
     _position = init_pos;

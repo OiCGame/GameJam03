@@ -50,10 +50,14 @@ bool CCharacter::Initialize(Mof::CVector2 init_pos) {
 }
 
 bool CCharacter::Update(std::array<CBullet, 256>& bullet_container) {
-    this->Move();
-    if (::g_pInput->IsKeyPush(MOFKEY_SPACE)) {
-        this->Shot(bullet_container);
-    } // if
+	if (!this->_show) {
+		return false;
+	} // if
+
+	this->Move();
+	if (::g_pInput->IsKeyPush(MOFKEY_SPACE)) {
+		this->Shot(bullet_container);
+	} // if
 
 	return true;
 }

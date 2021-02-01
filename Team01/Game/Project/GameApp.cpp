@@ -14,6 +14,7 @@ Mof::CTexture g_PlayerTexture;
 Mof::CTexture g_EnemyTexture;
 Mof::CTexture g_BulletTexture;
 CCharacter g_Player;
+CEnemy g_Enemy;
 std::array<CBullet, 256>g_BulletContainer;
 
 
