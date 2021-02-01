@@ -39,7 +39,6 @@ MofBool CGameApp::Initialize(void) {
 
 MofBool CGameApp::Update(void) {
 	g_pInput->RefreshKey();
-	::CInputManager::GetInstance().Refresh();
 
 	if (g_Player.IsShow()) {
 		g_Player.Update(g_BulletContainer);
@@ -47,13 +46,16 @@ MofBool CGameApp::Update(void) {
 	if (g_Enemy.IsShow()) {
 		g_Enemy.Update(g_BulletContainer);
 	} // if
-	
+
+
 	for (auto& bullet : g_BulletContainer) {
 		if (!bullet.IsShow()) {
 			continue;
 		} // if
 		bullet.Update();
 	} // for
+
+
 
 	for (auto& bullet : g_BulletContainer) {
 		if (!g_Enemy.IsShow() || !bullet.IsShow()) {
@@ -64,9 +66,9 @@ MofBool CGameApp::Update(void) {
 			bullet.Hide();
 		} // if
 	} // for
+
 	return TRUE;
 }
-
 
 MofBool CGameApp::Render(void) {
 	g_pGraphics->RenderStart();
