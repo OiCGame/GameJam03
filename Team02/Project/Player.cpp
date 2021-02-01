@@ -18,9 +18,11 @@ void CPlayer::Load()
 
 void CPlayer::Initialize()
 {
-	PlayerRectangle = CRectangle(0, 0, PlayerTexture.GetWidth() * 0.25f, PlayerTexture.GetHeight() * 0.25f);
 	PlayerPosition = CVector2((g_pGraphics->GetTargetWidth() - (PlayerTexture.GetWidth() * 0.25f)) * 0.5f,
 		g_pGraphics->GetTargetHeight() - (PlayerTexture.GetHeight() * 0.25f));
+	PlayerCollisionRadius = PlayerTexture.GetWidth() * 0.1;
+	PlayerCollisionPosCorrection = CVector2(PlayerTexture.GetWidth() * 0.125f, PlayerTexture.GetHeight() * 0.125f);
+	PlayerCollision = CCircle(PlayerPosition + PlayerCollisionPosCorrection, PlayerCollisionRadius);
 }
 
 void CPlayer::Update()
@@ -43,6 +45,8 @@ void CPlayer::Update()
 	{
 		//発射処理をここに
 	}
+
+	PlayerCollision = CCircle(PlayerPosition + PlayerCollisionPosCorrection, PlayerCollisionRadius);
 }
 
 void CPlayer::Render()
@@ -52,7 +56,8 @@ void CPlayer::Render()
 
 void CPlayer::RenderDebug()
 {
-	CGraphicsUtilities::RenderString(0, 100, "%1f : %2f", PlayerPosition.x, PlayerPosition.y);
+	CGraphicsUtilities::RenderString(0, 100, "プレイヤ座標　　X%1f : Y%2f", PlayerPosition.x, PlayerPosition.y);
+	CGraphicsUtilities::RenderCircle(PlayerCollision , MOF_COLOR_GREEN);
 }
 
 void CPlayer::Release()

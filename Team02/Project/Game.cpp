@@ -13,6 +13,7 @@ CGame::CGame(const InitData & data)
 {
     Load();
     Initialize();
+	DebugEnable = false;
 }
 
 // ********************************************************************************
@@ -67,6 +68,10 @@ void CGame::Update(void)
     {
         ChangeScene(SceneName::Title);
     }
+	if (g_pInput->IsKeyPush(MOFKEY_2))
+	{
+		DebugEnable = !DebugEnable;
+	}
 	Player.Update();
 }
 
@@ -82,7 +87,8 @@ void CGame::Render(void)
     // DEBUG
     CGraphicsUtilities::RenderString(0, 0, "GAME");
 	Player.Render();
-	Player.RenderDebug();
+	if (DebugEnable) { Player.RenderDebug(); }
+	
 }
 
 // ********************************************************************************
