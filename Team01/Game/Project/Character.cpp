@@ -33,6 +33,7 @@ CCharacter::CCharacter() :
 	_bullet_texture(nullptr),
 	_hp(10),
 	_show(true) {
+
 }
 
 CCharacter::~CCharacter() {
