@@ -12,16 +12,16 @@ void Character::Move(void) {
 
 bool Character::Shot(std::array<Bullet, 256>& bullet_container) {
     auto bullet_size = bullet_container.at(0).GetTextureSize();    
-    float offset = 2.0f;
+    auto offset = Mof::CVector2(2.0f, 10.0f);
     auto size = Mof::CVector2(_texture->GetWidth(), _texture->GetHeight());
-    auto pos = Mof::CVector2(_position.x + size.x * 0.5f - bullet_size.x * 0.5f - offset,
+    auto pos = Mof::CVector2(_position.x + size.x * 0.5f - bullet_size.x * 0.5f,
                              _position.y);
 
     for (auto& bullet : bullet_container) {
         if (bullet.IsShow()) {
             continue;
         } // if
-        bullet.Shot(pos, Bullet::TeamType::Player);
+        bullet.Shot(pos + offset, Bullet::TeamType::Player);
         return true;
     } // for
     return false;
