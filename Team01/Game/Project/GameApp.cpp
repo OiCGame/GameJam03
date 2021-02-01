@@ -1,7 +1,9 @@
 #include	"GameApp.h"
 
 
+
 MofBool CGameApp::Initialize(void) {
+    ::CUtilities::SetCurrentDirectory("Resource");
     return TRUE;
 }
 
