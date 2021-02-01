@@ -7,7 +7,13 @@ int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 	Mof::LPFramework pFrame = new Mof::CDX11GameFramework(); 
 	Mof::WINDOWSGAMEFRAMEWORKINITIALIZEINFO Info;
 	Info.pApplication = new CGameApp();
-	if ( pFrame->Initialize(&Info) )
+
+    // 初期ウィンドウを仮想フルスクリーンに変更
+    Info.WindowCreateInfo.Width  = 1920;
+    Info.WindowCreateInfo.Height = 1080;
+    Info.WindowCreateInfo.Style  = WS_POPUP | WS_VISIBLE;
+	
+    if ( pFrame->Initialize(&Info) )
 	{
 		pFrame->Run();
 	}
