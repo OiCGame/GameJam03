@@ -8,7 +8,7 @@
 #include "Bullet.h"
 
 
-class Character {
+class CCharacter {
 private:
     //! 位置
     Mof::CVector2 _position;
@@ -21,21 +21,21 @@ protected:
     /// 移動
     /// </summary>
     /// <param name=""></param>
-    void Move(void);
+    virtual void Move(void);
     /// <summary>
     /// 撃つ
     /// </summary>
     /// <param name=""></param>
-    bool Shot(std::array<Bullet, 256>& bullet_container);
+	virtual bool Shot(std::array<Bullet, 256>& bullet_container);
 public:
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    Character();
+	CCharacter();
     /// <summary>
     /// デストラクタ
     /// </summary>
-    virtual ~Character();
+    virtual ~CCharacter();
     /// <summary>
     /// セッター
     /// </summary>
@@ -46,23 +46,23 @@ public:
     /// </summary>
     /// <param name=""></param>
     /// <returns></returns>
-    bool Initialize(Mof::CVector2 init_pos);
+	virtual bool Initialize(Mof::CVector2 init_pos);
     /// <summary>
     /// 更新
     /// </summary>
     /// <param name=""></param>
     /// <returns></returns>
-    bool Update(std::array<Bullet, 256>& bullet_container);
+    virtual bool Update(std::array<Bullet, 256>& bullet_container);
     /// <summary>
     /// 描画
     /// </summary>
     /// <param name=""></param>
     /// <returns></returns>
-    bool Render(void);
+	virtual bool Render(void);
     /// <summary>
     /// 解放
     /// </summary>
     /// <param name=""></param>
     /// <returns></returns>
-    bool Release(void);
+	virtual bool Release(void);
 };
