@@ -9,7 +9,13 @@
 
 //INCLUDE
 #include	"GameApp.h"
-#include	"ResourceManager.h"
+
+#include	"SceneTitle.h"
+#include	"SceneGame.h"
+#include	"SceneGameClear.h"
+#include	"SceneGameOver.h"
+
+std::unique_ptr<CSceneBase> gpSecene(new CSceneTitle());
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -23,7 +29,7 @@ MofBool CGameApp::Initialize(void){
 	//素材フォルダの指定
 	CUtilities::SetCurrentDirectory("Resource");
 	
-	CResourceManager::Singleton().LoadTexture("t1","pipo-xmaschara01.png");
+	gpSecene->Initialize();
 
 	return TRUE;
 }
@@ -38,7 +44,28 @@ MofBool CGameApp::Update(void){
 	//キーの更新
 	g_pInput->RefreshKey();
 
+	gpSecene->Update();
 
+	if (gpSecene->IsSceneEnd()) {
+		switch (gpSecene->NextScene())
+		{
+		case NextScene::Title:
+			gpSecene.reset(new CSceneTitle());
+			break;
+		case NextScene::Game:
+			gpSecene.reset(new CSceneGame());
+			break;
+		case NextScene::GameClear:
+			gpSecene.reset(new CSceneGameClear());
+			break;
+		case NextScene::GameOver:
+			gpSecene.reset(new CSceneGameOver());
+			break;
+		default:
+			break;
+		}
+		gpSecene->Initialize();
+	}
 
 	return TRUE;
 }
@@ -55,7 +82,8 @@ MofBool CGameApp::Render(void){
 	//画面のクリア
 	g_pGraphics->ClearTarget(0.0f,0.0f,1.0f,0.0f,1.0f,0);
 
-	CResourceManager::Singleton().GetTextureList()->at("t1").Render(0,0);
+	gpSecene->Render();
+	gpSecene->RenderDebug();
 
 	//描画の終了
 	g_pGraphics->RenderEnd();
@@ -70,7 +98,7 @@ MofBool CGameApp::Render(void){
 *//**************************************************************************/
 MofBool CGameApp::Release(void){
 	
-	CResourceManager::Singleton().Release();
+	gpSecene->Release();
 
 	return TRUE;
 }
