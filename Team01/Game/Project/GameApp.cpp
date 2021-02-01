@@ -4,16 +4,19 @@
 #include <vector>
 
 #include "Character.h"
+#include "Enemy.h"
 #include "Bullet.h"
 
 #include <array>
+
 
 Mof::CTexture g_PlayerTexture;
 Mof::CTexture g_EnemyTexture;
 Mof::CTexture g_BulletTexture;
 CCharacter g_Player;
-CCharacter g_Enemy;
+CEnemy g_Enemy;
 std::array<Bullet, 256>g_BulletContainer;
+
 
 MofBool CGameApp::Initialize(void) {
     ::CUtilities::SetCurrentDirectory("Resource");
@@ -40,6 +43,11 @@ MofBool CGameApp::Update(void) {
     for (auto& bullet : g_BulletContainer) {
         bullet.Update();
     } // for
+
+
+	for (auto& bullet : g_BulletContainer) {
+		// collision
+	} // for
 
     return TRUE;
 }
