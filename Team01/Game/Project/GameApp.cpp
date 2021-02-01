@@ -10,8 +10,8 @@
 
 Mof::CTexture g_PlayerTexture;
 Mof::CTexture g_BulletTexture;
-Character g_Player;
-std::array<Bullet, 256>g_BulletContainer;
+CCharacter g_Player;
+std::array<CBullet, 256>g_BulletContainer;
 
 MofBool CGameApp::Initialize(void) {
     ::CUtilities::SetCurrentDirectory("Resource");
@@ -28,6 +28,8 @@ MofBool CGameApp::Initialize(void) {
 
 MofBool CGameApp::Update(void) {
     g_pInput->RefreshKey();
+
+	CInputManager::GetInstance().Refresh();
 
     g_Player.Update(g_BulletContainer);
 

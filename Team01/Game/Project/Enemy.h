@@ -1,7 +1,7 @@
 #pragma once
 #include "Character.h"
 
-class CEnemy : public Character
+class CEnemy : public CCharacter
 {
 private:
 protected:

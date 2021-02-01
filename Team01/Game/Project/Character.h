@@ -3,12 +3,12 @@
 
 #include <array>
 
-#include <Mof.h>
+#include "GameDefine.h"
 
 #include "Bullet.h"
 
 
-class Character {
+class CCharacter {
 private:
     //! 位置
     Mof::CVector2 _position;
@@ -26,16 +26,16 @@ protected:
     /// 撃つ
     /// </summary>
     /// <param name=""></param>
-    bool Shot(std::array<Bullet, 256>& bullet_container);
+    bool Shot(std::array<CBullet, 256>& bullet_container);
 public:
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    Character();
+    CCharacter();
     /// <summary>
     /// デストラクタ
     /// </summary>
-    virtual ~Character();
+    virtual ~CCharacter();
     /// <summary>
     /// セッター
     /// </summary>
@@ -52,7 +52,7 @@ public:
     /// </summary>
     /// <param name=""></param>
     /// <returns></returns>
-    bool Update(std::array<Bullet, 256>& bullet_container);
+    bool Update(std::array<CBullet, 256>& bullet_container);
     /// <summary>
     /// 描画
     /// </summary>

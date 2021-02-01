@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
 
-Bullet::Bullet() :
+CBullet::CBullet() :
     _position(),
     _move(0.0f, -5.0f),
     _texture(),
@@ -9,14 +9,14 @@ Bullet::Bullet() :
     _team_type() {
 }
 
-Bullet::~Bullet() {
+CBullet::~CBullet() {
 }
 
-void Bullet::SetTexture(Mof::CTexture* ptr) {
+void CBullet::SetTexture(Mof::CTexture* ptr) {
     this->_texture = ptr;
 }
 
-Mof::CVector2 Bullet::GetTextureSize(void) const {
+Mof::CVector2 CBullet::GetTextureSize(void) const {
     auto tex = _texture;
     if (tex) {
         return Mof::CVector2(tex->GetWidth(), tex->GetHeight());
@@ -24,11 +24,11 @@ Mof::CVector2 Bullet::GetTextureSize(void) const {
     return Mof::CVector2();
 }
 
-bool Bullet::IsShow(void) const {
+bool CBullet::IsShow(void) const {
     return this->_show;
 }
 
-bool Bullet::Update(void) {
+bool CBullet::Update(void) {
     if (!this->_show) {
         return false;
     } // if
@@ -37,7 +37,7 @@ bool Bullet::Update(void) {
     return true;
 }
 
-bool Bullet::Render(void) {
+bool CBullet::Render(void) {
     if (!this->_show) {
         return false;
     } // if
@@ -49,7 +49,7 @@ bool Bullet::Render(void) {
     return true;
 }
 
-bool Bullet::Shot(Mof::CVector2 init_pos, Bullet::TeamType type) {
+bool CBullet::Shot(Mof::CVector2 init_pos, CBullet::TeamType type) {
     _show = true;
     _position = init_pos;
     _team_type = type;
