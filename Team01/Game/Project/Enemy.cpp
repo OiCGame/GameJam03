@@ -1,10 +1,12 @@
 #include "Enemy.h"
 
-CEnemy::CEnemy() :
-	super() {
+
+void CEnemy::Move(void) {
+	 _speed =  _move_controller.ConputeSpeedValue(this);
+	 _move += _speed;
 }
 
-bool CEnemy::Update(std::array<CBullet, 256>& bullet_container) {
-
-	return true;
+CEnemy::CEnemy() :
+	super(),
+	_move_controller() {
 }
