@@ -15,7 +15,7 @@ Mof::CTexture g_EnemyTexture;
 Mof::CTexture g_BulletTexture;
 CCharacter g_Player;
 CEnemy g_Enemy;
-std::array<Bullet, 256>g_BulletContainer;
+std::array<CBullet, 256>g_BulletContainer;
 
 
 MofBool CGameApp::Initialize(void) {

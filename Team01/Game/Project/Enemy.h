@@ -10,5 +10,5 @@ private:
 protected:
 public:
 	CEnemy();
-	virtual bool Update(std::array<Bullet, 256>& bullet_container);
+	virtual bool Update(std::array<CBullet, 256>& bullet_container);
 };

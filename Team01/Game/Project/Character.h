@@ -29,7 +29,7 @@ protected:
 	/// 撃つ
 	/// </summary>
 	/// <param name=""></param>
-	virtual bool Shot(std::array<Bullet, 256>& bullet_container);
+	virtual bool Shot(std::array<CBullet, 256>& bullet_container);
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -59,7 +59,7 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	virtual bool Update(std::array<Bullet, 256>& bullet_container);
+	virtual bool Update(std::array<CBullet, 256>& bullet_container);
 	/// <summary>
 	/// 描画
 	/// </summary>

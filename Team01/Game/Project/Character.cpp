@@ -10,7 +10,7 @@ void CCharacter::Move(void) {
 	} // else if
 }
 
-bool CCharacter::Shot(std::array<Bullet, 256>& bullet_container) {
+bool CCharacter::Shot(std::array<CBullet, 256>& bullet_container) {
 	auto bullet_size = bullet_container.at(0).GetTextureSize();
 	auto offset = Mof::CVector2(2.0f, 10.0f);
 	auto size = Mof::CVector2(_texture->GetWidth(), _texture->GetHeight());
@@ -21,7 +21,7 @@ bool CCharacter::Shot(std::array<Bullet, 256>& bullet_container) {
 		if (bullet.IsShow()) {
 			continue;
 		} // if
-		bullet.Shot(pos + offset, Bullet::TeamType::Player);
+		bullet.Shot(pos + offset, CBullet::TeamType::Player);
 		return true;
 	} // for
 	return false;
@@ -58,7 +58,7 @@ bool CCharacter::Initialize(Mof::CVector2 init_pos) {
 	return true;
 }
 
-bool CCharacter::Update(std::array<Bullet, 256>& bullet_container) {
+bool CCharacter::Update(std::array<CBullet, 256>& bullet_container) {
 	if (!this->_show) {
 		return false;
 	} // if

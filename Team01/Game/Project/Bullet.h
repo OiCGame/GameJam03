@@ -3,7 +3,7 @@
 #include <Mof.h>
 
 
-class Bullet {
+class CBullet {
 public:
 	enum class TeamType {
 		Player,
@@ -24,11 +24,11 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	Bullet();
+	CBullet();
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~Bullet();
+	~CBullet();
     /// <summary>
     /// セッター
     /// </summary>
