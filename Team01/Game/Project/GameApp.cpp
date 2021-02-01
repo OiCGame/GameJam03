@@ -15,7 +15,7 @@ Mof::CTexture g_PlayerTexture;
 Mof::CTexture g_EnemyTexture;
 Mof::CTexture g_BulletTexture;
 CCharacter g_Player;
-CEnemy g_Enemy;
+CEnemy g_Enemy[3];
 std::array<CBullet, 256>g_BulletContainer;
 
 //CBullet g_BulletContainer[256];
@@ -28,8 +28,11 @@ MofBool CGameApp::Initialize(void) {
 	g_BulletTexture.Load("bullet/01Bullets.png");
 	g_Player.Initialize(Mof::CVector2(512.0f, 600.0f));
 	g_Player.SetTexture(&g_PlayerTexture);
-	g_Enemy.Initialize(Mof::CVector2(512.0f, 0.0f));
-	g_Enemy.SetTexture(&g_EnemyTexture);
+	for (int i = 0; i < 3; i++)
+	{
+		g_Enemy[i].Initialize(Vector2(300 + i * 200,200));
+		g_Enemy[i].SetTexture(&g_EnemyTexture);
+	}
 
 	for (auto& bullet : g_BulletContainer) {
 		bullet.SetTexture(&g_BulletTexture);
@@ -44,9 +47,12 @@ MofBool CGameApp::Update(void) {
 	if (g_Player.IsShow()) {
 		g_Player.Update(g_BulletContainer);
 	} // if
-	if (g_Enemy.IsShow()) {
-		g_Enemy.Update(g_BulletContainer);
-	} // if
+	for (int i = 0; i < 3; i++)
+	{
+		if (g_Enemy[i].IsShow()) {
+			g_Enemy[i].Update();
+		} // if
+	}
 	
 	for (auto& bullet : g_BulletContainer) {
 		if (!bullet.IsShow()) {
@@ -56,13 +62,16 @@ MofBool CGameApp::Update(void) {
 	} // for
 
 	for (auto& bullet : g_BulletContainer) {
-		if (!g_Enemy.IsShow() || !bullet.IsShow()) {
-			continue;
-		} //
-		if (g_Enemy.GetCollisionRectangle().CollisionRect(bullet.GetCollisionRectangle())) {
-			g_Enemy.Damege();
-			bullet.Hide();
-		} // if
+		for (int i = 0; i < 3; i++)
+		{
+			if (!g_Enemy[i].IsShow() || !bullet.IsShow()) {
+				continue;
+			} //
+			if (g_Enemy[i].GetCollisionRectangle().CollisionRect(bullet.GetCollisionRectangle())) {
+				g_Enemy[i].Damage();
+				bullet.Hide();
+			} // if
+		}
 	} // for
 	return TRUE;
 }
@@ -77,9 +86,12 @@ MofBool CGameApp::Render(void) {
 	if (g_Player.IsShow()) {
 		g_Player.Render();
 	} // if
-	if (g_Enemy.IsShow()) {
-		g_Enemy.Render();
-	} // if
+	for (int i = 0; i < 3; i++)
+	{
+		if (g_Enemy[i].IsShow()) {
+			g_Enemy[i].Render();
+		} // if
+	}
 	for (auto& bullet : g_BulletContainer) {
 		if (!bullet.IsShow()) {
 			continue;
@@ -92,6 +104,10 @@ MofBool CGameApp::Render(void) {
 }
 
 MofBool CGameApp::Release(void) {
+	for (int i = 0; i < 3; i++)
+	{
+		g_Enemy[i].Release();
+	}
 	g_PlayerTexture.Release();
 	g_EnemyTexture.Release();
 	g_BulletTexture.Release();

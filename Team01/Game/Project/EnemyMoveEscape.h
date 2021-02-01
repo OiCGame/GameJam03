@@ -9,4 +9,6 @@ private:
 public:
 	EnemyMoveEscape();
 	~EnemyMoveEscape();
+
+	virtual Mof::CVector2 ConputeSpeedValue(CEnemy* ptr) override;
 };
