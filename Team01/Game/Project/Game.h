@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <memory>
 #include <array>
 #include <vector>
 
@@ -18,11 +19,13 @@ private:
 	Mof::CTexture _enemy_texture;
 	Mof::CTexture _bullet_texture;
 	Mof::CTexture _effect_texture;
+	SpriteMotionData _effect_motion_data;
+
 
 	CCharacter _player;
 	std::vector<CEnemy> _enemies;
-	CEffect _effect;
 	std::array<CBullet, 256>_bullet_container;
+	std::vector<std::shared_ptr<CEffect>>_effect_container;
 	/// <summary>
 	/// •`‰æ
 	/// </summary>

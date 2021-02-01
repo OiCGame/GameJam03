@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 void CEnemy::Move(void) {
-	_position.y += 5;
+	_position.y += 1;
 }
 
 CEnemy::CEnemy() :

@@ -1,5 +1,6 @@
 #include "Effect.h"
 
+
 CEffect::CEffect() :
     _texture(),
     _motion(),
@@ -19,15 +20,10 @@ bool CEffect::IsShow(void) const {
     return this->_show;
 }
 
-bool CEffect::Load(Mof::CTexture* texture, const char* motion_path) {
-    _texture = texture;
-
-    //! ƒf[ƒ^
-    SpriteMotionData anim_data;
-    anim_data.Load(motion_path);
-
-    _motion.Create(anim_data.anims.data(),
-                   anim_data.anims.size());
+bool CEffect::Load(Mof::CTexture* texture, SpriteMotionData& anim) {
+    _texture = texture;    
+    _motion.Create(anim.anims.data(),
+                   anim.anims.size());
     return true;
 }
 
@@ -46,7 +42,6 @@ bool CEffect::Render(void) {
     } // if
 
     auto pos = _position;
-
     _texture->Render(pos.x, pos.y, _motion.GetSrcRect());
     return true;
 }

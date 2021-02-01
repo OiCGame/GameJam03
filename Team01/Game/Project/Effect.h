@@ -170,7 +170,7 @@ public:
     /// ì«Ç›çûÇ›
     /// </summary>
     /// <returns></returns>
-    bool Load(Mof::CTexture* texture, const char* motion_path);
+    bool Load(Mof::CTexture* texture, SpriteMotionData& anim);
     /// <summary>
     /// çXêV
     /// </summary>
