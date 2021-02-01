@@ -1,14 +1,27 @@
 #pragma once
 #include "SceneDefine.h"
+#include "Button.h"
 
 // ********************************************************************************
 /// <summary>
-/// 
+/// ゲームオーバークラス
 /// </summary>
 // ********************************************************************************
 class CGameOver : public MyApp::CScene
 {
 private:
+
+    CTexture m_GoToTitleTexture;  //! タイトルへ.png
+    CTexture m_RetryTexture;      //! リトライ.png
+    CTexture m_PlateTexture;      //! プレート2.png
+    CTexture m_BackPlateTexture;  //! プレート.png
+    CTexture m_GameOverTexture;   //! 文字.png
+    CTexture m_SelectTexture;     //! 選択.png
+
+    CButton  m_btnRetry;          //! リトライボタン
+    CButton  m_btnGoToTitle;      //! タイトルへボタン
+
+    int      m_SelectNo;          //! 選択番号 0:リトライ 1:タイトルへ
 
 public:
 

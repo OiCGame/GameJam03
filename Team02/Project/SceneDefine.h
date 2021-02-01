@@ -6,6 +6,8 @@ enum class SceneName
 {
     Title,
     Game,
+    GameOver,
+    GameClear,
 };
 
 // シーン共通データ

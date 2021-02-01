@@ -13,6 +13,7 @@
 //SCENE
 #include    "Title.h"
 #include    "Game.h"
+#include    "GameOver.h"
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -29,6 +30,7 @@ MofBool CGameApp::Initialize(void) {
     m_SceneManager
         .Add<CTitle>(SceneName::Title)
         .Add<CGame>(SceneName::Game)
+        .Add<CGameOver>(SceneName::GameOver)
         .SetFadeColor(MOF_COLOR_WHITE);
 
     // DEBUG : デバッグ用でゲームシーンからスタートする
