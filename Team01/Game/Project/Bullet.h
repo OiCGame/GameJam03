@@ -2,12 +2,13 @@
 
 #include <Mof.h>
 
-enum class BulletTeamType {
-	Player,
-	Enemy,
-};
 
 class Bullet {
+public:
+	enum class TeamType {
+		Player,
+		Enemy,
+	};
 private:
 	//! 位置
 	Mof::CVector2 _position;
@@ -18,7 +19,7 @@ private:
 	//! 表示フラグ
 	bool _show;
 	//! 所属
-	BulletTeamType _team_type;
+	TeamType _team_type;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -32,6 +33,16 @@ public:
     /// セッター
     /// </summary>
     void SetTexture(Mof::CTexture* ptr);
+	/// <summary>
+	/// ゲッター
+	/// </summary>
+	Mof::CVector2 GetTextureSize(void) const;
+	/// <summary>
+	/// 判定
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool IsShow(void) const;
     /// <summary>
     /// 更新
     /// </summary>
@@ -44,10 +55,10 @@ public:
     /// <param name=""></param>
     /// <returns></returns>
     bool Render(void);
-    /// <summary>
-    /// 解放
-    /// </summary>
-    /// <param name=""></param>
-    /// <returns></returns>
-    bool Release(void);
+	/// <summary>
+	/// 撃つ
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool Shot(Mof::CVector2 init_pos, TeamType type);
 };
