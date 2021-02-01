@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneDefine.h"
+#include "Player.h"
 
 // ********************************************************************************
 /// <summary>
@@ -9,7 +10,7 @@
 class CGame : public MyApp::CScene
 {
 private:
-
+	CPlayer		Player;
 public:
 
     // ********************************************************************************

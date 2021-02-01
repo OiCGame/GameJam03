@@ -36,6 +36,7 @@ CGame::~CGame(void)
 // ********************************************************************************
 void CGame::Initialize(void)
 {
+	Player.Initialize();
 }
 
 // ********************************************************************************
@@ -48,6 +49,7 @@ void CGame::Initialize(void)
 // ********************************************************************************
 bool CGame::Load(void)
 {
+	Player.Load();
     return true;
 }
 
@@ -65,6 +67,7 @@ void CGame::Update(void)
     {
         ChangeScene(SceneName::Title);
     }
+	Player.Update();
 }
 
 // ********************************************************************************
@@ -78,6 +81,8 @@ void CGame::Render(void)
 {
     // DEBUG
     CGraphicsUtilities::RenderString(0, 0, "GAME");
+	Player.Render();
+	Player.RenderDebug();
 }
 
 // ********************************************************************************
@@ -89,4 +94,5 @@ void CGame::Render(void)
 // ********************************************************************************
 void CGame::Release(void)
 {
+	Player.Release();
 }
