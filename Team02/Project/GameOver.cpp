@@ -1,14 +1,14 @@
-#include "Game.h"
+#include "GameOver.h"
 
 // ********************************************************************************
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="data">共通データ</param>
+/// <param name="data">シーン共通データ</param>
 /// <created>いのうえ,2021/02/01</created>
 /// <changed>いのうえ,2021/02/01</changed>
 // ********************************************************************************
-CGame::CGame(const InitData & data)
+CGameOver::CGameOver(const InitData & data)
     : IScene(data)
 {
     Load();
@@ -22,7 +22,7 @@ CGame::CGame(const InitData & data)
 /// <created>いのうえ,2021/02/01</created>
 /// <changed>いのうえ,2021/02/01</changed>
 // ********************************************************************************
-CGame::~CGame(void)
+CGameOver::~CGameOver(void)
 {
     Release();
 }
@@ -34,9 +34,8 @@ CGame::~CGame(void)
 /// <created>いのうえ,2021/02/01</created>
 /// <changed>いのうえ,2021/02/01</changed>
 // ********************************************************************************
-void CGame::Initialize(void)
+void CGameOver::Initialize(void)
 {
-	Player.Initialize();
 }
 
 // ********************************************************************************
@@ -47,9 +46,8 @@ void CGame::Initialize(void)
 /// <created>いのうえ,2021/02/01</created>
 /// <changed>いのうえ,2021/02/01</changed>
 // ********************************************************************************
-bool CGame::Load(void)
+bool CGameOver::Load(void)
 {
-	Player.Load();
     return true;
 }
 
@@ -60,14 +58,8 @@ bool CGame::Load(void)
 /// <created>いのうえ,2021/02/01</created>
 /// <changed>いのうえ,2021/02/01</changed>
 // ********************************************************************************
-void CGame::Update(void)
+void CGameOver::Update(void)
 {
-    // DEBUG : １キーでタイトルへ
-    if (g_pInput->IsKeyPush(MOFKEY_1))
-    {
-        ChangeScene(SceneName::Title);
-    }
-	Player.Update();
 }
 
 // ********************************************************************************
@@ -77,12 +69,8 @@ void CGame::Update(void)
 /// <created>いのうえ,2021/02/01</created>
 /// <changed>いのうえ,2021/02/01</changed>
 // ********************************************************************************
-void CGame::Render(void)
+void CGameOver::Render(void)
 {
-    // DEBUG
-    CGraphicsUtilities::RenderString(0, 0, "GAME");
-	Player.Render();
-	Player.RenderDebug();
 }
 
 // ********************************************************************************
@@ -92,7 +80,6 @@ void CGame::Render(void)
 /// <created>いのうえ,2021/02/01</created>
 /// <changed>いのうえ,2021/02/01</changed>
 // ********************************************************************************
-void CGame::Release(void)
+void CGameOver::Release(void)
 {
-	Player.Release();
 }
