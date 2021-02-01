@@ -2,17 +2,22 @@
 
 
 #include "Character.h"
+#include "Enemy.h"
 
 
 Mof::CTexture g_PlayerTexture;
+Mof::CTexture g_EnemyTexture;
 Character g_Player;
-
+CEnemy	g_Enemy;
 
 MofBool CGameApp::Initialize(void) {
     ::CUtilities::SetCurrentDirectory("Resource");
     g_PlayerTexture.Load("player/Plane1Up.png");
+	g_EnemyTexture.Load("enemy/Enemy01.png");
     g_Player.Initialize(Mof::CVector2(512.0f, 600.0f));
+	g_Enemy.Initialize(Mof::CVector2(512.0f, 100.0f));
     g_Player.SetTexture(&g_PlayerTexture);
+	g_Enemy.SetTexture(&g_EnemyTexture);
     return TRUE;
 }
 
@@ -32,6 +37,7 @@ MofBool CGameApp::Render(void) {
 
 
     g_Player.Render();
+	g_Enemy.Render();
 
     g_pGraphics->RenderEnd();
     return TRUE;
@@ -39,5 +45,6 @@ MofBool CGameApp::Render(void) {
 
 MofBool CGameApp::Release(void) {
     g_PlayerTexture.Release();
+	g_EnemyTexture.Release();
     return TRUE;
 }
