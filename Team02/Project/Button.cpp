@@ -55,11 +55,6 @@ void CButton::Initialize(const Vector2& pos, CTexture * pBase, CTexture * pFont,
 // ********************************************************************************
 void CButton::Render(void)
 {
-    // ƒ{ƒ^ƒ“‚ª“o˜^‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î•`‰æ‚µ‚È‚¢
-    if (m_pBtnTexture == nullptr)
-    {
-        return;
-    }
     g_pGraphics->SetStencilEnable(TRUE);
 
     g_pGraphics->SetStencilControl(COMPARISON_ALWAYS, STENCIL_INCR, STENCIL_INCR, STENCIL_INCR);
@@ -72,11 +67,14 @@ void CButton::Render(void)
 
     if (m_pFontTexture)
     {
-        float x = rect.Left + (rect.GetWidth()  - m_pFontTexture->GetWidth() ) * 0.5f;
-        float y = rect.Top  + (rect.GetHeight() - m_pFontTexture->GetHeight()) * 0.5f;
-        rect.SetPosition(Vector2(x, y));
-        rect.SetWidth(m_pFontTexture->GetWidth() * m_Scale.x);
-        rect.SetHeight(m_pFontTexture->GetHeight() * m_Scale.y);
+        if (m_pBtnTexture)
+        {
+            float x = rect.Left + (rect.GetWidth()  - m_pFontTexture->GetWidth() ) * 0.5f;
+            float y = rect.Top  + (rect.GetHeight() - m_pFontTexture->GetHeight()) * 0.5f;
+            rect.SetPosition(Vector2(x, y));
+            rect.SetWidth (m_pFontTexture->GetWidth()  * m_Scale.x);
+            rect.SetHeight(m_pFontTexture->GetHeight() * m_Scale.y);
+        }
         m_pFontTexture->Render(rect);
     }
 
@@ -114,6 +112,11 @@ CRectangle CButton::GetRect(void) const
 {
     if (m_pBtnTexture == nullptr)
     {
+        if (m_pFontTexture)
+        {
+            Vector2 size(m_pFontTexture->GetWidth(), m_pFontTexture->GetHeight());
+            return CRectangle(m_Pos, m_Pos + size * m_Scale);
+        }
         return sip::NoneRect;
     }
     Vector2 size(m_pBtnTexture->GetWidth(), m_pBtnTexture->GetHeight());

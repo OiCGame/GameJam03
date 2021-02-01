@@ -52,6 +52,8 @@ void CTitle::Initialize(void)
 
     // 選択の初期化
     m_SelectNo = 0;
+
+    m_OptionWindow.Initialize(&m_SelectTexture);
 }
 
 // ********************************************************************************
@@ -65,7 +67,7 @@ void CTitle::Initialize(void)
 bool CTitle::Load(void)
 {
     CUtilities::SetCurrentDirectory("UI/タイトル画面");
-    bool b[] =
+    MofBool b[] =
     {
         m_StartTexture.Load("はじめる.png"),
         m_EndTexture.Load("おわる.png"),
@@ -84,6 +86,7 @@ bool CTitle::Load(void)
             return false;
         }
     }
+    m_OptionWindow.Load();
 
     return true;
 }
@@ -108,10 +111,12 @@ void CTitle::Update(void)
     }
     else
     {
+        // ESCキーで終了
         if (g_pInput->IsKeyPush(MOFKEY_ESCAPE))
         {
             PostQuitMessage(0);
         }
+        // 選択やつ移動処理
         if (g_pInput->IsKeyPush(MOFKEY_UP))
         {
             m_SelectNo = (m_SelectNo - 1 < 0) ? (2) : (m_SelectNo - 1);
@@ -121,6 +126,7 @@ void CTitle::Update(void)
             m_SelectNo = (m_SelectNo + 1 > 2) ? (0) : (m_SelectNo + 1);
         }
 
+        // Enterキーで決定
         if (g_pInput->IsKeyPull(MOFKEY_RETURN))
         {
             switch (m_SelectNo)
@@ -153,27 +159,32 @@ void CTitle::Render(void)
     // 背景の描画
     m_BackTexture.Render(0, 0);
 
-    // タイトルロゴの描画位置計算
-    int px = (g_pGraphics->GetTargetWidth() - m_TitleTexture.GetWidth()) * 0.5f;
-    int py = g_pGraphics->GetTargetHeight() * 0.5f - m_TitleTexture.GetHeight();
+    if (m_OptionWindow.IsShow())
+    {
+        // オプション画面の描画
+        m_OptionWindow.Render();
+    }
+    else
+    {
+        // タイトルロゴの描画位置計算
+        int px = (g_pGraphics->GetTargetWidth() - m_TitleTexture.GetWidth()) * 0.5f;
+        int py = g_pGraphics->GetTargetHeight() * 0.5f - m_TitleTexture.GetHeight();
 
-    // タイトルロゴ描画
-    m_TitleTexture.Render(px, py);
+        // タイトルロゴ描画
+        m_TitleTexture.Render(px, py);
 
-    // 各ボタン描画
-    m_btnStart.Render();
-    m_btnOption.Render();
-    m_btnEnd.Render();
+        // 各ボタン描画
+        m_btnStart.Render();
+        m_btnOption.Render();
+        m_btnEnd.Render();
 
-    // 選択位置の計算
-    float th = m_PlateTexture.GetHeight();
-    px = m_btnStart.GetRect().Left - (m_SelectTexture.GetWidth() * 1.1f);
-    py = m_btnStart.GetRect().Top + 
-        ((th - m_SelectTexture.GetHeight()) * 0.5f) + (th * 1.1f * m_SelectNo);
-    m_SelectTexture.Render(px, py);
-
-    // オプション画面の描画
-    m_OptionWindow.Render();
+        // 選択位置の計算
+        float th = m_PlateTexture.GetHeight();
+        px = m_btnStart.GetRect().Left - (m_SelectTexture.GetWidth() * 1.1f);
+        py = m_btnStart.GetRect().Top +
+            ((th - m_SelectTexture.GetHeight()) * 0.5f) + (th * 1.1f * m_SelectNo);
+        m_SelectTexture.Render(px, py);
+    }
 }
 
 // ********************************************************************************
@@ -192,4 +203,7 @@ void CTitle::Release(void)
     m_SelectTexture.Release();
     m_TitleTexture.Release();
     m_BackTexture.Release();
+
+    m_OptionWindow.Save();
+    m_OptionWindow.Release();
 }
