@@ -25,7 +25,7 @@ Mof::CVector2 CBullet::GetTextureSize(void) const {
 }
 
 bool CBullet::IsShow(void) const {
-    return this->_show;
+	return this->_show;
 }
 
 bool CBullet::Update(void) {
@@ -33,8 +33,8 @@ bool CBullet::Update(void) {
         return false;
     } // if
 
-    _position += _move;
-    return true;
+	_position += _move;
+	return true;
 }
 
 bool CBullet::Render(void) {
@@ -42,11 +42,11 @@ bool CBullet::Render(void) {
         return false;
     } // if
 
-    auto tex = _texture;
-    if (tex) {
-        tex->Render(_position.x, _position.y);
-    } // if
-    return true;
+	auto tex = _texture;
+	if (tex) {
+		tex->Render(_position.x, _position.y);
+	} // if
+	return true;
 }
 
 bool CBullet::Shot(Mof::CVector2 init_pos, CBullet::TeamType type) {

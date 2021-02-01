@@ -55,7 +55,7 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container) {
         this->Shot(bullet_container);
     } // if
 
-    return true;
+	return true;
 }
 
 bool CCharacter::Render(void) {
@@ -65,4 +65,11 @@ bool CCharacter::Render(void) {
 
 bool CCharacter::Release(void) {
     return true;
+}
+
+void CCharacter::Damege(void) {
+	_hp--;
+	if (_hp <= 0) {
+		_show = false;
+	} // if
 }

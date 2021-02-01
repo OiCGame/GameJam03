@@ -38,6 +38,10 @@ public:
 	/// </summary>
 	Mof::CVector2 GetTextureSize(void) const;
 	/// <summary>
+	/// ÉQÉbÉ^Å[
+	/// </summary>
+	Mof::CRectangle GetCollisionRectangle(void) const;
+	/// <summary>
 	/// îªíË
 	/// </summary>
 	/// <param name=""></param>
