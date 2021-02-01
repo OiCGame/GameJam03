@@ -51,6 +51,12 @@
     <ClCompile Include="RoundRect.cpp">
       <Filter>ソース ファイル\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -78,6 +84,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="RoundRect.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
       <Filter>ヘッダー ファイル\Utilities</Filter>
     </ClInclude>
   </ItemGroup>

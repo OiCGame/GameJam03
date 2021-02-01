@@ -4,11 +4,20 @@
 class CPlayer
 {
 private:
-	CTexture		PlayerTexture;
-	CVector2		PlayerPosition;
-	CCircle			PlayerCollision;
-	float			PlayerCollisionRadius;
-	CVector2		PlayerCollisionPosCorrection;
+	CTexture		Texture;
+	CVector2		position;
+	CCircle			Collision;
+	float			CollisionRadius;
+	CVector2		CollisionPosCorrection;
+
+	enum BulletType
+	{
+		Empty,
+		Triangle,
+		Square
+	};
+
+	int				BulletBuffer;
 
 public:
 	CPlayer();
@@ -16,9 +25,11 @@ public:
 	void		Load();
 	void		Initialize();
 	void		Update();
+	void		ShotBullet(int bullettype);
 	void		Render();
 	void		RenderDebug();
 	void		Release();
 
-	CVector2	GetPosition() { return PlayerPosition; }
+	CVector2	GetPosition() { return position; }
+	void		SetBullet(int bulletype) { BulletBuffer = bulletype; }
 };
