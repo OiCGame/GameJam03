@@ -8,7 +8,7 @@ CSceneBase::CSceneBase() :
 
 
 void CSceneBase::SelectVertical(int& no, int count, bool loop) {
-	if (CInputManager::GetInstance().GetVertical ()< 0.25 && CInputManager::GetInstance().GetVertical() > -0.25)
+	if (CInputManager::GetInstance().GetVertical() < 0.25 && CInputManager::GetInstance().GetVertical() > -0.25)
 	{
 		m_Select.m_RemainVerticalGap = 0;
 		m_Select.m_ContinuousVerticalCount = 0;
@@ -53,7 +53,7 @@ void CSceneBase::SelectVertical(int& no, int count, bool loop) {
 }
 
 void CSceneBase::SelectHorizontal(int& no, int count, bool loop) {
-	if (CInputManager::GetInstance().GetHorizontal() < 0.25 && CInputManager::GetInstance().GetHorizontal() > -0.25)
+	if (CInputManager::GetInstance().GetHorizontal() < 0.25f && CInputManager::GetInstance().GetHorizontal() > -0.25f)
 	{
 		m_Select.m_RemainHorizontalGap = 0;
 		m_Select.m_ContinuousHorizontalCount = 0;
@@ -63,7 +63,7 @@ void CSceneBase::SelectHorizontal(int& no, int count, bool loop) {
 		m_Select.m_RemainHorizontalGap--;
 		return;
 	}
-	if (CInputManager::GetInstance().GetHorizontal ()> 0.75)
+	if (CInputManager::GetInstance().GetHorizontal() > 0.75f)
 	{
 		m_Select.m_RemainHorizontalGap = m_SelectGap[m_Select.m_ContinuousHorizontalCount];
 		m_Select.m_ContinuousHorizontalCount++;

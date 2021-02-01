@@ -3,7 +3,7 @@
 
 #include <array>
 
-#include <Mof.h>
+#include "GameDefine.h"
 
 #include "Bullet.h"
 
@@ -31,19 +31,19 @@ protected:
 	/// <param name=""></param>
 	virtual bool Shot(std::array<CBullet, 256>& bullet_container);
 public:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	CCharacter();
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	virtual ~CCharacter();
-	/// <summary>
-	/// セッター
-	/// </summary>
-	void SetTexture(Mof::CTexture* ptr);
-	void SetBulletTexture(Mof::CTexture* ptr);
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    CCharacter();
+    /// <summary>
+    /// デストラクタ
+    /// </summary>
+    virtual ~CCharacter();
+    /// <summary>
+    /// セッター
+    /// </summary>
+    void SetTexture(Mof::CTexture* ptr);
+    void SetBulletTexture(Mof::CTexture* ptr);
     /// <summary>
     /// ゲッター
     /// </summary>

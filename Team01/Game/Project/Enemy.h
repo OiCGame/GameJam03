@@ -3,9 +3,8 @@
 
 #include "Character.h"
 
-
-class CEnemy : public CCharacter {
-	using super = CCharacter;
+class CEnemy : public CCharacter
+{
 private:
 protected:
 public:
