@@ -98,9 +98,12 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBulletManager.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneGameClear.cpp" />
     <ClCompile Include="SceneGameOver.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
