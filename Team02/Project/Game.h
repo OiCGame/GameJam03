@@ -11,6 +11,7 @@ class CGame : public MyApp::CScene
 {
 private:
 	CPlayer		Player;
+	bool		DebugEnable;
 public:
 
     // ********************************************************************************

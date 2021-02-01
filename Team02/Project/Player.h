@@ -6,7 +6,9 @@ class CPlayer
 private:
 	CTexture		PlayerTexture;
 	CVector2		PlayerPosition;
-	CRectangle		PlayerRectangle;
+	CCircle			PlayerCollision;
+	float			PlayerCollisionRadius;
+	CVector2		PlayerCollisionPosCorrection;
 
 public:
 	CPlayer();
