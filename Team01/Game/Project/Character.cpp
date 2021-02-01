@@ -1,5 +1,6 @@
 #include "Character.h"
 
+
 void Character::Move(void) {
     if (::g_pInput->IsKeyHold(MOFKEY_LEFT)) {
         _position.x--;
@@ -7,6 +8,9 @@ void Character::Move(void) {
     else if (::g_pInput->IsKeyHold(MOFKEY_RIGHT)) {
         _position.x++;
     } // else if
+}
+
+void Character::Shot(void) {
 }
 
 Character::Character() :

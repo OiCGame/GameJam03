@@ -16,6 +16,11 @@ protected:
     /// </summary>
     /// <param name=""></param>
     void Move(void);
+    /// <summary>
+    /// 撃つ
+    /// </summary>
+    /// <param name=""></param>
+    void Shot(void);
 public:
     /// <summary>
     /// コンストラクタ
