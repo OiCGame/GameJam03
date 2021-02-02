@@ -31,8 +31,9 @@ CCharacter::CCharacter() :
 	_position(),
 	_texture(nullptr),
 	_bullet_texture(nullptr),
-	_hp(10),
+	_hp(4),
 	_show(true) {
+
 }
 
 CCharacter::~CCharacter() {
@@ -44,6 +45,10 @@ void CCharacter::SetTexture(Mof::CTexture* ptr) {
 
 void CCharacter::SetBulletTexture(Mof::CTexture* ptr) {
 	_bullet_texture = ptr;
+}
+
+Mof::CVector2 CCharacter::GetPosition(void) const {
+	return this->_position;
 }
 
 Mof::CRectangle CCharacter::GetCollisionRectangle(void) const {
