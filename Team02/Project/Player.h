@@ -2,11 +2,13 @@
 #include	"Mof.h"
 #include	"Bullet.h"
 
+constexpr auto BULLET_CATEGORY = 2;
+
 class CPlayer
 {
 private:
 	CTexture				Texture;
-	CTexture				BulletTexture[2];
+	CTexture				BulletTexture[BULLET_CATEGORY];
 	CVector2				position;
 	CCircle					Collision;
 	float					CollisionRadius;
@@ -21,6 +23,14 @@ private:
 
 	int						BulletBuffer;
 	CDynamicArray<CBullet>	Bullets;
+	enum RotateType
+	{
+		Up,
+		Right,
+		Down,
+		Left
+	};
+	int						BulletRotate;
 
 public:
 	CPlayer();

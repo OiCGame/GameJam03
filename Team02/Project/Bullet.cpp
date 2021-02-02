@@ -10,12 +10,14 @@ CBullet::~CBullet()
 {
 }
 
-void CBullet::Create(CTexture * texturePointer, float posx, float posy)
+void CBullet::Create(CTexture * texturePointer, float posx, float posy ,int type , int rotate)
 {
 	Texture = texturePointer;
 	Position = CVector2(posx, posy);
-	Collision = CCircle(posx + (Texture->GetWidth()*0.5) , posy + (Texture->GetHeight() * 0.5) , (float)Texture->GetWidth() * 0.5);
+	Collision = CCircle(posx , posy , (float)Texture->GetWidth() * 0.5);
 	IsShow = true;
+	BulletType = type;
+	Rotate = rotate;
 }
 
 void CBullet::Update()
@@ -25,8 +27,8 @@ void CBullet::Update()
 	if (Position.y >  - (int)Texture->GetHeight())
 	{
 		Position.y -= BULLET_SPEED;
-		Collision.x = Position.x + Texture->GetWidth() * 0.5;
-		Collision.y = Position.y + Texture->GetHeight() * 0.5;
+		Collision.x = Position.x;
+		Collision.y = Position.y;
 	}
 	else
 	{
@@ -37,11 +39,13 @@ void CBullet::Update()
 
 void CBullet::Render()
 {
-	Texture->Render(Position.x,Position.y);
+
+	Texture->RenderRotate(Position.x,
+			Position.y, MOF_ToRadian(90 * Rotate),TEXTUREALIGNMENT_CENTERCENTER);
 }
 
 void CBullet::RenderDebug(int i)
 {
-	CGraphicsUtilities::RenderString(0,250 + (50 * i),"íeç¿ïW X %1f : Y  %2f" , Position.x , Position.y);
+	CGraphicsUtilities::RenderString(0, 300 + (50 * i), "íeç¿ïW X %1f : Y  %2f", Position.x, Position.y);
 	CGraphicsUtilities::RenderCircle(Collision, MOF_COLOR_GREEN);
 }
