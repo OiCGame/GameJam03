@@ -13,7 +13,7 @@ enum class SceneName
 // シーン共通データ
 struct SceneData
 {
-
+    int StageNo; //! ステージ番号
 };
 
 // シーンマネージャー

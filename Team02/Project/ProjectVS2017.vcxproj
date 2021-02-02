@@ -98,6 +98,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RoundRect.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameApp.h" />
+    <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RoundRect.h" />

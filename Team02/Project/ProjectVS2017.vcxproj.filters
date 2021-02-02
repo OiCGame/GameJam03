@@ -57,6 +57,9 @@
     <ClCompile Include="Button.cpp">
       <Filter>ソース ファイル\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="GameClear.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClear.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
