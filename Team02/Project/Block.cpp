@@ -1,68 +1,70 @@
 
 #include	"Block.h"
 
-CBlock::CBlock() {
+CBlock::CBlock() :
+    m_pBlockTexture(nullptr) {
 }
 
 CBlock::~CBlock() {
 }
 
-bool CBlock::Load(void) {
-	if (!g_Block.Load("UI/ゲーム本編/四角.png")) {
-		return false;
-	}
-	if (!g_UpRect.Load("UI/ゲーム本編/上枠.png")) {
-		return false;
-	}
-	return true;
+void CBlock::SetTexture(CTexture* pTexture) {
+    m_pBlockTexture = pTexture;
 }
 
 void CBlock::Initialize(void) {
-	g_UpPos = Vector2(0, 0);
-	timer = 0;
-	for (int i = 0; i < SHOW; i++) {
-		g_Show[i] = false;
-	}
+	m_Pos   = Vector2(0, 0);
+	m_Timer = 0;
+	m_bShow = false;
 }
 
-void CBlock::BlockSet(int i) {
-	g_Show[i] = true;
-	g_BlPos[i].y = 0 - 600/*g_Block.GetHeight()*/;
-	g_BlPos[i].x = CUtilities::Random(RANDOM);
-	rad[i] = CUtilities::Random(RADIAN);
+void CBlock::FallStart(CTexture* pTexture, int bullettype) {
+    SetTexture(pTexture);
+    m_BulletType = (BulletType)bullettype;
+	m_bShow = true;
+	m_Pos.y = -1 * static_cast<float>(m_pBlockTexture->GetHeight());
+	m_Pos.x = CUtilities::Random(RANDOM_RANGE);
+	m_DegreeAngle = CUtilities::Random(RADIAN_RANGE);
 }
 
 void CBlock::Update(void) {
-	timer++;
-	t = (timer * timer) % SHOW;
-	if (!g_Show[t]) {
-		BlockSet(t);
-		timer = 0;
+	if (!m_bShow) {
+        return;
 	}
-	for (int i = 0; i < SHOW; i++) {
-		if (g_Show[i]) {
-			rad[i]++;
-			g_BlPos[i].y += SPEED;
-			if (g_BlPos[i].y > BOTTOM) {
-				g_Show[i] = false;
-			}
-		}
+    // 落下処理
+	m_DegreeAngle++;
+	m_Pos.y += BLOCK_FALLSPEED * CUtilities::GetFrameSecond();
+    // 画面外いった場合表示フラグを折る
+	if (m_Pos.y > BOTTOM_LIMIT) {
+		m_bShow = false;
 	}
 }
 
 void CBlock::Render(void) {
-	g_UpRect.Render(g_UpPos.x, g_UpPos.y);
+    if (!m_bShow) {
+        return;
+    }
+    m_pBlockTexture->RenderRotate(m_Pos.x, m_Pos.y, MOF_ToRadian(m_DegreeAngle), TEXALIGN_CENTERCENTER);
 }
 
-void CBlock::RenderBlock(void) {
-	for (int i = 0; i < SHOW; i++) {
-		if (g_Show[i]) {
-			g_Block.RenderRotate(g_BlPos[i].x, g_BlPos[i].y, MOF_ToRadian(rad[i] % 360), TEXALIGN_CENTERCENTER);
-		}
-	}
+void CBlock::RenderDebug() {
+    if(m_bShow)
+        CGraphicsUtilities::RenderCircle(GetCollisionCircle(), MOF_COLOR_GREEN);
 }
 
 void CBlock::Release(void) {
-	g_Block.Release();
-	g_UpRect.Release();
+	m_pBlockTexture = nullptr;
+}
+
+bool CBlock::IsShow(void) const {
+    return m_bShow;
+}
+
+CCircle CBlock::GetCollisionCircle(void) const {
+    if (!m_bShow) return CCircle();
+    return CCircle(m_Pos, m_pBlockTexture->GetWidth() * 0.4f);
+}
+
+int CBlock::GetBulletType(void) const {
+    return m_BulletType;
 }

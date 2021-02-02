@@ -11,9 +11,11 @@
 class CGame : public MyApp::CScene
 {
 private:
-	CPlayer		Player;
-    CBlock		Block;
-	bool		DebugEnable;
+	CPlayer		    Player;
+    CBlock		    Block[BLOCK_COUNT];
+	bool		    DebugEnable;
+    sip::CStopWatch BlockFallTimer;
+
 
 public:
 

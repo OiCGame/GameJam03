@@ -38,7 +38,14 @@ CGame::~CGame(void)
 void CGame::Initialize(void)
 {
 	Player.Initialize();
-    Block.Initialize();
+    for (int i = 0; i < BLOCK_COUNT; i++)
+    {
+        Block[i].Initialize();
+    }
+    BlockFallTimer.Start();
+    int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(2);
+    CTexture* pBlockTexture = Player.GetBulletTexture(bulletType);
+    Block[0].FallStart(pBlockTexture, bulletType);
 }
 
 // ********************************************************************************
@@ -52,7 +59,6 @@ void CGame::Initialize(void)
 bool CGame::Load(void)
 {
 	Player.Load();
-    Block.Load();
 
     return true;
 }
@@ -66,6 +72,8 @@ bool CGame::Load(void)
 // ********************************************************************************
 void CGame::Update(void)
 {
+    // タイマーの更新
+    BlockFallTimer.Update();
     // DEBUG : １キーでタイトルへ
     if (g_pInput->IsKeyPush(MOFKEY_1))
     {
@@ -75,8 +83,31 @@ void CGame::Update(void)
 	{
 		DebugEnable = !DebugEnable;
 	}
+
+    if (BlockFallTimer.GetTime() > 2.0f)
+    {
+        for (int i = 0; i < BLOCK_COUNT; i++)
+        {
+            if (Block[i].IsShow())
+            {
+                continue;
+            }
+
+            int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(2);
+            CTexture* pBlockTexture = Player.GetBulletTexture(bulletType);
+
+            Block[i].FallStart(pBlockTexture, bulletType);
+            BlockFallTimer.Reset();
+            break;
+        }
+    }
+
+    for (int i = 0; i < BLOCK_COUNT; i++)
+    {
+        Block[i].Update();
+    }
+
 	Player.Update();
-    Block.Update();
 }
 
 // ********************************************************************************
@@ -91,9 +122,17 @@ void CGame::Render(void)
     // DEBUG
     CGraphicsUtilities::RenderString(0, 0, "GAME");
 	Player.Render();
-    Block.Render();
-    Block.RenderBlock();
-	if (DebugEnable) { Player.RenderDebug(); }
+    for (int i = 0; i < BLOCK_COUNT; i++)
+    {
+        Block[i].Render();
+    }
+	if (DebugEnable) {
+        Player.RenderDebug();
+        for (int i = 0; i < BLOCK_COUNT; i++)
+        {
+            Block[i].RenderDebug();
+        }
+    }
 	
 }
 
@@ -107,5 +146,8 @@ void CGame::Render(void)
 void CGame::Release(void)
 {
 	Player.Release();
-    Block.Release();
+    for (int i = 0; i < BLOCK_COUNT; i++)
+    {
+        Block[i].Release();
+    }
 }

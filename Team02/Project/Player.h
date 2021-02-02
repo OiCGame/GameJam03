@@ -45,4 +45,5 @@ public:
 
 	CVector2	GetPosition() { return position; }
 	void		SetBullet(int bulletype) { BulletBuffer = bulletype; }
+    CTexture*   GetBulletTexture(int bulletype) { return &BulletTexture[bulletype]; }
 };
