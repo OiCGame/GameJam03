@@ -84,10 +84,10 @@ void CPlayer::Update()
 void CPlayer::ShotBullet(int bullettype)
 {
 	CBullet A;
+	A.Create(&BulletTexture[bullettype],
+		position.x - (BulletTexture[bullettype].GetWidth() * 0.5f) + (Texture.GetWidth() * 0.125f),
+		position.y - BulletTexture[bullettype].GetHeight());
 	Bullets.Add(A);
-	Bullets[Bullets.GetArrayCount() - 1].Create(&BulletTexture[bullettype],
-		 position.x - (BulletTexture[bullettype].GetWidth() * 0.5f) + (Texture.GetWidth() * 0.125f),
-		 position.y - BulletTexture[bullettype].GetHeight());
 
 	BulletBuffer = Empty;
 }

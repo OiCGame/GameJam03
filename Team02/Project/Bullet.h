@@ -9,6 +9,7 @@ class CBullet
 private:
 	CTexture*			Texture;
 	CVector2			Position;
+	CCircle				Collision;
 	bool				IsShow;
 public:
 	CBullet();
