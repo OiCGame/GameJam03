@@ -40,6 +40,7 @@ CCharacter::CCharacter() :
 	m_pBulletTexture(nullptr),
 	m_HP(4),
 	m_BulletNo(0),
+	m_RevivalCount(1),
 	m_bShow(true) {
 
 }
@@ -67,6 +68,9 @@ Mof::CRectangle CCharacter::GetCollisionRectangle(void) const {
 	return rect;
 }
 
+uint32_t CCharacter::GetRevivalCount(void) const{
+	return this->m_RevivalCount;
+}
 bool CCharacter::IsShow(void) const {
 	return this->m_bShow;
 }
@@ -112,9 +116,12 @@ bool CCharacter::Release(void) {
 	return true;
 }
 
-void CCharacter::Damage(void) {
+bool CCharacter::Damage(void) {
 	m_HP--;
 	if (m_HP <= 0) {
+		m_RevivalCount--;
 		m_bShow = false;
+		return true;
 	} // if
+	return false;
 }

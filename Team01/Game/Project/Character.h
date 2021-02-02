@@ -24,6 +24,8 @@ protected:
 	int m_HP;
 	//! 表示
 	bool m_bShow;
+	//! 残機
+	uint32_t m_RevivalCount;
 
 	int m_BulletNo;
 	/// <summary>
@@ -61,6 +63,10 @@ public:
     /// </summary>
 	Mof::CRectangle GetCollisionRectangle(void) const;
 	/// <summary>
+	/// ゲッター
+	/// </summary>
+	uint32_t GetRevivalCount(void) const;
+	/// <summary>
     /// ゲッター
     /// </summary>
 	bool IsShow(void) const;
@@ -93,5 +99,5 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	void Damage(void);
+	bool Damage(void);
 };

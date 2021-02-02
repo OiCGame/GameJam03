@@ -7,6 +7,7 @@
 
 #include <Mof.h>
 
+#include "UICanvas.h"
 #include "Character.h"
 #include "Enemy.h"
 #include "Bullet.h"
@@ -15,6 +16,10 @@
 
 class CGame {
 private:
+	UICanvas m_UICanvas;
+	float m_ElapsedTime;
+	std::vector<CEnemy::InitParam> m_EnemyDatas;
+
 	Mof::CTexture _player_texture;
 	Mof::CTexture _enemy_texture;
 	Mof::CTexture _bullet_texture;
@@ -26,12 +31,26 @@ private:
 	std::vector<CEnemy> _enemies;
 	std::array<CBullet, 256>m_PlayerBullets;
 	std::vector<std::shared_ptr<CEffect>>_effect_container;
+
 	/// <summary>
-	/// 描画
+	/// エネミー出現
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	void SpawnEnemy(void);
+	/// <summary>
+	/// 爆発エフェクト発生
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	void EffectStart(Mof::CVector2 position);
+	/// <summary>
+	/// 衝突
 	/// </summary>
 	/// <param name=""></param>
     /// <returns></returns>
 	void Collision(void);
+	void CollisionPlayerEnemies(void);
 public:
 	CGame();
 	~CGame();

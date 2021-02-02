@@ -60,8 +60,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\Library\Include;../include</AdditionalIncludeDirectories>
-      <LanguageStandard>
-      </LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -106,6 +105,7 @@
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameDefine.cpp" />
     <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="UICanvas.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -119,11 +119,13 @@
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="UICanvas.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resource\motion\explode.json" />
     <None Include="..\Resource\stage\enemies.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

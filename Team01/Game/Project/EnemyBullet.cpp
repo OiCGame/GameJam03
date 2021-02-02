@@ -1,14 +1,13 @@
 #include "EnemyBullet.h"
 
-CEnemyBullet::CEnemyBullet():
-m_Pos(0.0f,0.0f),
-m_Move(0.0f,0.0f),
-m_Radius(6.0f),
-m_Speed(3.0f),
-m_Dir(0.0f),
-m_ReflectionCount(2),
-m_bDraw(false){
-
+CEnemyBullet::CEnemyBullet() :
+	m_Pos(0.0f, 0.0f),
+	m_Move(0.0f, 0.0f),
+	m_Radius(6.0f),
+	m_Speed(3.0f),
+	m_Dir(0.0f),
+	m_ReflectionCount(2),
+	m_bDraw(false) {
 }
 
 CEnemyBullet::~CEnemyBullet() {
@@ -35,28 +34,23 @@ void CEnemyBullet::Update() {
 	float w = g_pGraphics->GetTargetWidth();
 	float h = g_pGraphics->GetTargetHeight();
 
-	if (m_ReflectionNo > 0)
-	{
-		if (m_Pos.x < m_Radius)
-		{
+	if (m_ReflectionNo > 0) {
+		if (m_Pos.x < m_Radius) {
 			m_ReflectionNo--;
 			m_Pos.x = m_Radius;
 			m_Dir = 180 - m_Dir;
 		}
-		else if (m_Pos.x > w - m_Radius)
-		{
+		else if (m_Pos.x > w - m_Radius) {
 			m_ReflectionNo--;
 			m_Pos.x = w - m_Radius;
 			m_Dir = 180 - m_Dir;
 		}
-		else if (m_Pos.y < m_Radius)
-		{
+		else if (m_Pos.y < m_Radius) {
 			m_ReflectionNo--;
 			m_Pos.y = m_Radius;
 			m_Dir = 360 - m_Dir;
 		}
-		else if (m_Pos.y > h - m_Radius)
-		{
+		else if (m_Pos.y > h - m_Radius) {
 			m_ReflectionNo--;
 			m_Pos.y = h - m_Radius;
 			m_Dir = 360 - m_Dir;
@@ -66,20 +60,17 @@ void CEnemyBullet::Update() {
 		if (m_Dir > 360)
 			m_Dir -= 360;
 	}
-	else
-	{
+	else {
 		if (m_Pos.y - m_Radius > h || m_Pos.y + m_Radius < 0 || m_Pos.x - m_Radius > w || m_Pos.x + m_Radius < 0)
 			m_bDraw = false;
 	}
 }
 
 int CEnemyBullet::Collition(CRectangle prec) {
-	if (!m_bDraw)
-	{
+	if (!m_bDraw) {
 		return 0;
 	}
-	if (GetRec().CollisionRect(prec))
-	{
+	if (GetRec().CollisionRect(prec)) {
 		m_bDraw = false;
 		return 1;
 	}

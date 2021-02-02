@@ -16,6 +16,15 @@
     <Filter Include="リソース ファイル\stage">
       <UniqueIdentifier>{4a9f09f3-2b92-4b00-8496-0a4150046501}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\motion">
+      <UniqueIdentifier>{0e441733-9802-41e0-bea5-04882f611baa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{5378adb8-d375-459d-8710-9b61d8291e76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI">
+      <UniqueIdentifier>{c1ae2961-5ee7-44b5-948e-6010d084181a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -47,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="EnemyBullet.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="UICanvas.cpp">
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +92,9 @@
     <ClInclude Include="Game.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="UICanvas.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
@@ -89,6 +104,9 @@
   <ItemGroup>
     <None Include="..\Resource\stage\enemies.json">
       <Filter>リソース ファイル\stage</Filter>
+    </None>
+    <None Include="..\Resource\motion\explode.json">
+      <Filter>リソース ファイル\motion</Filter>
     </None>
   </ItemGroup>
 </Project>
