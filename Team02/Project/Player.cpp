@@ -14,6 +14,8 @@ CPlayer::~CPlayer()
 void CPlayer::Load()
 {
 	Texture.Load("UI/ゲーム本編/飛行機.png");
+	BulletTexture[Triangle].Load("UI/ゲーム本編/三角.png");
+	BulletTexture[Square].Load("UI/ゲーム本編/四角.png");
 }
 
 void CPlayer::Initialize()
@@ -42,13 +44,30 @@ void CPlayer::Update()
 		}
 	}
 
-	if (g_pInput->IsKeyPush(MOFKEY_SPACE) && !BulletBuffer == Empty)
+	if (g_pInput->IsKeyPush(MOFKEY_SPACE) && BulletBuffer != Empty)
 	{
 		
 		ShotBullet(BulletBuffer);
 
+	}
 
-		BulletBuffer = Empty;
+	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD7))
+	{
+		BulletBuffer = Triangle;
+	}
+	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD8))
+	{
+		BulletBuffer = Square;
+	}
+
+	for (int i = 0; i < Bullets.GetArrayCount(); i++)
+	{
+		Bullets[i].Update();
+	}
+
+	while (true)
+	{
+
 	}
 
 	Collision = CCircle(position + CollisionPosCorrection, CollisionRadius);
@@ -56,18 +75,33 @@ void CPlayer::Update()
 
 void CPlayer::ShotBullet(int bullettype)
 {
+	CBullet A;
+	Bullets.Add(A);
+	Bullets[Bullets.GetArrayCount() - 1].Create(&BulletTexture[bullettype],
+		 position.x - (BulletTexture[bullettype].GetWidth() * 0.5f) + (Texture.GetWidth() * 0.125f),
+		 position.y - BulletTexture[bullettype].GetHeight());
 
+	BulletBuffer = Empty;
 }
 
 
 void CPlayer::Render()
 {
 	Texture.RenderScale(position.x , position.y , 0.25f);
+
+	for (int i = 0; i < Bullets.GetArrayCount(); i++)
+	{
+		if (!Bullets[i].GetShow()) { continue; }
+		Bullets[i].Render();
+	}
 }
 
 void CPlayer::RenderDebug()
 {
-	CGraphicsUtilities::RenderString(0, 100, "プレイヤ座標　　X%1f : Y%2f", position.x, position.y);
+	CGraphicsUtilities::RenderString(0, 100, "プレイヤ座標　　X %1f : Y %2f", position.x, position.y);
+	CGraphicsUtilities::RenderString(0, 150, "保持弾種：%d", BulletBuffer);
+	CGraphicsUtilities::RenderString(0, 200, "現在存在する弾数：%d", Bullets.GetArrayCount());
+	
 	CGraphicsUtilities::RenderCircle(Collision , MOF_COLOR_GREEN);
 }
 

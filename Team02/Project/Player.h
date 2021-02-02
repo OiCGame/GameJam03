@@ -1,23 +1,26 @@
 #pragma once
 #include	"Mof.h"
+#include	"Bullet.h"
 
 class CPlayer
 {
 private:
-	CTexture		Texture;
-	CVector2		position;
-	CCircle			Collision;
-	float			CollisionRadius;
-	CVector2		CollisionPosCorrection;
+	CTexture				Texture;
+	CTexture				BulletTexture[2];
+	CVector2				position;
+	CCircle					Collision;
+	float					CollisionRadius;
+	CVector2				CollisionPosCorrection;
 
 	enum BulletType
 	{
-		Empty,
 		Triangle,
-		Square
+		Square,
+		Empty
 	};
 
-	int				BulletBuffer;
+	int						BulletBuffer;
+	CDynamicArray<CBullet>	Bullets;
 
 public:
 	CPlayer();
