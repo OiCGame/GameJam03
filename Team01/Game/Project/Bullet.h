@@ -11,15 +11,15 @@ public:
 	};
 private:
 	//! 位置
-	Mof::CVector2 _position;
+	Mof::CVector2 m_Position;
 	//! 更新時に足しこまれる移動量
-	Mof::CVector2 _move;
+	Mof::CVector2 m_Move;
 	//! 表示画像
-	Mof::CTexture* _texture;
+	Mof::CTexture* m_pTexture;
 	//! 表示フラグ
-	bool _show;
+	bool m_bShow;
 	//! 所属
-	TeamType _team_type;
+	TeamType m_TeamType;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -29,10 +29,10 @@ public:
 	/// デストラクタ
 	/// </summary>
 	~CBullet();
-    /// <summary>
-    /// セッター
-    /// </summary>
-    void SetTexture(Mof::CTexture* ptr);
+	/// <summary>
+	/// セッター
+	/// </summary>
+	void SetTexture(Mof::CTexture* ptr);
 	/// <summary>
 	/// セッター
 	/// </summary>
@@ -51,18 +51,18 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	bool IsShow(void) const;
-    /// <summary>
-    /// 更新
-    /// </summary>
-    /// <param name=""></param>
-    /// <returns></returns>
-    bool Update(void);
-    /// <summary>
-    /// 描画
-    /// </summary>
-    /// <param name=""></param>
-    /// <returns></returns>
-    bool Render(void);
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool Update(void);
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool Render(void);
 	/// <summary>
 	/// 撃つ
 	/// </summary>

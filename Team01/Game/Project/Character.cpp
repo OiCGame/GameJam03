@@ -6,19 +6,19 @@
 void CCharacter::Move(void) {
 	float threshold = 0.25f;
 	if (CInputManager::GetInstance().GetHorizontal() < -threshold) {
-		_move -= _speed;
+		m_Move -= m_Speed;
 	} // if
 	else if (threshold < CInputManager::GetInstance().GetHorizontal()) {
-		_move += _speed;
+		m_Move += m_Speed;
 	} // else if
 }
 
 bool CCharacter::Shot(std::array<CBullet, 256>& bullet_container) {
 	auto bullet_size = bullet_container.at(0).GetTextureSize();
 	auto offset = Mof::CVector2(2.0f, 10.0f);
-	auto size = Mof::CVector2(_texture->GetWidth(), _texture->GetHeight());
-	auto pos = Mof::CVector2(_position.x + size.x * 0.5f - bullet_size.x * 0.5f,
-		_position.y);
+	auto size = Mof::CVector2(m_pTexture->GetWidth(), m_pTexture->GetHeight());
+	auto pos = Mof::CVector2(m_Position.x + size.x * 0.5f - bullet_size.x * 0.5f,
+		m_Position.y);
 
 	for (auto& bullet : bullet_container) {
 		if (bullet.IsShow()) {
@@ -31,13 +31,13 @@ bool CCharacter::Shot(std::array<CBullet, 256>& bullet_container) {
 }
 
 CCharacter::CCharacter() :
-	_position(),
-	_move(),
-	_speed(2.0f, 0.0f),
-	_texture(nullptr),
-	_bullet_texture(nullptr),
-	_hp(4),
-	_show(true) {
+	m_Position(),
+	m_Move(),
+	m_Speed(2.0f, 0.0f),
+	m_pTexture(nullptr),
+	m_pBulletTexture(nullptr),
+	m_HP(4),
+	m_bShow(true) {
 
 }
 
@@ -45,39 +45,39 @@ CCharacter::~CCharacter() {
 }
 
 void CCharacter::SetTexture(Mof::CTexture* ptr) {
-	this->_texture = ptr;
+	this->m_pTexture = ptr;
 }
 
 void CCharacter::SetBulletTexture(Mof::CTexture* ptr) {
-	_bullet_texture = ptr;
+	m_pBulletTexture = ptr;
 }
 
 Mof::CVector2 CCharacter::GetPosition(void) const {
-	return this->_position;
+	return this->m_Position;
 }
 
 Mof::CRectangle CCharacter::GetCollisionRectangle(void) const {
 	auto rect = Mof::CRectangle(0.0f, 0.0f,
-		_texture->GetWidth(), _texture->GetHeight());
-	rect.Translation(_position);
+		m_pTexture->GetWidth(), m_pTexture->GetHeight());
+	rect.Translation(m_Position);
 	return rect;
 }
 
 bool CCharacter::IsShow(void) const {
-	return this->_show;
+	return this->m_bShow;
 }
 
 bool CCharacter::Initialize(Mof::CVector2 init_pos) {
-	_position = init_pos;
+	m_Position = init_pos;
 	return true;
 }
 
 bool CCharacter::Update(std::array<CBullet, 256>& bullet_container) {
-	if (!this->_show) {
+	if (!this->m_bShow) {
 		return false;
 	} // if
 
-	_move = Mof::CVector2();
+	m_Move = Mof::CVector2();
 
 	this->Move();
 	if (::g_pInput->IsKeyPush(MOFKEY_SPACE)) {
@@ -85,12 +85,12 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container) {
 	} // if
 
 
-	_position += _move;
+	m_Position += m_Move;
 	return true;
 }
 
 bool CCharacter::Render(void) {
-	if (!this->_show) {
+	if (!this->m_bShow) {
 		return false;
 	} // if
 
@@ -100,7 +100,7 @@ bool CCharacter::Render(void) {
 		MOF_ARGB(100, 100, 100, 100)
 	);
 #endif // _DEBUG
-	_texture->Render(_position.x, _position.y);
+	m_pTexture->Render(m_Position.x, m_Position.y);
 	return true;
 }
 
@@ -109,8 +109,8 @@ bool CCharacter::Release(void) {
 }
 
 void CCharacter::Damege(void) {
-	_hp--;
-	if (_hp <= 0) {
-		_show = false;
+	m_HP--;
+	if (m_HP <= 0) {
+		m_bShow = false;
 	} // if
 }

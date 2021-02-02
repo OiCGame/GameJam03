@@ -11,19 +11,19 @@
 class CCharacter {
 protected:
 	//! 位置
-	Mof::CVector2 _position;
+	Mof::CVector2 m_Position;
 	//! 移動
-	Mof::CVector2 _move;
+	Mof::CVector2 m_Move;
 	//! 移動
-	Mof::CVector2 _speed;
+	Mof::CVector2 m_Speed;
 	//! テクスチャ
-	Mof::CTexture* _texture;
+	Mof::CTexture* m_pTexture;
 	//! Bulletテクスチャ
-	Mof::CTexture* _bullet_texture;
+	Mof::CTexture* m_pBulletTexture;
 	//! HP
-	int _hp;
+	int m_HP;
 	//! 表示
-	bool _show;
+	bool m_bShow;
 	/// <summary>
 	/// 移動
 	/// </summary>
