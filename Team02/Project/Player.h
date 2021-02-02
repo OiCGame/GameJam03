@@ -47,4 +47,5 @@ public:
 	void		SetBullet(int bulletype) { BulletBuffer = bulletype; }
     CTexture*   GetBulletTexture(int bulletype) { return &BulletTexture[bulletype]; }
 	bool		CheckHitCollision(CCircle hitcollision) { return Collision.CollisionCircle(hitcollision); }
+	bool		IsBulletBuffer() { return BulletBuffer < Empty ? true : false; }
 };

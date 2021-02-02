@@ -54,21 +54,24 @@ void CPlayer::Update()
 		ShotBullet(BulletBuffer);
 
 	}
-	else if (g_pInput->IsKeyPull(MOFKEY_W))
+	if (BulletBuffer < Empty)
 	{
-		BulletRotate = Up;
-	}
-	else if (g_pInput->IsKeyPull(MOFKEY_D))
-	{
-		BulletRotate = Right;
-	}
-	else if (g_pInput->IsKeyPull(MOFKEY_S))
-	{
-		BulletRotate = Down;
-	}
-	else if (g_pInput->IsKeyPull(MOFKEY_A))
-	{
-		BulletRotate = Left;
+		if (g_pInput->IsKeyPull(MOFKEY_W))
+		{
+			BulletRotate = Up;
+		}
+		else if (g_pInput->IsKeyPull(MOFKEY_D))
+		{
+			BulletRotate = Right;
+		}
+		else if (g_pInput->IsKeyPull(MOFKEY_S))
+		{
+			BulletRotate = Down;
+		}
+		else if (g_pInput->IsKeyPull(MOFKEY_A))
+		{
+			BulletRotate = Left;
+		}
 	}
 
 	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD7))

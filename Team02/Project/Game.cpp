@@ -109,6 +109,7 @@ void CGame::Update(void)
     {
         Block[i].Update();
 
+		if (Player.IsBulletBuffer()) { continue; }
 		if (Player.CheckHitCollision(Block[i].GetCollisionCircle()))
 		{
 			Player.SetBullet(Block[i].GetBulletType());
