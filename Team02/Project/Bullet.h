@@ -23,5 +23,6 @@ public:
 	void	RenderDebug(int i);
 
 	bool	GetShow() { return IsShow; }
+	void	SetShow(bool isShow) { IsShow = isShow; }
 	int		GetBulletType() { return BulletType; }
 };
