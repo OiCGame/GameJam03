@@ -40,4 +40,7 @@ public:
     CCircle GetCollisionCircle() const;
 
     int GetBulletType() const;
+
+	//ŠÖ”Œã‚É‚Â‚¢‚Ä‚¢‚é const ‚ÌˆÓ–¡‚ğ—‰ğ‚µ‚Ä‚¢‚È‚¢‚Ì‚ÅA“K’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
+	void SetShow(bool isShow) { m_bShow = isShow; }
 };

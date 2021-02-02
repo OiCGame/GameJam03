@@ -102,12 +102,19 @@ void CGame::Update(void)
         }
     }
 
+
+	Player.Update();
+
     for (int i = 0; i < BLOCK_COUNT; i++)
     {
         Block[i].Update();
-    }
 
-	Player.Update();
+		if (Player.CheckHitCollision(Block[i].GetCollisionCircle()))
+		{
+			Player.SetBullet(Block[i].GetBulletType());
+			Block[i].SetShow(false);
+		}
+    }
 }
 
 // ********************************************************************************

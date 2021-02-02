@@ -14,7 +14,7 @@ void CBullet::Create(CTexture * texturePointer, float posx, float posy ,int type
 {
 	Texture = texturePointer;
 	Position = CVector2(posx, posy);
-	Collision = CCircle(posx , posy , (float)Texture->GetWidth() * 0.5);
+	Collision = CCircle(posx , posy , (float)Texture->GetWidth() * 0.4);
 	IsShow = true;
 	BulletType = type;
 	Rotate = rotate;
