@@ -99,7 +99,7 @@
       <Filter>ヘッダー ファイル\Utilities</Filter>
     </ClInclude>
     <ClCompile Include="Bullet.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ヘッダー ファイル</Filter>
     </ClCompile>
     <ClInclude Include="GameClear.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
