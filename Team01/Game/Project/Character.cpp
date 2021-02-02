@@ -108,7 +108,7 @@ bool CCharacter::Release(void) {
 	return true;
 }
 
-void CCharacter::Damege(void) {
+void CCharacter::Damage(void) {
 	m_HP--;
 	if (m_HP <= 0) {
 		m_bShow = false;

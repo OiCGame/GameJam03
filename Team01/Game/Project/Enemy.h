@@ -49,6 +49,7 @@ public:
 	void Initialize(Vector2 pos);
 	void SetTexture(Mof::CTexture* ptr);
 	void Update();
+	int CollitionBullet(CRectangle prec);
 	void Render();
 	void Release();
 

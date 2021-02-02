@@ -9,7 +9,7 @@ private:
 	float m_Radius;
 	float m_Speed;
 	float m_Dir;
-	bool m_bDrow;
+	bool m_bDraw;
 
 
 public:
@@ -18,8 +18,11 @@ public:
 
 	void Initialize(float dir);
 	void Generation(Vector2 pos);
+	int Collition(CRectangle prec);
 	void Update();
 	void Render();
 	void Release();
+
+	CRectangle GetRec() { return CRectangle(m_Pos.x - 10, m_Pos.y - 10, m_Pos.x + 10, m_Pos.y + 10); }
 };
 

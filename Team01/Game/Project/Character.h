@@ -91,5 +91,5 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	void Damege(void);
+	void Damage(void);
 };
