@@ -51,6 +51,7 @@ void CGame::Initialize(void)
 bool CGame::Load(void)
 {
 	Player.Load();
+
     return true;
 }
 

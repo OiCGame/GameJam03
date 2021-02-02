@@ -54,6 +54,9 @@ void CTitle::Initialize(void)
     m_SelectNo = 0;
 
     m_OptionWindow.Initialize(&m_SelectTexture);
+
+    // タイトルに戻ると1ステージから
+    GetData().StageNo = 0;
 }
 
 // ********************************************************************************
@@ -75,7 +78,6 @@ bool CTitle::Load(void)
         m_PlateTexture.Load("プレート5.png"),
         m_SelectTexture.Load("選択.png"),
         m_TitleTexture.Load("透明.png"),
-        m_BackTexture.Load("背景.png"),
     };
     CUtilities::SetCurrentDirectory("../../");
 
@@ -156,9 +158,6 @@ void CTitle::Update(void)
 // ********************************************************************************
 void CTitle::Render(void)
 {
-    // 背景の描画
-    m_BackTexture.Render(0, 0);
-
     if (m_OptionWindow.IsShow())
     {
         // オプション画面の描画
@@ -202,7 +201,6 @@ void CTitle::Release(void)
     m_PlateTexture.Release();
     m_SelectTexture.Release();
     m_TitleTexture.Release();
-    m_BackTexture.Release();
 
     m_OptionWindow.Save();
     m_OptionWindow.Release();

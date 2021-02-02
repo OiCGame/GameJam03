@@ -15,7 +15,6 @@ private:
     CTexture m_RetryTexture;      //! リトライ.png
     CTexture m_PlateTexture;      //! プレート2.png
     CTexture m_BackPlateTexture;  //! プレート.png
-    CTexture m_GameOverTexture;   //! 文字.png
     CTexture m_SelectTexture;     //! 選択.png
 
     CButton  m_btnRetry;          //! リトライボタン

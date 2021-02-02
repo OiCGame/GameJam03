@@ -42,13 +42,12 @@ void CGameOver::Initialize(void)
     const float h = g_pGraphics->GetTargetHeight();
 
     const float tw = (m_PlateTexture.GetWidth() + m_SelectTexture.GetWidth() * 1.1f);
-    const float x = (w - tw) * 0.5f + m_SelectTexture.GetWidth() * 1.1f;
-    const float y = h * 0.45f;
+    const float x = (w - tw) * 0.5f + m_SelectTexture.GetWidth() * 1.05f;
+    const float y = h * 0.37f;
     Vector2 pos(x, y);
-    const Vector2 scale(0.8f, 0.8f);
-    m_btnRetry.Initialize(pos, &m_PlateTexture, &m_RetryTexture, scale);
-    pos.y += m_PlateTexture.GetHeight() * 1.1f * scale.y;
-    m_btnGoToTitle.Initialize(pos, &m_PlateTexture, &m_GoToTitleTexture, scale);
+    m_btnRetry.Initialize(pos, &m_PlateTexture, &m_RetryTexture);
+    pos.y += m_PlateTexture.GetHeight() * 1.07f;
+    m_btnGoToTitle.Initialize(pos, &m_PlateTexture, &m_GoToTitleTexture);
 }
 
 // ********************************************************************************
@@ -68,7 +67,6 @@ bool CGameOver::Load(void)
         m_RetryTexture.Load("リトライ.png"),
         m_PlateTexture.Load("プレート2.png"),
         m_BackPlateTexture.Load("プレート.png"),
-        m_GameOverTexture.Load("文字.png"),
         m_SelectTexture.Load("選択.png"),
     };
     CUtilities::SetCurrentDirectory("../../");
@@ -128,20 +126,16 @@ void CGameOver::Render(void)
     const float w  = g_pGraphics->GetTargetWidth();
     const float h  = g_pGraphics->GetTargetHeight();
     CRectangle rect(0, 0, w, h);
-    CGraphicsUtilities::RenderFillRect(rect, MOF_COLOR_CWHITE);
 
     Vector2 size(m_BackPlateTexture.GetWidth(), m_BackPlateTexture.GetHeight());
-    const float sx = g_pGraphics->GetTargetWidth()  / size.x;
-    const float sy = g_pGraphics->GetTargetHeight() / size.y;
-    m_BackPlateTexture.RenderScale(0, 0, sx, sy);
+    const float sx = (g_pGraphics->GetTargetWidth()  - size.x) * 0.5f;
+    const float sy = (g_pGraphics->GetTargetHeight() - size.y) * 0.5f;
+    m_BackPlateTexture.Render(sx, sy);
 
-    m_GameOverTexture.Render((w - m_GameOverTexture.GetWidth()) * 0.5f, h * 0.2f);
-
-    const Vector2 scale(0.8f, 0.8f);
-    const float px = m_btnRetry.GetRect().Left - m_SelectTexture.GetWidth() * 1.1f;
+    const float px = m_btnRetry.GetRect().Left - m_SelectTexture.GetWidth() * 1.05f;
     const float py = m_btnRetry.GetRect().Top - 
         (m_btnRetry.GetRect().GetHeight() - m_SelectTexture.GetHeight()) * 0.5f +
-        m_SelectNo * m_PlateTexture.GetHeight() * 1.1f * scale.y;
+        m_SelectNo * m_PlateTexture.GetHeight() * 1.07f + m_PlateTexture.GetHeight() * 0.45f;
     m_SelectTexture.Render(px, py);
 
     m_btnRetry.Render();
@@ -161,6 +155,5 @@ void CGameOver::Release(void)
     m_RetryTexture    .Release();
     m_PlateTexture    .Release();
     m_BackPlateTexture.Release();
-    m_GameOverTexture .Release();
     m_SelectTexture   .Release();
 }

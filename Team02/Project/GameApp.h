@@ -21,7 +21,9 @@
 class CGameApp : public CSingleGameApplication {
 private:
 
-    MyApp m_SceneManager;
+    MyApp    m_SceneManager;
+
+    CTexture m_BackTexture;
 
 public:
 	/*************************************************************************//*!

@@ -14,7 +14,6 @@ private:
     CTexture m_PlateTexture;     //! プレート3.png
     CTexture m_BackPlateTexture; //! プレート4.png
     CTexture m_NextStageTexture; //! 次のステージへ.png
-    CTexture m_ClearTexture;     //! 文字.png
     CTexture m_SelectTexture;    //! 選択.png
     CTexture m_GoToTitleTexture; //! タイトルへ.png
 
