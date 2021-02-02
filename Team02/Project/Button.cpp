@@ -69,8 +69,8 @@ void CButton::Render(void)
     {
         if (m_pBtnTexture)
         {
-            float x = rect.Left + (rect.GetWidth()  - m_pFontTexture->GetWidth() ) * 0.5f;
-            float y = rect.Top  + (rect.GetHeight() - m_pFontTexture->GetHeight()) * 0.5f;
+            float x = rect.Left + (rect.GetWidth()  - m_pFontTexture->GetWidth()  * m_Scale.x) * 0.5f;
+            float y = rect.Top  + (rect.GetHeight() - m_pFontTexture->GetHeight() * m_Scale.y) * 0.5f;
             rect.SetPosition(Vector2(x, y));
             rect.SetWidth (m_pFontTexture->GetWidth()  * m_Scale.x);
             rect.SetHeight(m_pFontTexture->GetHeight() * m_Scale.y);

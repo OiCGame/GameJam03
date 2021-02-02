@@ -1,14 +1,14 @@
-#include "GameOver.h"
+#include "GameClear.h"
 
 // ********************************************************************************
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="data">シーン共通データ</param>
-/// <created>いのうえ,2021/02/01</created>
-/// <changed>いのうえ,2021/02/01</changed>
+/// <created>いのうえ,2021/02/02</created>
+/// <changed>いのうえ,2021/02/02</changed>
 // ********************************************************************************
-CGameOver::CGameOver(const InitData & data)
+CGameClear::CGameClear(const InitData & data)
     : IScene(data)
 {
     Load();
@@ -19,10 +19,10 @@ CGameOver::CGameOver(const InitData & data)
 /// <summary>
 /// デストラクタ
 /// </summary>
-/// <created>いのうえ,2021/02/01</created>
-/// <changed>いのうえ,2021/02/01</changed>
+/// <created>いのうえ,2021/02/02</created>
+/// <changed>いのうえ,2021/02/02</changed>
 // ********************************************************************************
-CGameOver::~CGameOver(void)
+CGameClear::~CGameClear(void)
 {
     Release();
 }
@@ -31,10 +31,10 @@ CGameOver::~CGameOver(void)
 /// <summary>
 /// 初期化
 /// </summary>
-/// <created>いのうえ,2021/02/01</created>
-/// <changed>いのうえ,2021/02/01</changed>
+/// <created>いのうえ,2021/02/02</created>
+/// <changed>いのうえ,2021/02/02</changed>
 // ********************************************************************************
-void CGameOver::Initialize(void)
+void CGameClear::Initialize(void)
 {
     m_SelectNo = 0;
 
@@ -46,7 +46,7 @@ void CGameOver::Initialize(void)
     const float y = h * 0.45f;
     Vector2 pos(x, y);
     const Vector2 scale(0.8f, 0.8f);
-    m_btnRetry.Initialize(pos, &m_PlateTexture, &m_RetryTexture, scale);
+    m_btnNextStage.Initialize(pos, &m_PlateTexture, &m_NextStageTexture, scale);
     pos.y += m_PlateTexture.GetHeight() * 1.1f * scale.y;
     m_btnGoToTitle.Initialize(pos, &m_PlateTexture, &m_GoToTitleTexture, scale);
 }
@@ -56,20 +56,20 @@ void CGameOver::Initialize(void)
 /// 読み込み
 /// </summary>
 /// <returns>true : 成功, false : 失敗</returns>
-/// <created>いのうえ,2021/02/01</created>
-/// <changed>いのうえ,2021/02/01</changed>
+/// <created>いのうえ,2021/02/02</created>
+/// <changed>いのうえ,2021/02/02</changed>
 // ********************************************************************************
-bool CGameOver::Load(void)
+bool CGameClear::Load(void)
 {
-    CUtilities::SetCurrentDirectory("UI/ゲームオーバー");
+    CUtilities::SetCurrentDirectory("UI/ゲームクリア");
     MofBool b[] = 
     {
-        m_GoToTitleTexture.Load("タイトルへ.png"),
-        m_RetryTexture.Load("リトライ.png"),
-        m_PlateTexture.Load("プレート2.png"),
-        m_BackPlateTexture.Load("プレート.png"),
-        m_GameOverTexture.Load("文字.png"),
-        m_SelectTexture.Load("選択.png"),
+         m_PlateTexture.Load("プレート3.png"),
+         m_BackPlateTexture.Load("プレート4.png"),
+         m_NextStageTexture.Load("次のステージへ.png"),
+         m_ClearTexture.Load("文字.png"),
+         m_SelectTexture.Load("選択.png"),
+         m_GoToTitleTexture.Load("タイトルへ.png"),
     };
     CUtilities::SetCurrentDirectory("../../");
 
@@ -80,6 +80,7 @@ bool CGameOver::Load(void)
             return false;
         }
     }
+   
     return true;
 }
 
@@ -87,10 +88,10 @@ bool CGameOver::Load(void)
 /// <summary>
 /// 更新
 /// </summary>
-/// <created>いのうえ,2021/02/01</created>
-/// <changed>いのうえ,2021/02/01</changed>
+/// <created>いのうえ,2021/02/02</created>
+/// <changed>いのうえ,2021/02/02</changed>
 // ********************************************************************************
-void CGameOver::Update(void)
+void CGameClear::Update(void)
 {
     // 選択やつ移動処理
     if (g_pInput->IsKeyPush(MOFKEY_UP))
@@ -120,31 +121,31 @@ void CGameOver::Update(void)
 /// <summary>
 /// 描画
 /// </summary>
-/// <created>いのうえ,2021/02/01</created>
-/// <changed>いのうえ,2021/02/01</changed>
+/// <created>いのうえ,2021/02/02</created>
+/// <changed>いのうえ,2021/02/02</changed>
 // ********************************************************************************
-void CGameOver::Render(void)
+void CGameClear::Render(void)
 {
-    const float w  = g_pGraphics->GetTargetWidth();
-    const float h  = g_pGraphics->GetTargetHeight();
+    const float w = g_pGraphics->GetTargetWidth();
+    const float h = g_pGraphics->GetTargetHeight();
     CRectangle rect(0, 0, w, h);
     CGraphicsUtilities::RenderFillRect(rect, MOF_COLOR_CWHITE);
 
     Vector2 size(m_BackPlateTexture.GetWidth(), m_BackPlateTexture.GetHeight());
-    const float sx = g_pGraphics->GetTargetWidth()  / size.x;
+    const float sx = g_pGraphics->GetTargetWidth() / size.x;
     const float sy = g_pGraphics->GetTargetHeight() / size.y;
     m_BackPlateTexture.RenderScale(0, 0, sx, sy);
 
-    m_GameOverTexture.Render((w - m_GameOverTexture.GetWidth()) * 0.5f, h * 0.2f);
+    m_ClearTexture.Render((w - m_ClearTexture.GetWidth()) * 0.5f, h * 0.2f);
 
     const Vector2 scale(0.8f, 0.8f);
-    const float px = m_btnRetry.GetRect().Left - m_SelectTexture.GetWidth() * 1.1f;
-    const float py = m_btnRetry.GetRect().Top - 
-        (m_btnRetry.GetRect().GetHeight() - m_SelectTexture.GetHeight()) * 0.5f +
+    const float px = m_btnNextStage.GetRect().Left - m_SelectTexture.GetWidth() * 1.1f;
+    const float py = m_btnNextStage.GetRect().Top -
+        (m_btnNextStage.GetRect().GetHeight() - m_SelectTexture.GetHeight()) * 0.5f +
         m_SelectNo * m_PlateTexture.GetHeight() * 1.1f * scale.y;
     m_SelectTexture.Render(px, py);
 
-    m_btnRetry.Render();
+    m_btnNextStage.Render();
     m_btnGoToTitle.Render();
 }
 
@@ -152,15 +153,15 @@ void CGameOver::Render(void)
 /// <summary>
 /// 解放
 /// </summary>
-/// <created>いのうえ,2021/02/01</created>
-/// <changed>いのうえ,2021/02/01</changed>
+/// <created>いのうえ,2021/02/02</created>
+/// <changed>いのうえ,2021/02/02</changed>
 // ********************************************************************************
-void CGameOver::Release(void)
+void CGameClear::Release(void)
 {
-    m_GoToTitleTexture.Release();
-    m_RetryTexture    .Release();
     m_PlateTexture    .Release();
     m_BackPlateTexture.Release();
-    m_GameOverTexture .Release();
+    m_NextStageTexture.Release();
+    m_ClearTexture    .Release();
     m_SelectTexture   .Release();
+    m_GoToTitleTexture.Release();
 }

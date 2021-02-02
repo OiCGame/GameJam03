@@ -13,6 +13,7 @@
 //SCENE
 #include    "Title.h"
 #include    "Game.h"
+#include    "GameClear.h"
 #include    "GameOver.h"
 
 /*************************************************************************//*!
@@ -30,6 +31,7 @@ MofBool CGameApp::Initialize(void) {
     m_SceneManager
         .Add<CTitle>(SceneName::Title)
         .Add<CGame>(SceneName::Game)
+        .Add<CGameClear>(SceneName::GameClear)
         .Add<CGameOver>(SceneName::GameOver)
         .SetFadeColor(MOF_COLOR_WHITE);
 
