@@ -6,6 +6,7 @@ CBullet::CBullet() :
 	m_Move(0.0f, -5.0f),
 	m_pTexture(),
 	m_bShow(false),
+	m_bUnDisappear(true),
 	m_TeamType() {
 }
 
@@ -17,7 +18,8 @@ void CBullet::SetTexture(Mof::CTexture* ptr) {
 }
 
 void CBullet::Hide(void) {
-	this->m_bShow = false;
+	if (!m_bUnDisappear)
+		this->m_bShow = false;
 }
 
 Mof::CVector2 CBullet::GetTextureSize(void) const {

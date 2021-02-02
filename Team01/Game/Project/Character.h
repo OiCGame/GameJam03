@@ -24,6 +24,8 @@ protected:
 	int m_HP;
 	//! •\Ž¦
 	bool m_bShow;
+
+	int m_BulletNo;
 	/// <summary>
 	/// ˆÚ“®
 	/// </summary>

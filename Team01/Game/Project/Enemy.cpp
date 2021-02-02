@@ -4,6 +4,7 @@ CEnemy::CEnemy() :
 	m_HP(10),
 	m_Speed(0.0f),
 	m_Dir(90.0f),
+	m_FastBulletNo(-1),
 	m_bDrow(true){
 }
 
@@ -38,7 +39,7 @@ void CEnemy::Initialize(Vector2 pos) {
 	int dirpat = 360 / m_BulletColumn;
 	float dirSplit = rand() % dirpat;
 
-	float dir = 90 - (m_BulletColumn - 1) * dirSplit / 2;
+	float dir = 270 - (m_BulletColumn - 1) * dirSplit / 2;
 
 	for (int i = 0; i < m_BulletCount; i++) {
 		int dp = i % m_BulletColumn;

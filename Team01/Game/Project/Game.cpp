@@ -23,15 +23,22 @@ void CGame::Collision(void) {
 	} // if
 
 	for (auto& enemy : _enemies) {
-		for (auto& bullet : m_PlayerBullets) {
-			if (!enemy.IsShow() || !bullet.IsShow()) {
+		for (int i = 0; i < m_PlayerBullets.size(); i++) {
+			if (!enemy.IsShow() || !m_PlayerBullets[i].IsShow()) {
 				continue;
 			} // if
-			if (enemy.GetCollisionRectangle().CollisionRect(bullet.GetCollisionRectangle())) {
+			int no = enemy.GetFastBulletNo();
+			if (no == m_PlayerBullets[i].GetNo())
+			{
+				continue;
+			}
+			if (enemy.GetCollisionRectangle().CollisionRect(m_PlayerBullets[i].GetCollisionRectangle())) {
 				/*
 				*/
 				enemy.Damage();
-				bullet.Hide();
+				m_PlayerBullets[i].Hide();
+
+				enemy.SetFastBulletNo(i);
 
 				auto pos = enemy.GetPosition();
 				auto effect = std::make_shared<CEffect>();

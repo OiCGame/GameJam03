@@ -20,11 +20,13 @@ bool CCharacter::Shot(std::array<CBullet, 256>& bullet_container) {
 	auto pos = Mof::CVector2(m_Position.x + size.x * 0.5f - bullet_size.x * 0.5f,
 		m_Position.y);
 
-	for (auto& bullet : bullet_container) {
-		if (bullet.IsShow()) {
+	for (int i = 0; i < bullet_container.size(); i++) {
+		if (bullet_container[i].IsShow()) {
 			continue;
 		} // if
-		bullet.Shot(pos + offset, CBullet::TeamType::Player);
+		bullet_container[i].Shot(pos + offset, CBullet::TeamType::Player);
+		bullet_container[i].SetNo(m_BulletNo);
+		m_BulletNo++;
 		return true;
 	} // for
 	return false;
@@ -37,6 +39,7 @@ CCharacter::CCharacter() :
 	m_pTexture(nullptr),
 	m_pBulletTexture(nullptr),
 	m_HP(4),
+	m_BulletNo(0),
 	m_bShow(true) {
 
 }
@@ -60,6 +63,7 @@ Mof::CRectangle CCharacter::GetCollisionRectangle(void) const {
 	auto rect = Mof::CRectangle(0.0f, 0.0f,
 		m_pTexture->GetWidth(), m_pTexture->GetHeight());
 	rect.Translation(m_Position);
+	rect.Expansion(-25.0f,-25.0f);
 	return rect;
 }
 
@@ -94,13 +98,13 @@ bool CCharacter::Render(void) {
 		return false;
 	} // if
 
+	m_pTexture->Render(m_Position.x, m_Position.y);
 #ifdef _DEBUG
-	::CGraphicsUtilities::RenderRect(
+	::CGraphicsUtilities::RenderFillRect(
 		this->GetCollisionRectangle(),
 		MOF_ARGB(100, 100, 100, 100)
 	);
 #endif // _DEBUG
-	m_pTexture->Render(m_Position.x, m_Position.y);
 	return true;
 }
 

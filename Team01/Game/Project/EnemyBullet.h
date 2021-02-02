@@ -11,6 +11,8 @@ private:
 	float m_Dir;
 	bool m_bDraw;
 
+	int		m_ReflectionCount;				// Å‘å”½Ë‰ñ”
+	int		m_ReflectionNo;				// Œ»İ‚Ìc‚è”½Ë‰ñ”
 
 public:
 	CEnemyBullet();

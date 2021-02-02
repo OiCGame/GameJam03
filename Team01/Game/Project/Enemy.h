@@ -16,6 +16,7 @@ private:
 	float m_Speed;
 	CTexture* m_pTexture;
 	bool m_bDrow;
+	int m_FastBulletNo;
 
 	/// <summary>
 	/// ˆÚ“®
@@ -54,5 +55,7 @@ public:
 	void Release();
 
 	void Damage();
+	int GetFastBulletNo() { return m_FastBulletNo; }
+	void SetFastBulletNo(int no) { m_FastBulletNo = no; }
 	Mof::CRectangle GetCollisionRectangle(void) const;
 };
