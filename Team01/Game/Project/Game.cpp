@@ -9,7 +9,8 @@ void CGame::Collision(void) {
         for (auto& enemy : _enemies) {
             if (player_rect.CollisionRect(enemy.GetCollisionRectangle())) {
                 _player.Damege();
-                enemy.Damege();
+
+				//enemy.Damege();
 
                 auto pos = _player.GetPosition();
                 auto effect = std::make_shared<CEffect>();
@@ -27,7 +28,9 @@ void CGame::Collision(void) {
                 continue;
             } // if
             if (enemy.GetCollisionRectangle().CollisionRect(bullet.GetCollisionRectangle())) {
-                enemy.Damege();
+				/*
+				enemy.Damege();
+				*/
                 bullet.Hide();
 
                 auto pos = enemy.GetPosition();
@@ -35,7 +38,7 @@ void CGame::Collision(void) {
                 effect->Load(&_effect_texture, _effect_motion_data);
                 effect->Start(pos);
                 _effect_container.push_back(effect);
-            } // if
+			} // if
         } // for
     } // for
 }
@@ -43,6 +46,7 @@ void CGame::Collision(void) {
 CGame::CGame() :
     _player_texture(),
     _enemy_texture(),
+    _stage_texture(),
     _bullet_texture(),
     _player(),
     _enemies(),
@@ -63,7 +67,8 @@ bool CGame::Initialize(void) {
     _enemy_texture.Load("enemy/Enemy01.png");
     _bullet_texture.Load("bullet/01Bullets.png");
     _effect_texture.Load("effect/effect00.png");
-    _effect_motion_data.Load("motion/explode.json");
+	_stage_texture.Load("pipo-bg001.jpg");
+	_effect_motion_data.Load("motion/explode.json");
 
     _player.Initialize(Mof::CVector2(512.0f, 600.0f));
     _player.SetTexture(&_player_texture);
@@ -106,7 +111,8 @@ bool CGame::Update(void) {
     } // if
     for (auto& enemy : _enemies) {
         if (enemy.IsShow()) {
-            enemy.Update(_bullet_container);
+            //enemy.Update(_bullet_container);
+            enemy.Update();
         } // if
     } // for
 
@@ -130,6 +136,8 @@ bool CGame::Update(void) {
 
 
 bool CGame::Render(void) {
+	_stage_texture.Render(0.0f, 0.0f);
+
     if (_player.IsShow()) {
         _player.Render();
     } // if
@@ -160,10 +168,15 @@ bool CGame::Render(void) {
 }
 
 bool CGame::Release(void) {
+	for (auto &e: _enemies) {
+		e.Release();
+	} // for
+
     _player_texture.Release();
     _enemy_texture.Release();
     _bullet_texture.Release();
     _effect_texture.Release();
+	_stage_texture.Release();
     return true;
 
 }

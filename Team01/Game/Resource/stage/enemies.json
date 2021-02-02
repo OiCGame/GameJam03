@@ -3,21 +3,21 @@
     {
       "id": "enemyID",
       "initPosX": 0,
-      "initPosY": 0,
+      "initPosY": 200,
       "movement": "movementID",
       "atack": "random"
     },
     {
       "id": "enemyID",
       "initPosX": 250,
-      "initPosY": 0,
+      "initPosY": 200,
       "movement": "movementID",
       "atack": "random"
     },
     {
       "id": "enemyID",
       "initPosX": 500,
-      "initPosY": 0,
+      "initPosY": 200,
       "movement": "movementID",
       "atack": "random"
     }

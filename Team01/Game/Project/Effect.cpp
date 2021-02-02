@@ -2,52 +2,53 @@
 
 
 CEffect::CEffect() :
-    _texture(),
-    _motion(),
-    _show(false) {
+	m_pTexture(),
+    m_Motion(),
+	m_bShow(false) {
 }
 
 CEffect::~CEffect() {
+	m_Motion.Release();
 }
 
 Mof::CRectangle CEffect::GetCollisionRectangle(void) const {
-    auto rect = _motion.GetSrcRect();
-    rect.Translation(_position);
+    auto rect = m_Motion.GetSrcRect();
+    rect.Translation(m_Position);
     return rect;
 }
 
 bool CEffect::IsShow(void) const {
-    return this->_show;
+    return this->m_bShow;
 }
 
 bool CEffect::Load(Mof::CTexture* texture, SpriteMotionData& anim) {
-    _texture = texture;    
-    _motion.Create(anim.anims.data(),
+    m_pTexture = texture;    
+    m_Motion.Create(anim.anims.data(),
                    anim.anims.size());
     return true;
 }
 
 bool CEffect::Update(void) {
-    if (_motion.IsEndMotion()) {
-        _show = false;
+    if (m_Motion.IsEndMotion()) {
+        m_bShow = false;
     } // if
 
-    _motion.AddTimer(::CUtilities::GetFrameSecond());
+    m_Motion.AddTimer(::CUtilities::GetFrameSecond());
     return true;
 }
 
 bool CEffect::Render(void) {
-    if (!_texture) {
+    if (!m_pTexture) {
         return false;
     } // if
 
-    auto pos = _position;
-    _texture->Render(pos.x, pos.y, _motion.GetSrcRect());
+    auto pos = m_Position;
+    m_pTexture->Render(pos.x, pos.y, m_Motion.GetSrcRect());
     return true;
 }
 
 bool CEffect::Start(Mof::CVector2 pos) {
-    _show = true;
-    _position = pos;
+    m_bShow = true;
+	m_Position = pos;
     return true;
 }

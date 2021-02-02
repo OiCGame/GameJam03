@@ -19,8 +19,8 @@ private:
 	Mof::CTexture _enemy_texture;
 	Mof::CTexture _bullet_texture;
 	Mof::CTexture _effect_texture;
+	Mof::CTexture _stage_texture;
 	SpriteMotionData _effect_motion_data;
-
 
 	CCharacter _player;
 	std::vector<CEnemy> _enemies;

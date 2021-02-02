@@ -138,13 +138,13 @@ struct SpriteMotionData {
 class CEffect {
 private:
     //! テクスチャ
-    Mof::CTexture* _texture;
+    Mof::CTexture* m_pTexture;
     //! モーション
-    Mof::CSpriteMotionController _motion;
+    Mof::CSpriteMotionController m_Motion;
     //! 表示
-    bool _show;
+    bool m_bShow;
     //! 位置
-    Mof::CVector2 _position;
+    Mof::CVector2 m_Position;
 public:
     /// <summary>
     /// コンストラクタ

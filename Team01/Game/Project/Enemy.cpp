@@ -4,23 +4,23 @@ CEnemy::CEnemy() :
 	m_HP(10),
 	m_Speed(0.0f),
 	m_Dir(90.0f),
-	m_bDrow(true),
-	_move_controller(new EnemyMoveEscape()) {
+	m_bDrow(true){
 }
 
 CEnemy::~CEnemy() {
-
 }
 
 void CEnemy::Move(void) {
-	//_speed = _move_controller->ConputeSpeedValue(this);
-
 	m_Move.y = sin(MOF_ToRadian(m_Dir)) * m_Speed;
 	m_Move.x = cos(MOF_ToRadian(m_Dir)) * m_Speed;
 
 	m_Pos += m_Move;
 
 	m_Dir += 0.0f;
+}
+
+Mof::CVector2 CEnemy::GetPosition(void) const {
+	return this->m_Pos;
 }
 
 void CEnemy::Initialize(Vector2 pos) {
@@ -40,8 +40,7 @@ void CEnemy::Initialize(Vector2 pos) {
 
 	float dir = 90 - (m_BulletColumn - 1) * dirSplit / 2;
 
-	for (int i = 0; i < m_BulletCount; i++)
-	{
+	for (int i = 0; i < m_BulletCount; i++) {
 		int dp = i % m_BulletColumn;
 		m_Bullet[i].Initialize(dir + dp * dirSplit);
 	}
@@ -53,51 +52,50 @@ void CEnemy::Initialize(Vector2 pos) {
 }
 
 void CEnemy::SetTexture(Mof::CTexture* ptr) {
-	m_Texture = ptr;
+	m_pTexture = ptr;
 }
 
 void CEnemy::Update() {
-	for (int i = 0; i < m_BulletNo; i++)
-	{
+	for (int i = 0; i < m_BulletNo; i++) {
 		m_Bullet[i].Update();
 	}
 
 	if (m_BulletNo >= m_BulletCount) { return; }
-	if (m_BulletSetRemGap > 0)
-	{
+	if (m_BulletSetRemGap > 0) {
 		m_BulletSetRemGap--;
 		return;
 	}
-	if (m_BulletRemGap > 0)
-	{
+	if (m_BulletRemGap > 0) {
 		m_BulletRemGap--;
 		return;
 	}
-	for (int i = 0; i < m_BulletColumn; i++)
-	{
+	for (int i = 0; i < m_BulletColumn; i++) {
 		m_Bullet[m_BulletNo].Generation(m_Pos);
 		m_BulletNo++;
 	}
 	m_BulletRemGap = m_BulletGap;
 	m_BulletSetNo++;
-	if (m_BulletSetNo >= m_BulletAmount)
-	{
+	if (m_BulletSetNo >= m_BulletAmount) {
 		m_BulletSetNo = 0;
 		m_BulletSetRemGap = m_BulletSetGap;
 	}
 }
 
 void CEnemy::Render() {
-	m_Texture->Render(m_Pos.x - m_Texture->GetWidth() / 2, m_Pos.y - m_Texture->GetHeight() / 2);
-	for (int i = 0; i < m_BulletCount; i++)
-	{
+#ifdef _DEBUG
+	::CGraphicsUtilities::RenderRect(
+		this->GetCollisionRectangle(),
+		MOF_ARGB(100, 100, 100, 100)
+	);
+#endif // _DEBUG
+	m_pTexture->Render(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y - m_pTexture->GetHeight() / 2);
+	for (int i = 0; i < m_BulletCount; i++) {
 		m_Bullet[i].Render();
 	}
 }
 
 void CEnemy::Release() {
-	if (m_Bullet)
-	{
+	if (m_Bullet) {
 		delete[] m_Bullet;
 		m_Bullet = NULL;
 	}
@@ -105,7 +103,7 @@ void CEnemy::Release() {
 
 Mof::CRectangle CEnemy::GetCollisionRectangle(void) const {
 	auto rect = Mof::CRectangle(0.0f, 0.0f,
-		m_Texture->GetWidth(), m_Texture->GetHeight());
+		m_pTexture->GetWidth(), m_pTexture->GetHeight());
 	rect.Translation(m_Pos);
 	return rect;
 }

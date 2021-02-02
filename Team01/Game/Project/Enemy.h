@@ -3,11 +3,8 @@
 
 #include "Character.h"
 
-#include "EnemyMove.h"
-
 #include "EnemyBullet.h"
 
-#include "EnemyMoveEscape.h"
 
 class CEnemy{
 	using super = CCharacter;
@@ -17,11 +14,9 @@ private:
 	Vector2 m_Move;
 	float m_Dir;
 	float m_Speed;
-	CTexture* m_Texture;
+	CTexture* m_pTexture;
 	bool m_bDrow;
 
-	//! ˆÚ“®‹@”\
-	EnemyMove* _move_controller;
 	/// <summary>
 	/// ˆÚ“®
 	/// </summary>
@@ -48,6 +43,7 @@ public:
 	CEnemy();
 	~CEnemy();
 
+	Mof::CVector2 GetPosition(void) const;
 	bool IsShow() { return m_bDrow; }
 
 	void Initialize(Vector2 pos);
