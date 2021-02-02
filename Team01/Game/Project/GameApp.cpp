@@ -26,7 +26,8 @@ MofBool CGameApp::Initialize(void) {
 	::CUtilities::SetCurrentDirectory("Resource");
 
 	
-//	g_Game.Initialize();
+	g_Game.Initialize();
+	/*
 	g_PlayerTexture.Load("player/Plane1Up.png");
 	g_EnemyTexture.Load("enemy/Enemy01.png");
 	g_BulletTexture.Load("bullet/01Bullets.png");
@@ -39,7 +40,7 @@ MofBool CGameApp::Initialize(void) {
 
 	for (auto& bullet : g_BulletContainer) {
 		bullet.SetTexture(&g_BulletTexture);
-	} // for
+	} // for*/
 	return TRUE;
 }
 
@@ -47,8 +48,9 @@ MofBool CGameApp::Update(void) {
 	g_pInput->RefreshKey();
 	::CInputManager::GetInstance().Refresh();
 
-	//g_Game.Update();
-	if (g_Player.IsShow()) {
+	g_Game.Update();
+
+	/*if (g_Player.IsShow()) {
 		g_Player.Update(g_BulletContainer);
 	} // if
 	for (int i = 0; i < 3; i++) {
@@ -74,7 +76,7 @@ MofBool CGameApp::Update(void) {
 				bullet.Hide();
 			} // if
 		}
-	} // for
+	} // for*/
 	return TRUE;
 }
 
@@ -84,9 +86,9 @@ MofBool CGameApp::Render(void) {
 
 	g_pGraphics->ClearTarget(0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0);
 
-	//g_Game.Render();
+	g_Game.Render();
 
-	if (g_Player.IsShow()) {
+	/*if (g_Player.IsShow()) {
 		g_Player.Render();
 	} // if
 	for (int i = 0; i < 3; i++) {
@@ -99,7 +101,7 @@ MofBool CGameApp::Render(void) {
 			continue;
 		} // if
 		bullet.Render();
-	} // for
+	} // for*/
 	g_pGraphics->RenderEnd();
 	return TRUE;
 }
@@ -112,5 +114,6 @@ MofBool CGameApp::Release(void) {
 	g_PlayerTexture.Release();
 	g_EnemyTexture.Release();
 	g_BulletTexture.Release();
+	g_Game.Release();
 	return TRUE;
 }

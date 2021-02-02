@@ -20,6 +20,9 @@ private:
 	bool m_bShow;
 	//! 所属
 	TeamType m_TeamType;
+
+	int m_BulletNo;
+	bool m_bUnDisappear;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -69,4 +72,7 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	bool Shot(Mof::CVector2 init_pos, TeamType type);
+
+	void SetNo(int no) { m_BulletNo = no; }
+	int GetNo() { return m_BulletNo; }
 };

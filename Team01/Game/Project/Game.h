@@ -24,7 +24,7 @@ private:
 
 	CCharacter _player;
 	std::vector<CEnemy> _enemies;
-	std::array<CBullet, 256>_bullet_container;
+	std::array<CBullet, 256>m_PlayerBullets;
 	std::vector<std::shared_ptr<CEffect>>_effect_container;
 	/// <summary>
 	/// •`‰æ

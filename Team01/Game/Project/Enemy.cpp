@@ -4,6 +4,7 @@ CEnemy::CEnemy() :
 	m_HP(10),
 	m_Speed(0.0f),
 	m_Dir(90.0f),
+	m_FastBulletNo(-1),
 	m_bDrow(true){
 }
 
@@ -38,7 +39,7 @@ void CEnemy::Initialize(Vector2 pos) {
 	int dirpat = 360 / m_BulletColumn;
 	float dirSplit = rand() % dirpat;
 
-	float dir = 90 - (m_BulletColumn - 1) * dirSplit / 2;
+	float dir = 270 - (m_BulletColumn - 1) * dirSplit / 2;
 
 	for (int i = 0; i < m_BulletCount; i++) {
 		int dp = i % m_BulletColumn;
@@ -81,6 +82,15 @@ void CEnemy::Update() {
 	}
 }
 
+int CEnemy::CollitionBullet(CRectangle prec) {
+	int col = 0;
+	for (int i = 0; i < m_BulletCount; i++)
+	{
+		col += m_Bullet[i].Collition(prec);
+	}
+	return col;
+}
+
 void CEnemy::Render() {
 #ifdef _DEBUG
 	::CGraphicsUtilities::RenderRect(
@@ -104,7 +114,9 @@ void CEnemy::Release() {
 Mof::CRectangle CEnemy::GetCollisionRectangle(void) const {
 	auto rect = Mof::CRectangle(0.0f, 0.0f,
 		m_pTexture->GetWidth(), m_pTexture->GetHeight());
-	rect.Translation(m_Pos);
+	auto size = Vector2(m_pTexture->GetWidth() * 0.5f, m_pTexture->GetHeight() * 0.5f);
+	auto pos = m_Pos;
+	rect.Translation(m_Pos - size);
 	return rect;
 }
 
