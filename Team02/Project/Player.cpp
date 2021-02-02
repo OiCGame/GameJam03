@@ -26,6 +26,7 @@ void CPlayer::Initialize()
 	CollisionPosCorrection = CVector2(Texture.GetWidth() * 0.125f, Texture.GetHeight() * 0.125f);
 	Collision = CCircle(position + CollisionPosCorrection, CollisionRadius);
 	BulletBuffer = Empty;
+	BulletRotate = Up;
 }
 
 void CPlayer::Update()
@@ -33,7 +34,10 @@ void CPlayer::Update()
 	if (g_pInput->IsKeyHold(MOFKEY_LEFT))
 	{
 		position.x -= MOVESPEED;
-		if (position.x <= 0) { position.x = 0; }
+		if (position.x <= 0) 
+		{ 
+			position.x = 0; 
+		}
 	}
 	else if (g_pInput->IsKeyHold(MOFKEY_RIGHT))
 	{
@@ -49,6 +53,22 @@ void CPlayer::Update()
 		
 		ShotBullet(BulletBuffer);
 
+	}
+	else if (g_pInput->IsKeyPull(MOFKEY_W))
+	{
+		BulletRotate = Up;
+	}
+	else if (g_pInput->IsKeyPull(MOFKEY_D))
+	{
+		BulletRotate = Right;
+	}
+	else if (g_pInput->IsKeyPull(MOFKEY_S))
+	{
+		BulletRotate = Down;
+	}
+	else if (g_pInput->IsKeyPull(MOFKEY_A))
+	{
+		BulletRotate = Left;
 	}
 
 	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD7))
@@ -75,7 +95,6 @@ void CPlayer::Update()
 			}
 			Bullets.Delete(i);
 		}
-
 	}
 
 	Collision = CCircle(position + CollisionPosCorrection, CollisionRadius);
@@ -85,11 +104,12 @@ void CPlayer::ShotBullet(int bullettype)
 {
 	CBullet A;
 	A.Create(&BulletTexture[bullettype],
-		position.x - (BulletTexture[bullettype].GetWidth() * 0.5f) + (Texture.GetWidth() * 0.125f),
-		position.y - BulletTexture[bullettype].GetHeight());
+		position.x + (Texture.GetWidth() * 0.125), 
+		position.y - BulletTexture[bullettype].GetHeight() * 0.5, bullettype, BulletRotate);
 	Bullets.Add(A);
 
 	BulletBuffer = Empty;
+	BulletRotate = Up;
 }
 
 
@@ -106,9 +126,12 @@ void CPlayer::Render()
 
 void CPlayer::RenderDebug()
 {
-	CGraphicsUtilities::RenderString(0, 100, "プレイヤ座標　　X %1f : Y %2f", position.x, position.y);
-	CGraphicsUtilities::RenderString(0, 150, "保持弾種：%d", BulletBuffer);
-	CGraphicsUtilities::RenderString(0, 200, "現在存在する弾数：%d", Bullets.GetArrayCount());
+	CGraphicsUtilities::RenderString(0, 100, MOF_COLOR_GREEN, "プレイヤ座標　　X %1f : Y %2f", position.x, position.y);
+	CGraphicsUtilities::RenderString(0, 150, MOF_COLOR_GREEN, "保持弾種：%s",
+		BulletBuffer == Triangle ? "三角" : BulletBuffer == Square ? "四角" : "空");
+	CGraphicsUtilities::RenderString(0, 200, MOF_COLOR_GREEN,"回転情報：%s",
+		BulletRotate == Up ? "上" : BulletRotate == Right ? "右" : BulletRotate == Down ? "下" : "左");
+	CGraphicsUtilities::RenderString(0, 250, MOF_COLOR_GREEN,"現在存在する弾数：%d", Bullets.GetArrayCount());
 
 	for (int i = 0; i < Bullets.GetArrayCount(); i++)
 	{
