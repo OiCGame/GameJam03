@@ -19,7 +19,7 @@ void CBullet::Create(CTexture * texturePointer, float posx, float posy)
 
 void CBullet::Update()
 {
-	if (Position.y >  -10 )
+	if (Position.y >  - (int)Texture->GetHeight())
 	{
 		Position.y -= BULLET_SPEED;
 	}
@@ -33,4 +33,9 @@ void CBullet::Update()
 void CBullet::Render()
 {
 	Texture->Render(Position.x,Position.y);
+}
+
+void CBullet::RenderDebug(int i)
+{
+	CGraphicsUtilities::RenderString(0,250 + (50 * i),"íeç¿ïW X %1f : Y  %2f" , Position.x , Position.y);
 }

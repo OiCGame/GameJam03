@@ -60,9 +60,22 @@ void CPlayer::Update()
 		BulletBuffer = Square;
 	}
 
-	for (int i = 0; i < Bullets.GetArrayCount(); i++)
+	if (Bullets.GetArrayCount() >= 1)
 	{
-		Bullets[i].Update();
+		for (int i = 0; i < Bullets.GetArrayCount(); i++)
+		{
+			Bullets[i].Update();
+		}
+
+		for (int i = Bullets.GetArrayCount() - 1; i >= 0; i--)
+		{
+			if (Bullets[i].GetShow())
+			{
+				continue;
+			}
+			Bullets.Delete(i);
+		}
+
 	}
 
 	Collision = CCircle(position + CollisionPosCorrection, CollisionRadius);
@@ -96,6 +109,11 @@ void CPlayer::RenderDebug()
 	CGraphicsUtilities::RenderString(0, 100, "プレイヤ座標　　X %1f : Y %2f", position.x, position.y);
 	CGraphicsUtilities::RenderString(0, 150, "保持弾種：%d", BulletBuffer);
 	CGraphicsUtilities::RenderString(0, 200, "現在存在する弾数：%d", Bullets.GetArrayCount());
+
+	for (int i = 0; i < Bullets.GetArrayCount(); i++)
+	{
+		Bullets[i].RenderDebug(i);
+	}
 	
 	CGraphicsUtilities::RenderCircle(Collision , MOF_COLOR_GREEN);
 }

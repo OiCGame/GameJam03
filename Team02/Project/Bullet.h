@@ -17,6 +17,7 @@ public:
 	void	Create(CTexture* texturePointer , float posx , float posy);
 	void	Update();
 	void	Render();
+	void	RenderDebug(int i);
 
 	bool	GetShow() { return IsShow; }
 };
