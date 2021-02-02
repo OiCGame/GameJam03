@@ -1,11 +1,12 @@
 #include "Enemy.h"
 
 CEnemy::CEnemy() :
-	m_HP(10),
+	m_HP(3),
 	m_Speed(0.0f),
 	m_Dir(90.0f),
 	m_FastBulletNo(-1),
-	m_bDrow(true){
+	m_bDrow(true),
+	m_MoveType(0) {
 }
 
 CEnemy::~CEnemy() {
@@ -23,13 +24,20 @@ void CEnemy::Move(void) {
 Mof::CVector2 CEnemy::GetPosition(void) const {
 	return this->m_Pos;
 }
-
-void CEnemy::Initialize(Vector2 pos) {
+void CEnemy::Initialize(const InitParam& param) {
+	this->Initialize(param.position, param.move_type,
+		param.bullet_column, param.bullet_amount, param.amount_set);
+}
+void CEnemy::Initialize(Vector2 pos, int move_type, int column, int amount, int set) {
 	m_Pos = pos;
+	m_MoveType = move_type;
 
-	m_BulletColumn = rand() % 32;
-	m_BulletAmount = rand() % 5 + 1;
-	m_BulletSetAmount = rand() % 5 + 5;
+	//	m_BulletColumn = rand() % 32;
+	m_BulletColumn = column;
+	//	m_BulletAmount = rand() % 5 + 1;
+	m_BulletAmount = amount;
+	//	m_BulletSetAmount = rand() % 5 + 5;
+	m_BulletSetAmount = set;
 
 	m_BulletCount = m_BulletColumn * m_BulletAmount * m_BulletSetAmount;
 
@@ -57,6 +65,20 @@ void CEnemy::SetTexture(Mof::CTexture* ptr) {
 }
 
 void CEnemy::Update() {
+	switch (m_MoveType) {
+	case 0:
+		this->Move();
+		break;
+	case 1:
+		m_Pos.x++;
+		break;
+	case 2:
+		m_Pos.y++;
+		break;
+	default:
+		break;
+	} // switch
+
 	for (int i = 0; i < m_BulletNo; i++) {
 		m_Bullet[i].Update();
 	}
@@ -84,8 +106,7 @@ void CEnemy::Update() {
 
 int CEnemy::CollitionBullet(CRectangle prec) {
 	int col = 0;
-	for (int i = 0; i < m_BulletCount; i++)
-	{
+	for (int i = 0; i < m_BulletCount; i++) {
 		col += m_Bullet[i].Collition(prec);
 	}
 	return col;
@@ -120,9 +141,11 @@ Mof::CRectangle CEnemy::GetCollisionRectangle(void) const {
 	return rect;
 }
 
-void CEnemy::Damage(void) {
+bool CEnemy::Damage(void) {
 	m_HP--;
 	if (m_HP <= 0) {
 		m_bDrow = false;
+		return true;
 	} // if
+	return false;
 }

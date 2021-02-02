@@ -1,25 +1,37 @@
 {
   "enemies": [
     {
+      "spawn_time": 1.0,
       "id": "enemyID",
       "initPosX": 250,
       "initPosY": 200,
       "movement": 0,
-      "atack": "random"
+      "atack": "random",
+      "bullet_column": 10,
+      "bullet_amount": 4,
+      "amount_set" :  5
     },
     {
+      "spawn_time": 2.0,
       "id": "enemyID",
-      "initPosX": 500,
-      "initPosY": 300,
-      "movement": 5,
-      "atack": "random"
+      "initPosX": 300,
+      "initPosY": 200,
+      "movement": 1,
+      "atack": "random",
+      "bullet_column": 1,
+      "bullet_amount": 1,
+      "amount_set": 6
     },
     {
+      "spawn_time": 4.0,
       "id": "enemyID",
       "initPosX": 750,
       "initPosY": 100,
       "movement": 2,
-      "atack": "random"
+      "atack": "random",
+      "bullet_column": 15,
+      "bullet_amount": 5,
+      "amount_set": 10
     }
   ]
 }

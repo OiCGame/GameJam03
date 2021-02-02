@@ -6,8 +6,20 @@
 #include "EnemyBullet.h"
 
 
-class CEnemy{
+class CEnemy {
 	using super = CCharacter;
+public:
+	struct InitParam {
+		Mof::CVector2 position;
+		int move_type;
+		float spawn_time;
+		int bullet_column;
+		int bullet_amount;
+		int amount_set;
+		InitParam(Mof::CVector2 pos, int move, float time, int column, int amount, int set) :
+			position(pos), move_type(move), spawn_time(time), bullet_column(column), bullet_amount(amount),amount_set(set){
+		}
+	};
 private:
 	int m_HP;
 	Vector2 m_Pos;
@@ -17,6 +29,8 @@ private:
 	CTexture* m_pTexture;
 	bool m_bDrow;
 	int m_FastBulletNo;
+	//! ˆÚ“®ƒ^ƒCƒv
+	int m_MoveType;
 
 	/// <summary>
 	/// ˆÚ“®
@@ -47,14 +61,20 @@ public:
 	Mof::CVector2 GetPosition(void) const;
 	bool IsShow() { return m_bDrow; }
 
-	void Initialize(Vector2 pos);
+	void Initialize(const InitParam& param);
+	void Initialize(Vector2 pos, int move_type, int column, int amount, int set);
 	void SetTexture(Mof::CTexture* ptr);
 	void Update();
 	int CollitionBullet(CRectangle prec);
 	void Render();
 	void Release();
 
-	void Damage();
+	/// <summary>
+	/// Ž€–S‚µ‚½‚çtrue‚ð•Ô‚·
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool Damage();
 	int GetFastBulletNo() { return m_FastBulletNo; }
 	void SetFastBulletNo(int no) { m_FastBulletNo = no; }
 	Mof::CRectangle GetCollisionRectangle(void) const;

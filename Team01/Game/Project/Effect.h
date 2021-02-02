@@ -145,6 +145,8 @@ private:
     bool m_bShow;
     //! 位置
     Mof::CVector2 m_Position;
+	//! 誘爆した数
+	uint32_t m_ChainCount;
 public:
     /// <summary>
     /// コンストラクタ
@@ -160,6 +162,12 @@ public:
     /// <param name=""></param>
     /// <returns></returns>
     Mof::CRectangle GetCollisionRectangle(void) const;
+	/// <summary>
+	/// ゲッター
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	uint32_t GetChainCount(void) const;
     /// <summary>
     /// 判定
     /// </summary>
@@ -170,7 +178,7 @@ public:
     /// 読み込み
     /// </summary>
     /// <returns></returns>
-    bool Load(Mof::CTexture* texture, SpriteMotionData& anim);
+    bool Generate(Mof::CTexture* texture, SpriteMotionData& anim, uint32_t chain_count = 0);
     /// <summary>
     /// 更新
     /// </summary>
@@ -187,4 +195,8 @@ public:
     /// 開始
     /// </summary>
     bool Start(Mof::CVector2 pos);
+	/// <summary>
+	/// 誘爆
+	/// </summary>
+	bool Chain(void);
 };
