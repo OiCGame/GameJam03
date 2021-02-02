@@ -3,6 +3,9 @@
 
 #include <Mof.h>
 
+#include <unordered_map>
+#include <string>
+
 
 class UILabel {
 private:
@@ -95,6 +98,10 @@ private:
 	std::vector<UILabel> m_Labels;
 	//! 画像
 	std::vector<UIImage> m_Images;
+	//! フォントのUV座標配列
+	std::unordered_map<std::string, Mof::CRectangle> m_FontMap;
+	//! フォントテクスチャ
+	Mof::CTexture m_FontTexture;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -116,6 +123,10 @@ public:
 	/// 描画
 	/// </summary>
 	bool Render(void);
+	/// <summary>
+	/// 解放
+	/// </summary>
+	bool Release(void);
 	/// <summary>
 	/// スコア追加
 	/// </summary>

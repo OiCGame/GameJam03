@@ -286,6 +286,8 @@ bool CGame::Render(void) {
 }
 
 bool CGame::Release(void) {
+	m_UICanvas.Release();
+
 	for (auto &e : _enemies) {
 		e.Release();
 	} // for
