@@ -62,7 +62,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\Library\Include;../include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Library\Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMTD;</IgnoreSpecificDefaultLibraries>
@@ -100,6 +100,9 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
+    <ClCompile Include="EnemyMove.cpp" />
+    <ClCompile Include="EnemyMoveEscape.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameDefine.cpp" />
     <ClCompile Include="SceneBase.cpp" />
@@ -110,7 +113,6 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="Helper.h" />
