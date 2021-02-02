@@ -113,11 +113,6 @@ void CTitle::Update(void)
     }
     else
     {
-        // ESCキーで終了
-        if (g_pInput->IsKeyPush(MOFKEY_ESCAPE))
-        {
-            PostQuitMessage(0);
-        }
         // 選択やつ移動処理
         if (g_pInput->IsKeyPush(MOFKEY_UP))
         {

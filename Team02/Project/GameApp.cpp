@@ -54,6 +54,12 @@ MofBool CGameApp::Update(void) {
 	//キーの更新
 	g_pInput->RefreshKey();
 
+    // ESCキーで終了
+    if (g_pInput->IsKeyPush(MOFKEY_ESCAPE))
+    {
+        PostQuitMessage(0);
+    }
+
     // シーンマネージャーの更新
     if (!m_SceneManager.Update())
     {

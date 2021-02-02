@@ -38,6 +38,7 @@ CGame::~CGame(void)
 void CGame::Initialize(void)
 {
 	Player.Initialize();
+    Block.Initialize();
 }
 
 // ********************************************************************************
@@ -51,6 +52,7 @@ void CGame::Initialize(void)
 bool CGame::Load(void)
 {
 	Player.Load();
+    Block.Load();
 
     return true;
 }
@@ -74,6 +76,7 @@ void CGame::Update(void)
 		DebugEnable = !DebugEnable;
 	}
 	Player.Update();
+    Block.Update();
 }
 
 // ********************************************************************************
@@ -88,6 +91,8 @@ void CGame::Render(void)
     // DEBUG
     CGraphicsUtilities::RenderString(0, 0, "GAME");
 	Player.Render();
+    Block.Render();
+    Block.RenderBlock();
 	if (DebugEnable) { Player.RenderDebug(); }
 	
 }
@@ -102,4 +107,5 @@ void CGame::Render(void)
 void CGame::Release(void)
 {
 	Player.Release();
+    Block.Release();
 }

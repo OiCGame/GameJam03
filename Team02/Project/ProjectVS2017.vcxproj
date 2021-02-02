@@ -95,6 +95,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -104,12 +105,14 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RoundRect.cpp" />
     <ClCompile Include="Setting.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StopWatch.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.h" />
+    <ClInclude Include="Block.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameApp.h" />
@@ -121,6 +124,7 @@
     <ClInclude Include="SceneDefine.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Setting.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StopWatch.h" />
     <ClInclude Include="Title.h" />
   </ItemGroup>
