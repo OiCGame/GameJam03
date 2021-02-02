@@ -98,11 +98,14 @@
     <ClInclude Include="Button.h">
       <Filter>ヘッダー ファイル\Utilities</Filter>
     </ClInclude>
-    <ClCompile Include="Bullet.h">
+    <ClInclude Include="Bullet.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClCompile>
+    </ClInclude>
     <ClInclude Include="GameClear.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDefine.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
