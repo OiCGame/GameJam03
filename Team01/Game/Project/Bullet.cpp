@@ -64,9 +64,4 @@ bool CBullet::Shot(Mof::CVector2 init_pos, CBullet::TeamType type) {
 	_position = init_pos;
 	_team_type = type;
 	return true;
-bool CBullet::Shot(Mof::CVector2 init_pos, CBullet::TeamType type) {
-    _show = true;
-    _position = init_pos;
-    _team_type = type;
-    return true;
 }
