@@ -18,6 +18,7 @@
 
 //MANAGER
 #include    "SoundManager.h"
+#include    "EffectManager.h"
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -46,6 +47,8 @@ MofBool CGameApp::Initialize(void) {
 
     // サウンドデータの読み込み
     g_SoundManager.Load();
+    // エフェクトデータの読み込み
+    g_EffectManager.Load();
 
 	return TRUE;
 }
@@ -61,6 +64,8 @@ MofBool CGameApp::Update(void) {
 	g_pInput->RefreshKey();
     // サウンドデータの更新
     g_SoundManager.Update();
+    // エフェクトの更新
+    g_EffectManager.Update();
 
     // ESCキーで終了
     if (g_pInput->IsKeyPush(MOFKEY_ESCAPE))
@@ -97,6 +102,9 @@ MofBool CGameApp::Render(void) {
         return FALSE;
     }
 
+    // エフェクトの描画
+    g_EffectManager.Render();
+
 	//描画の終了
 	g_pGraphics->RenderEnd();
 	return TRUE;
@@ -114,6 +122,9 @@ MofBool CGameApp::Release(void) {
 
     // サウンドデータの解放
     g_SoundManager.Release();
+
+    // エフェクトデータの解放
+    g_EffectManager.Release();
 	
     return TRUE;
 }
