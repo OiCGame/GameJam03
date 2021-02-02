@@ -10,6 +10,7 @@
 //INCLUDE
 #include	"GameApp.h"
 
+#include	"ResourceManager.h"
 #include	"SceneTitle.h"
 #include	"SceneGame.h"
 #include	"SceneGameClear.h"
@@ -30,7 +31,7 @@ MofBool CGameApp::Initialize(void){
 	CUtilities::SetCurrentDirectory("Resource");
 	
 	gpSecene->Initialize();
-
+	CResourceManager::Singleton().LoadTexture("Player","PlayerUFO.png");
 	return TRUE;
 }
 /*************************************************************************//*!
@@ -97,8 +98,7 @@ MofBool CGameApp::Render(void){
 						それ以外	失敗、エラーコードが戻り値となる
 *//**************************************************************************/
 MofBool CGameApp::Release(void){
-	
 	gpSecene->Release();
-
+	CResourceManager::Singleton().Release();
 	return TRUE;
 }
