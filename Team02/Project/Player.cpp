@@ -65,11 +65,6 @@ void CPlayer::Update()
 		Bullets[i].Update();
 	}
 
-	while (true)
-	{
-
-	}
-
 	Collision = CCircle(position + CollisionPosCorrection, CollisionRadius);
 }
 
