@@ -1,12 +1,15 @@
 #include "Character.h"
 
+#include "GameDefine.h"
+
 
 void CCharacter::Move(void) {
-	if (::g_pInput->IsKeyHold(MOFKEY_LEFT)) {
-		_position.x--;
+	float threshold = 0.25f;
+	if (CInputManager::GetInstance().GetHorizontal() < -threshold) {
+		_move -= _speed;
 	} // if
-	else if (::g_pInput->IsKeyHold(MOFKEY_RIGHT)) {
-		_position.x++;
+	else if (threshold < CInputManager::GetInstance().GetHorizontal()) {
+		_move += _speed;
 	} // else if
 }
 
@@ -29,6 +32,8 @@ bool CCharacter::Shot(std::array<CBullet, 256>& bullet_container) {
 
 CCharacter::CCharacter() :
 	_position(),
+	_move(),
+	_speed(2.0f, 0.0f),
 	_texture(nullptr),
 	_bullet_texture(nullptr),
 	_hp(4),
@@ -72,11 +77,15 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container) {
 		return false;
 	} // if
 
+	_move = Mof::CVector2();
+
 	this->Move();
 	if (::g_pInput->IsKeyPush(MOFKEY_SPACE)) {
 		this->Shot(bullet_container);
 	} // if
 
+
+	_position += _move;
 	return true;
 }
 
