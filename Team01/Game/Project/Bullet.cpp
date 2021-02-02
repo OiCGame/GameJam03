@@ -2,18 +2,18 @@
 
 
 CBullet::CBullet() :
-	_position(),
-	_move(0.0f, -5.0f),
-	_texture(),
-	_show(false),
-	_team_type() {
+    _position(),
+    _move(0.0f, -5.0f),
+    _texture(),
+    _show(false),
+    _team_type() {
 }
 
 CBullet::~CBullet() {
 }
 
 void CBullet::SetTexture(Mof::CTexture* ptr) {
-	this->_texture = ptr;
+    this->_texture = ptr;
 }
 
 void CBullet::Hide(void) {
@@ -21,11 +21,11 @@ void CBullet::Hide(void) {
 }
 
 Mof::CVector2 CBullet::GetTextureSize(void) const {
-	auto tex = _texture;
-	if (tex) {
-		return Mof::CVector2(tex->GetWidth(), tex->GetHeight());
-	} // if
-	return Mof::CVector2();
+    auto tex = _texture;
+    if (tex) {
+        return Mof::CVector2(tex->GetWidth(), tex->GetHeight());
+    } // if
+    return Mof::CVector2();
 }
 
 Mof::CRectangle CBullet::GetCollisionRectangle(void) const {

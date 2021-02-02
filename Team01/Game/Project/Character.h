@@ -12,6 +12,10 @@ class CCharacter {
 protected:
 	//! 位置
 	Mof::CVector2 _position;
+	//! 移動
+	Mof::CVector2 _move;
+	//! 移動
+	Mof::CVector2 _speed;
 	//! テクスチャ
 	Mof::CTexture* _texture;
 	//! Bulletテクスチャ
