@@ -102,11 +102,11 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource\stage\enemies.json">
-      <Filter>リソース ファイル\stage</Filter>
-    </None>
     <None Include="..\Resource\motion\explode.json">
       <Filter>リソース ファイル\motion</Filter>
+    </None>
+    <None Include="..\Resource\stage\test_stage.json">
+      <Filter>リソース ファイル\stage</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -129,7 +129,7 @@ bool CGame::Initialize(void) {
 	m_UICanvas.Initialize();
 
 	rapidjson::Document document;
-	if (!ParseJsonDocument("stage/enemies.json", document)) {
+	if (!ParseJsonDocument("stage/test_stage.json", document)) {
 		return false;
 	} // if
 
