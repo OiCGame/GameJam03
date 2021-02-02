@@ -16,6 +16,10 @@
 #include    "GameClear.h"
 #include    "GameOver.h"
 
+//MANAGER
+#include    "SoundManager.h"
+#include    "EffectManager.h"
+
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
 		@param			None
@@ -41,6 +45,11 @@ MofBool CGameApp::Initialize(void) {
     //m_SceneManager.Initialize(SceneName::Title);
     m_SceneManager.Initialize(SceneName::Game);
 
+    // サウンドデータの読み込み
+    g_SoundManager.Load();
+    // エフェクトデータの読み込み
+    g_EffectManager.Load();
+
 	return TRUE;
 }
 /*************************************************************************//*!
@@ -53,6 +62,10 @@ MofBool CGameApp::Initialize(void) {
 MofBool CGameApp::Update(void) {
 	//キーの更新
 	g_pInput->RefreshKey();
+    // サウンドデータの更新
+    g_SoundManager.Update();
+    // エフェクトの更新
+    g_EffectManager.Update();
 
     // ESCキーで終了
     if (g_pInput->IsKeyPush(MOFKEY_ESCAPE))
@@ -89,6 +102,9 @@ MofBool CGameApp::Render(void) {
         return FALSE;
     }
 
+    // エフェクトの描画
+    g_EffectManager.Render();
+
 	//描画の終了
 	g_pGraphics->RenderEnd();
 	return TRUE;
@@ -103,6 +119,12 @@ MofBool CGameApp::Render(void) {
 MofBool CGameApp::Release(void) {
 
     m_BackTexture.Release();
+
+    // サウンドデータの解放
+    g_SoundManager.Release();
+
+    // エフェクトデータの解放
+    g_EffectManager.Release();
 	
     return TRUE;
 }

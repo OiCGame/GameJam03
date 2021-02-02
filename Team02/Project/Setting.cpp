@@ -1,5 +1,6 @@
 #include "Setting.h"
 #include "RoundRect.h"
+#include "SoundManager.h"
 
 // ********************************************************************************
 /// <summary>
@@ -77,6 +78,8 @@ bool CSetting::Load(void)
 
     // 開けたらしめようホトトギス
     fclose(fp);
+
+    SetVolume();
 
     CUtilities::SetCurrentDirectory("UI/オプション画面");
 
@@ -260,6 +263,7 @@ void CSetting::Update(void)
         default:
             break;
         }
+        SetVolume();
     }
 }
 
@@ -383,4 +387,27 @@ void CSetting::Release(void)
 bool CSetting::IsShow(void) const
 {
     return m_bShow;
+}
+
+// ********************************************************************************
+/// <summary>
+/// ボリュームの設定
+/// </summary>
+/// <created>いのうえ,2021/02/02</created>
+/// <changed>いのうえ,2021/02/02</changed>
+// ********************************************************************************
+void CSetting::SetVolume(void)
+{
+    for (int i = 0; i < BGM_Count; i++)
+    {
+        g_SoundManager.GetBGM((BGM_Name)i)->SetVolume(m_SettingData.BGM_Volume);
+    }
+
+    for (int i = 0; i < SE_Count; i++)
+    {
+        for (int j = 0; j < SoundPoolCount; j++)
+        {
+            g_SoundManager.GetSE((SE_Name)i, j)->SetVolume(m_SettingData.SE_Volume);
+        }
+    }
 }
