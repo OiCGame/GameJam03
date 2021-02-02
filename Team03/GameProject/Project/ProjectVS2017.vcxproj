@@ -101,6 +101,7 @@
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneGame.cpp" />
@@ -116,7 +117,7 @@
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerBulletManager.h" />
+    <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="SceneGame.h" />
