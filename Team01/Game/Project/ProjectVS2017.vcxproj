@@ -123,6 +123,9 @@
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resource\stage\enemies.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

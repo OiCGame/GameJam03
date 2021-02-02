@@ -2,23 +2,23 @@
   "enemies": [
     {
       "id": "enemyID",
-      "initPosX": 0,
+      "initPosX": 110,
       "initPosY": 200,
-      "movement": "movementID",
+      "movement": 0,
       "atack": "random"
     },
     {
       "id": "enemyID",
       "initPosX": 250,
-      "initPosY": 200,
-      "movement": "movementID",
+      "initPosY": 300,
+      "movement": 5,
       "atack": "random"
     },
     {
       "id": "enemyID",
       "initPosX": 500,
-      "initPosY": 200,
-      "movement": "movementID",
+      "initPosY": 100,
+      "movement": 2,
       "atack": "random"
     }
   ]
