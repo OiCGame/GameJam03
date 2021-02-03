@@ -8,6 +8,8 @@ struct LauncherInit_Line {
 	CVector2 position;
 	// 発射ベクトル
 	CVector2 vector;
+	// テクスチャータイプ
+	BulletType type{ BulletType::red };
 	//発射回数
 	int count{ 1 };
 	// 発射間隔 [s]
@@ -20,6 +22,8 @@ struct LauncherInit_Polygon {
 	CVector2 position;
 	// 発射ベクトル
 	CVector2 vector;
+	// テクスチャータイプ
+	BulletType type{ BulletType::yellow };
 	//発射回数
 	int count{ 1 };
 	// 発射間隔 [s]

@@ -2,9 +2,20 @@
 
 #include	<Mof.h>
 
+enum class BulletType
+{
+	red,
+	purple,
+	yellow,
+	orange,
+};
+
 class CBullet
 {
 private:
+	const float  c_radius = 5;
+
+	CTexture*	m_pTexture;
 	CCircle	m_Body;
 	CVector2 m_Vector;
 	bool m_ShowFlag{ false };
@@ -13,7 +24,7 @@ private:
 
 public:
 	
-	void Initialize(const CVector2 & position, const CVector2 & vector, const float & wait);
+	void Initialize(const CVector2 & position, const CVector2 & vector, const float & wait, const BulletType& type);
 
 	void Update();
 

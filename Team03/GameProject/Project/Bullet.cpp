@@ -1,14 +1,28 @@
 #include "Bullet.h"
 
-void CBullet::Initialize(const CVector2 & position, const CVector2 & vector, const float & wait)
+void CBullet::Initialize(const CVector2 & position, const CVector2 & vector, const float & wait, const BulletType& type)
 {
 	m_Body.SetValue(
 		position.x,
 		position.y,
-		5
+		c_radius
 	);
 	m_Vector = vector;
 	m_WaitTime = wait;
+	// テクスチャー設定
+	switch (type)
+	{
+	case	BulletType::red:
+		break;
+	case	BulletType::purple:
+		break;
+	case	BulletType::yellow:
+		break;
+	case	BulletType::orange:
+		break;
+	default:
+		break;
+	}
 }
 
 void CBullet::Update()
@@ -36,5 +50,11 @@ bool CBullet::IsSurvival()
 void CBullet::Render()
 {
 	if (!m_ShowFlag) { return; }
-	CGraphicsUtilities::RenderCircle(m_Body, MOF_COLOR_WHITE);
+	if (!m_pTexture) {
+		CGraphicsUtilities::RenderCircle(m_Body, MOF_COLOR_WHITE);
+	}
+	m_pTexture->Render( 
+		m_Body.Position.x - m_pTexture->GetWidth() * 0.5f,
+		m_Body.Position.y - m_pTexture->GetHeight() *0.5f
+	);
 }
