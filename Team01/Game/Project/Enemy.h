@@ -22,6 +22,7 @@ public:
 	};
 private:
 	int m_HP;
+	int m_MaxHP;
 	Vector2 m_Pos;
 	Vector2 m_Move;
 	float m_Dir;
