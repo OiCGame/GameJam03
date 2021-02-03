@@ -63,5 +63,5 @@ void CPlayerBullet::RenderDebug(float top, float left)
 	CGraphicsUtilities::RenderString(top, left, textColor, "Bullet: ç¿ïW x{%6.2f},y{%6.2f}{%4.2f}", m_Position.x, m_Position.y, m_MoveDistance);
 
 	//ìñÇΩÇËîªíËópâ~ï\é¶
-	CGraphicsUtilities::RenderCircle(m_Position.x, m_Position.y, 10, MOF_XRGB(0, 245, 0));
+	CGraphicsUtilities::RenderCircle(GetCircle(), MOF_XRGB(0, 245, 0));
 }

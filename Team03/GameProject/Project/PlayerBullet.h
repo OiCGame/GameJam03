@@ -27,7 +27,7 @@ public:
 
 	bool IsShow() { return m_bShow; }
 
-	//CRectangle GetRectangle() { return; }
+	CCircle GetCircle() { return CCircle(m_Position.x, m_Position.y, 20); }
 
 };
 
