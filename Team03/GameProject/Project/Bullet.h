@@ -13,7 +13,7 @@ enum class BulletType
 class CBullet
 {
 private:
-	const float  c_radius = 5;
+	float  c_radius = 5;
 
 	CTexture*	m_pTexture;
 	CCircle	m_Body;
