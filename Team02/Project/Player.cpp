@@ -1,7 +1,7 @@
 #include	"Player.h"
 
 //ˆêŽž“I‚É
-#define		MOVESPEED	10
+constexpr auto MOVESPEED = 10;
 
 CPlayer::CPlayer()
 {

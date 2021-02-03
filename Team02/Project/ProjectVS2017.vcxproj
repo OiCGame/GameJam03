@@ -104,6 +104,7 @@
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="NumericDisplay.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RoundRect.cpp" />
     <ClCompile Include="Setting.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="GameOver.h" />
+    <ClInclude Include="NumericDisplay.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RoundRect.h" />
     <ClInclude Include="SceneDefine.h" />
