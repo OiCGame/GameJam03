@@ -16,10 +16,17 @@ void CSceneGame::Update()
 		this->SceneEnd();
 	}
 	m_Player.Update();
+
+	//LauncherInit_Line{ CVector2(0,100),CVector2(10,0), BulletType::red, 20, 0.2f }
+	//LauncherInit_Polygon{ CVector2(0,100),CVector2(10,0), BulletType::red, 20, 0.2f }
+	//LauncherInit_PolygonRotation{ CVector2(300,300),CVector2(5,5), BulletType::red, 60, 0.2f , 5 , 5, 6 }
+
+	CEnemyBulletManager::Singleton().Update();
 }
 
 void CSceneGame::Render()
 {
+	CEnemyBulletManager::Singleton().Render();
 	m_Player.Render();
 }
 

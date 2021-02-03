@@ -62,6 +62,38 @@ void CEnemyBulletManager::SetLauncher(const LauncherInit_Polygon & init)
 	}
 }
 
+// ‘½ŠpŒ`ó‚É‰ñ“]‚µ‚È‚ª‚ç”­Ë
+void CEnemyBulletManager::SetLauncher(const LauncherInit_PolygonRotation & init)
+{
+	// “àŠp‚ğ‹‚ß‚é radŠp
+	auto InternalAngle = (2 * MOF_MATH_PI) / init.vertex;
+
+	auto work = 0.0f;
+	if (init.vertex % 2 == 0) { // ‹ô”
+		work = InternalAngle / 2.0f;
+	}
+
+	float sumWiat = 0.0f;
+	for (int i = 0; i < init.count; i++) {
+		for (int v = 0; v < init.vertex; v++)
+		{
+			m_BulletList.push_back(CBullet());
+			m_BulletList.back().Initialize(
+				init.position,
+				CVector2(init.vector.x * sin(InternalAngle * v + work), -(init.vector.y * cos(InternalAngle * v + work))),
+				sumWiat,
+				init.type
+			);
+		}
+		int rev = 1;
+		if (init.reverseCount != 0) {
+			rev = (i / init.reverseCount % 2 == 0 ? 1 : -1);
+		}
+		work += init.addAngle + rev;
+		sumWiat += init.interval;
+	}
+}
+
 //std::vector<CBullet> CEnemyBulletManager::GetAliveBulletList()
 //{
 //	// // Œ©‚¦‚Ä‚¢‚é‚©‚ÌŠm”F
