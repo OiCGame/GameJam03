@@ -3,7 +3,7 @@
     {
       "spawn_time": 1.0,
       "id": "enemyID",
-      "initPosX": 250,
+      "initPosX": 350,
       "initPosY": 200,
       "movement": {
         "default": 3,
@@ -19,8 +19,8 @@
     {
       "spawn_time": 2.0,
       "id": "enemyID",
-      "initPosX": 300,
-      "initPosY": 200,
+      "initPosX": 600,
+      "initPosY": 500,
       "movement": {
         "default": 3,
         "pinch": 2,
@@ -35,8 +35,8 @@
     {
       "spawn_time": 4.0,
       "id": "enemyID",
-      "initPosX": 750,
-      "initPosY": 100,
+      "initPosX": 850,
+      "initPosY": 500,
 
       "movement": {
         "default": 3,
