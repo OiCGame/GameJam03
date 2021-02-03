@@ -10,7 +10,9 @@ void CGame::SpawnEnemy(void) {
 		} // if
 		auto enemy = CEnemy();
 		enemy.Initialize(spawn_data);
-		enemy.SetTexture(&_enemy_texture);
+		enemy.SetTexture(& m_Textures.at(spawn_data.texture_path) );
+		enemy.SetTarget(_player.GetPosition());
+
 		_enemies.push_back(std::move(enemy));
 	} // for
 
@@ -24,9 +26,10 @@ void CGame::SpawnEnemy(void) {
 }
 
 void CGame::EffectStart(Mof::CVector2 position) {
+	auto& effect_tex = m_Textures.at(m_EffectTexturePath);
 	auto pos = position;
 	auto effect = std::make_shared<CEffect>();
-	effect->Generate(&_effect_texture, _effect_motion_data);
+	effect->Generate(&effect_tex, _effect_motion_data);
 	effect->Start(pos);
 	_effect_container.push_back(effect);
 
@@ -55,10 +58,11 @@ void CGame::Collision(void) {
 			} // if
 		} // for
 	} // for
+	auto& effect_tex = m_Textures.at(m_EffectTexturePath);
 	for (auto& param : effect_param) {
 		auto pos = param.position;
 		auto effect = std::make_shared<CEffect>();
-		effect->Generate(&_effect_texture, _effect_motion_data, param.chain);
+		effect->Generate(&effect_tex , _effect_motion_data, param.chain);
 		effect->Start(pos);
 		_effect_container.push_back(effect);
 
@@ -115,10 +119,18 @@ void CGame::CollisionPlayerEnemies(void) {
 CGame::CGame() :
 	m_UICanvas(),
 	m_ElapsedTime(0.0f),
-	_player_texture(),
-	_enemy_texture(),
-	_stage_texture(),
-	_bullet_texture(),
+	m_PlayerTexturePath("player/Plane1Up.png"),
+	m_EnemyTexturePath1("enemy/Enemy01.png"),
+	m_EnemyTexturePath2("enemy/Enemy02.png"),
+	m_EnemyTexturePath3("enemy/Enemy03.png"),
+	m_BulletTexturePath("bullet/01Bullets.png"),
+	m_EffectTexturePath("effect/effect00.png"),
+	m_StageTexturePath("pipo-bg001.jpg"),
+
+	//	_player_texture(),
+	//	_enemy_texture(),
+	//	_stage_texture(),
+	//	_bullet_texture(),
 	_player(),
 	_enemies(),
 	m_PlayerBullets(),
@@ -136,15 +148,25 @@ bool CGame::Initialize(void) {
 		return false;
 	} // if
 
-	_player_texture.Load("player/Plane1Up.png");
-	_enemy_texture.Load("enemy/Enemy01.png");
-	_bullet_texture.Load("bullet/01Bullets.png");
-	_effect_texture.Load("effect/effect00.png");
-	_stage_texture.Load("pipo-bg001.jpg");
+
+
+	m_Textures = {
+		{m_PlayerTexturePath, Mof::CTexture()},
+		{m_EnemyTexturePath1, Mof::CTexture()},
+		{m_EnemyTexturePath2, Mof::CTexture()},
+		{m_EnemyTexturePath3, Mof::CTexture()},
+		{m_BulletTexturePath, Mof::CTexture()},
+		{m_StageTexturePath, Mof::CTexture()},
+		{m_EffectTexturePath, Mof::CTexture()}
+	};
+	for (auto & pair : m_Textures) {
+		pair.second.Load(pair.first.c_str());
+	} // for
+
 	_effect_motion_data.Load("motion/explode.json");
 
 	_player.Initialize(Mof::CVector2(512.0f, 600.0f));
-	_player.SetTexture(&_player_texture);
+	_player.SetTexture(&m_Textures.at(m_PlayerTexturePath));
 
 	const auto& info = document["enemies"];
 	for (uint32_t i = 0; i < info.Size(); i++) {
@@ -164,9 +186,10 @@ bool CGame::Initialize(void) {
 		int bullet_amount = info[i]["bullet_amount"].GetInt();
 		int amount_set = info[i]["amount_set"].GetInt();
 		int hp = info[i]["hp"].GetInt();
+		std::string tex_path = info[i]["texture_uri"].GetString();
 
 		m_EnemyDatas.push_back(CEnemy::InitParam(
-			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, hp));
+			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, hp, tex_path));
 		/*
 		auto enemy = CEnemy();
 		enemy.Initialize(Mof::CVector2(x, y), move_type);
@@ -177,24 +200,26 @@ bool CGame::Initialize(void) {
 
 
 
+	auto& bullet_tex = m_Textures.at(m_BulletTexturePath);
 	for (auto& bullet : m_PlayerBullets) {
-		bullet.SetTexture(&_bullet_texture);
+		bullet.SetTexture(&bullet_tex);
 	} // for
 
 
-	auto pos = Mof::CVector2(0.0f, ::g_pGraphics->GetTargetHeight() - _player_texture.GetHeight());
-	float width = _player_texture.GetWidth();
+	auto& player_tex = m_Textures.at(m_PlayerTexturePath);
+	auto pos = Mof::CVector2(0.0f, ::g_pGraphics->GetTargetHeight() - player_tex.GetHeight());
+	float width = player_tex.GetWidth();
 	for (int i = 0; i < _player.GetRevivalCount(); i++) {
 		auto name = std::string("image");
 		name += std::to_string(i);
-		m_UICanvas.AddImage(name.c_str(), &_player_texture, pos);
+		m_UICanvas.AddImage(name.c_str(), &player_tex, pos);
 		pos.x += width;
 	} // for
 	return true;
 }
 
 bool CGame::Update(void) {
-//	m_ElapsedTime += ::CUtilities::GetFrameSecond();
+	//	m_ElapsedTime += ::CUtilities::GetFrameSecond();
 	m_ElapsedTime += 0.0167f;
 	this->SpawnEnemy();
 
@@ -227,7 +252,7 @@ bool CGame::Update(void) {
 	} // if
 
 	for (auto& enemy : _enemies) {
-			enemy.Update();
+		enemy.Update();
 	} // for
 
 	for (auto& bullet : m_PlayerBullets) {
@@ -251,14 +276,15 @@ bool CGame::Update(void) {
 
 
 bool CGame::Render(void) {
-	_stage_texture.Render(0.0f, 0.0f);
+	auto& stage_tex = m_Textures.at(m_StageTexturePath);
+	stage_tex.Render(0.0f, 0.0f);
 
 	if (_player.IsShow()) {
 		_player.Render();
 	} // if
 
 	for (auto& enemy : _enemies) {
-			enemy.Render();
+		enemy.Render();
 	} // for
 
 	for (auto& bullet : m_PlayerBullets) {
@@ -282,7 +308,7 @@ bool CGame::Render(void) {
 	::CGraphicsUtilities::RenderString(700.0f, 0.0f, "elapsed time = %f", m_ElapsedTime);
 
 	if (!_player.IsShow()) {
-	::CGraphicsUtilities::RenderString(500.0f, 500.0f, "GameOver");
+		::CGraphicsUtilities::RenderString(500.0f, 500.0f, "GameOver");
 	} // if
 	return true;
 }
@@ -294,11 +320,8 @@ bool CGame::Release(void) {
 		e.Release();
 	} // for
 
-	_player_texture.Release();
-	_enemy_texture.Release();
-	_bullet_texture.Release();
-	_effect_texture.Release();
-	_stage_texture.Release();
+	for (auto& pair : m_Textures) {
+		pair.second.Release();
+	} // for
 	return true;
-
 }

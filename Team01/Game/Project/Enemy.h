@@ -3,7 +3,17 @@
 
 #include "Character.h"
 
+#include <random>
+
 #include "EnemyBullet.h"
+
+
+static int GenerateRandom(const int min, const int max) {
+	std::random_device seed;
+	std::mt19937 engine(seed());
+	std::uniform_int_distribution<> random(min, max);
+	return random(engine);
+}
 
 
 class CEnemy {
@@ -19,8 +29,9 @@ public:
         int bullet_amount;
         int amount_set;
         int hp_max;
-        InitParam(Mof::CVector2 pos, int move, int pinch_move, float ratio, float time, int column, int amount, int set, int hp) :
-            position(pos), move_type(move), move_type_on_pinch(pinch_move), pinch_hp_ratio(ratio), spawn_time(time), bullet_column(column), bullet_amount(amount), amount_set(set), hp_max(hp) {
+		std::string texture_path;
+        InitParam(Mof::CVector2 pos, int move, int pinch_move, float ratio, float time, int column, int amount, int set, int hp, std::string tex_path) :
+            position(pos), move_type(move), move_type_on_pinch(pinch_move), pinch_hp_ratio(ratio), spawn_time(time), bullet_column(column), bullet_amount(amount), amount_set(set), hp_max(hp), texture_path(tex_path){
         }
     };
 private:
@@ -37,7 +48,14 @@ private:
     int m_MoveType;
     int m_MoveTypeOnPinch;
     float m_PinchHPRatio;
+	//! “ËŒ‚ˆÊ’u
+	Mof::CVector2 m_Target;
 
+	/// <summary>
+	/// ˆÚ“®
+	/// </summary>
+	/// <param name=""></param>
+	void Chase(Mof::CVector2 pos);
     /// <summary>
     /// ˆÚ“®
     /// </summary>
@@ -45,7 +63,7 @@ private:
     virtual void Move(void);
     void Move(int type);
     void MoveOutOfWindow(void);
-
+	void MoveAssault(void);
 
     CEnemyBullet* m_Bullet;
     int m_BulletColumn;
@@ -62,9 +80,7 @@ private:
     int m_BulletSetRemGap;
 
 	int m_BulletShowCount;
-
 public:
-
     CEnemy();
     ~CEnemy();
 
@@ -74,6 +90,7 @@ public:
     void Initialize(const InitParam& param);
     void Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp);
     void SetTexture(Mof::CTexture* ptr);
+    void SetTarget(Mof::CVector2 pos);
     void Update();
     int CollisionBullet(CRectangle prec);
     void Render();

@@ -1,5 +1,7 @@
 #include "Enemy.h"
 
+#include "Character.h"
+
 CEnemy::CEnemy() :
 	m_HP(3),
 	m_MaxHP(3),
@@ -9,12 +11,19 @@ CEnemy::CEnemy() :
 	m_bDrow(true),
 	m_MoveType(0),
 	m_MoveTypeOnPinch(0),
-	m_PinchHPRatio(0.0f) {
+	m_PinchHPRatio(0.0f),
+	m_Target() {
 }
 
 CEnemy::~CEnemy() {
 }
 
+void CEnemy::Chase(Mof::CVector2 target) {
+	Mof::CVector2 direction = target - m_Pos;
+	direction.Normal(direction);
+
+	m_Move += direction;
+}
 void CEnemy::Move(void) {
 	m_Move.y = sin(MOF_ToRadian(m_Dir)) * m_Speed;
 	m_Move.x = cos(MOF_ToRadian(m_Dir)) * m_Speed;
@@ -39,6 +48,9 @@ void CEnemy::Move(int type) {
 	case 3:
 		this->MoveOutOfWindow();
 		break;
+	case 4:
+		this->MoveAssault();
+		break;
 	default:
 		break;
 	} // switch
@@ -47,7 +59,7 @@ void CEnemy::Move(int type) {
 void CEnemy::MoveOutOfWindow(void) {
 	auto pos = m_Pos;
 	auto size = Mof::CVector2(::g_pFramework->GetWindow()->GetWidth(),
-		::g_pFramework->GetWindow()->GetHeight() );
+		::g_pFramework->GetWindow()->GetHeight());
 
 	float distance = size.Length();
 	float length;
@@ -80,12 +92,14 @@ void CEnemy::MoveOutOfWindow(void) {
 		distance = length;
 		escape_point = right;
 	} // if
-	
-	Mof::CVector2 direction = escape_point - pos;
-	direction.Normal(direction);
 
-	m_Pos += direction;
+
+	this->Chase(escape_point);
 	return;
+}
+
+void CEnemy::MoveAssault(void) {
+	this->Chase(m_Target);
 }
 
 Mof::CVector2 CEnemy::GetPosition(void) const {
@@ -138,7 +152,21 @@ void CEnemy::SetTexture(Mof::CTexture* ptr) {
 	m_pTexture = ptr;
 }
 
+void CEnemy::SetTarget(Mof::CVector2 pos) {
+	int range = 100;
+
+	auto temp = pos;
+	temp.y = ::g_pFramework->GetWindow()->GetHeight();
+	temp.x += GenerateRandom(-range, range);
+
+	m_Target = temp;
+}
+
 void CEnemy::Update() {
+	m_Move.x = 0.0f;
+	m_Move.y = 0.0f;
+
+
 	for (int i = 0; i < m_BulletNo; i++) {
 		if (!m_Bullet[i].IsShow()) { continue; }
 		m_Bullet[i].Update();
@@ -154,6 +182,8 @@ void CEnemy::Update() {
 	else {
 		this->Move(m_MoveTypeOnPinch);
 	} // else
+	m_Pos += m_Move;
+
 
 	if (m_BulletNo >= m_BulletCount) { return; }
 	if (m_BulletSetRemGap > 0) {
