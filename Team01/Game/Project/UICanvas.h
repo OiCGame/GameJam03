@@ -7,6 +7,12 @@
 #include <string>
 
 
+struct FontMap{
+	//! 文字テクスチャ
+	Mof::CTexture texture;
+	//! フォントのUV座標配列
+	std::unordered_map<std::string, Mof::CRectangle> uvs;
+};
 class UILabel {
 private:
 	//! テキスト
@@ -16,9 +22,12 @@ private:
 	//! 表示カウント
 	int existance;
 	//! フォント  reference only
-	Mof::CFont* font;
+//	Mof::CFont* font;
+	FontMap* font;
+//	Mof::CTexture* font;
+	//std::unordered_map<std::string, Mof::CRectangle>* m_FontMap;
 public:
-	UILabel(const std::string& str, Mof::CVector2 pos, int exist, Mof::CFont* ptr) :
+	UILabel(const std::string& str, Mof::CVector2 pos, int exist, FontMap* ptr) :
 		text(str), position(pos), existance(exist), font(ptr) {
 	}
 	~UILabel() {
@@ -52,9 +61,13 @@ public:
 			return false;
 		} // if
 
-		return font->RenderString(position.x, position.y,
-			MOF_ARGB(255, 255, 0, 0),
-			text.c_str());
+		auto pos = position;
+		for (int i = 0; i < text.size() ; i++) {
+			auto key = text.substr(i, 1);
+			font->texture.Render(pos.x, pos.y, font->uvs.at(key));
+			pos.x += 40.0f;
+		} // for
+		return true;
 	}
 
 };
@@ -99,9 +112,11 @@ private:
 	//! 画像
 	std::vector<UIImage> m_Images;
 	//! フォントのUV座標配列
-	std::unordered_map<std::string, Mof::CRectangle> m_FontMap;
+//	std::unordered_map<std::string, Mof::CRectangle> m_FontMap;
 	//! フォントテクスチャ
-	Mof::CTexture m_FontTexture;
+//	Mof::CTexture m_FontTexture;
+
+	FontMap m_FontMap;
 public:
 	/// <summary>
 	/// コンストラクタ

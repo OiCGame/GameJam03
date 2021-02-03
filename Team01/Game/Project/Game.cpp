@@ -127,10 +127,6 @@ CGame::CGame() :
 	m_EffectTexturePath("effect/effect00.png"),
 	m_StageTexturePath("pipo-bg001.jpg"),
 
-	//	_player_texture(),
-	//	_enemy_texture(),
-	//	_stage_texture(),
-	//	_bullet_texture(),
 	_player(),
 	_enemies(),
 	m_PlayerBullets(),
@@ -190,12 +186,6 @@ bool CGame::Initialize(void) {
 
 		m_EnemyDatas.push_back(CEnemy::InitParam(
 			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, hp, tex_path));
-		/*
-		auto enemy = CEnemy();
-		enemy.Initialize(Mof::CVector2(x, y), move_type);
-		enemy.SetTexture(&_enemy_texture);
-		_enemies.push_back(std::move(enemy));
-		*/
 	} // for
 
 
@@ -219,7 +209,6 @@ bool CGame::Initialize(void) {
 }
 
 bool CGame::Update(void) {
-	//	m_ElapsedTime += ::CUtilities::GetFrameSecond();
 	m_ElapsedTime += 0.0167f;
 	this->SpawnEnemy();
 
@@ -304,7 +293,6 @@ bool CGame::Render(void) {
 
 	m_UICanvas.Render();
 
-	::CGraphicsUtilities::RenderString(0.0f, 0.0f, "effect contaner size = %d", _effect_container.size());
 	::CGraphicsUtilities::RenderString(700.0f, 0.0f, "elapsed time = %f", m_ElapsedTime);
 
 	if (!_player.IsShow()) {

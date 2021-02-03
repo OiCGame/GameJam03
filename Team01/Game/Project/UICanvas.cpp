@@ -7,20 +7,19 @@ UICanvas::UICanvas() :
     m_Font(),
     m_Score(),
     m_RenderedScore(0),
-    m_FontMap(),
-    m_FontTexture() {
+    m_FontMap() {
 
     auto size = Mof::CVector2(37.0f, 60.0f);
     for (int i = 0; i < 10; i++) {
-        m_FontMap.emplace(std::string(std::to_string(i)),
+		m_FontMap.uvs.emplace(std::string(std::to_string(i)),
                           Mof::CRectangle(size.x * i, 0.0f,
                                           size.x * i + size.x, size.y));
     } // for
 
-    std::string alpha = "abcdefghijklmnopqrstuvwxyz";
+    std::string alpha = "abcdefghijklmnopqrstuvwxyz ";
     for (int i = 0; i < alpha.size(); i++) {
         auto str = alpha.substr(i , 1);
-        m_FontMap.emplace(str,
+		m_FontMap.uvs.emplace(str,
                           Mof::CRectangle(size.x * i, 60.0f,
                                           size.x * i + size.x,60.0f + size.y));
     } // for
@@ -35,7 +34,7 @@ bool UICanvas::Initialize(void) {
     if (!m_Font.Create(64, "ƒƒCƒŠƒI")) {
         return false;
     } // if
-    if (!m_FontTexture.Load("font.png")) {
+    if (!m_FontMap.texture.Load("font.png")) {
         return false;
     } // if
     return true;
@@ -62,22 +61,14 @@ bool UICanvas::Update(void) {
     return true;
 }
 bool UICanvas::Render(void) {
-    auto text = std::string("score");
-    text += std::to_string(m_RenderedScore);
-    m_Font.RenderString(0.0f, 0.0f, MOF_ARGB(255, 255, 0, 0), text.c_str());
+    auto text = std::string("score " + std::to_string(m_RenderedScore));
 
-
-    for (int i = 0; i < 10; i++) {
-        auto uv = m_FontMap.at(std::to_string(i));
-        m_FontTexture.Render(400.0f + 35 * i, 400.0f, uv);
-    } // for
-    for (int i = 0; i < text.size() - 1; i++) {
-        auto key  = text.substr(i, 1);
-        auto uv = m_FontMap.at(key);
-        m_FontTexture.Render(400.0f + 35 * i, 500.0f, uv);
-    } // for
-
-
+	auto pos = Mof::CVector2(0.0f, 0.0f);
+	for (int i = 0; i < text.size() ; i++) {
+		auto key = text.substr(i, 1);
+		m_FontMap.texture.Render(pos.x, pos.y, m_FontMap.uvs.at(key));
+		pos.x += 40.0f;
+	} // for
 
     for (auto& label : m_Labels) {
         label.Render();
@@ -91,7 +82,8 @@ bool UICanvas::Render(void) {
 }
 
 bool UICanvas::Release(void) {
-    m_FontTexture.Release();
+	m_FontMap.texture.Release();
+//    m_FonMap .Release();
     return true;
 }
 
@@ -100,7 +92,7 @@ void UICanvas::AddScore(uint32_t value) {
 }
 
 void UICanvas::AddText(const std::string& text, Mof::CVector2 position, int exist) {
-    m_Labels.push_back(UILabel(text, position, exist, &m_Font));
+    m_Labels.push_back(UILabel(text, position, exist, &m_FontMap));
 }
 
 void UICanvas::AddImage(const char* name, Mof::CTexture* texture, Mof::CVector2 pos) {
