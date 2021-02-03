@@ -3,6 +3,9 @@
 CSceneBase::CSceneBase() :
 	m_SelectNo(0),
 	m_bEnd(false),
+	m_bEndStart(false),
+	m_FadeSpeed(5),
+	m_Alpha(255),
 	m_NextSceneNo(0) {
 }
 
@@ -92,7 +95,35 @@ void CSceneBase::SelectHorizontal(int& no, int count, bool loop) {
 			if (loop)
 				no = (count - 1 < 0) ? 0 : count - 1;
 			else
-				no = 0;
+				no = 0; 
+		} // if
+	}
+}
+
+void CSceneBase::FadeInOut(void) {
+	if (m_bEndStart)
+	{
+		m_Alpha += m_FadeSpeed;
+		if (m_Alpha >= 255)
+		{
+			m_Alpha = 255;
+			m_bEndStart = false;
+			m_bEnd = true;
 		}
 	}
+	else
+	{
+		if (m_Alpha > 0)
+		{
+			m_Alpha -= m_FadeSpeed;
+		}
+		else if (m_Alpha < 0)
+		{
+			m_Alpha = 0;
+		}
+	}
+}
+
+void CSceneBase::RenderFade(void) {
+	CGraphicsUtilities::RenderFillRect(0,0,g_pGraphics->GetTargetWidth(),g_pGraphics->GetTargetHeight(),MOF_ARGB(m_Alpha,255,255,255));
 }

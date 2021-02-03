@@ -1,7 +1,14 @@
 #pragma once
 #include <Mof.h>
-class GameDefine
+enum tag_SCENENO
 {
+	SCENENO_TITLE,
+	SCENENO_GAME,
+	SCENENO_GAMEOVER,
+	SCENENO_GAMECLEAR,
+	SCENENO_RANKING,
+
+	SCENENO_COUNT
 };
 
 class CInputManager {
