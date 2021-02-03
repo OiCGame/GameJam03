@@ -29,17 +29,22 @@ MofBool CGameApp::Initialize(void){
 
 	CUtilities::SetFPS(60);
 	g_pGraphics->SetScreenSize(1920, 1080);
-
 	//素材フォルダの指定
 	CUtilities::SetCurrentDirectory("Resource");
 	
-	gpSecene->Initialize();
 	CResourceManager::Singleton()
-		.LoadTexture("GameClear","images/background/game_clear.png")
-		.LoadTexture("GameOver","images/background/game_over.png")
-		.LoadTexture("Player", "PlayerUFO.png")
-		.LoadTexture("PlayerBullet", "PlayerBullet.png")
-		.LoadTexture("PlayerArrow", "PlayerArrow.png");
+		// 画像の読み込み
+		.LoadTexture("GameClear", "images/background/game_clear.png")
+		.LoadTexture("GameOver", "images/background/game_over.png")
+		.LoadTexture("Player", "images/player/PlayerUFO.png")
+		.LoadTexture("PlayerBullet", "images/player/PlayerBullet.png")
+		.LoadTexture("PlayerArrow", "images/player/PlayerArrow.png")
+		// 音の読み込み
+		.LoadSound("bgm_title", "sounds/BGM/title.mp3");
+
+
+	gpSecene->Initialize();
+
 	return TRUE;
 }
 /*************************************************************************//*!
