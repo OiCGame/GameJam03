@@ -9,6 +9,7 @@ private:
 public:
 	CSceneGame();
 	~CSceneGame();
+	bool Load(void);
 	void Initialize(void);
 	void Update(void);
 	void Render(void);

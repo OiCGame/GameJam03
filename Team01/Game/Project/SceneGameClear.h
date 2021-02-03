@@ -9,6 +9,7 @@ private:
 public:
 	CSceneGameClear();
 	~CSceneGameClear();
+	bool Load(void);
 	void Initialize(void);
 	void Update(void);
 	void Render(void);

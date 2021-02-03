@@ -8,20 +8,25 @@ CSceneTitle::~CSceneTitle() {
 
 }
 
+bool CSceneTitle::Load() {
+	return false;
+}
+
 void CSceneTitle::Initialize() {
 
 }
 
 void CSceneTitle::Update() {
+	FadeInOut();
+	if (m_bEndStart) { return; }
 	if (CInputManager::GetInstance().GetPush(1))
 	{
-		m_bEnd = true;
+		m_bEndStart = true;
 		m_NextSceneNo = SCENENO_GAME;
 	}
 }
 
 void CSceneTitle::Render() {
-
 	for (int i = 0; i < m_MessageCount; i++)
 	{
 		CRectangle r;
@@ -30,6 +35,7 @@ void CSceneTitle::Render() {
 		float hei = 350 + i * 40;
 		CGraphicsUtilities::RenderString(wid - r.GetWidth() / 2, hei, m_OptionMessage[i].c_str());
 	}
+	RenderFade();
 }
 
 void CSceneTitle::RenderDebug() {
