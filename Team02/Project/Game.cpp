@@ -38,6 +38,7 @@ CGame::~CGame(void)
 void CGame::Initialize(void)
 {
 	Player.Initialize();
+    Panel.Initialize(GetData().StageNo);
     for (int i = 0; i < BLOCK_COUNT; i++)
     {
         Block[i].Initialize();
@@ -121,6 +122,9 @@ void CGame::Update(void)
 			Block[i].SetShow(false);
 		}
     }
+    // ‚ ‚Æ‚Å•Ï‚¦‚½‚¢‚Ì‚Åƒ_ƒ~[î•ñ‚ð‘—‚Á‚Ä‚¨‚­
+    Panel.Update(CRectangle(), -1, -1);
+
 	Timer.Update();
 
 	if (Timer.GetTime() <= 0)
@@ -142,17 +146,23 @@ void CGame::Render(void)
     {
         Block[i].Render();
     }
-	if (DebugEnable) {
+
+    Panel.Render();
+
+	Player.Render();
+	Timer.Render();
+    GuideImage.Render(g_pGraphics->GetTargetWidth() * 0.99f, g_pGraphics->GetTargetHeight() * 0.025f, TEXALIGN_TOPRIGHT);
+
+    // DEBUG
+    if (DebugEnable) {
         Player.RenderDebug();
         for (int i = 0; i < BLOCK_COUNT; i++)
         {
             Block[i].RenderDebug();
         }
-		Timer.RenderDebug();
+        Timer.RenderDebug();
+        Panel.RenderDebug();
     }
-	Player.Render();
-	Timer.Render();
-    GuideImage.Render(g_pGraphics->GetTargetWidth() * 0.99f, g_pGraphics->GetTargetHeight() * 0.025f, TEXALIGN_TOPRIGHT);
 }
 
 // ********************************************************************************
@@ -164,6 +174,7 @@ void CGame::Render(void)
 // ********************************************************************************
 void CGame::Release(void)
 {
+    Panel.Release();
 	Player.Release();
     for (int i = 0; i < BLOCK_COUNT; i++)
     {

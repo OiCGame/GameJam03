@@ -1,7 +1,6 @@
 #pragma once
 #include	"Mof.h"
 #include	"Bullet.h"
-#include	"Panel.h"
 
 constexpr auto BULLET_CATEGORY = 2;
 
@@ -33,7 +32,6 @@ private:
 	};
 	int						BulletRotate;
 
-	CPanel					Panel;
 	//ƒvƒŒƒCƒ„‚ªUI‚ğ‚Â‚Ì‚Í—Ç‚­‚È‚¢‚©‚àBŒŸ“¢Ÿ‘æ‚ÅˆÚ“®‚³‚¹‚Ü‚·
 	CTexture				BulletUITexture[BULLET_CATEGORY];	
 	CTexture				UIFrameTexture;

@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Block.h"
 #include "Timer.h"
+#include "Panel.h"
 
 // ********************************************************************************
 /// <summary>
@@ -18,6 +19,7 @@ private:
 	bool		    DebugEnable;
     sip::CStopWatch BlockFallTimer;
     CTexture        GuideImage;
+    CPanel			Panel;
 
 public:
 
