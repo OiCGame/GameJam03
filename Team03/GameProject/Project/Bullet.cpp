@@ -1,5 +1,10 @@
 #include "Bullet.h"
 
+bool CBullet::CollisionCircle(const CCircle & circle)
+{
+	return m_Body.CollisionCircle(circle);
+}
+
 void CBullet::Initialize(const CVector2 & position, const CVector2 & vector, const float & wait, const BulletType& type)
 {
 	m_Body.SetValue(
@@ -34,6 +39,11 @@ void CBullet::Update()
 	if (!m_ShowFlag) { return; }
 	m_Body.x += m_Vector.x;
 	m_Body.y += m_Vector.y;
+}
+
+bool CBullet::IsShow()
+{
+	return m_ShowFlag;
 }
 
 bool CBullet::IsSurvival()

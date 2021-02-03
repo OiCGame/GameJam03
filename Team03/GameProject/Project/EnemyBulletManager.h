@@ -34,12 +34,9 @@ struct LauncherInit_Polygon {
 
 class CEnemyBulletManager
 {
-public:
-	using BulletList = std::vector<CBullet>;
-
 private:
 	// 弾の管理配列
-	BulletList m_BulletList;
+	std::vector<CBullet> m_BulletList;
 
 public:
 	// シングルトン
@@ -55,6 +52,11 @@ public:
 	void SetLauncher(const LauncherInit_Line & init);
 	// 多角形状に発射
 	void SetLauncher(const LauncherInit_Polygon & init);
+
+	// 生きている弾の取得 (コストが高い為保留)
+	// std::vector<CBullet> GetAliveBulletList();
+
+	std::vector<CBullet>* GetBulletList();
 
 	// 更新
 	void Update();

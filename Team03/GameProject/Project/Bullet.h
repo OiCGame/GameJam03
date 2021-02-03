@@ -24,9 +24,13 @@ private:
 
 public:
 	
+	bool CollisionCircle(const CCircle & circle);
+
 	void Initialize(const CVector2 & position, const CVector2 & vector, const float & wait, const BulletType& type);
 
 	void Update();
+
+	bool IsShow();
 
 	bool IsSurvival();
 

@@ -28,7 +28,8 @@ void CEnemyBulletManager::SetLauncher(const LauncherInit_Line & init)
 		m_BulletList.back().Initialize(
 			init.position,
 			init.vector,
-			sumWiat
+			sumWiat,
+			init.type
 		);
 		sumWiat += init.interval;
 	}
@@ -53,11 +54,32 @@ void CEnemyBulletManager::SetLauncher(const LauncherInit_Polygon & init)
 			m_BulletList.back().Initialize(
 				init.position,
 				CVector2(init.vector.x * sin(InternalAngle * v + work), -(init.vector.y * cos(InternalAngle * v + work))),
-				sumWiat
+				sumWiat,
+				init.type
 			);
 		}
 		sumWiat += init.interval;
 	}
+}
+
+//std::vector<CBullet> CEnemyBulletManager::GetAliveBulletList()
+//{
+//	// // 見えているかの確認
+//	//auto it = std::remove_if(
+//	//	m_BulletList.begin(),
+//	//	m_BulletList.end(),
+//	//	[](CBullet bullet) { return bullet.IsShow(); }
+//	//);
+//	//for (; it != m_BulletList.begin(); it--) {
+//	//	it->CollisionCircle(CCircle()/*Plarey*/);
+//	//}
+//}
+
+
+
+std::vector<CBullet>* CEnemyBulletManager::GetBulletList()
+{
+	return &m_BulletList;
 }
 
 // 更新
