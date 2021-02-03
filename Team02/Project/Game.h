@@ -17,6 +17,7 @@ private:
 	CTimer			Timer;
 	bool		    DebugEnable;
     sip::CStopWatch BlockFallTimer;
+    CTexture        GuideImage;
 
 public:
 

@@ -63,6 +63,9 @@ bool CGame::Load(void)
 {
 	Player.Load();
 	Timer.Load();
+    CUtilities::SetCurrentDirectory("UI/ÉQÅ[ÉÄñ{ï“");
+    GuideImage.Load("ÉKÉCÉh2.png");
+    CUtilities::SetCurrentDirectory("../../");
     return true;
 }
 
@@ -135,8 +138,6 @@ void CGame::Update(void)
 // ********************************************************************************
 void CGame::Render(void)
 {
-    // DEBUG
-    CGraphicsUtilities::RenderString(0, 0, "GAME");
     for (int i = 0; i < BLOCK_COUNT; i++)
     {
         Block[i].Render();
@@ -151,6 +152,7 @@ void CGame::Render(void)
     }
 	Player.Render();
 	Timer.Render();
+    GuideImage.Render(g_pGraphics->GetTargetWidth() * 0.99f, g_pGraphics->GetTargetHeight() * 0.025f, TEXALIGN_TOPRIGHT);
 }
 
 // ********************************************************************************
@@ -168,4 +170,5 @@ void CGame::Release(void)
         Block[i].Release();
     }
 	Timer.Release();
+    GuideImage.Release();
 }
