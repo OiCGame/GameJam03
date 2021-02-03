@@ -33,5 +33,7 @@ public:
     void RenderDebug(void);
 
     void Release(void);
+
+    CTexture* GetMiniBlockTexture(int bullettype) { return &BulletUITexture[bullettype]; }
 };
 

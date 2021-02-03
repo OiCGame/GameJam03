@@ -7,6 +7,12 @@ CPanel::CPanel() {
 CPanel::~CPanel() {
 }
 
+void CPanel::SetTexture(CTexture ** pTextureArray)
+{
+    m_pTryangleTexture = pTextureArray[0];
+    m_pSquareTexture = pTextureArray[1];
+}
+
 void CPanel::Initialize(int stagenum) {
 	m_StgNum = stagenum;
 	Release();	//一度素材の開放を挟む
@@ -37,8 +43,6 @@ void CPanel::Initialize(int stagenum) {
 		}
 		break;
 	}
-	三角Texture.Load("UI/ゲーム本編/ミニ三角ブロック.png");
-	四角Texture.Load("UI/ゲーム本編/ミニ四角ブロック.png");
 	m_Clear = false;
 	for (int i = 0; i < STG1JUDGECNT; i++)
 	{
@@ -121,8 +125,8 @@ void CPanel::Render(void) {
 		{
 			if (m_SingleOk[i])
 			{
-				四角Texture.Render(SinglePos_Stg1[i].x + (245 - (float)四角Texture.GetWidth()) * 0.5f,
-					SinglePos_Stg1[i].y + (259 - (float)四角Texture.GetHeight()) * 0.5f);
+                m_pSquareTexture->Render(SinglePos_Stg1[i].x + (245 - (float)m_pSquareTexture->GetWidth()) * 0.5f,
+					SinglePos_Stg1[i].y + (259 - (float)m_pSquareTexture->GetHeight()) * 0.5f);
 			}
 		}
 		break;
@@ -160,14 +164,14 @@ void CPanel::RenderDebug(void) {
 		break;
 	}
 
-	CGraphicsUtilities::RenderString(0,1000, "描画位置 X ： %f", SinglePos_Stg1[0].x + (245 - 四角Texture.GetWidth()) * 0.5f);
+	CGraphicsUtilities::RenderString(0,1000, "描画位置 X ： %f", SinglePos_Stg1[0].x + (245 - m_pSquareTexture->GetWidth()) * 0.5f);
 }
 
 void CPanel::Release(void) {
 	m_PanelTexture.Release();
 	//一時的なもの、記述変更の後削除すること
-	四角Texture.Release();
-	三角Texture.Release();
+    m_pSquareTexture = nullptr;
+	m_pTryangleTexture= nullptr;
 }
 
 void CPanel::CheckClear()

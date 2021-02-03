@@ -39,6 +39,14 @@ void CGame::Initialize(void)
 {
 	Player.Initialize();
     Panel.Initialize(GetData().StageNo);
+
+    CTexture* texArray[]
+    {
+        /**Player.GetBulletTexture(0)/*/GameUI.GetMiniBlockTexture(0)/**/,
+        /**Player.GetBulletTexture(1)/*/GameUI.GetMiniBlockTexture(1)/**/,
+    };
+    Panel.SetTexture(texArray);
+
     for (int i = 0; i < BLOCK_COUNT; i++)
     {
         Block[i].Initialize();
