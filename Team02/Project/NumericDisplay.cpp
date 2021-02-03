@@ -11,7 +11,7 @@ CNumericDisplay::~CNumericDisplay()
 void CNumericDisplay::Load()
 {
 	Texture.Load("UI/ƒQ[ƒ€–{•Ò/”Žš.png");
-	TextureWidth = (Texture.GetWidth() * 0.1f);
+	TextureWidth = 47.5;
 }
 
 void CNumericDisplay::Create(int numeric , CVector2 position)
@@ -27,7 +27,7 @@ void CNumericDisplay::Render()
 		CRectangle rec(TextureWidth * NumericBuffer.GetData(i), 0,
 			TextureWidth * (NumericBuffer.GetData(i) + 1), Texture.GetHeight());
 		rect = rec;
-		Texture.Render(Position.x + (TextureWidth * i), Position.y, rec);
+		Texture.Render(Position.x - (TextureWidth * i), Position.y, rec);
 	}
 }
 
@@ -55,7 +55,7 @@ void CNumericDisplay::SetNumeric(int numeric)
 	int digits = (int)log10((double)numeric) + 1;
 	while (digits > 0)
 	{
-		NumericBuffer.AddFast(numeric % 10);
+		NumericBuffer.AddLast(numeric % 10);
 		numeric /= 10;
 		digits--;
 	}

@@ -46,6 +46,8 @@ void CGame::Initialize(void)
     int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(2);
     CTexture* pBlockTexture = Player.GetBulletTexture(bulletType);
     Block[0].FallStart(pBlockTexture, bulletType);
+	
+	Timer.Initialize( 300,CVector2(1450,500));
 }
 
 // ********************************************************************************
@@ -59,7 +61,7 @@ void CGame::Initialize(void)
 bool CGame::Load(void)
 {
 	Player.Load();
-
+	Timer.Load();
     return true;
 }
 
@@ -102,7 +104,6 @@ void CGame::Update(void)
         }
     }
 
-
 	Player.Update();
 
     for (int i = 0; i < BLOCK_COUNT; i++)
@@ -116,6 +117,12 @@ void CGame::Update(void)
 			Block[i].SetShow(false);
 		}
     }
+	Timer.Update();
+
+	if (Timer.GetTime() <= 0)
+	{
+		ChangeScene(SceneName::GameOver);
+	}
 }
 
 // ********************************************************************************
@@ -140,8 +147,9 @@ void CGame::Render(void)
         {
             Block[i].RenderDebug();
         }
+		Timer.RenderDebug();
     }
-	
+	Timer.Render();
 }
 
 // ********************************************************************************
@@ -158,4 +166,5 @@ void CGame::Release(void)
     {
         Block[i].Release();
     }
+	Timer.Release();
 }

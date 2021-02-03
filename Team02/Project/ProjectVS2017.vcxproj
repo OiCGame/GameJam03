@@ -111,6 +111,7 @@
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StopWatch.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -134,6 +135,7 @@
     <ClInclude Include="Setting.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StopWatch.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>

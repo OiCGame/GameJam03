@@ -2,6 +2,7 @@
 #include "SceneDefine.h"
 #include "Player.h"
 #include "Block.h"
+#include "Timer.h"
 
 // ********************************************************************************
 /// <summary>
@@ -13,9 +14,9 @@ class CGame : public MyApp::CScene
 private:
 	CPlayer		    Player;
     CBlock		    Block[BLOCK_COUNT];
+	CTimer			Timer;
 	bool		    DebugEnable;
     sip::CStopWatch BlockFallTimer;
-
 
 public:
 

@@ -7,6 +7,7 @@ class CNumericDisplay
 private:
 	CTexture			Texture;
 	float				TextureWidth;
+	//”’l‚Ì‚½‚ßŠî€‚ÌÅ‰EˆÊ’u‚ğ“ü‚ê‚é
 	CVector2			Position;
 	CDynamicArray<int>	NumericBuffer;
 
