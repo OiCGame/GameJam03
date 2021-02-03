@@ -44,6 +44,7 @@ void CGame::Collision(void) {
 	};
 	std::vector<EffectParam> effect_param;
 	for (auto& enemy : _enemies) {
+		if (!enemy.IsShow()) { continue; }
 		for (auto effect : _effect_container) {
 			auto enemy_rect = enemy.GetCollisionRectangle();
 			if (enemy_rect.CollisionRect(effect->GetCollisionRectangle())) {
@@ -85,7 +86,7 @@ void CGame::Collision(void) {
 			} // if
 		} // for
 		if (_player.IsShow()) {
-			for (int i = 0; i < enemy.CollitionBullet(_player.GetCollisionRectangle()); i++) {
+			for (int i = 0; i < enemy.CollisionBullet(_player.GetCollisionRectangle()); i++) {
 				/*
 				if (_player.Damage()) {
 					auto name = std::string("image");
@@ -212,7 +213,7 @@ bool CGame::Update(void) {
 			_enemies.begin(),
 			_enemies.end(),
 			[](CEnemy& enemy) {
-			if (enemy.IsShow() == false) {
+			if (!enemy.IsShow() && enemy.GetBulletShow() == 0) {
 				enemy.Release();
 				return true;
 			} // if
@@ -226,9 +227,7 @@ bool CGame::Update(void) {
 	} // if
 
 	for (auto& enemy : _enemies) {
-		if (enemy.IsShow()) {
 			enemy.Update();
-		} // if
 	} // for
 
 	for (auto& bullet : m_PlayerBullets) {
@@ -259,9 +258,7 @@ bool CGame::Render(void) {
 	} // if
 
 	for (auto& enemy : _enemies) {
-		if (enemy.IsShow()) {
 			enemy.Render();
-		} // if
 	} // for
 
 	for (auto& bullet : m_PlayerBullets) {

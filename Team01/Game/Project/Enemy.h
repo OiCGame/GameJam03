@@ -61,6 +61,8 @@ private:
     int m_BulletSetGap = 60;
     int m_BulletSetRemGap;
 
+	int m_BulletShowCount;
+
 public:
 
     CEnemy();
@@ -73,7 +75,7 @@ public:
     void Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp);
     void SetTexture(Mof::CTexture* ptr);
     void Update();
-    int CollitionBullet(CRectangle prec);
+    int CollisionBullet(CRectangle prec);
     void Render();
     void Release();
 
@@ -86,4 +88,5 @@ public:
     int GetFastBulletNo() { return m_FastBulletNo; }
     void SetFastBulletNo(int no) { m_FastBulletNo = no; }
     Mof::CRectangle GetCollisionRectangle(void) const;
+	int GetBulletShow() { return m_BulletShowCount; }
 };

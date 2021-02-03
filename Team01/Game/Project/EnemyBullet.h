@@ -20,11 +20,12 @@ public:
 
 	void Initialize(float dir);
 	void Generation(Vector2 pos);
-	int Collition(CRectangle prec);
+	int Collision(CRectangle prec);
 	void Update();
 	void Render();
 	void Release();
 
+	bool IsShow() { return m_bDraw; }
 	CRectangle GetRec() { return CRectangle(m_Pos.x - 10, m_Pos.y - 10, m_Pos.x + 10, m_Pos.y + 10); }
 };
 

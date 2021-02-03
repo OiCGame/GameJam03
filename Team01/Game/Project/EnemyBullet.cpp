@@ -66,7 +66,7 @@ void CEnemyBullet::Update() {
 	}
 }
 
-int CEnemyBullet::Collition(CRectangle prec) {
+int CEnemyBullet::Collision(CRectangle prec) {
 	if (!m_bDraw) {
 		return 0;
 	}
