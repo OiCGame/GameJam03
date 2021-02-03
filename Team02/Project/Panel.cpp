@@ -37,6 +37,8 @@ void CPanel::Initialize(int stagenum) {
 		}
 		break;
 	}
+	三角Texture.Load("UI/ゲーム本編/ミニ三角ブロック.png");
+	四角Texture.Load("UI/ゲーム本編/ミニ四角ブロック.png");
 	m_Clear = false;
 	for (int i = 0; i < STG1JUDGECNT; i++)
 	{
@@ -93,6 +95,21 @@ void CPanel::Update(CRectangle rec, float px, int bt) {
 			m_SingleConfirm[i] = true;
 		}
 	}
+
+	CheckClear();
+
+	//Debug
+	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD1))
+	{
+		m_SingleOk[0] = true;
+	}
+	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD2))
+	{
+		for (int i = 0; i < STG1JUDGECNT; i++)
+		{
+			m_SingleOk[i] = true;
+		}
+	}
 }
 
 void CPanel::Render(void) {
@@ -100,6 +117,14 @@ void CPanel::Render(void) {
 	case STAGE1:
 		//位置を中央に修正、画面上部にUIを表示するので位置変更 by 深山 2021/02/03 14:03
 		m_PanelTexture.Render((g_pGraphics->GetTargetWidth() - m_PanelTexture.GetWidth()) * 0.5, 130);
+		for (int i = 0; i < STG1JUDGECNT; i++)
+		{
+			if (m_SingleOk[i])
+			{
+				四角Texture.Render(SinglePos_Stg1[i].x + (245 - (float)四角Texture.GetWidth()) * 0.5f,
+					SinglePos_Stg1[i].y + (259 - (float)四角Texture.GetHeight()) * 0.5f);
+			}
+		}
 		break;
 	case STAGE2:
 		break;
@@ -135,11 +160,14 @@ void CPanel::RenderDebug(void) {
 		break;
 	}
 
-	CGraphicsUtilities::RenderString(0,1000, "パネル描画位置 X ： %f", (g_pGraphics->GetTargetWidth() - m_PanelTexture.GetWidth()) * 0.5);
+	CGraphicsUtilities::RenderString(0,1000, "描画位置 X ： %f", SinglePos_Stg1[0].x + (245 - 四角Texture.GetWidth()) * 0.5f);
 }
 
 void CPanel::Release(void) {
 	m_PanelTexture.Release();
+	//一時的なもの、記述変更の後削除すること
+	四角Texture.Release();
+	三角Texture.Release();
 }
 
 void CPanel::CheckClear()

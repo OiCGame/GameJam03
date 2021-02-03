@@ -4,6 +4,9 @@
 #include	"Mof.h"
 #include	"Bullet.h"
 
+//‚Å‚«‚ê‚ÎBulletManager‚Ì‚æ‚¤‚É‚·‚é‚×‚«‚©‚à
+#include	"Player.h"
+
 constexpr auto STG1JUDGECNT = 7;	// Stage 1 Judge Count
 constexpr auto STG2JUDGECNT = 0;
 constexpr auto STG3JUDGECNT = 0;
@@ -18,9 +21,10 @@ enum StageNumber {
 class CPanel {
 private:
 	CDynamicArray<CBullet>	Bullet;
+	CPlayer					Player;
 	CTexture	m_PanelTexture;
-	CTexture*	ŽlŠpTexture;
-	CTexture*	ŽOŠpTexture;
+	CTexture	ŽlŠpTexture;
+	CTexture	ŽOŠpTexture;
 	bool		m_SingleOk[JUDGECNT];			// ŒÂ•Ê
 	bool		m_SingleConfirm[JUDGECNT];			// ŒÂ•Ê
 	bool		m_Clear;
