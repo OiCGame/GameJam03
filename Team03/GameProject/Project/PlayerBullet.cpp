@@ -53,7 +53,6 @@ void CPlayerBullet::Update()
 
 void CPlayerBullet::Render()
 {
-	//, 
 	m_Texture->RenderRotate(m_Position.x, m_Position.y, m_Angle,CRectangle(0, 0, min(m_MoveDistance, ((float)m_Texture->GetWidth())), m_Texture->GetHeight()), TEXTUREALIGNMENT_CENTERLEFT);
 }
 

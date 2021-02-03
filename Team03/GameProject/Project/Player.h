@@ -56,7 +56,7 @@ public:
 	CCircle GetCircle() { return CCircle(m_Position, m_Radius); }
 	CRectangle GetRectangle() { return CRectangle(m_Position.x - m_Radius, m_Position.y - m_Radius, m_Position.x + m_Radius, m_Position.y + m_Radius); }
 
-	CRectangle GetBulletRectangle() { }
+	std::vector<CPlayerBullet> GetBullet() { return m_BulletList; }
 
 	int GetLife() { return m_Life; }
 

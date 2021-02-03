@@ -129,7 +129,7 @@ void CPlayer::Update()
 		//UŒ‚CT
 		if (m_AttackCooldown > 0) {
 			m_AttackCooldown -= CUtilities::GetFrameSecond();
-			if (m_AttackCooldown > 0) {
+			if (m_AttackCooldown < 0) {
 				m_AttackCooldown = 0;
 			}
 		}
@@ -141,6 +141,7 @@ void CPlayer::Update()
 
 				m_BulletList.push_back(bullet);
 				m_AttackCooldown = ATTACK_COOLDOWN_TIME;
+				m_BulletRemain--;
 			}
 		}
 	}
