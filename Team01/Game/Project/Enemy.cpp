@@ -1,15 +1,12 @@
 #include "Enemy.h"
 
 CEnemy::CEnemy() :
-    m_HP(3),
-	m_MaxHP(3),
-    m_Speed(0.0f),
-    m_Dir(90.0f),
-    m_FastBulletNo(-1),
-    m_bDrow(true),
-    m_MoveType(0),
-    m_MoveTypeOnPinch(0),
-    m_PinchHPRatio(0.0f) {
+	m_HP(3),
+	m_Speed(0.0f),
+	m_Dir(90.0f),
+	m_FastBulletNo(-1),
+	m_bDrow(true),
+	m_MoveType(0) {
 }
 
 CEnemy::~CEnemy() {
@@ -118,8 +115,8 @@ void CEnemy::Initialize(const InitParam& param) {
 
 void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp) {
     m_Pos = pos;
-	m_MaxHP = hp;
-    m_HP = m_MaxHP;
+    m_HPMax = hp;
+    m_HP = m_HPMax;
     m_MoveType = move_type;
     m_MoveTypeOnPinch = pinch_move;
     m_PinchHPRatio = ratio;
@@ -158,7 +155,7 @@ void CEnemy::SetTexture(Mof::CTexture* ptr) {
 }
 
 void CEnemy::Update() {
-    float ratio = m_HP / m_MaxHP;
+    float ratio = m_HP / m_HPMax;
     if (m_PinchHPRatio <= ratio) {
         this->Move(m_MoveType);
     } // if
@@ -228,18 +225,11 @@ void CEnemy::Render() {
 
 
 #endif // _DEBUG
+	m_pTexture->Render(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y - m_pTexture->GetHeight() / 2);
 
 
-
-
-
-
-    m_pTexture->Render(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y - m_pTexture->GetHeight() / 2);
-    
-	
-	
-
-	if (m_HP != m_MaxHP) {
+	if (m_HP != m_MaxHP)
+	{
 		float hpw = m_pTexture->GetWidth();
 		float hpper = m_HP;
 		hpper /= m_MaxHP;
@@ -251,12 +241,6 @@ void CEnemy::Render() {
 	for (int i = 0; i < m_BulletCount; i++) {
 		m_Bullet[i].Render();
 	}
-
-
-	
-	for (int i = 0; i < m_BulletCount; i++) {
-        m_Bullet[i].Render();
-    }
 }
 
 void CEnemy::Release() {
