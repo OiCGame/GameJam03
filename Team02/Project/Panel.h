@@ -37,7 +37,7 @@ public:
 	~CPanel();
     void SetTexture(CTexture** pTextureArray);
 	void Initialize(int stagenum);
-	void Update(CRectangle rec, float px, int bt);
+	void Update();
 	void Render();
 	void RenderDebug();
 	void Release();
@@ -76,4 +76,6 @@ public:
 
 	void	CheckClear();
 	bool	IsClear() { return m_Clear; }
+
+	void	CheckHitCollision(CRectangle rec, float px, int bt);
 };

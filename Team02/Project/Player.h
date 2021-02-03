@@ -48,4 +48,6 @@ public:
 	bool		IsBulletBuffer() { return BulletBuffer < Empty ? true : false; }
     int         GetBulletBuffer() { return BulletBuffer; }
     int         GetBulletRotate() { return BulletRotate; }
+
+	CDynamicArray<CBullet>	GetBulletArray() { return Bullets; }
 };

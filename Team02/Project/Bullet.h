@@ -23,8 +23,7 @@ private:
 	int					BulletType;
 	int					Rotate;
 
-	CRectangle			SquRect;
-	CRectangle			TriRect;
+	CRectangle			BulletRect;
 public:
 	CBullet();
 	~CBullet();
@@ -38,9 +37,7 @@ public:
 	void	SetShow(bool isShow) { IsShow = isShow; }
 	int		GetBulletType() { return BulletType; }
 
-	float		GetXPos() { return Position.x; }
-	CRectangle GetBulletRect[2] = {
-		SquRect,		//四角の矩形
-		TriRect			//三角の矩形 ???
-	};
+	float	GetPosX() { return Position.x; }
+
+	CRectangle		GetRectangle() { return BulletRect; }
 };

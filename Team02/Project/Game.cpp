@@ -134,8 +134,18 @@ void CGame::Update(void)
 			Block[i].SetShow(false);
 		}
     }
+	//後程可能であればポインタに変更します
+	CDynamicArray<CBullet>	tmpBullet;
+	tmpBullet = Player.GetBulletArray();
+
+	for (int i = 0; i < tmpBullet.GetArrayCount(); i++)
+	{
+		Panel.CheckHitCollision(tmpBullet[i].GetRectangle(),
+			tmpBullet[i].GetPosX(), tmpBullet[i].GetBulletType());
+	}
+
     // あとで変えたいのでダミー情報を送っておく
-    Panel.Update(CRectangle(), -1, -1);
+    Panel.Update(/*CRectangle(), -1, -1*/);
 
 	Timer.Update();
 

@@ -50,70 +50,27 @@ void CPanel::Initialize(int stagenum) {
 	}
 }
 
-void CPanel::Update(CRectangle rec, float px, int bt) {
-	//複数接触判定フラグをfalse
-	m_MultiCollision = false;
-	switch (m_StgNum) {
-	case STAGE1:
-		for (int i = 0; i < STG1JUDGECNT; i++) {
-			// 各上枠パネルと打ち出された弾との当たり判定と、パネルの種類と弾の種類が一致するなら...
-			if (SingleRect_Stg1[i].CollisionRect(rec) &&
-				SingleState_Stg1[i] == bt) {
-				// i > 0でしか判定できない処理
-				// 既に、接触判定が出ていた( i - 1 番目が接触判定を起こしていた場合)
-				if (m_MultiCollision && i > 0) {
-					// 今回の判定の「X座標と前回のX座標との絶対値」を比べ、今回の方が少なければ(近ければ)下記の処理を行う
-					m_JdgA = FrontLine_Stg1[i] - px;
-					m_JdgB = FrontLine_Stg1[i - 1] - px;
-					if (abs(m_JdgA) <= abs(m_JdgB)) {
-						m_SingleOk[i] = true;
-						m_SingleOk[i - 1] = false;	// 前回(i - 1)で得たm_SingleOkをfalseにする...
-					}
-				}
-				else {
-					m_MultiCollision = true;
-					m_SingleOk[i] = true;
-				}
-			}
-		}
-		break;
-	case STAGE2:
-		for (int i = 0; i < STG2JUDGECNT; i++) {
-			if (SingleRect_Stg2[i].CollisionRect(rec)/* &&
-				SingleState_Stg2[i] == bt*/) {
-
-			}
-		}
-		break;
-	case STAGE3:
-		for (int i = 0; i < STG3JUDGECNT; i++) {
-			if (SingleRect_Stg3[i].CollisionRect(rec)/* &&
-				SingleState_Stg3[i] == bt*/) {
-
-			}
-		}
-		break;
-	}
+void CPanel::Update() {
+	
 	for (int i = 0; i < STG1JUDGECNT; i++) {
 		if (m_SingleOk[i]) {
 			m_SingleConfirm[i] = true;
 		}
 	}
 
-	CheckClear();
-
 	//Debug
 	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD1))
 	{
-		m_SingleOk[0] = true;
+		m_SingleConfirm[0] = true;
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD2))
 	{
 		for (int i = 0; i < STG1JUDGECNT; i++)
 		{
-			m_SingleOk[i] = true;
+			m_SingleConfirm[i] = true;
 		}
 	}
+	CheckClear();
 }
 
 void CPanel::Render(void) {
@@ -123,7 +80,7 @@ void CPanel::Render(void) {
 		m_PanelTexture.Render((g_pGraphics->GetTargetWidth() - m_PanelTexture.GetWidth()) * 0.5, 130);
 		for (int i = 0; i < STG1JUDGECNT; i++)
 		{
-			if (m_SingleOk[i])
+			if (m_SingleConfirm[i])
 			{
                 m_pSquareTexture->Render(SinglePos_Stg1[i].x + (245 - (float)m_pSquareTexture->GetWidth()) * 0.5f,
 					SinglePos_Stg1[i].y + (259 - (float)m_pSquareTexture->GetHeight()) * 0.5f);
@@ -179,7 +136,7 @@ void CPanel::CheckClear()
 	int count = 0;
 	for (int i = 0; i < STG1JUDGECNT; i++)
 	{
-		if (m_SingleOk[i])
+		if (m_SingleConfirm[i])
 		{
 			count++;
 		}
@@ -191,5 +148,52 @@ void CPanel::CheckClear()
 	else
 	{
 		m_Clear = false;
+	}
+}
+
+void CPanel::CheckHitCollision(CRectangle rec, float px, int bt)
+{
+	//複数接触判定フラグをfalse
+	m_MultiCollision = false;
+	switch (m_StgNum) {
+	case STAGE1:
+		for (int i = 0; i < STG1JUDGECNT; i++) {
+			// 各上枠パネルと打ち出された弾との当たり判定と、パネルの種類と弾の種類が一致するなら...
+			if (SingleRect_Stg1[i].CollisionRect(rec) &&
+				SingleState_Stg1[i] == bt) {
+				// i > 0でしか判定できない処理
+				// 既に、接触判定が出ていた( i - 1 番目が接触判定を起こしていた場合)
+				if (m_MultiCollision && i > 0) {
+					// 今回の判定の「X座標と前回のX座標との絶対値」を比べ、今回の方が少なければ(近ければ)下記の処理を行う
+					m_JdgA = FrontLine_Stg1[i] - px;
+					m_JdgB = FrontLine_Stg1[i - 1] - px;
+					if (abs(m_JdgA) <= abs(m_JdgB)) {
+						m_SingleOk[i] = true;
+						m_SingleOk[i - 1] = false;	// 前回(i - 1)で得たm_SingleOkをfalseにする...
+					}
+				}
+				else {
+					m_MultiCollision = true;
+					m_SingleOk[i] = true;
+				}
+			}
+		}
+		break;
+	case STAGE2:
+		for (int i = 0; i < STG2JUDGECNT; i++) {
+			if (SingleRect_Stg2[i].CollisionRect(rec)/* &&
+				SingleState_Stg2[i] == bt*/) {
+
+			}
+		}
+		break;
+	case STAGE3:
+		for (int i = 0; i < STG3JUDGECNT; i++) {
+			if (SingleRect_Stg3[i].CollisionRect(rec)/* &&
+				SingleState_Stg3[i] == bt*/) {
+
+			}
+		}
+		break;
 	}
 }
