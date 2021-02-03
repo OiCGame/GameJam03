@@ -2,7 +2,7 @@
 
 CEnemy::CEnemy() :
     m_HP(3),
-    m_HPMax(3),
+	m_MaxHP(3),
     m_Speed(0.0f),
     m_Dir(90.0f),
     m_FastBulletNo(-1),
@@ -118,8 +118,8 @@ void CEnemy::Initialize(const InitParam& param) {
 
 void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp) {
     m_Pos = pos;
-    m_HPMax = hp;
-    m_HP = m_HPMax;
+	m_MaxHP = hp;
+    m_HP = m_MaxHP;
     m_MoveType = move_type;
     m_MoveTypeOnPinch = pinch_move;
     m_PinchHPRatio = ratio;
@@ -158,7 +158,7 @@ void CEnemy::SetTexture(Mof::CTexture* ptr) {
 }
 
 void CEnemy::Update() {
-    float ratio = m_HP / m_HPMax;
+    float ratio = m_HP / m_MaxHP;
     if (m_PinchHPRatio <= ratio) {
         this->Move(m_MoveType);
     } // if
@@ -232,8 +232,29 @@ void CEnemy::Render() {
 
 
 
+
+
     m_pTexture->Render(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y - m_pTexture->GetHeight() / 2);
-    for (int i = 0; i < m_BulletCount; i++) {
+    
+	
+	
+
+	if (m_HP != m_MaxHP) {
+		float hpw = m_pTexture->GetWidth();
+		float hpper = m_HP;
+		hpper /= m_MaxHP;
+		hpw *= hpper;
+		CGraphicsUtilities::RenderFillRect(m_Pos.x - m_pTexture->GetWidth() / 2 - 2, m_Pos.y + m_pTexture->GetHeight() / 2 + 2, m_Pos.x + m_pTexture->GetWidth() / 2 + 2, m_Pos.y + m_pTexture->GetHeight() / 2 + 6, MOF_XRGB(0, 0, 0));
+		CGraphicsUtilities::RenderFillRect(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y + m_pTexture->GetHeight() / 2 + 3, m_Pos.x - m_pTexture->GetWidth() / 2 + hpw, m_Pos.y + m_pTexture->GetHeight() / 2 + 5, MOF_XRGB(0, 255, 0));
+	}
+
+	for (int i = 0; i < m_BulletCount; i++) {
+		m_Bullet[i].Render();
+	}
+
+
+	
+	for (int i = 0; i < m_BulletCount; i++) {
         m_Bullet[i].Render();
     }
 }
