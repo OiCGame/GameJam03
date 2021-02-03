@@ -4,6 +4,7 @@
 #include "Block.h"
 #include "Timer.h"
 #include "Panel.h"
+#include "GameUI.h"
 
 // ********************************************************************************
 /// <summary>
@@ -18,8 +19,8 @@ private:
 	CTimer			Timer;
 	bool		    DebugEnable;
     sip::CStopWatch BlockFallTimer;
-    CTexture        GuideImage;
     CPanel			Panel;
+    CGameUI         GameUI;
 
 public:
 

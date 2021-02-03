@@ -50,6 +50,8 @@ void CGame::Initialize(void)
 	
 	//207はタイマーUI枠の幅、textureの読み込み位置を再検討？
 	Timer.Initialize( 300,CVector2(((int)g_pGraphics->GetTargetWidth() * 0.5) - 207,0));
+
+    GameUI.Initialize();
 }
 
 // ********************************************************************************
@@ -64,9 +66,7 @@ bool CGame::Load(void)
 {
 	Player.Load();
 	Timer.Load();
-    CUtilities::SetCurrentDirectory("UI/ゲーム本編");
-    GuideImage.Load("ガイド2.png");
-    CUtilities::SetCurrentDirectory("../../");
+    GameUI.Load();
     return true;
 }
 
@@ -150,8 +150,13 @@ void CGame::Render(void)
     Panel.Render();
 
 	Player.Render();
+
+    GameUI.Render();
+    if (Player.IsBulletBuffer())
+    {
+        GameUI.RenderBulletUI(Player.GetBulletBuffer(), Player.GetBulletRotate());
+    }
 	Timer.Render();
-    GuideImage.Render(g_pGraphics->GetTargetWidth() * 0.99f, g_pGraphics->GetTargetHeight() * 0.025f, TEXALIGN_TOPRIGHT);
 
     // DEBUG
     if (DebugEnable) {
@@ -162,6 +167,7 @@ void CGame::Render(void)
         }
         Timer.RenderDebug();
         Panel.RenderDebug();
+        GameUI.RenderDebug();
     }
 }
 
@@ -181,5 +187,5 @@ void CGame::Release(void)
         Block[i].Release();
     }
 	Timer.Release();
-    GuideImage.Release();
+    GameUI.Release();
 }

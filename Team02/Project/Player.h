@@ -2,8 +2,6 @@
 #include	"Mof.h"
 #include	"Bullet.h"
 
-constexpr auto BULLET_CATEGORY = 2;
-
 class CPlayer
 {
 private:
@@ -32,11 +30,6 @@ private:
 	};
 	int						BulletRotate;
 
-	//ƒvƒŒƒCƒ„‚ªUI‚ğ‚Â‚Ì‚Í—Ç‚­‚È‚¢‚©‚àBŒŸ“¢Ÿ‘æ‚ÅˆÚ“®‚³‚¹‚Ü‚·
-	CTexture				BulletUITexture[BULLET_CATEGORY];	
-	CTexture				UIFrameTexture;
-	CVector2				BulletUIPosition;
-
 public:
 	CPlayer();
 	~CPlayer();
@@ -53,4 +46,6 @@ public:
     CTexture*   GetBulletTexture(int bulletype) { return &BulletTexture[bulletype]; }
 	bool		CheckHitCollision(CCircle hitcollision) { return Collision.CollisionCircle(hitcollision); }
 	bool		IsBulletBuffer() { return BulletBuffer < Empty ? true : false; }
+    int         GetBulletBuffer() { return BulletBuffer; }
+    int         GetBulletRotate() { return BulletRotate; }
 };
