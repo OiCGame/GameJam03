@@ -163,8 +163,12 @@ void CPlayer::Render()
 	}
 
 	//–îˆó
-	CVector2 arrowPos = m_Position + m_MouseVector * (m_Radius + 20);
-	m_TextureArrow->RenderRotate(arrowPos.x, arrowPos.y, atan2(m_MouseVector.x, -m_MouseVector.y), TEXTUREALIGNMENT_BOTTOMCENTER);
+	CVector2 arrowPos = m_Position + m_MouseVector * (m_Radius + 50);
+	float arrowHeight = m_TextureArrow->GetHeight();
+	//CT•\Ž¦ˆ—
+	arrowHeight *= m_AttackCooldown / ATTACK_COOLDOWN_TIME;
+	CRectangle arrowRect = CRectangle(0, arrowHeight, m_TextureArrow->GetWidth(), m_TextureArrow->GetHeight());
+	m_TextureArrow->RenderRotate(arrowPos.x, arrowPos.y, atan2(m_MouseVector.x, -m_MouseVector.y), arrowRect, TEXTUREALIGNMENT_BOTTOMCENTER);
 
 	for (int i = 0; i < m_BulletList.size(); i++)
 	{
