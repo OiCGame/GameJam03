@@ -31,7 +31,9 @@ MofBool CGameApp::Initialize(void){
 	CUtilities::SetCurrentDirectory("Resource");
 	
 	gpSecene->Initialize();
-	CResourceManager::Singleton().LoadTexture("Player","PlayerUFO.png");
+	CResourceManager::Singleton().LoadTexture("Player","PlayerUFO.png")
+								 .LoadTexture("PlayerBullet","PlayerBullet.png")
+								 .LoadTexture("PlayerArrow","PlayerArrow.png");
 	return TRUE;
 }
 /*************************************************************************//*!
