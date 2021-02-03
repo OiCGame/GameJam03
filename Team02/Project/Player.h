@@ -34,6 +34,9 @@ private:
 	int						BulletRotate;
 
 	CPanel					Panel;
+	//ƒvƒŒƒCƒ„‚ªUI‚ğ‚Â‚Ì‚Í—Ç‚­‚È‚¢‚©‚àBŒŸ“¢Ÿ‘æ‚ÅˆÚ“®‚³‚¹‚Ü‚·
+	CTexture				BulletUITexture[BULLET_CATEGORY + 1];	
+	CVector2				BulletUIPosition;
 
 public:
 	CPlayer();

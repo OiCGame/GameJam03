@@ -136,7 +136,6 @@ void CGame::Render(void)
 {
     // DEBUG
     CGraphicsUtilities::RenderString(0, 0, "GAME");
-	Player.Render();
     for (int i = 0; i < BLOCK_COUNT; i++)
     {
         Block[i].Render();
@@ -149,6 +148,7 @@ void CGame::Render(void)
         }
 		Timer.RenderDebug();
     }
+	Player.Render();
 	Timer.Render();
 }
 

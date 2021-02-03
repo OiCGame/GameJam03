@@ -16,6 +16,9 @@ void CPlayer::Load()
 	Texture.Load("UI/ƒQ[ƒ€–{•Ò/”òs‹@.png");
 	BulletTexture[Triangle].Load("UI/ƒQ[ƒ€–{•Ò/ŽOŠp.png");
 	BulletTexture[Square].Load("UI/ƒQ[ƒ€–{•Ò/ŽlŠp.png");
+	BulletUITexture[Triangle].Load("UI/ƒQ[ƒ€–{•Ò/ƒAƒCƒeƒ€˜g_ŽOŠp.png");
+	BulletUITexture[Square].Load("UI/ƒQ[ƒ€–{•Ò/ƒAƒCƒeƒ€˜g_ŽlŠp.png");
+	BulletUITexture[Empty].Load("UI/ƒQ[ƒ€–{•Ò/ƒAƒCƒeƒ€˜g_‹ó”’.png");
 }
 
 void CPlayer::Initialize()
@@ -28,6 +31,8 @@ void CPlayer::Initialize()
 	Collision = CCircle(position + CollisionPosCorrection, CollisionRadius);
 	BulletBuffer = Empty;
 	BulletRotate = Up;
+
+	BulletUIPosition = CVector2(g_pGraphics->GetTargetWidth()*0.5, 0);
 }
 
 void CPlayer::Update()
@@ -128,6 +133,8 @@ void CPlayer::Render()
 		if (!Bullets[i].GetShow()) { continue; }
 		Bullets[i].Render();
 	}
+
+	BulletUITexture[BulletBuffer].Render(BulletUIPosition.x , BulletUIPosition.y);
 }
 
 void CPlayer::RenderDebug()
@@ -151,4 +158,10 @@ void CPlayer::Release()
 {
 	Panel.Release();
 	Texture.Release();
+	for (int i = 0; i < BULLET_CATEGORY; i++)
+	{
+		BulletTexture[i].Release();
+		BulletUITexture[i].Release();
+	}
+	BulletUITexture[BULLET_CATEGORY].Release();
 }
