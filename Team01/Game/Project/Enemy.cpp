@@ -1,5 +1,7 @@
 #include "Enemy.h"
 
+#include "Character.h"
+
 CEnemy::CEnemy() :
 	m_HP(3),
 	m_MaxHP(3),
@@ -9,12 +11,19 @@ CEnemy::CEnemy() :
 	m_bDrow(true),
 	m_MoveType(0),
 	m_MoveTypeOnPinch(0),
-	m_PinchHPRatio(0.0f) {
+	m_PinchHPRatio(0.0f),
+	m_Target() {
 }
 
 CEnemy::~CEnemy() {
 }
 
+void CEnemy::Chase(Mof::CVector2 target) {
+	Mof::CVector2 direction = target - m_Pos;
+	direction.Normal(direction);
+
+	m_Move += direction;
+}
 void CEnemy::Move(void) {
 	m_Move.y = sin(MOF_ToRadian(m_Dir)) * m_Speed;
 	m_Move.x = cos(MOF_ToRadian(m_Dir)) * m_Speed;
@@ -39,6 +48,9 @@ void CEnemy::Move(int type) {
 	case 3:
 		this->MoveOutOfWindow();
 		break;
+	case 4:
+		this->MoveAssault();
+		break;
 	default:
 		break;
 	} // switch
@@ -49,63 +61,45 @@ void CEnemy::MoveOutOfWindow(void) {
 	auto size = Mof::CVector2(::g_pFramework->GetWindow()->GetWidth(),
 		::g_pFramework->GetWindow()->GetHeight());
 
-	float distance = 0.0f;
-	float length = size.Length();
+	float distance = size.Length();
+	float length;
 	Mof::CVector2 escape_point;
 
-	{
-		auto top = Mof::CVector2(pos.x, 0.0f);
-		length = Mof::CVector2Utilities::Distance(pos, top);
-		if (distance < length) {
-			distance = length;
-			escape_point = top;
-		} // if
-	}
-
-	{
-		auto bottom = Mof::CVector2(pos.x, size.y);
-		length = Mof::CVector2Utilities::Distance(pos, bottom);
-		if (distance < length) {
-			distance = length;
-			escape_point = bottom;
-		} // if
-	}
-
-
-	{
-		auto left = Mof::CVector2(0.0f, pos.y);
-		length = Mof::CVector2Utilities::Distance(pos, left);
-		if (distance < length) {
-			distance = length;
-			escape_point = left;
-		} // if
-	}
-
-	{
-		auto right = Mof::CVector2(size.x, pos.y);
-		length = Mof::CVector2Utilities::Distance(pos, right);
-		if (length < distance) {
-			distance = length;
-			escape_point = right;
-		} // if
-	}
-
-	return;
-	/*
-	if (m_Pos.x <= escape_point.x) {
-		m_Pos.x++;
+	auto top = Mof::CVector2(pos.x, 0.0f);
+	length = Mof::CVector2Utilities::Distance(pos, top);
+	if (length < distance) {
+		distance = length;
+		escape_point = top;
 	} // if
-	else if (escape_point.x <= m_Pos.x) {
-		m_Pos.x--;
-	} // else if
-	else if (m_Pos.y <= escape_point.y) {
-		m_Pos.y++;
-	} // else if
-	else if (escape_point.y <= m_Pos.y) {
-		m_Pos.y--;
-	} // else if
-	*/
 
+	auto bottom = Mof::CVector2(pos.x, size.y);
+	length = Mof::CVector2Utilities::Distance(pos, bottom);
+	if (length < distance) {
+		distance = length;
+		escape_point = bottom;
+	} // if
+
+	auto left = Mof::CVector2(0.0f, pos.y);
+	length = Mof::CVector2Utilities::Distance(pos, left);
+	if (length < distance) {
+		distance = length;
+		escape_point = left;
+	} // if
+
+	auto right = Mof::CVector2(size.x, pos.y);
+	length = Mof::CVector2Utilities::Distance(pos, right);
+	if (length < distance) {
+		distance = length;
+		escape_point = right;
+	} // if
+
+
+	this->Chase(escape_point);
+	return;
+}
+
+void CEnemy::MoveAssault(void) {
+	this->Chase(m_Target);
 }
 
 Mof::CVector2 CEnemy::GetPosition(void) const {
@@ -158,7 +152,21 @@ void CEnemy::SetTexture(Mof::CTexture* ptr) {
 	m_pTexture = ptr;
 }
 
+void CEnemy::SetTarget(Mof::CVector2 pos) {
+	int range = 100;
+
+	auto temp = pos;
+	temp.y = ::g_pFramework->GetWindow()->GetHeight();
+	temp.x += GenerateRandom(-range, range);
+
+	m_Target = temp;
+}
+
 void CEnemy::Update() {
+	m_Move.x = 0.0f;
+	m_Move.y = 0.0f;
+
+
 	for (int i = 0; i < m_BulletNo; i++) {
 		if (!m_Bullet[i].IsShow()) { continue; }
 		m_Bullet[i].Update();
@@ -174,6 +182,8 @@ void CEnemy::Update() {
 	else {
 		this->Move(m_MoveTypeOnPinch);
 	} // else
+	m_Pos += m_Move;
+
 
 	if (m_BulletNo >= m_BulletCount) { return; }
 	if (m_BulletSetRemGap > 0) {

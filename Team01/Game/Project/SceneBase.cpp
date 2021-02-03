@@ -95,8 +95,8 @@ void CSceneBase::SelectHorizontal(int& no, int count, bool loop) {
 			if (loop)
 				no = (count - 1 < 0) ? 0 : count - 1;
 			else
-				no = 0;
-		}
+				no = 0; 
+		} // if
 	}
 }
 

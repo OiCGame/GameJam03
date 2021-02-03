@@ -4,6 +4,8 @@
 #include <memory>
 #include <array>
 #include <vector>
+#include <unordered_map>
+#include <string>
 
 #include <Mof.h>
 
@@ -19,12 +21,16 @@ private:
 	UICanvas m_UICanvas;
 	float m_ElapsedTime;
 	std::vector<CEnemy::InitParam> m_EnemyDatas;
+	std::unordered_map<std::string, Mof::CTexture> m_Textures;
 
-	Mof::CTexture _player_texture;
-	Mof::CTexture _enemy_texture;
-	Mof::CTexture _bullet_texture;
-	Mof::CTexture _effect_texture;
-	Mof::CTexture _stage_texture;
+	std::string m_PlayerTexturePath;
+	std::string m_EnemyTexturePath1;
+	std::string m_EnemyTexturePath2;
+	std::string m_EnemyTexturePath3;
+	std::string m_BulletTexturePath;
+	std::string m_EffectTexturePath;
+	std::string m_StageTexturePath;
+
 	SpriteMotionData _effect_motion_data;
 
 	CCharacter _player;
