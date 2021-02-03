@@ -24,6 +24,8 @@ void CPanel::Initialize(int stagenum) {
 		for (int i = 0; i < STG1JUDGECNT; i++) {
 			m_SingleOk[i] = false;
 			m_SingleConfirm[i] = false;
+			//‘S‚ÄŽlŠp‚Ì‚½‚ßRotateî•ñ‚Í‚Ç‚ê‚Å‚à‚¢‚¢
+			m_Rotate[i][STAGE1] = Up;
 		}
 		break;
 	case STAGE2:
@@ -151,7 +153,7 @@ void CPanel::CheckClear()
 	}
 }
 
-void CPanel::CheckHitCollision(CRectangle rec, float px, int bt)
+void CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 {
 	//•¡”ÚG”»’èƒtƒ‰ƒO‚ðfalse
 	m_MultiCollision = false;
@@ -161,6 +163,16 @@ void CPanel::CheckHitCollision(CRectangle rec, float px, int bt)
 			// Šeã˜gƒpƒlƒ‹‚Æ‘Å‚¿o‚³‚ê‚½’e‚Æ‚Ì“–‚½‚è”»’è‚ÆAƒpƒlƒ‹‚ÌŽí—Þ‚Æ’e‚ÌŽí—Þ‚ªˆê’v‚·‚é‚È‚ç...
 			if (SingleRect_Stg1[i].CollisionRect(rec) &&
 				SingleState_Stg1[i] == bt) {
+				
+				//ƒlƒXƒg‚ª[‚­‚È‚è‚·‚¬‚Ä‚¢‚é‚½‚ß‘Îô‚µ‚½‚¢
+				if (SingleState_Stg1[i] != Square)
+				{
+					if (m_Rotate[i][STAGE1] != rotate)
+					{
+						continue;
+					}
+				}
+
 				// i > 0‚Å‚µ‚©”»’è‚Å‚«‚È‚¢ˆ—
 				// Šù‚ÉAÚG”»’è‚ªo‚Ä‚¢‚½( i - 1 ”Ô–Ú‚ªÚG”»’è‚ð‹N‚±‚µ‚Ä‚¢‚½ê‡)
 				if (m_MultiCollision && i > 0) {

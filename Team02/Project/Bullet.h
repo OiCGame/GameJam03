@@ -13,6 +13,14 @@ enum BulletType
 	Empty
 };
 
+enum RotateType
+{
+	Up,
+	Right,
+	Down,
+	Left
+};
+
 class CBullet
 {
 private:
@@ -36,8 +44,7 @@ public:
 	bool	GetShow() { return IsShow; }
 	void	SetShow(bool isShow) { IsShow = isShow; }
 	int		GetBulletType() { return BulletType; }
-
 	float	GetPosX() { return Position.x; }
-
 	CRectangle		GetRectangle() { return BulletRect; }
+	int		GetRotate() { return Rotate; }
 };

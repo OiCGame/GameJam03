@@ -21,13 +21,14 @@ private:
 
 	int						BulletBuffer;
 	CDynamicArray<CBullet>	Bullets;
-	enum RotateType
+	//使用箇所が増えたためBullet.hにて再記述
+	/*enum RotateType
 	{
 		Up,
 		Right,
 		Down,
 		Left
-	};
+	};*/
 	int						BulletRotate;
 
 public:

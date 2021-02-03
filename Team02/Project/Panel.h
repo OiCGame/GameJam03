@@ -15,7 +15,9 @@ constexpr auto JUDGECNT = 10;
 enum StageNumber {
 	STAGE1,
 	STAGE2,
-	STAGE3
+	STAGE3,
+
+	STAGECOUNT
 };
 
 class CPanel {
@@ -32,6 +34,7 @@ private:
 	int			m_JudgeCnt;		//ステージごとの判定用上枠数
 	bool		m_MultiCollision;
 	float		m_JdgA, m_JdgB;
+	int			m_Rotate[JUDGECNT][STAGECOUNT];	//回転情報を格納してください
 public:
 	CPanel();
 	~CPanel();
@@ -77,5 +80,5 @@ public:
 	void	CheckClear();
 	bool	IsClear() { return m_Clear; }
 
-	void	CheckHitCollision(CRectangle rec, float px, int bt);
+	void	CheckHitCollision(CRectangle rec, float px, int bt , int rotate);
 };
