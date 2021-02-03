@@ -47,7 +47,8 @@ void CGame::Initialize(void)
     CTexture* pBlockTexture = Player.GetBulletTexture(bulletType);
     Block[0].FallStart(pBlockTexture, bulletType);
 	
-	Timer.Initialize( 300,CVector2(1450,500));
+	//207はタイマーUI枠の幅、textureの読み込み位置を再検討？
+	Timer.Initialize( 300,CVector2(((int)g_pGraphics->GetTargetWidth() * 0.5) - 207,0));
 }
 
 // ********************************************************************************

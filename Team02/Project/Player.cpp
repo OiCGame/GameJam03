@@ -16,9 +16,9 @@ void CPlayer::Load()
 	Texture.Load("UI/ゲーム本編/飛行機.png");
 	BulletTexture[Triangle].Load("UI/ゲーム本編/三角.png");
 	BulletTexture[Square].Load("UI/ゲーム本編/四角.png");
-	BulletUITexture[Triangle].Load("UI/ゲーム本編/アイテム枠_三角.png");
-	BulletUITexture[Square].Load("UI/ゲーム本編/アイテム枠_四角.png");
-	BulletUITexture[Empty].Load("UI/ゲーム本編/アイテム枠_空白.png");
+	BulletUITexture[Triangle].Load("UI/ゲーム本編/ミニ三角ブロック.png");
+	BulletUITexture[Square].Load("UI/ゲーム本編/ミニ四角ブロック.png");
+	UIFrameTexture.Load("UI/ゲーム本編/アイテム枠_空白.png");
 }
 
 void CPlayer::Initialize()
@@ -32,7 +32,7 @@ void CPlayer::Initialize()
 	BulletBuffer = Empty;
 	BulletRotate = Up;
 
-	BulletUIPosition = CVector2(g_pGraphics->GetTargetWidth()*0.5, 0);
+	BulletUIPosition = CVector2(g_pGraphics->GetTargetWidth() * 0.5f, 0);
 }
 
 void CPlayer::Update()
@@ -62,19 +62,19 @@ void CPlayer::Update()
 	}
 	if (BulletBuffer < Empty)
 	{
-		if (g_pInput->IsKeyPull(MOFKEY_W))
+		if (g_pInput->IsKeyPush(MOFKEY_W))
 		{
 			BulletRotate = Up;
 		}
-		else if (g_pInput->IsKeyPull(MOFKEY_D))
+		else if (g_pInput->IsKeyPush(MOFKEY_D))
 		{
 			BulletRotate = Right;
 		}
-		else if (g_pInput->IsKeyPull(MOFKEY_S))
+		else if (g_pInput->IsKeyPush(MOFKEY_S))
 		{
 			BulletRotate = Down;
 		}
-		else if (g_pInput->IsKeyPull(MOFKEY_A))
+		else if (g_pInput->IsKeyPush(MOFKEY_A))
 		{
 			BulletRotate = Left;
 		}
@@ -134,7 +134,13 @@ void CPlayer::Render()
 		Bullets[i].Render();
 	}
 
-	BulletUITexture[BulletBuffer].Render(BulletUIPosition.x , BulletUIPosition.y);
+	UIFrameTexture.Render(BulletUIPosition.x , BulletUIPosition.y);
+	if (BulletBuffer != Empty)
+	{
+		BulletUITexture[BulletBuffer].RenderRotate(BulletUIPosition.x + (UIFrameTexture.GetWidth() * 0.5),
+			BulletUIPosition.y + (UIFrameTexture.GetHeight() * 0.5), 
+			MOF_ToRadian(90 * BulletRotate), TEXTUREALIGNMENT_CENTERCENTER);
+	}
 }
 
 void CPlayer::RenderDebug()
@@ -144,7 +150,8 @@ void CPlayer::RenderDebug()
 		BulletBuffer == Triangle ? "三角" : BulletBuffer == Square ? "四角" : "空");
 	CGraphicsUtilities::RenderString(0, 200, MOF_COLOR_GREEN,"回転情報：%s",
 		BulletRotate == Up ? "上" : BulletRotate == Right ? "右" : BulletRotate == Down ? "下" : "左");
-	CGraphicsUtilities::RenderString(0, 250, MOF_COLOR_GREEN,"現在存在する弾数：%d", Bullets.GetArrayCount());
+	CGraphicsUtilities::RenderString(0, 250, MOF_COLOR_GREEN, "現在存在する弾数：%d", Bullets.GetArrayCount());
+	CGraphicsUtilities::RenderString(500, 0, MOF_COLOR_GREEN,"アイテムUI座標 %1f %2f", BulletUIPosition.x, BulletUIPosition.y);
 
 	for (int i = 0; i < Bullets.GetArrayCount(); i++)
 	{

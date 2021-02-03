@@ -94,7 +94,8 @@ void CPanel::Update(CRectangle rec, float px, int bt) {
 void CPanel::Render(void) {
 	switch (m_StgNum) {
 	case STAGE1:
-		m_PanelTexture.Render(0, 0);
+		//位置を中央に修正、画面上部にUIを表示するので位置変更 by 深山 2021/02/03 14:03
+		m_PanelTexture.Render((g_pGraphics->GetTargetWidth() - m_PanelTexture.GetWidth()) * 0.5, 130);
 		break;
 	case STAGE2:
 		break;

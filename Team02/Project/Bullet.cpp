@@ -44,8 +44,8 @@ void CBullet::Update()
 void CBullet::Render()
 {
 
-	Texture->RenderRotate(Position.x,
-			Position.y, MOF_ToRadian(90 * Rotate),TEXTUREALIGNMENT_CENTERCENTER);
+	Texture->RenderRotate(Position.x,Position.y, 
+		MOF_ToRadian(90 * Rotate),TEXTUREALIGNMENT_CENTERCENTER);
 }
 
 void CBullet::RenderDebug(int i)
