@@ -1,15 +1,12 @@
 #include "Enemy.h"
 
 CEnemy::CEnemy() :
-    m_HP(3),
-    m_HPMax(3),
-    m_Speed(0.0f),
-    m_Dir(90.0f),
-    m_FastBulletNo(-1),
-    m_bDrow(true),
-    m_MoveType(0),
-    m_MoveTypeOnPinch(0),
-    m_PinchHPRatio(0.0f) {
+	m_HP(3),
+	m_Speed(0.0f),
+	m_Dir(90.0f),
+	m_FastBulletNo(-1),
+	m_bDrow(true),
+	m_MoveType(0) {
 }
 
 CEnemy::~CEnemy() {
@@ -228,14 +225,22 @@ void CEnemy::Render() {
 
 
 #endif // _DEBUG
+	m_pTexture->Render(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y - m_pTexture->GetHeight() / 2);
 
 
+	if (m_HP != m_MaxHP)
+	{
+		float hpw = m_pTexture->GetWidth();
+		float hpper = m_HP;
+		hpper /= m_MaxHP;
+		hpw *= hpper;
+		CGraphicsUtilities::RenderFillRect(m_Pos.x - m_pTexture->GetWidth() / 2 - 2, m_Pos.y + m_pTexture->GetHeight() / 2 + 2, m_Pos.x + m_pTexture->GetWidth() / 2 + 2, m_Pos.y + m_pTexture->GetHeight() / 2 + 6, MOF_XRGB(0, 0, 0));
+		CGraphicsUtilities::RenderFillRect(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y + m_pTexture->GetHeight() / 2 + 3, m_Pos.x - m_pTexture->GetWidth() / 2 + hpw, m_Pos.y + m_pTexture->GetHeight() / 2 + 5, MOF_XRGB(0, 255, 0));
+	}
 
-
-    m_pTexture->Render(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y - m_pTexture->GetHeight() / 2);
-    for (int i = 0; i < m_BulletCount; i++) {
-        m_Bullet[i].Render();
-    }
+	for (int i = 0; i < m_BulletCount; i++) {
+		m_Bullet[i].Render();
+	}
 }
 
 void CEnemy::Release() {

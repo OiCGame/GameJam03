@@ -6,6 +6,7 @@
 UICanvas::UICanvas() :
     m_Font(),
     m_Score(),
+    m_RenderedScore(0),
     m_FontMap(),
     m_FontTexture() {
 
