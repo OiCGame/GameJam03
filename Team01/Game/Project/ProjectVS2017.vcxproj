@@ -14,7 +14,7 @@
     <ProjectGuid>{582B9C61-742D-4D2B-9C72-42C088CE473D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SimpleProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -98,6 +98,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameDefine.cpp" />
     <ClCompile Include="SceneBase.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="SceneBase.h" />
