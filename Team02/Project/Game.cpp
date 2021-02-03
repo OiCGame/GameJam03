@@ -49,7 +49,7 @@ void CGame::Initialize(void)
     Block[0].FallStart(pBlockTexture, bulletType);
 	
 	//207はタイマーUI枠の幅、textureの読み込み位置を再検討？
-	Timer.Initialize( 300,CVector2(((int)g_pGraphics->GetTargetWidth() * 0.5) - 207,0));
+	Timer.Initialize(GameTime, CVector2(((int)g_pGraphics->GetTargetWidth() * 0.5) - 207,0));
 
     GameUI.Initialize();
 }
@@ -85,6 +85,10 @@ void CGame::Update(void)
     if (g_pInput->IsKeyPush(MOFKEY_1))
     {
         ChangeScene(SceneName::Title);
+    }
+    if (g_pInput->IsKeyPush(MOFKEY_0))
+    {
+        ChangeScene(SceneName::GameClear);
     }
 	if (g_pInput->IsKeyPush(MOFKEY_2))
 	{
