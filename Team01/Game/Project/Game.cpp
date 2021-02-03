@@ -86,11 +86,13 @@ void CGame::Collision(void) {
 		} // for
 		if (_player.IsShow()) {
 			for (int i = 0; i < enemy.CollitionBullet(_player.GetCollisionRectangle()); i++) {
+				/*
 				if (_player.Damage()) {
 					auto name = std::string("image");
 					name += std::to_string(_player.GetRevivalCount());
 					m_UICanvas.RemoveImage(name);
 				} // if
+				*/
 			} // for
 		}
 	} // for
@@ -152,15 +154,18 @@ bool CGame::Initialize(void) {
 
 		int x = info[i]["initPosX"].GetInt();
 		int y = info[i]["initPosY"].GetInt();
-		int move_type = info[i]["movement"].GetInt();
+		auto& move_info = info[i]["movement"];
+		int move_type = move_info["default"].GetInt();
+		int move_type_on_pinch = move_info["pinch"].GetInt();
+		float pinch_hp_ratio = move_info["pinch_hp_ratio"].GetFloat();
 		float spawn_time = info[i]["spawn_time"].GetFloat();
 		int bullet_column = info[i]["bullet_column"].GetInt();
 		int bullet_amount = info[i]["bullet_amount"].GetInt();
 		int amount_set = info[i]["amount_set"].GetInt();
+		int hp = info[i]["hp"].GetInt();
 
 		m_EnemyDatas.push_back(CEnemy::InitParam(
-			Mof::CVector2(x, y), move_type, spawn_time, bullet_column, bullet_amount, amount_set));
-
+			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, hp));
 		/*
 		auto enemy = CEnemy();
 		enemy.Initialize(Mof::CVector2(x, y), move_type);
