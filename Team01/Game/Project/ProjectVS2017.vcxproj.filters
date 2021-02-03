@@ -31,6 +31,9 @@
     <Filter Include="ヘッダー ファイル\Scene">
       <UniqueIdentifier>{cbbf8679-9781-424b-bd4d-3f6f1e68a64f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\score">
+      <UniqueIdentifier>{768111c9-9871-474b-b704-6e0e3ee5e21f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -143,6 +146,12 @@
     </None>
     <None Include="..\Resource\stage\test_stage.json">
       <Filter>リソース ファイル\stage</Filter>
+    </None>
+    <None Include="..\Resource\stage\test_stage1.json">
+      <Filter>リソース ファイル\stage</Filter>
+    </None>
+    <None Include="..\Resource\Score\Score.dat">
+      <Filter>リソース ファイル\score</Filter>
     </None>
   </ItemGroup>
 </Project>

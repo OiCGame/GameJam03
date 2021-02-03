@@ -82,6 +82,8 @@ bool UICanvas::Render(void) {
 }
 
 bool UICanvas::Release(void) {
+	m_Labels.clear();
+	m_Images.clear();
 	m_FontMap.texture.Release();
 //    m_FonMap .Release();
     return true;

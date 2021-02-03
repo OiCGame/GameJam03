@@ -136,7 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\motion\explode.json" />
+    <None Include="..\Resource\Score\Score.dat" />
     <None Include="..\Resource\stage\test_stage.json" />
+    <None Include="..\Resource\stage\test_stage1.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

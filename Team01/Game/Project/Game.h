@@ -20,25 +20,26 @@ class CGame {
 private:
 	UICanvas m_UICanvas;
 	float m_ElapsedTime;
-	std::vector<CEnemy::InitParam> m_EnemyDatas;
+	
 	std::unordered_map<std::string, Mof::CTexture> m_Textures;
-
 	std::string m_PlayerTexturePath;
-	std::string m_EnemyTexturePath1;
-	std::string m_EnemyTexturePath2;
-	std::string m_EnemyTexturePath3;
 	std::string m_BulletTexturePath;
 	std::string m_EffectTexturePath;
 	std::string m_StageTexturePath;
+	SpriteMotionData m_EffectMotionData;
 
-	SpriteMotionData _effect_motion_data;
 
-	CCharacter _player;
-	std::vector<CEnemy> _enemies;
+	std::vector<CEnemy::InitParam> m_EnemyDatas;
+	CCharacter m_Player;
+	std::vector<CEnemy> m_Enemies;
 	std::array<CBullet, 256>m_PlayerBullets;
-	std::vector<std::shared_ptr<CEffect>>_effect_container;
+	std::vector<std::shared_ptr<CEffect>> m_Effects;
 	//! 出現中
 	bool m_bBossExist;
+	
+	std::vector<std::string> m_StagePaths;
+	uint32_t m_StagePhaseIndex;
+
 	/// <summary>
 	/// エネミー出現
 	/// </summary>

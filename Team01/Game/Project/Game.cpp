@@ -11,9 +11,9 @@ void CGame::SpawnEnemy(void) {
 		auto enemy = CEnemy();
 		enemy.Initialize(spawn_data);
 		enemy.SetTexture(& m_Textures.at(spawn_data.texture_path) );
-		enemy.SetTarget(_player.GetPosition());
+		enemy.SetTarget(m_Player.GetPosition());
 
-		_enemies.push_back(std::move(enemy));
+		m_Enemies.push_back(std::move(enemy));
 	} // for
 
 	auto it = std::remove_if(
@@ -29,9 +29,9 @@ void CGame::EffectStart(Mof::CVector2 position) {
 	auto& effect_tex = m_Textures.at(m_EffectTexturePath);
 	auto pos = position;
 	auto effect = std::make_shared<CEffect>();
-	effect->Generate(&effect_tex, _effect_motion_data);
+	effect->Generate(&effect_tex, m_EffectMotionData);
 	effect->Start(pos);
-	_effect_container.push_back(effect);
+	m_Effects.push_back(effect);
 
 	m_UICanvas.AddScore(100);
 	m_UICanvas.AddText(std::to_string(100), pos, 60);
@@ -46,9 +46,9 @@ void CGame::Collision(void) {
 		}
 	};
 	std::vector<EffectParam> effect_param;
-	for (auto& enemy : _enemies) {
+	for (auto& enemy : m_Enemies) {
 		if (!enemy.IsShow()) { continue; }
-		for (auto effect : _effect_container) {
+		for (auto effect : m_Effects) {
 			auto& collitioned_effects = enemy.GetCollisionedEffects();
 			if (std::find_if(collitioned_effects.begin(), collitioned_effects.end(), [&](std::weak_ptr<CEffect> weak) { 
 				if (auto e = weak.lock()) {
@@ -74,16 +74,16 @@ void CGame::Collision(void) {
 	for (auto& param : effect_param) {
 		auto pos = param.position;
 		auto effect = std::make_shared<CEffect>();
-		effect->Generate(&effect_tex , _effect_motion_data, param.chain);
+		effect->Generate(&effect_tex , m_EffectMotionData, param.chain);
 		effect->Start(pos);
-		_effect_container.push_back(effect);
+		m_Effects.push_back(effect);
 
 		int score = std::pow(2, param.chain) * 100;
 		m_UICanvas.AddScore(score);
 		m_UICanvas.AddText(std::to_string(score), pos, 60);
 	} // for
 
-	for (auto& enemy : _enemies) {
+	for (auto& enemy : m_Enemies) {
 		for (int i = 0; i < m_PlayerBullets.size(); i++) {
 			if (!enemy.IsShow() || !m_PlayerBullets[i].IsShow()) {
 				continue;
@@ -103,12 +103,12 @@ void CGame::Collision(void) {
 				} // if
 			} // if
 		} // for
-		if (_player.IsShow()) {
-			for (int i = 0; i < enemy.CollisionBullet(_player.GetCollisionRectangle()); i++) {
+		if (m_Player.IsShow()) {
+			for (int i = 0; i < enemy.CollisionBullet(m_Player.GetCollisionRectangle()); i++) {
 				/*
-				if (_player.Damage()) {
+				if (m_Player.Damage()) {
 					auto name = std::string("image");
-					name += std::to_string(_player.GetRevivalCount());
+					name += std::to_string(m_Player.GetRevivalCount());
 					m_UICanvas.RemoveImage(name);
 				} // if
 				*/
@@ -118,12 +118,12 @@ void CGame::Collision(void) {
 }
 
 void CGame::CollisionPlayerEnemies(void) {
-	if (_player.IsShow()) {
-		auto player_rect = _player.GetCollisionRectangle();
-		for (auto& enemy : _enemies) {
+	if (m_Player.IsShow()) {
+		auto player_rect = m_Player.GetCollisionRectangle();
+		for (auto& enemy : m_Enemies) {
 			if (player_rect.CollisionRect(enemy.GetCollisionRectangle())) {
-				_player.Damage();
-				this->EffectStart(_player.GetPosition());
+				m_Player.Damage();
+				this->EffectStart(m_Player.GetPosition());
 				break;
 			} // if
 		} // for
@@ -133,19 +133,21 @@ void CGame::CollisionPlayerEnemies(void) {
 CGame::CGame() :
 	m_UICanvas(),
 	m_ElapsedTime(0.0f),
+	m_Textures(),
 	m_PlayerTexturePath("player/Plane1Up.png"),
-	m_EnemyTexturePath1("enemy/Enemy01.png"),
-	m_EnemyTexturePath2("enemy/Enemy02.png"),
-	m_EnemyTexturePath3("enemy/Enemy03.png"),
 	m_BulletTexturePath("bullet/01Bullets.png"),
 	m_EffectTexturePath("effect/effect00.png"),
 	m_StageTexturePath("pipo-bg001.jpg"),
+	m_EffectMotionData(),
 
-	_player(),
-	_enemies(),
+	m_EnemyDatas(),
+	m_Player(),
+	m_Enemies(),
 	m_PlayerBullets(),
-	_effect_container() ,
-	m_bBossExist(false){
+	m_Effects() ,
+	m_bBossExist(false), 
+	m_StagePaths({ "stage/test_stage.json", "stage/test_stage1.json" }),
+	m_StagePhaseIndex(0){
 }
 
 CGame::~CGame() {
@@ -153,19 +155,24 @@ CGame::~CGame() {
 
 bool CGame::Initialize(void) {
 	m_UICanvas.Initialize();
+	m_ElapsedTime = 0.0f;
+	m_bBossExist = false;
 
 	rapidjson::Document document;
-	if (!ParseJsonDocument("stage/test_stage.json", document)) {
+	if (!ParseJsonDocument(m_StagePaths.at(m_StagePhaseIndex).c_str(), document)) {
 		return false;
 	} // if
-
+	m_StageTexturePath = document["texture"]["uri"].GetString();
 
 
 	m_Textures = {
 		{m_PlayerTexturePath, Mof::CTexture()},
-		{m_EnemyTexturePath1, Mof::CTexture()},
-		{m_EnemyTexturePath2, Mof::CTexture()},
-		{m_EnemyTexturePath3, Mof::CTexture()},
+		{"enemy/Enemy01.png", Mof::CTexture()},
+		{"enemy/Enemy02.png", Mof::CTexture()},
+		{"enemy/Enemy03.png", Mof::CTexture()},
+		{"enemy/Enemy04.png", Mof::CTexture()},
+		{"enemy/Enemy05.png", Mof::CTexture()},
+		{"enemy/Enemy06.png", Mof::CTexture()},
 		{m_BulletTexturePath, Mof::CTexture()},
 		{m_StageTexturePath, Mof::CTexture()},
 		{m_EffectTexturePath, Mof::CTexture()}
@@ -174,10 +181,10 @@ bool CGame::Initialize(void) {
 		pair.second.Load(pair.first.c_str());
 	} // for
 
-	_effect_motion_data.Load("motion/explode.json");
+	m_EffectMotionData.Load("motion/explode.json");
 
-	_player.Initialize(Mof::CVector2(512.0f, 600.0f));
-	_player.SetTexture(&m_Textures.at(m_PlayerTexturePath));
+	m_Player.Initialize(Mof::CVector2(512.0f, 600.0f));
+	m_Player.SetTexture(&m_Textures.at(m_PlayerTexturePath));
 
 	const auto& info = document["enemies"];
 	for (uint32_t i = 0; i < info.Size(); i++) {
@@ -214,7 +221,7 @@ bool CGame::Initialize(void) {
 	auto& player_tex = m_Textures.at(m_PlayerTexturePath);
 	auto pos = Mof::CVector2(0.0f, ::g_pGraphics->GetTargetHeight() - player_tex.GetHeight());
 	float width = player_tex.GetWidth();
-	for (int i = 0; i < _player.GetRevivalCount(); i++) {
+	for (int i = 0; i < m_Player.GetRevivalCount(); i++) {
 		auto name = std::string("image");
 		name += std::to_string(i);
 		m_UICanvas.AddImage(name.c_str(), &player_tex, pos);
@@ -224,23 +231,34 @@ bool CGame::Initialize(void) {
 }
 
 bool CGame::Update(void) {
+	if (::g_pInput->IsKeyPush(MOFKEY_RETURN)) {
+		m_StagePhaseIndex++;
+		if (m_StagePaths.size() - 1 < m_StagePhaseIndex ) {
+			m_StagePhaseIndex = m_StagePaths.size() - 1;
+		} // if
+
+
+		this->Release();
+		this->Initialize();
+	} // if
+
 	m_ElapsedTime += 0.0167f;
 	this->SpawnEnemy();
 
 	// îÒï\é¶ÇÃÇ‡ÇÃÇÕçÌèú
 	{
 		auto it = std::remove_if(
-			_effect_container.begin(),
-			_effect_container.end(),
+			m_Effects.begin(),
+			m_Effects.end(),
 			[](std::shared_ptr<CEffect> effect) {
 			return effect->IsShow() == false;
 		});
-		_effect_container.erase(it, _effect_container.end());
+		m_Effects.erase(it, m_Effects.end());
 	}
 	{
 		auto it = std::remove_if(
-			_enemies.begin(),
-			_enemies.end(),
+			m_Enemies.begin(),
+			m_Enemies.end(),
 			[](CEnemy& enemy) {
 			if (!enemy.IsShow() && enemy.GetBulletShow() == 0) {
 				enemy.Release();
@@ -248,14 +266,14 @@ bool CGame::Update(void) {
 			} // if
 			return false;
 		});
-		_enemies.erase(it, _enemies.end());
+		m_Enemies.erase(it, m_Enemies.end());
 	}
 
-	if (_player.IsShow()) {
-		_player.Update(m_PlayerBullets);
+	if (m_Player.IsShow()) {
+		m_Player.Update(m_PlayerBullets);
 	} // if
 
-	for (auto& enemy : _enemies) {
+	for (auto& enemy : m_Enemies) {
 		enemy.Update();
 	} // for
 
@@ -265,7 +283,7 @@ bool CGame::Update(void) {
 		} // if
 		bullet.Update();
 	} // for
-	for (auto& effect : _effect_container) {
+	for (auto& effect : m_Effects) {
 		if (effect->IsShow()) {
 			effect->Update();
 		} // if
@@ -283,11 +301,11 @@ bool CGame::Render(void) {
 	auto& stage_tex = m_Textures.at(m_StageTexturePath);
 	stage_tex.Render(0.0f, 0.0f);
 
-	if (_player.IsShow()) {
-		_player.Render();
+	if (m_Player.IsShow()) {
+		m_Player.Render();
 	} // if
 
-	for (auto& enemy : _enemies) {
+	for (auto& enemy : m_Enemies) {
 		enemy.Render();
 	} // for
 
@@ -298,7 +316,7 @@ bool CGame::Render(void) {
 		bullet.Render();
 	} // for
 
-	for (auto& effect : _effect_container) {
+	for (auto& effect : m_Effects) {
 		if (effect->IsShow()) {
 			effect->Render();
 		} // if
@@ -309,8 +327,9 @@ bool CGame::Render(void) {
 	m_UICanvas.Render();
 
 	::CGraphicsUtilities::RenderString(700.0f, 0.0f, "elapsed time = %f", m_ElapsedTime);
+	::CGraphicsUtilities::RenderString(700.0f, 30.0f, "stage phase = %d", m_StagePhaseIndex);
 
-	if (!_player.IsShow()) {
+	if (!m_Player.IsShow()) {
 		::CGraphicsUtilities::RenderString(500.0f, 500.0f, "GameOver");
 	} // if
 	return true;
@@ -318,11 +337,16 @@ bool CGame::Render(void) {
 
 bool CGame::Release(void) {
 	m_UICanvas.Release();
+	m_EnemyDatas.clear();
 
-	for (auto &e : _enemies) {
+	m_Player.Release();
+
+	for (auto &e : m_Enemies) {
 		e.Release();
-	} // for
+	} // for	
+	m_Enemies.clear();
 
+	m_Effects.clear();
 	for (auto& pair : m_Textures) {
 		pair.second.Release();
 	} // for
