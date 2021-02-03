@@ -105,6 +105,14 @@ void CEnemy::MoveAssault(void) {
 Mof::CVector2 CEnemy::GetPosition(void) const {
 	return this->m_Pos;
 }
+
+std::vector<std::weak_ptr<CEffect>>& CEnemy::GetCollisionedEffects(void) {
+	return this->m_CollisionedEffects;
+}
+void CEnemy::AddCollisionedEffect(const std::shared_ptr<CEffect>& ptr) {
+	m_CollisionedEffects.push_back(ptr);
+}
+
 void CEnemy::Initialize(const InitParam& param) {
 	this->Initialize(param.position, param.move_type, param.move_type_on_pinch, param.pinch_hp_ratio,
 		param.bullet_column, param.bullet_amount, param.amount_set, param.hp_max);
@@ -272,8 +280,8 @@ Mof::CRectangle CEnemy::GetCollisionRectangle(void) const {
 	return rect;
 }
 
-bool CEnemy::Damage(void) {
-	m_HP--;
+bool CEnemy::Damage(int damage_value) {
+	m_HP -= damage_value;
 	if (m_HP <= 0) {
 		m_bDrow = false;
 		return true;

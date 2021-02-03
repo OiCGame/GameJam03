@@ -37,7 +37,8 @@ private:
 	std::vector<CEnemy> _enemies;
 	std::array<CBullet, 256>m_PlayerBullets;
 	std::vector<std::shared_ptr<CEffect>>_effect_container;
-
+	//! 出現中
+	bool m_bBossExist;
 	/// <summary>
 	/// エネミー出現
 	/// </summary>

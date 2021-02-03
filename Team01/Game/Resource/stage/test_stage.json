@@ -6,8 +6,8 @@
       "initPosX": 350,
       "initPosY": 200,
       "movement": {
-        "default": 4,
-        "pinch": 1,
+        "default": 0,
+        "pinch": 0,
         "pinch_hp_ratio": 0.8
       },
       "atack": "random",
@@ -20,18 +20,18 @@
     {
       "spawn_time": 2.0,
       "id": "enemyID",
-      "initPosX": 600,
-      "initPosY": 500,
+      "initPosX": 400,
+      "initPosY": 200,
       "movement": {
-        "default": 4,
-        "pinch": 2,
+        "default": 0,
+        "pinch": 1,
         "pinch_hp_ratio": 0.8
       },
       "atack": "random",
       "bullet_column": 1,
       "bullet_amount": 1,
       "amount_set": 6,
-      "hp": 1,
+      "hp": 3,
       "texture_uri": "enemy/Enemy02.png"
 
     },
@@ -42,8 +42,8 @@
       "initPosY": 500,
 
       "movement": {
-        "default": 4,
-        "pinch": 0,
+        "default": 0,
+        "pinch": 1,
         "pinch_hp_ratio": 0.2
       },
 
@@ -51,7 +51,7 @@
       "bullet_column": 15,
       "bullet_amount": 5,
       "amount_set": 10,
-      "hp": 5,
+      "hp": 3,
       "texture_uri": "enemy/Enemy03.png"
 
     }

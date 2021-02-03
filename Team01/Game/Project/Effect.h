@@ -168,6 +168,12 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	uint32_t GetChainCount(void) const;
+	/// <summary>
+	/// ÉQÉbÉ^Å[
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	int GetDamageValue(bool exist_boss) const;
     /// <summary>
     /// îªíË
     /// </summary>

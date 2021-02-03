@@ -49,9 +49,21 @@ void CGame::Collision(void) {
 	for (auto& enemy : _enemies) {
 		if (!enemy.IsShow()) { continue; }
 		for (auto effect : _effect_container) {
+			auto& collitioned_effects = enemy.GetCollisionedEffects();
+			if (std::find_if(collitioned_effects.begin(), collitioned_effects.end(), [&](std::weak_ptr<CEffect> weak) { 
+				if (auto e = weak.lock()) {
+					return e == effect;
+				} // if
+				return false;
+			}) != collitioned_effects.end()) {
+				continue;
+			} // if
 			auto enemy_rect = enemy.GetCollisionRectangle();
 			if (enemy_rect.CollisionRect(effect->GetCollisionRectangle())) {
-				if (enemy.Damage()) {
+				enemy.AddCollisionedEffect(effect);
+
+				int damage_value = effect->GetDamageValue(m_bBossExist);
+				if (enemy.Damage(damage_value)) {
 					effect->Chain();
 					effect_param.push_back(EffectParam(enemy.GetPosition(), effect->GetChainCount()));
 				} // if
@@ -84,7 +96,9 @@ void CGame::Collision(void) {
 				m_PlayerBullets[i].Hide();
 
 				enemy.SetFastBulletNo(i);
-				if (enemy.Damage()) {
+				int damage_value = 1;
+
+				if (enemy.Damage(damage_value)) {
 					this->EffectStart(enemy.GetPosition());
 				} // if
 			} // if
@@ -130,7 +144,8 @@ CGame::CGame() :
 	_player(),
 	_enemies(),
 	m_PlayerBullets(),
-	_effect_container() {
+	_effect_container() ,
+	m_bBossExist(false){
 }
 
 CGame::~CGame() {

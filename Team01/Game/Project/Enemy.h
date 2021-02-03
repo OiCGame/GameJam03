@@ -6,7 +6,7 @@
 #include <random>
 
 #include "EnemyBullet.h"
-
+#include "Effect.h"
 
 static int GenerateRandom(const int min, const int max) {
 	std::random_device seed;
@@ -50,7 +50,8 @@ private:
     float m_PinchHPRatio;
 	//! “ËŒ‚ˆÊ’u
 	Mof::CVector2 m_Target;
-
+	//! “–‚½‚Á‚½Effect
+	std::vector<std::weak_ptr<CEffect>> m_CollisionedEffects;
 	/// <summary>
 	/// ˆÚ“®
 	/// </summary>
@@ -80,11 +81,16 @@ private:
     int m_BulletSetRemGap;
 
 	int m_BulletShowCount;
+
+
 public:
     CEnemy();
     ~CEnemy();
 
     Mof::CVector2 GetPosition(void) const;
+	std::vector<std::weak_ptr<CEffect>> & GetCollisionedEffects(void);
+	void AddCollisionedEffect(const std::shared_ptr<CEffect>& ptr);
+
     bool IsShow() { return m_bDrow; }
 
     void Initialize(const InitParam& param);
@@ -101,7 +107,7 @@ public:
     /// </summary>
     /// <param name=""></param>
     /// <returns></returns>
-    bool Damage();
+    bool Damage(int damage_value);
     int GetFastBulletNo() { return m_FastBulletNo; }
     void SetFastBulletNo(int no) { m_FastBulletNo = no; }
     Mof::CRectangle GetCollisionRectangle(void) const;
