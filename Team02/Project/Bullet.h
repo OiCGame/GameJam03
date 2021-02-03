@@ -4,6 +4,13 @@
 
 constexpr auto BULLET_SPEED = 6;
 
+enum BulletType
+{
+	Triangle,
+	Square,
+	Empty
+};
+
 class CBullet
 {
 private:
@@ -13,6 +20,9 @@ private:
 	bool				IsShow;
 	int					BulletType;
 	int					Rotate;
+
+	CRectangle			SquRect;
+	CRectangle			TriRect;
 public:
 	CBullet();
 	~CBullet();
@@ -25,4 +35,10 @@ public:
 	bool	GetShow() { return IsShow; }
 	void	SetShow(bool isShow) { IsShow = isShow; }
 	int		GetBulletType() { return BulletType; }
+
+	float		GetXPos() { return Position.x; }
+	CRectangle GetBulletRect[2] = {
+		SquRect,		//四角の矩形
+		TriRect			//三角の矩形 ???
+	};
 };

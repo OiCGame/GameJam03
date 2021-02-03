@@ -29,6 +29,10 @@ void CBullet::Update()
 		Position.y -= BULLET_SPEED;
 		Collision.x = Position.x;
 		Collision.y = Position.y;
+		GetBulletRect[0].Left = Position.x - 590 / 2;
+		GetBulletRect[0].Right = GetBulletRect[0].Left + 590;
+		GetBulletRect[0].Top = Position.y - 580 / 2;
+		GetBulletRect[0].Bottom = GetBulletRect[0].Top + 580;
 	}
 	else
 	{
@@ -48,4 +52,5 @@ void CBullet::RenderDebug(int i)
 {
 	CGraphicsUtilities::RenderString(0, 300 + (50 * i), "íeç¿ïW X %1f : Y  %2f", Position.x, Position.y);
 	CGraphicsUtilities::RenderCircle(Collision, MOF_COLOR_GREEN);
+	CGraphicsUtilities::RenderRect(GetBulletRect[0], MOF_COLOR_GREEN);
 }

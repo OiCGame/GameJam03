@@ -20,6 +20,7 @@ void CPlayer::Load()
 
 void CPlayer::Initialize()
 {
+	Panel.Initialize(0);
 	position = CVector2((g_pGraphics->GetTargetWidth() - (Texture.GetWidth() * 0.25f)) * 0.5f,
 		g_pGraphics->GetTargetHeight() - (Texture.GetHeight() * 0.25f));
 	CollisionRadius = Texture.GetWidth() * 0.1;
@@ -88,6 +89,7 @@ void CPlayer::Update()
 		for (int i = 0; i < Bullets.GetArrayCount(); i++)
 		{
 			Bullets[i].Update();
+			Panel.Update(Bullets[i].GetBulletRect[0], Bullets[i].GetXPos(), Bullets[i].GetBulletType());
 		}
 
 		for (int i = Bullets.GetArrayCount() - 1; i >= 0; i--)
@@ -118,6 +120,7 @@ void CPlayer::ShotBullet(int bullettype)
 
 void CPlayer::Render()
 {
+	Panel.Render();
 	Texture.RenderScale(position.x , position.y , 0.25f);
 
 	for (int i = 0; i < Bullets.GetArrayCount(); i++)
@@ -140,11 +143,12 @@ void CPlayer::RenderDebug()
 	{
 		Bullets[i].RenderDebug(i);
 	}
-	
+	Panel.RenderDebug();
 	CGraphicsUtilities::RenderCircle(Collision , MOF_COLOR_GREEN);
 }
 
 void CPlayer::Release()
 {
+	Panel.Release();
 	Texture.Release();
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include	"Mof.h"
 #include	"Bullet.h"
+#include	"Panel.h"
 
 constexpr auto BULLET_CATEGORY = 2;
 
@@ -14,12 +15,12 @@ private:
 	float					CollisionRadius;
 	CVector2				CollisionPosCorrection;
 
-	enum BulletType
+	/*enum BulletType		//Bullet.hÇ…ÇƒçƒãLèq .... Panel.hÇ≈Ç‡égÇ¢ÇΩÇ¢Ç≈Ç∑
 	{
 		Triangle,
 		Square,
 		Empty
-	};
+	};*/
 
 	int						BulletBuffer;
 	CDynamicArray<CBullet>	Bullets;
@@ -31,6 +32,8 @@ private:
 		Left
 	};
 	int						BulletRotate;
+
+	CPanel					Panel;
 
 public:
 	CPlayer();
