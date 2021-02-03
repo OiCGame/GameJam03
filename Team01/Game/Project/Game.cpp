@@ -237,7 +237,6 @@ bool CGame::Update(void) {
 			m_StagePhaseIndex = m_StagePaths.size() - 1;
 		} // if
 
-
 		this->Release();
 		this->Initialize();
 	} // if
