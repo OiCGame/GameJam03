@@ -7,6 +7,11 @@ int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 	Mof::LPFramework pFrame = new Mof::CDX11GameFramework(); 
 	Mof::WINDOWSGAMEFRAMEWORKINITIALIZEINFO Info;
 	Info.pApplication = new CGameApp();
+	//Info.WindowCreateInfo.px = 0;
+	//Info.WindowCreateInfo.py = 0;
+	//Info.WindowCreateInfo.Width = 1920;
+	//Info.WindowCreateInfo.Height = 1080;
+	//Info.WindowCreateInfo.Style = (WS_VISIBLE | WS_POPUP | WS_EX_TRANSPARENT);
 	if ( pFrame->Initialize(&Info) )
 	{
 		pFrame->Run();

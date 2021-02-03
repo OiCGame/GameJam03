@@ -32,6 +32,27 @@ struct LauncherInit_Polygon {
 	int vertex{ 8 };
 };
 
+// 多角形　回転付き
+struct LauncherInit_PolygonRotation {
+	// 位置 
+	CVector2 position;
+	// 発射ベクトル
+	CVector2 vector;
+	// テクスチャータイプ
+	BulletType type{ BulletType::yellow };
+	//発射回数
+	int count{ 1 };
+	// 発射間隔 [s]
+	float interval{ 0.5f };
+	// 頂点数
+	int vertex{ 8 };
+	// 加算角度
+	int addAngle{ 10 };
+	// 反転 0の場合無効 
+	int reverseCount{ 0 };
+};
+
+
 class CEnemyBulletManager
 {
 private:
@@ -52,6 +73,8 @@ public:
 	void SetLauncher(const LauncherInit_Line & init);
 	// 多角形状に発射
 	void SetLauncher(const LauncherInit_Polygon & init);
+	// 多角形状に回転しながら発射
+	void SetLauncher(const LauncherInit_PolygonRotation & init);
 
 	// 生きている弾の取得 (コストが高い為保留)
 	// std::vector<CBullet> GetAliveBulletList();

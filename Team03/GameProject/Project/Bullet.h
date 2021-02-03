@@ -15,7 +15,7 @@ class CBullet
 private:
 	float  c_radius = 5;
 
-	CTexture*	m_pTexture;
+	CTexture*	m_pTexture = NULL;
 	CCircle	m_Body;
 	CVector2 m_Vector;
 	bool m_ShowFlag{ false };

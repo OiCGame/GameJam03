@@ -1,6 +1,7 @@
 #pragma once
 #include	 "Mof.h"
 #include	 "SceneBase.h"
+#include	 "EnemyBulletManager.h"
 #include	 "Player.h"
 
 class CSceneGame : public CSceneBase

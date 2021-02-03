@@ -61,10 +61,12 @@ void CBullet::Render()
 {
 	if (!m_ShowFlag) { return; }
 	if (!m_pTexture) {
-		CGraphicsUtilities::RenderCircle(m_Body, MOF_COLOR_WHITE);
+		CGraphicsUtilities::RenderFillCircle(m_Body, MOF_COLOR_WHITE);
 	}
-	m_pTexture->Render( 
-		m_Body.Position.x - m_pTexture->GetWidth() * 0.5f,
-		m_Body.Position.y - m_pTexture->GetHeight() *0.5f
-	);
+	else {
+		m_pTexture->Render(
+			m_Body.Position.x - m_pTexture->GetWidth() * 0.5f,
+			m_Body.Position.y - m_pTexture->GetHeight() *0.5f
+		);
+	}
 }
