@@ -5,6 +5,7 @@
 #include "SceneGame.h"
 #include "SceneGameOver.h"
 #include "SceneGameClear.h"
+#include "SceneRanking.h"
 
 CSceneBase* g_pScene = NULL;
 bool g_bDebug = false;
@@ -50,6 +51,10 @@ MofBool CGameApp::Update(void) {
 			g_pScene = new CSceneGameClear();
 			g_pScene->SetScene(SCENENO_GAMECLEAR);
 			break;
+		case SCENENO_RANKING:
+			g_pScene = new CSceneRanking();
+			g_pScene->SetScene(SCENENO_RANKING);
+			break;
 		default:
 			break;
 		}
@@ -63,7 +68,7 @@ MofBool CGameApp::Update(void) {
 MofBool CGameApp::Render(void) {
 	g_pGraphics->RenderStart();
 
-	g_pGraphics->ClearTarget(0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0);
+	g_pGraphics->ClearTarget(0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0);
 
 
 	g_pScene->Render();

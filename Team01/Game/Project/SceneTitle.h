@@ -4,8 +4,8 @@
 class CSceneTitle : public CSceneBase
 {
 private:
-	static const int m_MessageCount = 2;
-	std::string		m_OptionMessage[m_MessageCount] = { "連鎖するシューティング","Pless Space : Start" };
+	static const int m_MessageCount = 3;
+	std::string		m_Message[m_MessageCount] = { "連鎖するシューティング","ゲームスタート", "ランキング" };
 public:
 	CSceneTitle();
 	~CSceneTitle();
