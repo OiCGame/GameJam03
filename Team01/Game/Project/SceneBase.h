@@ -33,7 +33,6 @@ public:
 	CSceneBase();
 	virtual ~CSceneBase() {};
 	virtual void Initialize(void) = 0;
-	virtual bool Load(void) = 0;
 	virtual void Update(void) = 0;
 	virtual void Render(void) = 0;
 	virtual void RenderDebug(void) = 0;

@@ -105,6 +105,10 @@
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameDefine.cpp" />
     <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="SceneGameClear.cpp" />
+    <ClCompile Include="SceneGameOver.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="UICanvas.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -119,6 +123,10 @@
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="SceneGameClear.h" />
+    <ClInclude Include="SceneGameOver.h" />
+    <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="UICanvas.h" />
   </ItemGroup>
   <ItemGroup>
