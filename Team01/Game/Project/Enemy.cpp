@@ -46,14 +46,13 @@ void CEnemy::MoveOutOfWindow(void) {
     auto size = Mof::CVector2(::g_pFramework->GetWindow()->GetWidth(),
                               ::g_pFramework->GetWindow()->GetHeight());
 
-    float distance = 0.0f;
-    float length = size.Length();
+    float distance = size.Length();
     Mof::CVector2 escape_point;
 
     {
         auto top = Mof::CVector2(pos.x, 0.0f);
-        length = Mof::CVector2Utilities::Distance(pos, top);
-        if (distance < length) {
+        float length = Mof::CVector2Utilities::Distance(pos, top);
+        if (length < distance) {
             distance = length;
             escape_point = top;
         } // if
@@ -61,8 +60,8 @@ void CEnemy::MoveOutOfWindow(void) {
 
     {
         auto bottom = Mof::CVector2(pos.x, size.y);
-        length = Mof::CVector2Utilities::Distance(pos, bottom);
-        if (distance < length) {
+        float length = Mof::CVector2Utilities::Distance(pos, bottom);
+        if (length < distance) {
             distance = length;
             escape_point = bottom;
         } // if
@@ -71,8 +70,8 @@ void CEnemy::MoveOutOfWindow(void) {
 
     {
         auto left = Mof::CVector2(0.0f, pos.y);
-        length = Mof::CVector2Utilities::Distance(pos, left);
-        if (distance < length) {
+		float length = Mof::CVector2Utilities::Distance(pos, left);
+        if (length < distance) {
             distance = length;
             escape_point = left;
         } // if
@@ -80,16 +79,14 @@ void CEnemy::MoveOutOfWindow(void) {
 
     {
         auto right = Mof::CVector2(size.x, pos.y);
-        length = Mof::CVector2Utilities::Distance(pos, right);
+		float length = Mof::CVector2Utilities::Distance(pos, right);
         if (length < distance) {
             distance = length;
             escape_point = right;
         } // if
     }
-
-    return;
-    /*
-    if (m_Pos.x <= escape_point.x) {
+    
+	if (m_Pos.x <= escape_point.x) {
         m_Pos.x++;
     } // if
     else if (escape_point.x <= m_Pos.x) {
@@ -101,8 +98,6 @@ void CEnemy::MoveOutOfWindow(void) {
     else if (escape_point.y <= m_Pos.y) {
         m_Pos.y--;
     } // else if
-    */
-
 }
 
 Mof::CVector2 CEnemy::GetPosition(void) const {
@@ -115,8 +110,8 @@ void CEnemy::Initialize(const InitParam& param) {
 
 void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp) {
     m_Pos = pos;
-    m_HPMax = hp;
-    m_HP = m_HPMax;
+    m_MaxHP = hp;
+    m_HP = m_MaxHP;
     m_MoveType = move_type;
     m_MoveTypeOnPinch = pinch_move;
     m_PinchHPRatio = ratio;
@@ -155,7 +150,7 @@ void CEnemy::SetTexture(Mof::CTexture* ptr) {
 }
 
 void CEnemy::Update() {
-    float ratio = m_HP / m_HPMax;
+    float ratio = m_HP / m_MaxHP;
     if (m_PinchHPRatio <= ratio) {
         this->Move(m_MoveType);
     } // if
