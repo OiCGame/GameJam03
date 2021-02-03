@@ -18,6 +18,7 @@ private:
     CTexture m_PlateTexture;  //! ボタンプレート画像
     CTexture m_SelectTexture; //! 選択画像
     CTexture m_TitleTexture;  //! タイトル画像
+    CTexture m_GuideTexture;  //! 操作方法画像
 
     CButton  m_btnStart;      //! 始めるボタン
     CButton  m_btnOption;     //! オプションボタン

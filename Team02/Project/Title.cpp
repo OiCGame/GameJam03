@@ -78,6 +78,7 @@ bool CTitle::Load(void)
         m_PlateTexture.Load("プレート5.png"),
         m_SelectTexture.Load("選択.png"),
         m_TitleTexture.Load("透明.png"),
+        m_GuideTexture.Load("ガイド.png"),
     };
     CUtilities::SetCurrentDirectory("../../");
 
@@ -178,6 +179,9 @@ void CTitle::Render(void)
         py = m_btnStart.GetRect().Top +
             ((th - m_SelectTexture.GetHeight()) * 0.5f) + (th * 1.1f * m_SelectNo);
         m_SelectTexture.Render(px, py);
+
+        // 操作方法の描画
+        m_GuideTexture.Render(g_pGraphics->GetTargetWidth() * 0.98f, g_pGraphics->GetTargetHeight() * 0.97f, TEXALIGN_BOTTOMRIGHT);
     }
 }
 
@@ -196,6 +200,7 @@ void CTitle::Release(void)
     m_PlateTexture.Release();
     m_SelectTexture.Release();
     m_TitleTexture.Release();
+    m_GuideTexture.Release();
 
     m_OptionWindow.Save();
     m_OptionWindow.Release();
