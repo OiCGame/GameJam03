@@ -130,6 +130,8 @@ void CPanel::RenderDebug(void) {
 		}
 		break;
 	}
+
+	CGraphicsUtilities::RenderString(0,1000, "パネル描画位置 X ： %f", (g_pGraphics->GetTargetWidth() - m_PanelTexture.GetWidth()) * 0.5);
 }
 
 void CPanel::Release(void) {

@@ -40,24 +40,25 @@ public:
 	int SingleState_Stg1[STG1JUDGECNT] = { Square,Square,Square,Square,Square,Square,Square };		//四角 : 0 / 三角 : 1 で記述
 	//パネルがどっちにより大きく接しているか(近いか)を判定するために使う、境界線
 	float FrontLine_Stg1[STG1JUDGECNT] = { 124, 387 ,634, 881, 1129 ,1376, 1610 };
+	//以下パネル1について、描画位置変更につき調整しました。
 	CVector2   SinglePos_Stg1[STG1JUDGECNT] = {
-		Vector2(14,13),
-		Vector2(263,13),
-		Vector2(511,13),
-		Vector2(757,13),
-		Vector2(1006,13),
-		Vector2(1253,13),
-		Vector2(1500,13)
+		Vector2(90,140),
+		Vector2(342,140),
+		Vector2(589,140),
+		Vector2(836,140),
+		Vector2(1083,140),
+		Vector2(1330,140),
+		Vector2(1577,140)
 	};
 	CRectangle SingleRect_Stg1[STG1JUDGECNT] = {
 		// ペイントにて大きさを測ったよ
-		CRectangle(14,13, 261,262),
-		CRectangle(263,13, 509,262),
-		CRectangle(511,13, 755,262),
-		CRectangle(757,13,1004,262),
-		CRectangle(1006,13,1252,262),
-		CRectangle(1253,13,1497,262),
-		CRectangle(1500,13,1748,262),
+		CRectangle(90,140, 340,399),
+		CRectangle(342,140, 587,399),
+		CRectangle(589,140, 834,399),
+		CRectangle(836,140,1081,399),
+		CRectangle(1083,140,1328,399),
+		CRectangle(1330,140,1575,399),
+		CRectangle(1577,140,1822,399),
 	};
 	CRectangle SingleRect_Stg2[2] = {
 		CRectangle(0,0,0,0),
