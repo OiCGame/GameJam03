@@ -135,6 +135,11 @@ void CGame::Update(void)
 	{
 		ChangeScene(SceneName::GameOver);
 	}
+
+	if (Panel.IsClear())
+	{
+		ChangeScene(SceneName::GameClear);
+	}
 }
 
 // ********************************************************************************

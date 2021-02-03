@@ -38,6 +38,10 @@ void CPanel::Initialize(int stagenum) {
 		break;
 	}
 	m_Clear = false;
+	for (int i = 0; i < STG1JUDGECNT; i++)
+	{
+		m_SingleOk[i] = false;
+	}
 }
 
 void CPanel::Update(CRectangle rec, float px, int bt) {
@@ -136,4 +140,24 @@ void CPanel::RenderDebug(void) {
 
 void CPanel::Release(void) {
 	m_PanelTexture.Release();
+}
+
+void CPanel::CheckClear()
+{
+	int count = 0;
+	for (int i = 0; i < STG1JUDGECNT; i++)
+	{
+		if (m_SingleOk[i])
+		{
+			count++;
+		}
+	}
+	if (count == STG1JUDGECNT)
+	{
+		m_Clear = true;
+	}
+	else
+	{
+		m_Clear = false;
+	}
 }

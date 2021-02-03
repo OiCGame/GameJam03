@@ -68,4 +68,7 @@ public:
 		CRectangle(0,0,0,0),
 		CRectangle(0,0,0,0)
 	};
+
+	void	CheckClear();
+	bool	IsClear() { return m_Clear; }
 };
