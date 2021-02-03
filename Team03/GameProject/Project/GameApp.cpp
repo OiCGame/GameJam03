@@ -27,13 +27,19 @@ std::unique_ptr<CSceneBase> gpSecene(new CSceneTitle());
 *//**************************************************************************/
 MofBool CGameApp::Initialize(void){
 
+	CUtilities::SetFPS(60);
+	g_pGraphics->SetScreenSize(1920, 1080);
+
 	//素材フォルダの指定
 	CUtilities::SetCurrentDirectory("Resource");
 	
 	gpSecene->Initialize();
-	CResourceManager::Singleton().LoadTexture("Player","PlayerUFO.png")
-								 .LoadTexture("PlayerBullet","PlayerBullet.png")
-								 .LoadTexture("PlayerArrow","PlayerArrow.png");
+	CResourceManager::Singleton()
+		.LoadTexture("GameClear","images/background/game_clear.png")
+		.LoadTexture("GameOver","images/background/game_over.png")
+		.LoadTexture("Player", "PlayerUFO.png")
+		.LoadTexture("PlayerBullet", "PlayerBullet.png")
+		.LoadTexture("PlayerArrow", "PlayerArrow.png");
 	return TRUE;
 }
 /*************************************************************************//*!

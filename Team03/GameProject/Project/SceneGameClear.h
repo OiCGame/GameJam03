@@ -4,6 +4,10 @@
 
 class CSceneGameClear : public CSceneBase
 {
+private:
+	CTexture* m_pBackground;
+
+public:
 	void Initialize() override;
 	void Update()  override;
 	void Render()  override;
