@@ -29,8 +29,8 @@ void CBullet::Update()
 		Position.y -= BULLET_SPEED;
 		Collision.x = Position.x;
 		Collision.y = Position.y;
-		BulletRect = CRectangle(Position.x - 295, Position.y - 290,
-								Position.x + 295, Position.y + 290);
+		BulletRect = CRectangle(Position.x - (int)Texture->GetWidth() * 0.5f, Position.y - (int)Texture->GetHeight() * 0.5f,
+								Position.x + (int)Texture->GetWidth() * 0.5f, Position.y + (int)Texture->GetHeight() * 0.5f);
 	}
 	else
 	{

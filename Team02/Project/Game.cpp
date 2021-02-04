@@ -42,8 +42,8 @@ void CGame::Initialize(void)
 
     CTexture* texArray[]
     {
-        /**Player.GetBulletTexture(0)/*/GameUI.GetMiniBlockTexture(0)/**/,
-        /**Player.GetBulletTexture(1)/*/GameUI.GetMiniBlockTexture(1)/**/,
+        /**/Player.GetBulletTexture(0)/*/GameUI.GetMiniBlockTexture(0)/**/,
+        /**/Player.GetBulletTexture(1)/*/GameUI.GetMiniBlockTexture(1)/**/,
     };
     Panel.SetTexture(texArray);
 
@@ -135,14 +135,17 @@ void CGame::Update(void)
 		}
     }
 	//後程可能であればポインタに変更したい
-	CDynamicArray<CBullet>	tmpBullet;
+	CDynamicArray<CBullet>*	tmpBullet;
 	tmpBullet = Player.GetBulletArray();
 
-	for (int i = 0; i < tmpBullet.GetArrayCount(); i++)
+	for (int i = 0; i < tmpBullet->GetArrayCount(); i++)
 	{
-		Panel.CheckHitCollision(tmpBullet[i].GetRectangle(),
-			tmpBullet[i].GetPosX(), tmpBullet[i].GetBulletType(),
-			tmpBullet[i].GetRotate());
+		if (Panel.CheckHitCollision(tmpBullet->GetData(i).GetRectangle(),
+			tmpBullet->GetData(i).GetPosX(), tmpBullet->GetData(i).GetBulletType(),
+			tmpBullet->GetData(i).GetRotate()))
+		{
+			tmpBullet->GetData(i).SetShow(false);
+		}
 	}
 
     // あとで変えたいのでダミー情報を送っておく
