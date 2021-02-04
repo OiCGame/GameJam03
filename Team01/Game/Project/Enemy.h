@@ -97,9 +97,9 @@ public:
     void Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp);
     void SetTexture(Mof::CTexture* ptr);
     void SetTarget(Mof::CVector2 pos);
-    void Update();
+    void Update(bool end);
     int CollisionBullet(CRectangle prec);
-    void Render();
+    void Render(bool end);
     void Release();
 
     /// <summary>

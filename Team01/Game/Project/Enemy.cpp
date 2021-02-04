@@ -127,11 +127,11 @@ void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio,
 	m_PinchHPRatio = ratio;
 
 
-	//	m_BulletColumn = rand() % 32;
+	//	m_BulletColumn = rand() % 1 + 1;
 	m_BulletColumn = column;
-	//	m_BulletAmount = rand() % 5 + 1;
+	//	m_BulletAmount = rand() % 1 + 1;
 	m_BulletAmount = amount;
-	//	m_BulletSetAmount = rand() % 5 + 5;
+	//	m_BulletSetAmount = rand() % 1 + 6;
 	m_BulletSetAmount = set;
 
 	m_BulletCount = m_BulletColumn * m_BulletAmount * m_BulletSetAmount;
@@ -170,16 +170,20 @@ void CEnemy::SetTarget(Mof::CVector2 pos) {
 	m_Target = temp;
 }
 
-void CEnemy::Update() {
+void CEnemy::Update(bool end) {
 	m_Move.x = 0.0f;
 	m_Move.y = 0.0f;
 
-
+	m_BulletShowCount = 0;
 	for (int i = 0; i < m_BulletNo; i++) {
 		if (!m_Bullet[i].IsShow()) { continue; }
-		m_Bullet[i].Update();
+		if (end)
+			m_Bullet[i].PopUpdate();
+		else
+			m_Bullet[i].Update();
 		m_BulletShowCount++;
 	}
+
 
 	if (!m_bDrow) { return; }
 
@@ -222,9 +226,12 @@ int CEnemy::CollisionBullet(CRectangle prec) {
 	return col;
 }
 
-void CEnemy::Render() {
+void CEnemy::Render(bool end) {
 	for (int i = 0; i < m_BulletCount; i++) {
-		m_Bullet[i].Render();
+		if (end)
+			m_Bullet[i].PopRender();
+		else
+			m_Bullet[i].Render();
 	}
 	if (!m_bDrow) { return; }
 #ifdef _DEBUG

@@ -147,7 +147,8 @@ CGame::CGame() :
 	m_Effects(),
 	m_bBossExist(false),
 	m_StagePaths({ "stage/test_stage.json", "stage/test_stage1.json" }),
-	m_StagePhaseIndex(0) {
+	m_StagePhaseIndex(0),
+	m_bPhaseChange(0) {
 }
 
 CGame::~CGame() {
@@ -175,6 +176,7 @@ bool CGame::Initialize(void) {
 	m_UICanvas.Initialize();
 	m_ElapsedTime = 0.0f;
 	m_bBossExist = false;
+	m_bPhaseChange = 0;
 
 	rapidjson::Document document;
 	if (!ParseJsonDocument(m_StagePaths.at(m_StagePhaseIndex).c_str(), document)) {
@@ -201,8 +203,8 @@ bool CGame::Initialize(void) {
 
 	m_EffectMotionData.Load("motion/explode.json");
 
-	m_Player.Initialize(Mof::CVector2(512.0f, 600.0f));
 	m_Player.SetTexture(&m_Textures.at(m_PlayerTexturePath));
+	m_Player.Initialize(Mof::CVector2(512.0f, 600.0f));
 
 	const auto& info = document["enemies"];
 	for (uint32_t i = 0; i < info.Size(); i++) {
@@ -249,7 +251,14 @@ bool CGame::Initialize(void) {
 }
 
 bool CGame::Update(void) {
-	if (::g_pInput->IsKeyPush(MOFKEY_RETURN)) {
+	if (m_bPhaseChange == 0) {
+		if (::g_pInput->IsKeyPush(MOFKEY_RETURN) || (m_EnemyDatas.empty() && m_EnemyCount == 0))
+		{
+			m_bPhaseChange = 1;
+		}
+	} // if
+	if (m_bPhaseChange == 2)
+	{
 		m_StagePhaseIndex++;
 		if (m_StagePaths.size() - 1 < m_StagePhaseIndex) {
 			m_StagePhaseIndex = m_StagePaths.size() - 1;
@@ -257,7 +266,7 @@ bool CGame::Update(void) {
 
 		this->Release();
 		this->Initialize();
-	} // if
+	}
 
 	m_ElapsedTime += 0.0167f;
 	this->SpawnEnemy();
@@ -287,11 +296,18 @@ bool CGame::Update(void) {
 	}
 
 	if (m_Player.IsShow()) {
-		m_Player.Update(m_PlayerBullets);
+		m_Player.Update(m_PlayerBullets, m_bPhaseChange);
+		if (m_Player.OutTop())
+			m_bPhaseChange = 2;
 	} // if
 
+	m_EnemyCount = 0;
 	for (auto& enemy : m_Enemies) {
-		enemy.Update();
+		if (enemy.IsShow())
+			m_EnemyCount += 1;
+	} // for
+	for (auto& enemy : m_Enemies) {
+		enemy.Update(m_EnemyDatas.empty() && m_EnemyCount == 0);
 	} // for
 
 	for (auto& bullet : m_PlayerBullets) {
@@ -306,7 +322,10 @@ bool CGame::Update(void) {
 		} // if
 	} // for
 
-	this->Collision();
+	if (m_bPhaseChange == 0)
+	{
+		this->Collision();
+	}
 
 
 	m_UICanvas.Update();
@@ -323,7 +342,7 @@ bool CGame::Render(void) {
 	} // if
 
 	for (auto& enemy : m_Enemies) {
-		enemy.Render();
+		enemy.Render(m_EnemyDatas.empty() && m_EnemyCount == 0);
 	} // for
 
 	for (auto& bullet : m_PlayerBullets) {

@@ -64,11 +64,11 @@ Mof::CRectangle CCharacter::GetCollisionRectangle(void) const {
 	auto rect = Mof::CRectangle(0.0f, 0.0f,
 		m_pTexture->GetWidth(), m_pTexture->GetHeight());
 	rect.Translation(m_Position);
-	rect.Expansion(-25.0f,-25.0f);
+	rect.Expansion(-25.0f, -25.0f);
 	return rect;
 }
 
-uint32_t CCharacter::GetRevivalCount(void) const{
+uint32_t CCharacter::GetRevivalCount(void) const {
 	return this->m_RevivalCount;
 }
 bool CCharacter::IsShow(void) const {
@@ -76,24 +76,36 @@ bool CCharacter::IsShow(void) const {
 }
 
 bool CCharacter::Initialize(Mof::CVector2 init_pos) {
-	m_Position = init_pos;
+	m_InitPos = init_pos;
+	m_Position = Vector2(m_InitPos.x, g_pGraphics->GetTargetHeight());
 	return true;
 }
 
-bool CCharacter::Update(std::array<CBullet, 256>& bullet_container) {
+bool CCharacter::Update(std::array<CBullet, 256>& bullet_container, int pha) {
 	if (!this->m_bShow) {
 		return false;
 	} // if
+	if (pha == 1)
+	{
+		m_Position.y -= 3;
+	}
+	else
+	{
+		m_Move = Mof::CVector2();
 
-	m_Move = Mof::CVector2();
+		if (m_Position.y > m_InitPos.y)
+		{
+			m_Position.y -= 3;
+		}
 
-	this->Move();
-	if (::g_pInput->IsKeyPush(MOFKEY_SPACE)) {
-		this->Shot(bullet_container);
-	} // if
+		this->Move();
+		if (::g_pInput->IsKeyPush(MOFKEY_SPACE)) {
+			this->Shot(bullet_container);
+		} // if
 
 
-	m_Position += m_Move;
+		m_Position += m_Move;
+	}
 	return true;
 }
 

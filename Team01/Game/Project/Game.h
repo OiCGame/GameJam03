@@ -36,9 +36,11 @@ private:
 	std::vector<std::shared_ptr<CEffect>> m_Effects;
 	//! 出現中
 	bool m_bBossExist;
-	
+	int m_EnemyCount;
 	std::vector<std::string> m_StagePaths;
 	uint32_t m_StagePhaseIndex;
+
+	int m_bPhaseChange;
 
 	/// <summary>
 	/// エネミー出現
