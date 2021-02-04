@@ -48,6 +48,7 @@ MofBool CGameApp::Initialize(void){
 		.LoadTexture("Enemy", "images/enemy/Enemyufo.png")
 		.LoadTexture("cloud_left", "images/cloud/cloud_left.png")
 		.LoadTexture("cloud_gray_left", "images/cloud/cloud_gray_left.png")
+		.LoadTexture("ItemLife", "images/item/ItemLife.png")
 		// âπÇÃì«Ç›çûÇ›
 		.LoadSound("bgm_title", "sounds/BGM/title.mp3");
 
