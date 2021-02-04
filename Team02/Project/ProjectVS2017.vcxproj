@@ -106,6 +106,7 @@
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="MyTime.cpp" />
     <ClCompile Include="NumericDisplay.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -129,8 +130,10 @@
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="GameUI.h" />
+    <ClInclude Include="MyTime.h" />
     <ClInclude Include="NumericDisplay.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="Periodic.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RoundRect.h" />
     <ClInclude Include="SceneDefine.h" />
@@ -143,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Periodic.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

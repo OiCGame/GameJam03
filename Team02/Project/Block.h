@@ -2,7 +2,7 @@
 
 #include	"Mof.h"
 
-#define     BLOCK_FALLTIME      5.0f
+#define     BLOCK_FALLTIME      2.0f
 #define		BLOCK_FALLSPEED		(1080.0f / BLOCK_FALLTIME) //‘¬“x(ƒtƒŒ[ƒ€‚ÉˆË‘¶‚µ‚È‚¢)
 #define		BLOCK_COUNT		    10			//•`‰æ”
 #define		SHOW_MAX	        20			//Å‘å•`‰æ”

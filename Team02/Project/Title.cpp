@@ -1,4 +1,5 @@
 #include "Title.h"
+#include "Periodic.h"
 
 // ********************************************************************************
 /// <summary>
@@ -103,6 +104,7 @@ bool CTitle::Load(void)
 // ********************************************************************************
 void CTitle::Update(void)
 {
+
     // オプションを開いているか否か
     if (m_OptionWindow.IsShow())
     {
@@ -176,9 +178,13 @@ void CTitle::Render(void)
         // 選択位置の計算
         float th = m_PlateTexture.GetHeight();
         px = m_btnStart.GetRect().Left - (m_SelectTexture.GetWidth() * 1.1f);
+        //px = m_SelectMotionX.GetValue();
         py = m_btnStart.GetRect().Top +
             ((th - m_SelectTexture.GetHeight()) * 0.5f) + (th * 1.1f * m_SelectNo);
-        m_SelectTexture.Render(px, py);
+        
+        MofS32 alpha = 255 * sip::CPeriodic::Sine0_1(0.8f);
+        MofU32 color = MOF_ALPHA_WHITE(alpha);
+        m_SelectTexture.Render(px, py, color);
 
         // 操作方法の描画
         m_GuideTexture.Render(g_pGraphics->GetTargetWidth() * 0.98f, g_pGraphics->GetTargetHeight() * 0.97f, TEXALIGN_BOTTOMRIGHT);

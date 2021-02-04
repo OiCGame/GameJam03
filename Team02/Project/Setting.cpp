@@ -1,6 +1,7 @@
 #include "Setting.h"
 #include "RoundRect.h"
 #include "SoundManager.h"
+#include "Periodic.h"
 
 // ********************************************************************************
 /// <summary>
@@ -352,7 +353,9 @@ void CSetting::Render(void)
     default:
         break;
     }
-    m_pSelectTexture->Render(pos.x, pos.y);
+    MofS32 alpha = 255 * sip::CPeriodic::Sine0_1(0.8f);
+    MofU32 color = MOF_ALPHA_WHITE(alpha);
+    m_pSelectTexture->Render(pos.x, pos.y, color);
 }
 
 // ********************************************************************************

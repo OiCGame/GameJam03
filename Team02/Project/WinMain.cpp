@@ -1,4 +1,5 @@
 #include	"GameApp.h"
+#include    "MyTime.h"
 
 int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow )
 {
@@ -7,6 +8,7 @@ int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 	Mof::LPFramework pFrame = new Mof::CDX11GameFramework(); 
 	Mof::WINDOWSGAMEFRAMEWORKINITIALIZEINFO Info;
 	Info.pApplication = new CGameApp();
+    sip::CMyTime::InitTime();
 
     // 初期ウィンドウを仮想フルスクリーンに変更
     Info.WindowCreateInfo.Width  = 1920;

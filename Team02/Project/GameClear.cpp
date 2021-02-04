@@ -1,5 +1,6 @@
 #include "GameClear.h"
 #include "GameDefine.h"
+#include "Periodic.h"
 
 // ********************************************************************************
 /// <summary>
@@ -153,7 +154,9 @@ void CGameClear::Render(void)
     {
         py = m_btnGoToTitle.GetRect().Top + (m_btnGoToTitle.GetRect().GetHeight() - m_SelectTexture.GetHeight()) * 0.5f;
     }
-    m_SelectTexture.Render(px, py);
+    MofS32 alpha = 255 * sip::CPeriodic::Sine0_1(0.8f);
+    MofU32 color = MOF_ALPHA_WHITE(alpha);
+    m_SelectTexture.Render(px, py, color);
 
     if ((m_NowStageNo != MaxStage - 1))
     {

@@ -44,7 +44,7 @@ void CBlock::Render(void) {
     if (!m_bShow) {
         return;
     }
-    m_pBlockTexture->RenderRotate(m_Pos.x, m_Pos.y, MOF_ToRadian(m_DegreeAngle), TEXALIGN_CENTERCENTER);
+    m_pBlockTexture->RenderScaleRotate(m_Pos.x, m_Pos.y, 0.5f, MOF_ToRadian(m_DegreeAngle), TEXALIGN_CENTERCENTER);
 }
 
 void CBlock::RenderDebug() {

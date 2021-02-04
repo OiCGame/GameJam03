@@ -103,7 +103,7 @@ void CGame::Update(void)
 		DebugEnable = !DebugEnable;
 	}
 
-    if (BlockFallTimer.GetTime() > 2.0f)
+    if (BlockFallTimer.GetTime() > BlockFallIntervalSecond)
     {
         for (int i = 0; i < BLOCK_COUNT; i++)
         {

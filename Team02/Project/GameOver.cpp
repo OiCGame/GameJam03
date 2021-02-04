@@ -1,4 +1,5 @@
 #include "GameOver.h"
+#include "Periodic.h"
 
 // ********************************************************************************
 /// <summary>
@@ -136,7 +137,10 @@ void CGameOver::Render(void)
     const float py = m_btnRetry.GetRect().Top - 
         (m_btnRetry.GetRect().GetHeight() - m_SelectTexture.GetHeight()) * 0.5f +
         m_SelectNo * m_PlateTexture.GetHeight() * 1.07f + m_PlateTexture.GetHeight() * 0.45f;
-    m_SelectTexture.Render(px, py);
+
+    MofS32 alpha = 255 * sip::CPeriodic::Sine0_1(0.8f);
+    MofU32 color = MOF_ALPHA_WHITE(alpha);
+    m_SelectTexture.Render(px, py, color);
 
     m_btnRetry.Render();
     m_btnGoToTitle.Render();
