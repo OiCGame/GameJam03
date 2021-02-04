@@ -87,7 +87,7 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container, int pha) {
 	} // if
 	if (pha == 1)
 	{
-		m_Position.y -= 3;
+		m_Position.y -= 4;
 	}
 	else
 	{

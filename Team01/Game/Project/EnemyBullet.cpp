@@ -17,9 +17,9 @@ CEnemyBullet::~CEnemyBullet() {
 
 }
 
-void CEnemyBullet::Initialize(float dir) {
+void CEnemyBullet::Initialize(float dir, int reflect) {
 	m_Dir = dir;
-	m_ReflectionNo = m_ReflectionCount;
+	m_ReflectionNo = reflect;
 }
 
 void CEnemyBullet::Generation(Vector2 pos) {

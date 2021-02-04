@@ -223,11 +223,12 @@ bool CGame::Initialize(void) {
 		int bullet_column = info[i]["bullet_column"].GetInt();
 		int bullet_amount = info[i]["bullet_amount"].GetInt();
 		int amount_set = info[i]["amount_set"].GetInt();
+		int reflect_count = info[i]["reflect_count"].GetInt();
 		int hp = info[i]["hp"].GetInt();
 		std::string tex_path = info[i]["texture_uri"].GetString();
 
 		m_EnemyDatas.push_back(CEnemy::InitParam(
-			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, hp, tex_path));
+			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set,reflect_count,  hp, tex_path));
 	} // for
 
 

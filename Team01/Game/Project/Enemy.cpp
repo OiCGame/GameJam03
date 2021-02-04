@@ -115,10 +115,10 @@ void CEnemy::AddCollisionedEffect(const std::shared_ptr<CEffect>& ptr) {
 
 void CEnemy::Initialize(const InitParam& param) {
 	this->Initialize(param.position, param.move_type, param.move_type_on_pinch, param.pinch_hp_ratio,
-		param.bullet_column, param.bullet_amount, param.amount_set, param.hp_max);
+		param.bullet_column, param.bullet_amount, param.reflect_count, param.amount_set, param.hp_max);
 }
 
-void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp) {
+void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int reflect, int hp) {
 	m_Pos = pos;
 	m_MaxHP = hp;
 	m_HP = m_MaxHP;
@@ -142,11 +142,11 @@ void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio,
 	int dirpat = 360 / m_BulletColumn;
 	float dirSplit = rand() % dirpat;
 
-	float dir = 270 - (m_BulletColumn - 1) * dirSplit / 2;
+	float dir = 90 - (m_BulletColumn - 1) * dirSplit / 2;
 
 	for (int i = 0; i < m_BulletCount; i++) {
 		int dp = i % m_BulletColumn;
-		m_Bullet[i].Initialize(dir + dp * dirSplit);
+		m_Bullet[i].Initialize(dir + dp * dirSplit,reflect);
 	}
 
 	m_BulletNo = 0;
