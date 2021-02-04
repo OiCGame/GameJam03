@@ -3,29 +3,31 @@
 #include	"EnemyManager.h"
 #include	"Enemy.h"
 
+void CSceneGame::ResetEnemies(int wave_no)
+{
+	CEnemyManager::Singleton().Release();
+	// “G‚Ì—Ê‚ğİ’è
+	for (int i = 0; i < m_EnemyCount[wave_no]; i++)
+	{
+		auto enemy = std::make_shared<CEnemy>();
+		enemy->Initialize();
+		CEnemyManager::Singleton().AddEnemy(enemy);
+	}
+	//ˆÚ“®ˆÊ’u‚Ì“o˜^
+	for (const auto & pos : m_CloudPositions[wave_no])
+	{
+		CEnemyManager::Singleton().AddMovePos(CVector2(pos[0], pos[1]));
+	}
+}
+
 void CSceneGame::Initialize()
 {
 	m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
 
 	m_Player.Initialize(CVector2(500, 500));
 
-	CEnemyManager::Singleton().Initialize();
-	for (int i = 0; i < 2; i++)
-	{
-		auto enemy = std::make_shared<CEnemy>();
-		enemy->Initialize();
-		//enemy->SetMoveParameter(CVector2(450*(i+1), 200), TYPE_MOVE, CVector2(3.5f, 3.5f));
-		CEnemyManager::Singleton().AddEnemy(enemy);
-	}
-
-
-	//ˆÚ“®ˆÊ’u‚Ì“o˜^
-	for (int i = 0; i < 6; i++)
-	{
-		int x = CUtilities::Random(CGraphicsUtilities::GetGraphics()->GetTargetWidth());
-		int y = CUtilities::Random(CGraphicsUtilities::GetGraphics()->GetTargetHeight());
-		CEnemyManager::Singleton().AddMovePos(CVector2(x, y));
-	}
+	CEnemyManager::Singleton().Initialize(); // ResetEnemies()“à‚ÉˆÚA‚·‚é‚©‚àH
+	this->ResetEnemies(m_WaveNo);
 }
 
 void CSceneGame::Update()
@@ -38,6 +40,10 @@ void CSceneGame::Update()
 		this->SetNextScene(NextScene::GameOver);
 		this->SceneEnd();
 	}
+	if (g_pInput->IsKeyPush(MOFKEY_F3)) {
+		this->ResetEnemies(++m_WaveNo);
+	}
+
 	m_Player.Update();
 
 	if (g_pInput->IsKeyPush(MOFKEY_RETURN))
@@ -58,7 +64,7 @@ void CSceneGame::Render()
 	CEnemyBulletManager::Singleton().Render();
 	CEnemyManager::Singleton().Render();
 
-	for (const auto & pos : m_CloudPositions[0]) {
+	for (const auto & pos : m_CloudPositions[m_WaveNo]) {
 		m_pCloudTexture->Render(
 			pos[0] - m_pCloudTexture->GetWidth()*0.5f,
 			pos[1] - m_pCloudTexture->GetHeight() * 0.5f
@@ -74,6 +80,7 @@ void CSceneGame::RenderDebug()
 	CGraphicsUtilities::RenderString(0, 0, "Game");	
 	CGraphicsUtilities::RenderString(0, 30, "push to F1 => next SecenGameClear");
 	CGraphicsUtilities::RenderString(0, 60, "push to F2 => next SecenGameOver");
+	CGraphicsUtilities::RenderString(0, 90, "push to F3 => next wave");
 }
 
 void CSceneGame::Release()
