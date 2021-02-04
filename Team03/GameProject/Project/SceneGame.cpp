@@ -1,8 +1,28 @@
 #include "SceneGame.h"
+#include	"EnemyManager.h"
+#include	"Enemy.h"
 
 void CSceneGame::Initialize()
 {
 	m_Player.Initialize(CVector2(500, 500));
+
+	CEnemyManager::Singleton().Initialize();
+	for (int i = 0; i < 2; i++)
+	{
+		auto enemy = std::make_shared<CEnemy>();
+		enemy->Initialize();
+		//enemy->SetMoveParameter(CVector2(450*(i+1), 200), TYPE_MOVE, CVector2(3.5f, 3.5f));
+		CEnemyManager::Singleton().AddEnemy(enemy);
+	}
+
+
+	//ˆÚ“®ˆÊ’u‚Ì“o˜^
+	for (int i = 0; i < 6; i++)
+	{
+		int x = CUtilities::Random(CGraphicsUtilities::GetGraphics()->GetTargetWidth());
+		int y = CUtilities::Random(CGraphicsUtilities::GetGraphics()->GetTargetHeight());
+		CEnemyManager::Singleton().AddMovePos(CVector2(x, y));
+	}
 }
 
 void CSceneGame::Update()
@@ -17,6 +37,12 @@ void CSceneGame::Update()
 	}
 	m_Player.Update();
 
+	if (g_pInput->IsKeyPush(MOFKEY_RETURN))
+	{
+		CEnemyManager::Singleton().StartMove(5.0f, CVector2(3.5f, 3.5f), TYPE_ALL);
+	}
+	CEnemyManager::Singleton().Update();
+
 	//LauncherInit_Line{ CVector2(0,100),CVector2(10,0), BulletType::red, 20, 0.2f }
 	//LauncherInit_Polygon{ CVector2(0,100),CVector2(10,0), BulletType::red, 20, 0.2f }
 	//LauncherInit_PolygonRotation{ CVector2(300,300),CVector2(5,5), BulletType::red, 60, 0.2f , 5 , 5, 6 }
@@ -27,6 +53,7 @@ void CSceneGame::Update()
 void CSceneGame::Render()
 {
 	CEnemyBulletManager::Singleton().Render();
+	CEnemyManager::Singleton().Render();
 	m_Player.Render();
 }
 
@@ -40,4 +67,5 @@ void CSceneGame::RenderDebug()
 
 void CSceneGame::Release()
 {
+	CEnemyManager::Singleton().Release();
 }
