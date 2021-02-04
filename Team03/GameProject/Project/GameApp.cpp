@@ -40,6 +40,7 @@ MofBool CGameApp::Initialize(void){
 		.LoadTexture("PlayerBullet", "images/player/PlayerBullet.png")
 		.LoadTexture("PlayerArrow", "images/player/PlayerArrow.png")
 		.LoadTexture("Enemy", "images/enemy/Enemyufo.png")
+		.LoadTexture("cloud_left", "images/cloud/cloud_left.png")
 		// âπÇÃì«Ç›çûÇ›
 		.LoadSound("bgm_title", "sounds/BGM/title.mp3");
 
