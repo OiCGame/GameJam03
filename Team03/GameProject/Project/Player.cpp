@@ -211,3 +211,17 @@ void CPlayer::TakeDamage()
 	m_Life--;
 }
 
+bool CPlayer::ItemCollisionCheck(const CItem& item)
+{
+	bool b = item.GetCircle().CollisionCircle(GetCircle());
+	if (b) {
+		switch (item.GetItemType())
+		{
+		case ItemType::ITEM_LIFE:
+			m_Life += 1;
+			break;
+		}
+	}
+	return b;
+}
+

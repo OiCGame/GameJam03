@@ -1,6 +1,7 @@
 #pragma once
 #include	"Mof.h"
 #include	"PlayerBullet.h"
+#include	"Item.h"
 
 class CPlayer
 {
@@ -62,5 +63,7 @@ public:
 
 	int  GetBulletRemain() { return m_BulletRemain; }
 	void SetBulletRemain(int num) { m_BulletRemain = num; }
+
+	bool ItemCollisionCheck(const CItem& item);
 };
 
