@@ -8,6 +8,11 @@ CSceneTitle::CSceneTitle() :
 	if (!m_Texture.Load("title.png")) {
 		::OutputDebugString("failed to load title texture");
 	} // if
+	if (!m_ShopTexture.Load("shop.png")) {
+		::OutputDebugString("failed to load title texture");
+	} // if
+
+
 	if (!m_Font.Create(48, "ÉÅÉCÉäÉI")) {
 		::OutputDebugString("failed to create title font");
 	} // if
@@ -15,6 +20,7 @@ CSceneTitle::CSceneTitle() :
 
 CSceneTitle::~CSceneTitle() {
 	m_Texture.Release();
+	m_ShopTexture.Release();
 }
 
 bool CSceneTitle::Load() {
@@ -45,6 +51,8 @@ void CSceneTitle::Update() {
 
 void CSceneTitle::Render() {
 	m_Texture.Render(0.0f, 0.0f);
+
+	m_ShopTexture.Render(400.0f, 0.0f);
 
 	for (int i = 0; i < m_MessageCount; i++) {
 		CRectangle r;

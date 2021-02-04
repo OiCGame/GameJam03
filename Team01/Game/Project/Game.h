@@ -14,11 +14,13 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Effect.h"
+#include "Shop.h"
 
 
 class CGame {
 private:
 	UICanvas m_UICanvas;
+	CShop m_Shop;
 	float m_ElapsedTime;
 	
 	std::unordered_map<std::string, Mof::CTexture> m_Textures;
@@ -39,7 +41,6 @@ private:
 	
 	std::vector<std::string> m_StagePaths;
 	uint32_t m_StagePhaseIndex;
-
 	/// <summary>
 	/// エネミー出現
 	/// </summary>

@@ -132,6 +132,7 @@ void CGame::CollisionPlayerEnemies(void) {
 
 CGame::CGame() :
 	m_UICanvas(),
+	m_Shop(),
 	m_ElapsedTime(0.0f),
 	m_Textures(),
 	m_PlayerTexturePath("player/Plane1Up.png"),
@@ -245,6 +246,9 @@ bool CGame::Initialize(void) {
 		m_UICanvas.AddImage(name.c_str(), &player_tex, pos);
 		pos.x += width;
 	} // for
+
+
+	m_Shop.Initialize(&m_Textures, m_PlayerTexturePath, m_BulletTexturePath);
 	return true;
 }
 
@@ -317,6 +321,8 @@ bool CGame::Update(void) {
 bool CGame::Render(void) {
 	auto& stage_tex = m_Textures.at(m_StageTexturePath);
 	stage_tex.Render(0.0f, 0.0f);
+
+	m_Shop.Render();
 
 	if (m_Player.IsShow()) {
 		m_Player.Render();
