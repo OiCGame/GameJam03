@@ -125,5 +125,5 @@ void CSceneBase::FadeInOut(void) {
 }
 
 void CSceneBase::RenderFade(void) {
-	CGraphicsUtilities::RenderFillRect(0,0,g_pGraphics->GetTargetWidth(),g_pGraphics->GetTargetHeight(),MOF_ARGB(m_Alpha,255,255,255));
+	CGraphicsUtilities::RenderFillRect(0,0,g_pGraphics->GetTargetWidth(),g_pGraphics->GetTargetHeight(),MOF_ARGB(m_Alpha,0,0,0));
 }

@@ -148,7 +148,7 @@ CGame::CGame() :
 	m_bBossExist(false),
 	m_StagePaths({ "stage/test_stage.json", "stage/test_stage1.json" }),
 	m_StagePhaseIndex(0),
-	m_bPhaseChange(0) {
+	m_bPhaseNo(0) {
 }
 
 CGame::~CGame() {
@@ -176,7 +176,7 @@ bool CGame::Initialize(void) {
 	m_UICanvas.Initialize();
 	m_ElapsedTime = 0.0f;
 	m_bBossExist = false;
-	m_bPhaseChange = 0;
+	m_bPhaseNo = 0;
 
 	rapidjson::Document document;
 	if (!ParseJsonDocument(m_StagePaths.at(m_StagePhaseIndex).c_str(), document)) {
@@ -252,13 +252,13 @@ bool CGame::Initialize(void) {
 }
 
 bool CGame::Update(void) {
-	if (m_bPhaseChange == 0) {
+	if (m_bPhaseNo == 0) {
 		if (::g_pInput->IsKeyPush(MOFKEY_RETURN) || (m_EnemyDatas.empty() && m_EnemyCount == 0))
 		{
-			m_bPhaseChange = 1;
+			m_bPhaseNo = 1;
 		}
 	} // if
-	if (m_bPhaseChange == 2)
+	if (m_bPhaseNo == 2)
 	{
 		m_StagePhaseIndex++;
 		if (m_StagePaths.size() - 1 < m_StagePhaseIndex) {
@@ -297,9 +297,9 @@ bool CGame::Update(void) {
 	}
 
 	if (m_Player.IsShow()) {
-		m_Player.Update(m_PlayerBullets, m_bPhaseChange);
+		m_Player.Update(m_PlayerBullets, m_bPhaseNo);
 		if (m_Player.OutTop())
-			m_bPhaseChange = 2;
+			m_bPhaseNo = 2;
 	} // if
 
 	m_EnemyCount = 0;
@@ -323,7 +323,7 @@ bool CGame::Update(void) {
 		} // if
 	} // for
 
-	if (m_bPhaseChange == 0)
+	if (m_bPhaseNo == 0)
 	{
 		this->Collision();
 	}

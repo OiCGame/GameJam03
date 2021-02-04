@@ -196,6 +196,10 @@ void CEnemy::Update(bool end) {
 	} // else
 	m_Pos += m_Move;
 
+	if (m_Pos.x > g_pGraphics->GetTargetWidth() || m_Pos.x +m_pTexture->GetWidth() < 0)
+	{
+		m_bDrow = false;
+	}
 
 	if (m_BulletNo >= m_BulletCount) { return; }
 	if (m_BulletSetRemGap > 0) {

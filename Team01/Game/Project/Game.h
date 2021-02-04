@@ -40,7 +40,7 @@ private:
 	std::vector<std::string> m_StagePaths;
 	uint32_t m_StagePhaseIndex;
 
-	int m_bPhaseChange;
+	int m_bPhaseNo;
 
 	/// <summary>
 	/// エネミー出現
@@ -100,4 +100,6 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	bool Release(void);
+
+	int GetPhaseNo() { return m_bPhaseNo; }
 };

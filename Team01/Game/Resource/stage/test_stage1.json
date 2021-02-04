@@ -53,7 +53,7 @@
       "bullet_column": 15,
       "bullet_amount": 5,
       "amount_set": 10,
-      "reflect_count": 2,
+      "reflect_count": 4,
       "hp": 3,
       "texture_uri": "enemy/Enemy06.png"
 
