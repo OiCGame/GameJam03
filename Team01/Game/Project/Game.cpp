@@ -10,7 +10,7 @@ void CGame::SpawnEnemy(void) {
 		} // if
 		auto enemy = CEnemy();
 		enemy.Initialize(spawn_data);
-		enemy.SetTexture(& m_Textures.at(spawn_data.texture_path) );
+		enemy.SetTexture(&m_Textures.at(spawn_data.texture_path));
 		enemy.SetTarget(m_Player.GetPosition());
 
 		m_Enemies.push_back(std::move(enemy));
@@ -50,7 +50,7 @@ void CGame::Collision(void) {
 		if (!enemy.IsShow()) { continue; }
 		for (auto effect : m_Effects) {
 			auto& collitioned_effects = enemy.GetCollisionedEffects();
-			if (std::find_if(collitioned_effects.begin(), collitioned_effects.end(), [&](std::weak_ptr<CEffect> weak) { 
+			if (std::find_if(collitioned_effects.begin(), collitioned_effects.end(), [&](std::weak_ptr<CEffect> weak) {
 				if (auto e = weak.lock()) {
 					return e == effect;
 				} // if
@@ -74,7 +74,7 @@ void CGame::Collision(void) {
 	for (auto& param : effect_param) {
 		auto pos = param.position;
 		auto effect = std::make_shared<CEffect>();
-		effect->Generate(&effect_tex , m_EffectMotionData, param.chain);
+		effect->Generate(&effect_tex, m_EffectMotionData, param.chain);
 		effect->Start(pos);
 		m_Effects.push_back(effect);
 
@@ -105,13 +105,13 @@ void CGame::Collision(void) {
 		} // for
 		if (m_Player.IsShow()) {
 			for (int i = 0; i < enemy.CollisionBullet(m_Player.GetCollisionRectangle()); i++) {
-				/*
+				break;
+
 				if (m_Player.Damage()) {
 					auto name = std::string("image");
 					name += std::to_string(m_Player.GetRevivalCount());
 					m_UICanvas.RemoveImage(name);
 				} // if
-				*/
 			} // for
 		}
 	} // for
@@ -144,13 +144,31 @@ CGame::CGame() :
 	m_Player(),
 	m_Enemies(),
 	m_PlayerBullets(),
-	m_Effects() ,
-	m_bBossExist(false), 
+	m_Effects(),
+	m_bBossExist(false),
 	m_StagePaths({ "stage/test_stage.json", "stage/test_stage1.json" }),
-	m_StagePhaseIndex(0){
+	m_StagePhaseIndex(0) {
 }
 
 CGame::~CGame() {
+}
+
+bool CGame::IsPlayerDead(void) const {
+	return !m_Player.IsShow();
+}
+
+bool CGame::IsAllPhaseEnd(void) const {
+	if (!m_EnemyDatas.empty()) {
+		return false;
+	} // if
+
+	bool exist = false;
+	for (auto& enemy : m_Enemies) {
+		if (enemy.IsShow()) {
+			return false;
+		} // if
+	} // for
+	return m_StagePaths.size() - 1 == m_StagePhaseIndex;
 }
 
 bool CGame::Initialize(void) {
@@ -233,7 +251,7 @@ bool CGame::Initialize(void) {
 bool CGame::Update(void) {
 	if (::g_pInput->IsKeyPush(MOFKEY_RETURN)) {
 		m_StagePhaseIndex++;
-		if (m_StagePaths.size() - 1 < m_StagePhaseIndex ) {
+		if (m_StagePaths.size() - 1 < m_StagePhaseIndex) {
 			m_StagePhaseIndex = m_StagePaths.size() - 1;
 		} // if
 

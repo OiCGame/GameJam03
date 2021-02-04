@@ -1,11 +1,9 @@
 #include "SceneGame.h"
 
 CSceneGame::CSceneGame() {
-
 }
 
 CSceneGame::~CSceneGame() {
-
 }
 
 bool CSceneGame::Load() {
@@ -20,13 +18,13 @@ void CSceneGame::Update() {
 	FadeInOut();
 	if (m_bEndStart) { return; }
 	m_Game.Update();
-	if (g_pInput->IsKeyPush(MOFKEY_F2))
-	{
+//	if (g_pInput->IsKeyPush(MOFKEY_F2)) {
+	if (m_Game.IsAllPhaseEnd()) {
 		m_bEndStart = true;
 		m_NextSceneNo = SCENENO_GAMECLEAR;
 	}
-	if (g_pInput->IsKeyPush(MOFKEY_F3))
-	{
+	//	if (g_pInput->IsKeyPush(MOFKEY_F3)) {
+	if (m_Game.IsPlayerDead()) {
 		m_bEndStart = true;
 		m_NextSceneNo = SCENENO_GAMEOVER;
 	}

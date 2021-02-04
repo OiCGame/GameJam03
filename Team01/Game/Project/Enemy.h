@@ -91,7 +91,7 @@ public:
 	std::vector<std::weak_ptr<CEffect>> & GetCollisionedEffects(void);
 	void AddCollisionedEffect(const std::shared_ptr<CEffect>& ptr);
 
-    bool IsShow() { return m_bDrow; }
+    bool IsShow(void) const { return m_bDrow; }
 
     void Initialize(const InitParam& param);
     void Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp);

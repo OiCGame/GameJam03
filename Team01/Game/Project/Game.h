@@ -63,6 +63,18 @@ public:
 	CGame();
 	~CGame();
 	/// <summary>
+	/// ゲームオーバー判定用
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool IsPlayerDead(void) const;
+	/// <summary>
+	/// ゲームクリア判定用
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool IsAllPhaseEnd(void) const;
+	/// <summary>
 	/// 描画
 	/// </summary>
 	/// <param name=""></param>

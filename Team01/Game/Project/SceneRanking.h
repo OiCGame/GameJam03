@@ -4,6 +4,9 @@
 class CSceneRanking : public CSceneBase
 {
 private:
+	//! テクスチャ
+	Mof::CTexture m_Texture;
+
 	static const int m_ScoreCount = 10;
 	int		m_Score[m_ScoreCount];
 

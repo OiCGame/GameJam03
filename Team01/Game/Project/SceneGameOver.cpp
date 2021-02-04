@@ -1,11 +1,14 @@
 #include "SceneGameOver.h"
 
-CSceneGameOver::CSceneGameOver() {
-
+CSceneGameOver::CSceneGameOver() :
+	m_Texture() {
+	if (!m_Texture.Load("gameover.png")) {
+		::OutputDebugString("failed to load game over texture");
+	} // if
 }
 
 CSceneGameOver::~CSceneGameOver() {
-
+	m_Texture.Release();
 }
 
 bool CSceneGameOver::Load() {
@@ -19,16 +22,16 @@ void CSceneGameOver::Initialize() {
 void CSceneGameOver::Update() {
 	FadeInOut();
 	if (m_bEndStart) { return; }
-	if (CInputManager::GetInstance().GetPush(1))
-	{
+	if (CInputManager::GetInstance().GetPush(1)) {
 		m_bEndStart = true;
 		m_NextSceneNo = SCENENO_TITLE;
 	}
 }
 
 void CSceneGameOver::Render() {
-	for (int i = 0; i < m_MessageCount; i++)
-	{
+	m_Texture.Render(0.0f, 0.0f);
+
+	for (int i = 0; i < m_MessageCount; i++) {
 		CRectangle r;
 		CGraphicsUtilities::CalculateStringRect(0, 0, m_OptionMessage[i].c_str(), r);
 		float wid = g_pGraphics->GetTargetWidth() / 2;
