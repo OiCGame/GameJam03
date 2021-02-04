@@ -9,6 +9,7 @@ CEnemyManager::CEnemyManager() :
 
 CEnemyManager::~CEnemyManager()
 {
+	Release();
 }
 
 CEnemyManager & CEnemyManager::Singleton(void)

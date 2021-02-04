@@ -22,7 +22,7 @@ private:
 	CVector2 m_MoveSpeed;		// 移動量
 	CVector2 m_MovePos;		// 移動先の位置
 	CVector2 m_OldPos[5];	// 移動した位置の保存
-	CTexture m_EnemyTexture;// テクスチャ
+	CTexture* m_EnemyTexture;// テクスチャ
 	int m_Type;
 	bool m_bShow;
 	int m_AfterimageInterval;

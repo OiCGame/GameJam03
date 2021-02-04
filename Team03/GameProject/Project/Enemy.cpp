@@ -1,6 +1,8 @@
 #include "Enemy.h"
+#include	"ResourceManager.h"
 
-CEnemy::CEnemy()
+CEnemy::CEnemy():
+	m_EnemyTexture()
 {
 }
 
@@ -10,11 +12,12 @@ CEnemy::~CEnemy()
 
 bool CEnemy::Initialize(void)
 {
-	if (!m_EnemyTexture.Load("Enemyufo.png"))
+	/*if (!m_EnemyTexture.Load("Enemyufo.png"))
 	{
 		return false;
-	}
-	m_Position = CVector2(CGraphicsUtilities::GetGraphics()->GetTargetWidth() * 0.5f - m_EnemyTexture.GetWidth() * 0.5f, 0);
+	}*/
+	m_EnemyTexture = &CResourceManager::Singleton().GetTextureList()->at("Enemy");
+	m_Position = CVector2(CGraphicsUtilities::GetGraphics()->GetTargetWidth() * 0.5f - m_EnemyTexture->GetWidth() * 0.5f, 0);
 	for (int i = 0; i < 5; i++)
 	{
 		m_OldPos[i] = m_Position;
@@ -65,16 +68,15 @@ void CEnemy::Render(void)
 {
 	for (int i = 0; i < 5; i++)
 	{
-		m_EnemyTexture.Render(m_OldPos[i].x, m_OldPos[i].y, MOF_ARGB(40 * (i + 1), 255, 255, 255));
+		m_EnemyTexture->Render(m_OldPos[i].x, m_OldPos[i].y, MOF_ARGB(40 * (i + 1), 255, 255, 255));
 	}
-	m_EnemyTexture.Render(m_Position.x, m_Position.y);
+	m_EnemyTexture->Render(m_Position.x, m_Position.y);
 	
 	CGraphicsUtilities::RenderCircle(GetCircle(), MOF_COLOR_CWHITE);
 }
 
 void CEnemy::Release(void)
 {
-	m_EnemyTexture.Release();
 }
 
 void CEnemy::UpdateMove(void)
@@ -112,7 +114,7 @@ void CEnemy::SetMoveParameter(CVector2 mPos, int type, CVector2 speed)
 
 CRectangle CEnemy::GetRectangle(void)
 {
-	return CRectangle(m_Position.x,m_Position.y, m_Position.x + m_EnemyTexture.GetWidth(),m_Position.y + m_EnemyTexture.GetHeight());
+	return CRectangle(m_Position.x,m_Position.y, m_Position.x + m_EnemyTexture->GetWidth(),m_Position.y + m_EnemyTexture->GetHeight());
 }
 
 CCircle CEnemy::GetCircle(void)
