@@ -41,9 +41,11 @@ MofBool CGameApp::Initialize(void) {
         .Add<CGameOver>(SceneName::GameOver)
         .SetFadeColor(MOF_COLOR_WHITE);
 
+    m_SceneManager.Initialize(SceneName::Title);
+#ifdef _DEBUG
     // DEBUG : デバッグ用でゲームシーンからスタートする
-    //m_SceneManager.Initialize(SceneName::Title);
     m_SceneManager.Initialize(SceneName::Game);
+#endif //_DEBUG
 
     // サウンドデータの読み込み
     g_SoundManager.Load();

@@ -11,8 +11,11 @@ int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
     // 初期ウィンドウを仮想フルスクリーンに変更
     Info.WindowCreateInfo.Width  = 1920;
     Info.WindowCreateInfo.Height = 1080;
+
     Info.WindowCreateInfo.Style  = WS_POPUP | WS_VISIBLE;
-	
+#ifdef _DEBUG
+    Info.WindowCreateInfo.Style  = WS_OVERLAPPEDWINDOW | WS_CAPTION | WS_VISIBLE | WS_THICKFRAME;
+#endif //_DEBUG
     if ( pFrame->Initialize(&Info) )
 	{
 		pFrame->Run();
