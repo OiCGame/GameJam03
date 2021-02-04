@@ -36,10 +36,18 @@ MofBool CGameApp::Initialize(void){
 		// âÊëúÇÃì«Ç›çûÇ›
 		.LoadTexture("GameClear", "images/background/game_clear.png")
 		.LoadTexture("GameOver", "images/background/game_over.png")
+		.LoadTexture("wave1","images/background/wave1_background.png")
+		.LoadTexture("wave2","images/background/wave2_background.png")
+		.LoadTexture("wave3","images/background/wave3_background.png")
+		.LoadTexture("wave4","images/background/wave4_background.png")
+		.LoadTexture("wave5","images/background/wave5_background.png")
+		.LoadTexture("wave6","images/background/wave6_background.png")
 		.LoadTexture("Player", "images/player/PlayerUFO.png")
 		.LoadTexture("PlayerBullet", "images/player/PlayerBullet.png")
 		.LoadTexture("PlayerArrow", "images/player/PlayerArrow.png")
 		.LoadTexture("Enemy", "images/enemy/Enemyufo.png")
+		.LoadTexture("cloud_left", "images/cloud/cloud_left.png")
+		.LoadTexture("cloud_gray_left", "images/cloud/cloud_gray_left.png")
 		// âπÇÃì«Ç›çûÇ›
 		.LoadSound("bgm_title", "sounds/BGM/title.mp3");
 
