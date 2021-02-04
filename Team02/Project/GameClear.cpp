@@ -37,7 +37,8 @@ CGameClear::~CGameClear(void)
 // ********************************************************************************
 void CGameClear::Initialize(void)
 {
-    m_SelectNo = (GetData().StageNo == MaxStage - 1) ? 1 : 0;
+    m_NowStageNo =  GetData().StageNo;
+    m_SelectNo   = (GetData().StageNo == MaxStage - 1) ? 1 : 0;
 
     const float w = g_pGraphics->GetTargetWidth();
     const float h = g_pGraphics->GetTargetHeight();
@@ -48,6 +49,12 @@ void CGameClear::Initialize(void)
     Vector2 pos(x, y);
     m_btnNextStage.Initialize(pos, &m_PlateTexture, &m_NextStageTexture);
     pos.y += m_PlateTexture.GetHeight() * 1.07f;
+    if (m_NowStageNo == MaxStage - 1)
+    {
+        float y = (pos.y - m_btnNextStage.GetRect().Top) * 0.5f;
+        y += m_btnNextStage.GetRect().Top;
+        pos.y = y;
+    }
     m_btnGoToTitle.Initialize(pos, &m_PlateTexture, &m_GoToTitleTexture);
 }
 
@@ -139,12 +146,16 @@ void CGameClear::Render(void)
     m_BackPlateTexture.Render(sx, sy);
 
     const float px = m_btnNextStage.GetRect().Left - m_SelectTexture.GetWidth() * 1.05f;
-    const float py = m_btnNextStage.GetRect().Top -
+    float       py = m_btnNextStage.GetRect().Top -
         (m_btnNextStage.GetRect().GetHeight() - m_SelectTexture.GetHeight()) * 0.5f +
         m_SelectNo * m_PlateTexture.GetHeight() * 1.07f + m_PlateTexture.GetHeight() * 0.45f;
+    if (m_NowStageNo == MaxStage - 1)
+    {
+        py = m_btnGoToTitle.GetRect().Top + (m_btnGoToTitle.GetRect().GetHeight() - m_SelectTexture.GetHeight()) * 0.5f;
+    }
     m_SelectTexture.Render(px, py);
 
-    if ((GetData().StageNo != MaxStage - 1))
+    if ((m_NowStageNo != MaxStage - 1))
     {
         m_btnNextStage.Render();
     }

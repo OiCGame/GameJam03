@@ -47,7 +47,7 @@ public:
 	//上枠のパネルの(種類の)状態を記述
 	int SingleState_Stg1[STG1JUDGECNT] = { Square,Square,Square,Square,Square,Square,Square };		//四角 : 0 / 三角 : 1 で記述
 	//パネルがどっちにより大きく接しているか(近いか)を判定するために使う、境界線
-	float FrontLine_Stg1[STG1JUDGECNT] = { 124, 387 ,634, 881, 1129 ,1376, 1610 };
+	float FrontLine_Stg1[STG1JUDGECNT] = { 215, 460 ,705, 950, 1195 ,1440, 1685 };
 	//以下パネル1について、描画位置変更につき調整しました。
 	CVector2   SinglePos_Stg1[STG1JUDGECNT] = {
 		Vector2(90,140),
@@ -80,5 +80,5 @@ public:
 	void	CheckClear();
 	bool	IsClear() { return m_Clear; }
 
-	void	CheckHitCollision(CRectangle rec, float px, int bt , int rotate);
+	bool	CheckHitCollision(CRectangle rec, float px, int bt , int rotate);
 };
