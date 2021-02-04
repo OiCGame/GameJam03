@@ -122,7 +122,7 @@ void CEnemy::SetMoveParameter(CVector2 mPos, int type, CVector2 speed)
 	m_MoveSpeed = speed;
 	if (type == TYPE_ALL)
 	{
-		CUtilities::Random(TYPE_ALL);
+		m_Type = CUtilities::Random(TYPE_ALL);
 	}
 	else
 	{

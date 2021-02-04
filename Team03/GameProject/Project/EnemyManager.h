@@ -12,7 +12,7 @@ private:
 
 	float m_MoveTime;
 	CVector2 m_MoveSpeed;
-	bool m_MoveType;
+	int m_MoveType;
 
 	// コンストラクタ
 	CEnemyManager();
