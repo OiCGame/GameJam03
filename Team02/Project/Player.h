@@ -50,5 +50,5 @@ public:
     int         GetBulletBuffer() { return BulletBuffer; }
     int         GetBulletRotate() { return BulletRotate; }
 
-	CDynamicArray<CBullet>	GetBulletArray() { return Bullets; }
+	CDynamicArray<CBullet>*	GetBulletArray() { return &Bullets; }
 };
