@@ -189,13 +189,15 @@ int CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 					if (abs(m_JdgA) <= abs(m_JdgB)) {
 						m_SingleOk[i] = true;
 						m_SingleOk[i - 1] = false;	// ‘O‰ñ(i - 1)‚Å“¾‚½m_SingleOk‚ðfalse‚É‚·‚é...
+						ReturnNum = i;
 					}
 				}
 				else {
 					m_MultiCollision = true;
 					m_SingleOk[i] = true;
+					ReturnNum = i;
 				}
-				ReturnNum = i;
+				
 			}
 		}
 		return ReturnNum;

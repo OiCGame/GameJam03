@@ -146,9 +146,9 @@ void CGame::Update(void)
 		if (PanelNum != -1)
 		{
 			CVector2 PanelPos = Panel.GetSTG1Position(PanelNum);
-			//エフェクトとパネル1枠分の差の値
-			PanelPos.x -= 120;
-			PanelPos.y -= 155.5f;
+			//パネルの中央にエフェクトが来るように調整
+			PanelPos.x -= 140;
+			PanelPos.y -= 150;
 			g_EffectManager.Start(Effect_Hit, PanelPos);
 			tmpBullet->GetData(i).SetShow(false);
 		}
