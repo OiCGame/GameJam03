@@ -3,8 +3,9 @@
 #include	"EnemyManager.h"
 #include	"Enemy.h"
 
-void CSceneGame::ResetEnemies(int wave_no)
+void CSceneGame::NextWave(int wave_no)
 {
+	// “GStatus‚ÌÄİ’è
 	CEnemyManager::Singleton().Release();
 	// “G‚Ì—Ê‚ğİ’è
 	for (int i = 0; i < m_EnemyCount[wave_no]; i++)
@@ -18,16 +19,25 @@ void CSceneGame::ResetEnemies(int wave_no)
 	{
 		CEnemyManager::Singleton().AddMovePos(CVector2(pos[0], pos[1]));
 	}
+
+	// ‰_‚Ì‰æ‘œ‚ğÄİ’è
+	if (wave_no < 5) {
+		m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
+	}
+	else {
+		m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_gray_left");
+	}
+	// ”wŒi‚ÌÄİ’è
+	m_pBackgroundTexture = &CResourceManager::Singleton().GetTextureList()->at(m_WaveBackground[wave_no]);
 }
 
 void CSceneGame::Initialize()
 {
-	m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
 
 	m_Player.Initialize(CVector2(500, 500));
 
 	CEnemyManager::Singleton().Initialize(); // ResetEnemies()“à‚ÉˆÚA‚·‚é‚©‚àH
-	this->ResetEnemies(m_WaveNo);
+	this->NextWave(m_WaveNo);
 }
 
 void CSceneGame::Update()
@@ -41,7 +51,7 @@ void CSceneGame::Update()
 		this->SceneEnd();
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_F3)) {
-		this->ResetEnemies(++m_WaveNo);
+		this->NextWave(++m_WaveNo);
 	}
 
 	m_Player.Update();

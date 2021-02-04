@@ -7,8 +7,7 @@
 class CSceneGame : public CSceneBase
 {
 private:
-	CTexture* m_pCloudTexture;
-	int m_WaveNo{ 0 };
+
 	// ‰_‚Ì(‘å‘Ì‚Ì)’†SÀ•W
 	std::vector<std::vector<std::vector<int>>> m_CloudPositions = {
 		// wave1
@@ -57,10 +56,22 @@ private:
 
 	};
 	int m_EnemyCount[6] = { 1,1,2,2,3,3 };
+	std::string m_WaveBackground[6] = {
+		"wave1",
+		"wave2",
+		"wave3",
+		"wave4",
+		"wave5",
+		"wave6",
+	};
+
+	CTexture* m_pCloudTexture;
+	CTexture* m_pBackgroundTexture;
+	int m_WaveNo{ 0 };
 
 	CPlayer m_Player;
 	
-	void ResetEnemies(int wave_no);
+	void NextWave(int wave_no);
 
 public:
 	void Initialize() override;
