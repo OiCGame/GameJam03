@@ -21,7 +21,7 @@ void CSceneGame::NextWave(int wave_no)
 	}
 
 	// ‰_‚Ì‰æ‘œ‚ğÄİ’è
-	if (wave_no < 5) {
+	if (wave_no < 4) {
 		m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
 	}
 	else {
@@ -51,7 +51,9 @@ void CSceneGame::Update()
 		this->SceneEnd();
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_F3)) {
-		this->NextWave(++m_WaveNo);
+		if(m_WaveNo < 5){
+			this->NextWave(++m_WaveNo);
+		}
 	}
 
 	m_Player.Update();
@@ -71,6 +73,8 @@ void CSceneGame::Update()
 
 void CSceneGame::Render()
 {
+	m_pBackgroundTexture->Render(0, 0);
+
 	CEnemyBulletManager::Singleton().Render();
 	CEnemyManager::Singleton().Render();
 
