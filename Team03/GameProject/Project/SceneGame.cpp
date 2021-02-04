@@ -1,9 +1,12 @@
 #include "SceneGame.h"
+#include	"ResourceManager.h"
 #include	"EnemyManager.h"
 #include	"Enemy.h"
 
 void CSceneGame::Initialize()
 {
+	m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
+
 	m_Player.Initialize(CVector2(500, 500));
 
 	CEnemyManager::Singleton().Initialize();
@@ -54,6 +57,14 @@ void CSceneGame::Render()
 {
 	CEnemyBulletManager::Singleton().Render();
 	CEnemyManager::Singleton().Render();
+
+	for (const auto & pos : m_CloudPositions[0]) {
+		m_pCloudTexture->Render(
+			pos[0] - m_pCloudTexture->GetWidth()*0.5f,
+			pos[1] - m_pCloudTexture->GetHeight() * 0.5f
+		);
+	}
+
 	m_Player.Render();
 }
 
