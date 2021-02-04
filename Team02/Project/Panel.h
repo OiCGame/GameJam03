@@ -80,5 +80,8 @@ public:
 	void	CheckClear();
 	bool	IsClear() { return m_Clear; }
 
-	bool	CheckHitCollision(CRectangle rec, float px, int bt , int rotate);
+	int	CheckHitCollision(CRectangle rec, float px, int bt , int rotate);
+
+	//複数ステージに対応した形に変更予定
+	CVector2	GetSTG1Position(int panelnum) { return SinglePos_Stg1[panelnum]; }
 };
