@@ -82,7 +82,7 @@ void CButton::Render(void)
 
     if (IsHold())
     {
-        CGraphicsUtilities::RenderFillRect(GetRect(), MOF_ALPHA_WHITE(64));
+        //CGraphicsUtilities::RenderFillRect(GetRect(), MOF_ALPHA_WHITE(64));
     }
     g_pGraphics->SetStencilEnable(FALSE);
 }
@@ -175,4 +175,17 @@ bool CButton::IsHold(void) const
 bool CButton::IsPull(void) const
 {
     return IsMouseOver() && g_pInput->IsMouseKeyPull(MOFMOUSE_LBUTTON);
+}
+
+// ********************************************************************************
+/// <summary>
+/// ボタンの表示座標変更
+/// </summary>
+/// <param name="position">表示座標</param>
+/// <created>いのうえ,2021/02/04</created>
+/// <changed>いのうえ,2021/02/04</changed>
+// ********************************************************************************
+void CButton::SetPosition(const Vector2 & position)
+{
+    m_Pos = position;
 }
