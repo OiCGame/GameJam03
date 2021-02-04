@@ -5,6 +5,7 @@
 #include "Timer.h"
 #include "Panel.h"
 #include "GameUI.h"
+#include "EffectManager.h"
 
 constexpr int GameTime = 300;
 

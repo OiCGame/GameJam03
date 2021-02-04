@@ -153,10 +153,10 @@ void CPanel::CheckClear()
 	}
 }
 
-bool CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
+int CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 {
 	//戻り値用
-	bool IsHit = false;
+	int ReturnNum = -1;
 	//複数接触判定フラグをfalse
 	m_MultiCollision = false;
 	switch (m_StgNum) {
@@ -189,16 +189,18 @@ bool CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 					if (abs(m_JdgA) <= abs(m_JdgB)) {
 						m_SingleOk[i] = true;
 						m_SingleOk[i - 1] = false;	// 前回(i - 1)で得たm_SingleOkをfalseにする...
+						ReturnNum = i;
 					}
 				}
 				else {
 					m_MultiCollision = true;
 					m_SingleOk[i] = true;
+					ReturnNum = i;
 				}
-				IsHit = true;
+				
 			}
 		}
-		return IsHit;
+		return ReturnNum;
 	case STAGE2:
 		for (int i = 0; i < STG2JUDGECNT; i++) {
 			if (SingleRect_Stg2[i].CollisionRect(rec)/* &&
@@ -206,7 +208,7 @@ bool CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 
 			}
 		}
-		return IsHit;
+		return ReturnNum;
 	case STAGE3:
 		for (int i = 0; i < STG3JUDGECNT; i++) {
 			if (SingleRect_Stg3[i].CollisionRect(rec)/* &&
@@ -214,6 +216,6 @@ bool CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 
 			}
 		}
-		return IsHit;
+		return ReturnNum;
 	}
 }

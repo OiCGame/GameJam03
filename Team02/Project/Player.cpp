@@ -56,21 +56,14 @@ void CPlayer::Update()
 	}
 	if (BulletBuffer < Empty)
 	{
-		if (g_pInput->IsKeyPush(MOFKEY_W))
+		if (g_pInput->IsKeyPush(MOFKEY_LSHIFT) ||
+			g_pInput->IsKeyPush(MOFKEY_RSHIFT))
 		{
-			BulletRotate = Up;
-		}
-		else if (g_pInput->IsKeyPush(MOFKEY_D))
-		{
-			BulletRotate = Right;
-		}
-		else if (g_pInput->IsKeyPush(MOFKEY_S))
-		{
-			BulletRotate = Down;
-		}
-		else if (g_pInput->IsKeyPush(MOFKEY_A))
-		{
-			BulletRotate = Left;
+			BulletRotate++;
+			if (BulletRotate >= 4)
+			{
+				BulletRotate = 0;
+			}
 		}
 	}
 

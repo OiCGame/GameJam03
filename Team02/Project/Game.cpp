@@ -137,13 +137,19 @@ void CGame::Update(void)
 	//後程可能であればポインタに変更したい
 	CDynamicArray<CBullet>*	tmpBullet;
 	tmpBullet = Player.GetBulletArray();
-
+	int PanelNum = -1;
 	for (int i = 0; i < tmpBullet->GetArrayCount(); i++)
 	{
-		if (Panel.CheckHitCollision(tmpBullet->GetData(i).GetRectangle(),
+		PanelNum = Panel.CheckHitCollision(tmpBullet->GetData(i).GetRectangle(),
 			tmpBullet->GetData(i).GetPosX(), tmpBullet->GetData(i).GetBulletType(),
-			tmpBullet->GetData(i).GetRotate()))
+			tmpBullet->GetData(i).GetRotate());
+		if (PanelNum != -1)
 		{
+			CVector2 PanelPos = Panel.GetSTG1Position(PanelNum);
+			//パネルの中央にエフェクトが来るように調整
+			PanelPos.x -= 140;
+			PanelPos.y -= 150;
+			g_EffectManager.Start(Effect_Hit, PanelPos);
 			tmpBullet->GetData(i).SetShow(false);
 		}
 	}
