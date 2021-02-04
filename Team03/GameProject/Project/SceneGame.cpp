@@ -46,6 +46,18 @@ void CSceneGame::Update()
 	//LauncherInit_Line{ CVector2(0,100),CVector2(10,0), BulletType::red, 20, 0.2f }
 	//LauncherInit_Polygon{ CVector2(0,100),CVector2(10,0), BulletType::red, 20, 0.2f }
 	//LauncherInit_PolygonRotation{ CVector2(300,300),CVector2(5,5), BulletType::red, 60, 0.2f , 5 , 5, 6 }
+	if (g_pInput->IsKeyPush(MOFKEY_1))
+	{
+		CEnemyManager::Singleton().StartShot(LauncherInit_Line{ CVector2(0,0),CVector2(10,0), BulletType::red, 20, 0.2f });
+	}
+	else if (g_pInput->IsKeyPush(MOFKEY_2))
+	{
+		CEnemyManager::Singleton().StartShot(LauncherInit_Polygon{ CVector2(0,0),CVector2(10,0), BulletType::red, 20, 0.2f });
+	}
+	else if (g_pInput->IsKeyPush(MOFKEY_3))
+	{
+		CEnemyManager::Singleton().StartShot(LauncherInit_PolygonRotation{ CVector2(300,0),CVector2(5,5), BulletType::red, 60, 0.2f , 5 , 5, 6 });
+	}
 
 	CEnemyBulletManager::Singleton().Update();
 }

@@ -70,6 +70,30 @@ void CEnemyManager::StartMove(float Time, CVector2 speed, int type)
 	m_MoveType = type;
 }
 
+void CEnemyManager::StartShot(const LauncherInit_Line & init)
+{
+	for (auto enemy : m_pEnemyArray)
+	{
+		enemy->Shot(init);
+	}
+}
+
+void CEnemyManager::StartShot(const LauncherInit_Polygon & init)
+{
+	for (auto enemy : m_pEnemyArray)
+	{
+		enemy->Shot(init);
+	}
+}
+
+void CEnemyManager::StartShot(const LauncherInit_PolygonRotation & init)
+{
+	for (auto enemy : m_pEnemyArray)
+	{
+		enemy->Shot(init);
+	}
+}
+
 void CEnemyManager::AddEnemy(const std::shared_ptr<CEnemy>& penemy)
 {
 	m_pEnemyArray.push_back(penemy);
@@ -101,4 +125,9 @@ int CEnemyManager::GetEnemyCount(void)
 bool CEnemyManager::IsMoveEnd(void)
 {
 	return m_MoveTime <= 0;
+}
+
+bool CEnemyManager::IsShotEnd(void)
+{
+	return CEnemyBulletManager::Singleton().GetBulletList()->size() == 0;
 }

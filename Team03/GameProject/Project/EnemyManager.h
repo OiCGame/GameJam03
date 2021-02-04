@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include "Enemy.h"
+#include "EnemyBulletManager.h"
 
 class CEnemyManager
 {
@@ -37,6 +38,11 @@ public:
 	// ˆÚ“®‚ÌŠJŽn
 	void StartMove(float Time,CVector2 speed,int type);
 
+	// ’e‚Ì”­ŽË
+	void StartShot(const LauncherInit_Line & init);
+	void StartShot(const LauncherInit_Polygon & init);
+	void StartShot(const LauncherInit_PolygonRotation & init);
+
 	// “o˜^
 	void AddEnemy(const std::shared_ptr<CEnemy> & penemy);
 
@@ -50,5 +56,7 @@ public:
 	int GetEnemyCount(void);
 
 	bool IsMoveEnd(void);
+
+	bool IsShotEnd(void);
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Mof.h"
+#include "EnemyBulletManager.h"
 
 #define		AFTERIMAGE_INTERVAL		5
 
@@ -49,6 +50,11 @@ public:
 
 	// 移動の更新
 	void UpdateMove(void);
+
+	// 弾の発射
+	void Shot(const LauncherInit_Line & init);
+	void Shot(const LauncherInit_Polygon & init);
+	void Shot(const LauncherInit_PolygonRotation & init);
 	
 
 	// 移動に必要なパラメーターを設定
@@ -61,7 +67,7 @@ public:
 	CCircle GetCircle(void);
 	
 	// 中心座標の取得
-	Vector2 GetCenterPos(void);
+	CVector2 GetCenterPos(void);
 
 	bool IsShow(void);
 

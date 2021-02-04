@@ -94,6 +94,27 @@ void CEnemy::UpdateMove(void)
 	m_Position += dvec * m_MoveSpeed;
 }
 
+void CEnemy::Shot(const LauncherInit_Line & init)
+{
+	LauncherInit_Line d = init;
+	d.position = GetCenterPos();
+	CEnemyBulletManager::Singleton().SetLauncher(d);
+}
+
+void CEnemy::Shot(const LauncherInit_Polygon & init)
+{
+	LauncherInit_Polygon d = init;
+	d.position = GetCenterPos();
+	CEnemyBulletManager::Singleton().SetLauncher(d);
+}
+
+void CEnemy::Shot(const LauncherInit_PolygonRotation & init)
+{
+	LauncherInit_PolygonRotation d = init;
+	d.position = GetCenterPos();
+	CEnemyBulletManager::Singleton().SetLauncher(d);
+}
+
 
 void CEnemy::SetMoveParameter(CVector2 mPos, int type, CVector2 speed)
 {
@@ -122,7 +143,7 @@ CCircle CEnemy::GetCircle(void)
 	return CCircle(GetCenterPos(), GetRectangle().GetWidth() * 0.5f);
 }
 
-Vector2 CEnemy::GetCenterPos(void)
+CVector2 CEnemy::GetCenterPos(void)
 {
 	return GetRectangle().GetCenter();
 }
