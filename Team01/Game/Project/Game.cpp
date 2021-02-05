@@ -297,7 +297,7 @@ bool CGame::Initialize(void) {
 
 bool CGame::Update(void) {
 	if (m_bPhaseNo == 0) {
-		if (::g_pInput->IsKeyPush(MOFKEY_RETURN) || (m_EnemyDatas.empty() && m_EnemyCount == 0))
+		if (CInputManager::GetInstance().GetPush(8) || (m_EnemyDatas.empty() && m_EnemyCount == 0))
 		{
 			m_bPhaseNo = 1;
 		}
@@ -312,10 +312,10 @@ bool CGame::Update(void) {
 		this->Release();
 		this->Initialize();
 	} // if
-	if (::g_pInput->IsKeyPush(MOFKEY_X)) {
+	if (CInputManager::GetInstance().GetPush(0)) {
 		m_Shop.SetShowFlag(true);
 	} // if
-	if (::g_pInput->IsKeyPush(MOFKEY_C)) {
+	if (CInputManager::GetInstance().GetPush(5)) {
 		m_Shop.SetShowFlag(false);
 	} // if
 

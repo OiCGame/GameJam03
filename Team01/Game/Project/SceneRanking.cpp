@@ -37,7 +37,7 @@ void CSceneRanking::Initialize() {
 void CSceneRanking::Update() {
 	FadeInOut();
 	if (m_bEndStart) { return; }
-	if (g_pInput->IsKeyPush(MOFKEY_RETURN)) {
+	if (CInputManager::GetInstance().GetPush(9)) {
 		m_bEndStart = true;
 		m_NextSceneNo = SCENENO_TITLE;
 	}

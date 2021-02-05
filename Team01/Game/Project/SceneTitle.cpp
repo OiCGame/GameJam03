@@ -34,7 +34,7 @@ void CSceneTitle::Update() {
 	FadeInOut();
 	if (m_bEndStart) { return; }
 	SelectVertical(m_SelectNo, m_MessageCount - 1, true);
-	if (CInputManager::GetInstance().GetPush(1)) {
+	if (CInputManager::GetInstance().GetPush(9)) {
 		m_bEndStart = true;
 		switch (m_SelectNo) {
 		case 0:
@@ -52,7 +52,11 @@ void CSceneTitle::Update() {
 void CSceneTitle::Render() {
 	m_Texture.Render(0.0f, 0.0f);
 
-	m_ShopTexture.Render(400.0f, 0.0f);
+	float w = g_pGraphics->GetTargetWidth();
+	float h = g_pGraphics->GetTargetHeight();
+	float scale = w * 0.45f;
+	scale /= m_ShopTexture.GetWidth();
+	m_ShopTexture.RenderScale(w - m_ShopTexture.GetWidth() * scale, h - m_ShopTexture.GetHeight() * scale,scale);
 
 	for (int i = 0; i < m_MessageCount; i++) {
 		CRectangle r;

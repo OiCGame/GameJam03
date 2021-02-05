@@ -22,7 +22,7 @@ void CSceneGameClear::Initialize() {
 void CSceneGameClear::Update() {
 	FadeInOut();
 	if (m_bEndStart) { return; }
-	if (CInputManager::GetInstance().GetPush(1)) {
+	if (CInputManager::GetInstance().GetPush(9)) {
 		m_bEndStart = true;
 		m_NextSceneNo = SCENENO_TITLE;
 	}

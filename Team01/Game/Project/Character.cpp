@@ -137,10 +137,10 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container, int pha) {
 		}
 
 	this->Move();
-	if (::g_pInput->IsKeyPush(MOFKEY_SPACE) && m_bAutoShot) {
+	if (CInputManager::GetInstance().GetPush(9) && m_bAutoShot) {
 		this->Shot(bullet_container);
 	} // if
-	if (::g_pInput->IsKeyHold(MOFKEY_SPACE)) {
+	if (CInputManager::GetInstance().GetPush(9)) {
 		m_ShotIntervalCount++;
 		if (m_ShotInterval < m_ShotIntervalCount) {
 			this->Shot(bullet_container);
