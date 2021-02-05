@@ -16,6 +16,7 @@ void CPlayer::Load()
 	Texture.Load("UI/ゲーム本編/飛行機.png");
 	BulletTexture[Triangle].Load("UI/ゲーム本編/三角.png");
 	BulletTexture[Square].Load("UI/ゲーム本編/四角.png");
+	BulletTexture[2].Load("UI/ゲーム本編/隕石.png");
 }
 
 void CPlayer::Initialize()

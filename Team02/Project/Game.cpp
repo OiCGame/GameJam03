@@ -74,7 +74,7 @@ void CGame::Initialize(void)
         Block[i].Initialize();
     }
     BlockFallTimer.Start();
-    int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(2);
+    int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(3);
     CTexture* pBlockTexture = Player.GetBulletTexture(bulletType);
     Block[0].FallStart(pBlockTexture, bulletType);
 	
@@ -139,7 +139,7 @@ void CGame::Update(void)
                 continue;
             }
 
-            int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(2);
+            int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(3);
             CTexture* pBlockTexture = Player.GetBulletTexture(bulletType);
 
             Block[i].FallStart(pBlockTexture, bulletType);
@@ -154,11 +154,12 @@ void CGame::Update(void)
     {
         Block[i].Update();
 
-		if (Player.IsBulletBuffer()) { continue; }
+		int btype = Block[i].GetBulletType();
+
+		if (Player.IsBulletBuffer() && btype != 2) { continue; }
 		if (Player.CheckHitCollision(Block[i].GetCollisionCircle()))
-		{
-			int btype = Block[i].GetBulletType();
-			if (btype == 3)
+		{	
+			if (btype == 2)
 			{
 				Timer.SetTime(-10);
 			}

@@ -31,14 +31,14 @@ void CGameUI::Initialize(void)
 
 void CGameUI::Render(void)
 {
-    UIFrameTexture.Render(BulletUIPosition.x, BulletUIPosition.y);
+    UIFrameTexture.RenderScale(BulletUIPosition.x, BulletUIPosition.y , 0.5f);
     GuideImage.Render(g_pGraphics->GetTargetWidth() * 0.99f, g_pGraphics->GetTargetHeight() * 0.025f, TEXALIGN_TOPRIGHT);
 }
 
 void CGameUI::RenderBulletUI(int bullettype, int rotate)
 {
-    BulletUITexture[bullettype].RenderRotate(BulletUIPosition.x + (UIFrameTexture.GetWidth() * 0.5),
-        BulletUIPosition.y + (UIFrameTexture.GetHeight() * 0.5),
+    BulletUITexture[bullettype].RenderRotate(BulletUIPosition.x + (UIFrameTexture.GetWidth() * 0.25),
+        BulletUIPosition.y + (UIFrameTexture.GetHeight() * 0.25),
         MOF_ToRadian(90 * rotate), TEXTUREALIGNMENT_CENTERCENTER);
 }
 

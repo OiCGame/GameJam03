@@ -4,7 +4,7 @@
 
 constexpr auto BULLET_SPEED = 6;
 
-constexpr auto BULLET_CATEGORY = 2;
+constexpr auto BULLET_CATEGORY = 3;
 
 enum BulletType
 {
