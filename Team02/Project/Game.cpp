@@ -136,14 +136,14 @@ void CGame::Update(void)
 		if (Player.CheckHitCollision(Block[i].GetCollisionCircle()))
 		{
 			int btype = Block[i].GetBulletType();
-			/*if (btype == 3)
+			if (btype == 3)
 			{
 				Timer.SetTime(-10);
 			}
 			else
 			{
 				Player.SetBullet(btype);
-			}*/
+			}
 			Block[i].SetShow(false);
 		}
     }
