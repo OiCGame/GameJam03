@@ -48,6 +48,7 @@ void CEffectManager::Load(void)
     std::string animFile[] =
     {
         "Effect/ヒットエフェクト/hit.anim",
+        "Effect/CLEAR　連番/clear.anim",
     };
     for (int i = 0; i < Effect_Count; i++)
     {
@@ -56,6 +57,7 @@ void CEffectManager::Load(void)
     std::string texFile[] =
     {
         "Effect/ヒットエフェクト/effect.png",
+        "Effect/CLEAR　連番/1-29.png",
     };
     for (int i = 0; i < Effect_Count; i++)
     {
