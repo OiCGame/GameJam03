@@ -93,6 +93,11 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 	} // if
 	m_pResources = resources;
 
+	if (!m_Items.empty()) {
+		return false;
+	} // if
+	
+
 	struct InitParam {
 		Mof::CTexture* texture;
 		uint32_t price;
