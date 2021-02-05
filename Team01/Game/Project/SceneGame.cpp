@@ -18,7 +18,11 @@ void CSceneGame::Update() {
 	FadeInOut();
 	if (m_bEndStart) { return; }
 	m_Game.Update();
-//	if (g_pInput->IsKeyPush(MOFKEY_F2)) {
+	//	if (g_pInput->IsKeyPush(MOFKEY_F2)) {
+	if (m_Game.GetPhaseNo() == 2)
+	{
+		m_Alpha = 255;
+	}
 	if (m_Game.IsAllPhaseEnd()) {
 		m_bEndStart = true;
 		m_NextSceneNo = SCENENO_GAMECLEAR;
