@@ -79,7 +79,7 @@ CCharacter::CCharacter() :
 	m_bShow(true),
 	m_bAutoShot(false),
 	m_ShotInterval(20),
-	m_ShotIntervalCount(0),
+	m_ShotIntervalCount(20),
 	m_b3WayShot(false) {
 }
 
@@ -140,7 +140,7 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container, int pha) {
 	if (CInputManager::GetInstance().GetPush(9) && m_bAutoShot) {
 		this->Shot(bullet_container);
 	} // if
-	if (CInputManager::GetInstance().GetPush(9)) {
+	if (CInputManager::GetInstance().GetHold(9)) {
 		m_ShotIntervalCount++;
 		if (m_ShotInterval < m_ShotIntervalCount) {
 			this->Shot(bullet_container);
