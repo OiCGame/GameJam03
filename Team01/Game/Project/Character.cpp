@@ -154,7 +154,7 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container, int pha) {
 		} // if
 	} // if
 
-		m_Position.x = std::clamp(m_Position.x, 0.0f, 1024.0f - m_pTexture->GetWidth());
+		m_Position.x = std::clamp(m_Position.x + m_Move.x, 0.0f, 1024.0f - m_pTexture->GetWidth());
 
 	} // else
 	return true;
