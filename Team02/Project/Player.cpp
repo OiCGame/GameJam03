@@ -20,10 +20,10 @@ void CPlayer::Load()
 
 void CPlayer::Initialize()
 {
-	position = CVector2((g_pGraphics->GetTargetWidth() - (Texture.GetWidth() * 0.25f)) * 0.5f,
-		g_pGraphics->GetTargetHeight() - (Texture.GetHeight() * 0.25f));
+	position = CVector2((g_pGraphics->GetTargetWidth() - (Texture.GetWidth() * 0.5f)) * 0.5f,
+		g_pGraphics->GetTargetHeight() - (Texture.GetHeight()* 0.6f));
 	CollisionRadius = Texture.GetWidth() * 0.1;
-	CollisionPosCorrection = CVector2(Texture.GetWidth() * 0.125f, Texture.GetHeight() * 0.125f);
+	CollisionPosCorrection = CVector2(Texture.GetWidth() * 0.25f, Texture.GetHeight() * 0.25f);
 	Collision = CCircle(position + CollisionPosCorrection, CollisionRadius);
 	BulletBuffer = Empty;
 	BulletRotate = Up;
@@ -42,9 +42,9 @@ void CPlayer::Update()
 	else if (g_pInput->IsKeyHold(MOFKEY_RIGHT))
 	{
 		position.x += MOVESPEED;
-		if (position.x + (Texture.GetHeight() * 0.25f) >= g_pGraphics->GetTargetWidth())
+		if (position.x + (Texture.GetHeight() * 0.5f) >= g_pGraphics->GetTargetWidth())
 		{
-			position.x = g_pGraphics->GetTargetWidth() - (Texture.GetHeight() * 0.25f);
+			position.x = g_pGraphics->GetTargetWidth() - (Texture.GetHeight() * 0.5f);
 		}
 	}
 
@@ -101,7 +101,7 @@ void CPlayer::ShotBullet(int bullettype)
 {
 	CBullet A;
 	A.Create(&BulletTexture[bullettype],
-		position.x + (Texture.GetWidth() * 0.125), 
+		position.x + (Texture.GetWidth() * 0.25), 
 		position.y - BulletTexture[bullettype].GetHeight() * 0.5, bullettype, BulletRotate);
 	Bullets.Add(A);
 
@@ -112,7 +112,7 @@ void CPlayer::ShotBullet(int bullettype)
 
 void CPlayer::Render()
 {
-	Texture.RenderScale(position.x , position.y , 0.25f);
+	Texture.RenderScale(position.x , position.y , 0.5f);
 
 	for (int i = 0; i < Bullets.GetArrayCount(); i++)
 	{

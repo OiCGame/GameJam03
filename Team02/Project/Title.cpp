@@ -126,8 +126,8 @@ void CTitle::Update(void)
             m_SelectNo = (m_SelectNo + 1 > 2) ? (0) : (m_SelectNo + 1);
         }
 
-        // Enterキーで決定
-        if (g_pInput->IsKeyPull(MOFKEY_RETURN))
+        // Enterキーで決定 <- スペースのほうが操作よかったので変更 b y深山 2021/02/05/16:53
+        if (g_pInput->IsKeyPull(MOFKEY_SPACE))
         {
             switch (m_SelectNo)
             {
