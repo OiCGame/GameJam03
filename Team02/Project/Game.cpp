@@ -97,6 +97,13 @@ bool CGame::Load(void)
 	Player.Load();
 	Timer.Load();
     GameUI.Load();
+    std::string stageFile[] = 
+    {
+        "StageData/stage_data1.stage",
+        "StageData/stage_data2.stage",
+        "StageData/stage_data2.stage",
+    };
+    Panel.Load(stageFile[GetData().StageNo].c_str());
     return true;
 }
 
@@ -173,22 +180,17 @@ void CGame::Update(void)
 	//後程可能であればポインタに変更したい
 	CDynamicArray<CBullet>*	tmpBullet;
 	tmpBullet = Player.GetBulletArray();
-	int PanelNum = -1;
 	for (int i = 0; i < tmpBullet->GetArrayCount(); i++)
 	{
-		PanelNum = Panel.CheckHitCollision(tmpBullet->GetData(i).GetRectangle(),
-			tmpBullet->GetData(i).GetPosX(), tmpBullet->GetData(i).GetBulletType(),
-			tmpBullet->GetData(i).GetRotate());
-		if (PanelNum != -1)
-		{
-			CVector2 PanelPos = Panel.GetPanelPosition(PanelNum);
-			//パネルの中央にエフェクトが来るように調整
-				PanelPos.x -= 140;
-				PanelPos.y -= 150;						
-			g_EffectManager.Start(Effect_Hit, PanelPos);
-			g_SoundManager.GetSE(SE_PanelSet)->Play();
-			tmpBullet->GetData(i).SetShow(false);
-		}
+		int panelNo = Panel.CheckHitCollision(tmpBullet->GetData(i));
+        if (panelNo != -1)
+        {
+            CVector2 PanelPos = Panel.GetPanelPosition(panelNo);
+            //パネルの中央にエフェクトが来るように調整
+            g_EffectManager.Start(Effect_Hit, PanelPos);
+            g_SoundManager.GetSE(SE_PanelSet)->Play();
+            tmpBullet->GetData(i).SetShow(false);
+        }
 	}
 
     // あとで変えたいのでダミー情報を送っておく

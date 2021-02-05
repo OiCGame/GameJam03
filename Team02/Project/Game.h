@@ -8,7 +8,7 @@
 #include "EffectManager.h"
 
 constexpr int   GameTime                =   60;
-constexpr float BlockFallIntervalSecond = 0.7f;
+constexpr float BlockFallIntervalSecond = 1.3f;
 
 // ********************************************************************************
 /// <summary>

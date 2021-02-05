@@ -47,4 +47,6 @@ public:
 	float	GetPosX() { return Position.x; }
 	CRectangle		GetRectangle() { return BulletRect; }
 	int		GetRotate() { return Rotate; }
+
+    CCircle GetCollisionCircle() { return CCircle(Position, Texture->GetWidth() * 0.45f); }
 };

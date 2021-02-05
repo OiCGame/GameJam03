@@ -119,7 +119,7 @@ void CEffectManager::Render(void)
                 continue;
             }
             Vector2& pos = m_EffectPos[i][j];
-            m_EffectTexture[i].Render(pos.x, pos.y, m_EffectMotion[i][j].GetSrcRect());
+            m_EffectTexture[i].Render(pos.x, pos.y, m_EffectMotion[i][j].GetSrcRect(), TEXALIGN_CENTERCENTER);
         }
     }
 }
