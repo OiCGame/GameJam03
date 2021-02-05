@@ -110,8 +110,33 @@ private:
 	GameFlow	m_NowGameFlow{GameFlow::Enemy_SetMove};
 	float	m_FlowWiatTime{0};
 
+	// ‰¹
 	CSoundBuffer* m_pBGM;
 	CSoundBuffer* m_pSE_Explosion;
+
+	// UI
+	std::string m_UI_LifeTexture[6] = {
+		"ui_life_0",
+		"ui_life_1",
+		"ui_life_2",
+		"ui_life_3",
+		"ui_life_4",
+		"ui_life_5",
+	};
+	CTexture* m_pUI_Life;
+
+	std::string m_UI_WaveTexture[6] = {
+		"ui_wave_1",
+		"ui_wave_2",
+		"ui_wave_3",
+		"ui_wave_4",
+		"ui_wave_5",
+		"ui_wave_6",
+	};
+	CTexture* m_pUI_Wave;
+
+	CFont font;
+
 	CPlayer m_Player;
 	
 	void DebugKey();

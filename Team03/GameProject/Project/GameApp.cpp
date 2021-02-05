@@ -50,6 +50,22 @@ MofBool CGameApp::Initialize(void){
 		.LoadTexture("cloud_left", "images/cloud/cloud_left.png")
 		.LoadTexture("cloud_gray_left", "images/cloud/cloud_gray_left.png")
 		.LoadTexture("ItemLife", "images/item/ItemLife.png")
+			// UI
+				// Life
+		.LoadTexture("ui_life_0","images/ui/life/ui_zannki0.png")
+		.LoadTexture("ui_life_1","images/ui/life/ui_zannki1.png")
+		.LoadTexture("ui_life_2","images/ui/life/ui_zannki2.png")
+		.LoadTexture("ui_life_3","images/ui/life/ui_zannki3.png")
+		.LoadTexture("ui_life_4","images/ui/life/ui_zannki4.png")
+		.LoadTexture("ui_life_5","images/ui/life/ui_zannki5.png")
+				// wave
+		.LoadTexture("ui_wave_1","images/ui/wave/ui_wave1.png")
+		.LoadTexture("ui_wave_2","images/ui/wave/ui_wave2.png")
+		.LoadTexture("ui_wave_3","images/ui/wave/ui_wave3.png")
+		.LoadTexture("ui_wave_4","images/ui/wave/ui_wave4.png")
+		.LoadTexture("ui_wave_5","images/ui/wave/ui_wave5.png")
+		.LoadTexture("ui_wave_6","images/ui/wave/ui_wave6.png")
+
 		// âπÇÃì«Ç›çûÇ›
 		.LoadSound("bgm_title", "sounds/BGM/title.mp3")
 		.LoadSound("bgm_clear", "sounds/BGM/gameclear.mp3")

@@ -107,6 +107,8 @@ void CSceneGame::Flow_EnemyShots()
 	if (CEnemyBulletManager::Singleton().GetBulletList()->size() > 0) {
 		// 更新 (回避)
 		m_Player.Update();
+		// lifeの更新
+		m_pUI_Life = &CResourceManager::Singleton().GetTextureList()->at(m_UI_LifeTexture[m_Player.GetLife()]);
 		// 弾幕とプレイヤーの当たり判定
 		if (!m_Player.IsDamageableable()) { return; }
 		auto pBulletList = CEnemyBulletManager::Singleton().GetBulletList();
@@ -180,9 +182,14 @@ void CSceneGame::NextWave(int wave_no)
 
 void CSceneGame::Initialize()
 {
+	font.Create(32, "LightNovelPOPv2.otf");
 	m_pSE_Explosion = &CResourceManager::Singleton().GetSoundList()->at("se_explosion");
 	m_pSE_Explosion->SetVolume(0.3f);
+	
 	m_Player.Initialize(CVector2(500, 500));
+	
+	m_pUI_Life = &CResourceManager::Singleton().GetTextureList()->at(m_UI_LifeTexture[m_Player.GetLife()]);
+	m_pUI_Wave = &CResourceManager::Singleton().GetTextureList()->at(m_UI_WaveTexture[m_WaveNo]);
 
 	CEnemyManager::Singleton().Initialize(); // ResetEnemies()内に移植するかも？
 	this->NextWave(m_WaveNo);
@@ -227,6 +234,9 @@ void CSceneGame::Render()
 	}
 
 	m_Player.Render();
+
+	m_pUI_Life->Render(5, 8);
+	m_pUI_Wave->Render(m_pUI_Life->GetWidth() + 5, 15);
 }
 
 void CSceneGame::RenderDebug()
