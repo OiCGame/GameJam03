@@ -113,7 +113,7 @@ void CGameClear::Update(void)
         }
     }
 
-    if (g_pInput->IsKeyPush(MOFKEY_RETURN))
+    if (g_pInput->IsKeyPush(MOFKEY_SPACE))
     {
         switch (m_SelectNo)
         {

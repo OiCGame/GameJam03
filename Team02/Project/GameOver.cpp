@@ -101,7 +101,7 @@ void CGameOver::Update(void)
         m_SelectNo = (m_SelectNo == 1) ? (0) : (1);
     }
 
-    if (g_pInput->IsKeyPush(MOFKEY_RETURN))
+    if (g_pInput->IsKeyPush(MOFKEY_SPACE))
     {
         switch (m_SelectNo)
         {
