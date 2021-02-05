@@ -312,7 +312,7 @@ bool CGame::Initialize(void) {
 	m_Shop.Initialize(&m_Textures);
 	m_Shop.SetCanvasPtr(&m_UICanvas);
 
-	m_UICanvas.AddScore(60);
+	m_UICanvas.AddScore(10);
 
 	return true;
 }
@@ -337,9 +337,14 @@ bool CGame::Update(void) {
 		m_Shop.SetShowFlag(true);
 	} // if
 	if (CInputManager::GetInstance().GetPush(5)) {
+		if (m_Shop.IsShow()) {
+			m_ShopShip.Start();
+		} // if
 		m_Shop.SetShowFlag(false);
 	} // if
 
+	m_UICanvas.Update();
+	
 	if (m_Shop.IsShow()) {
 		m_Shop.Update(m_ShopShip);
 	} // if

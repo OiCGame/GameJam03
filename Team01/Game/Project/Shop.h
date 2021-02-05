@@ -36,7 +36,10 @@ private:
 	bool m_bAutoShotSoldout;
 	//! 3Way売り切れ
 	bool m_b3WayShotSoldout;
-
+	//! 弾レベル
+	int m_BulletLevel;
+	//! 弾レベル最大値
+	int m_BulletLevelMax;
 
 	/// <summary>
 	/// アイテム選択

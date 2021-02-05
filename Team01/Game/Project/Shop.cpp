@@ -1,9 +1,12 @@
 #include "Shop.h"
 
 #include "Item1Up.h"
-#include "ItemBulletPowerUp1.h"
 #include "Item3Way.h"
 #include "ItemAuto.h"
+#include "ItemBulletPowerUp1.h"
+#include "ItemBulletPowerUp2.h"
+#include "ItemBulletPowerUp3.h"
+#include "ItemBulletPowerUp4.h"
 
 
 void CShop::ItemSelect(void) {
@@ -22,8 +25,23 @@ std::shared_ptr<CItem> CShop::CreateItem(int index) {
 		ptr->SetTexture(&m_pResources->at("shop/1Up.png"));
 		break;
 	case 1:
-		ptr = std::make_shared<CItemBulletPowerUp1>();
-		ptr->SetTexture(&m_pResources->at("shop/Lv.1.png"));
+		if (m_BulletLevel == 1) {
+			ptr = std::make_shared<CItemBulletPowerUp1>();
+			ptr->SetTexture(&m_pResources->at("shop/Lv.1.png"));
+		} // if
+		else if (m_BulletLevel == 2) {
+			ptr = std::make_shared<CItemBulletPowerUp2>();
+			ptr->SetTexture(&m_pResources->at("shop/Lv.2.png"));
+		} // else if
+		else if (m_BulletLevel == 3) {
+			ptr = std::make_shared<CItemBulletPowerUp3>();
+			ptr->SetTexture(&m_pResources->at("shop/Lv.3.png"));
+		} // else if
+		else if (m_BulletLevel == 4) {
+			ptr = std::make_shared<CItemBulletPowerUp4>();
+			ptr->SetTexture(&m_pResources->at("shop/Lv.4.png"));
+		} // else if
+
 		break;
 	case 2:
 		ptr = std::make_shared<CItemAuto>();
@@ -48,7 +66,9 @@ CShop::CShop() :
 	m_bShow(false),
 	m_pCanvas(),
 	m_bAutoShotSoldout(false),
-	m_b3WayShotSoldout(false){
+	m_b3WayShotSoldout(false),
+	m_BulletLevel(0),
+	m_BulletLevelMax(3) {
 }
 
 CShop::~CShop() {
@@ -79,9 +99,9 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 	};
 	InitParam params[]{
 		{&m_pResources->at("shop/shop-hart.png"), 1},
-		{&m_pResources->at("shop/shop-atk-Up.png"), 9},
+		{&m_pResources->at("shop/shop-atk-Up.png"), 2},
 		{&m_pResources->at("shop/shop-auto.png"), 5},
-		{&m_pResources->at("shop/shop-spazer.png"), 2}
+		{&m_pResources->at("shop/shop-spazer.png"), 3}
 	};
 	m_Items.reserve(sizeof(params) / sizeof(InitParam));
 
@@ -93,6 +113,7 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 	m_pSelectItem.reset();
 
 	m_bAutoShotSoldout = false;
+	m_b3WayShotSoldout = false;
 	return true;
 }
 
@@ -119,19 +140,50 @@ bool CShop::Update(CShopShip& out) {
 		this->ItemSelect();
 	} // else if
 
-	if (m_SelectIndex == 2 && m_bAutoShotSoldout) {
-		return false;
-	} // if
-	if (m_SelectIndex == 3 && m_b3WayShotSoldout) {
-		return false;
-	} // if
-
+	switch (m_SelectIndex) {
+	case 0:
+		break;
+	case 1:
+		if (m_BulletLevel == m_BulletLevelMax) {
+			return false;
+		} // if
+		break;
+	case 2:
+		if (m_bAutoShotSoldout) {
+			return false;
+		} // if
+		break;
+	case 3:
+		if (m_b3WayShotSoldout) {
+			return false;
+		} // if
+		break;
+	} // switch
 
 	// buy
 	if (::g_pInput->IsKeyPush(MOFKEY_X) && !m_pSelectItem.expired()) {
 		auto ptr = m_pSelectItem.lock();
-		if (ptr->GetPrice() < m_pCanvas->GetScore()) {
+		if (ptr->GetPrice() <= m_pCanvas->GetScore()) {
 
+			if (m_SelectIndex == 1) {
+				m_BulletLevel++;
+				if (m_BulletLevel == 1) {
+					m_Items.at(m_SelectIndex)->SetTexture(&m_pResources->at("shop/shop-atk-Up2.png"));
+				} // if
+				else if (m_BulletLevel == 2) {
+					m_Items.at(m_SelectIndex)->SetTexture(&m_pResources->at("shop/shop-atk-Up3.png"));
+				} // else if
+				else if (m_BulletLevel == 3) {
+					m_Items.at(m_SelectIndex)->SetTexture(&m_pResources->at("shop/shop-atk-Up4.png"));
+				} // else if
+
+
+				if (m_BulletLevelMax <= m_BulletLevel) {
+					m_BulletLevel = m_BulletLevelMax;
+					m_Items.at(m_SelectIndex)->Soldout();
+				} // if
+
+			} // if
 			if (m_SelectIndex == 2) {
 				m_bAutoShotSoldout = true;
 				m_Items.at(m_SelectIndex)->SetTexture(&m_pResources->at("shop/shop-has-auto.png"));
