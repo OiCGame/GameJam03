@@ -37,9 +37,9 @@ CEnemy::CEnemy() :
 	m_Target(),
 	m_StartPositionY(GenerateRandomF(384.0f, 576.0f)),
 
-	count_(0.0f),
-	count_limit_(360.0f),
-	wave_amplitude_(5.0f) {
+	m_MoveWaveAmplitudeCount(0.0f),
+	m_MoveWaveAmplitudeCountMax(360.0f),
+	m_MoveWaveAmplitude(5.0f) {
 }
 
 CEnemy::~CEnemy() {
@@ -145,9 +145,7 @@ void CEnemy::MoveWave(void) {
 
 	float accel = 1.0f;
 
-	m_Move.x = std::cosf(count_ * kPi / 180.0f) * wave_amplitude_;
-
-	m_Move.x = std::cosf(count_ * kPi / 180.0f) * wave_amplitude_;
+	m_Move.x = std::cosf(m_MoveWaveAmplitudeCount* kPi / 180.0f) * m_MoveWaveAmplitude;
 	m_Move.y = accel;
 	auto angle = m_WaveDirection;
 
@@ -155,9 +153,9 @@ void CEnemy::MoveWave(void) {
 		angle,
 		0, 0);
 
-	count_ += 5;
-	if (count_ > count_limit_) {
-		count_ = 0.0f;
+	m_MoveWaveAmplitudeCount += 5;
+	if (m_MoveWaveAmplitudeCount > m_MoveWaveAmplitudeCountMax) {
+		m_MoveWaveAmplitudeCount = 0.0f;
 	} // if
 }
 

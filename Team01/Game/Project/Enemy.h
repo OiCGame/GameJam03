@@ -59,9 +59,9 @@ private:
 	float m_WaveDirection;
 
 
-	float count_;
-	float count_limit_;
-	float wave_amplitude_;
+	float m_MoveWaveAmplitudeCount;
+	float m_MoveWaveAmplitudeCountMax;
+	float m_MoveWaveAmplitude;
 
 	/// <summary>
 	/// ˆÚ“®

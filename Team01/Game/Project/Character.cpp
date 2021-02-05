@@ -123,34 +123,32 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container, int pha) {
 	if (!this->m_bShow) {
 		return false;
 	} // if
-	if (pha == 1)
-	{
+	if (pha == 1) {
 		m_Position.y -= 4;
 	}
-	else
-	{
+	else {
 		m_Move = Mof::CVector2();
 
-		if (m_Position.y > m_InitPos.y)
-		{
+		if (m_Position.y > m_InitPos.y) {
 			m_Position.y -= 3;
 		}
 
-	this->Move();
-	if (::g_pInput->IsKeyPush(MOFKEY_SPACE) && m_bAutoShot) {
-		this->Shot(bullet_container);
-	} // if
-	if (::g_pInput->IsKeyHold(MOFKEY_SPACE)) {
-		m_ShotIntervalCount++;
-		if (m_ShotInterval < m_ShotIntervalCount) {
+		this->Move();
+		if (::g_pInput->IsKeyPush(MOFKEY_SPACE) && m_bAutoShot) {
 			this->Shot(bullet_container);
-			m_ShotIntervalCount = 0;
 		} // if
-	} // if
-
-
+		if (::g_pInput->IsKeyHold(MOFKEY_SPACE)) {
+			m_ShotIntervalCount++;
+			if (m_ShotInterval < m_ShotIntervalCount) {
+				this->Shot(bullet_container);
+				m_ShotIntervalCount = 0;
+			} // if
+		} // if
 		m_Position += m_Move;
-	}
+
+		m_Position.x = std::clamp(m_Position.x, 0.0f, 1024.0f  - m_pTexture->GetWidth());
+
+	} // else
 	return true;
 }
 

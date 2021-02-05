@@ -136,7 +136,7 @@ void CGame::CollisionPlayerEnemies(void) {
 }
 
 void CGame::CollistionItem(void) {
-	for (auto item : m_pItems) {
+	for (auto item : m_Items) {
 		if (item->GetRectangle().CollisionRect(m_Player.GetCollisionRectangle())) {
 			item->SetShow(false);
 		} // if
@@ -153,7 +153,7 @@ void CGame::CollistionItem(void) {
 CGame::CGame() :
 	m_UICanvas(),
 	m_Shop(),
-	m_pItems(),
+	m_Items(),
 	m_ElapsedTime(0.0f),
 	m_Textures(),
 	m_PlayerTexturePath("player/Plane1Up.png"),
@@ -382,10 +382,10 @@ bool CGame::Update(void) {
 
 
 	if (m_Shop.IsShow()) {
-		m_Shop.Update(m_pItems, m_Player);
+		m_Shop.Update(m_Items, m_Player);
 	} // if
 
-	for (auto item : m_pItems) {
+	for (auto item : m_Items) {
 		item->Update();
 	} // for
 
@@ -429,7 +429,7 @@ bool CGame::Render(void) {
 
 
 
-	for (auto item : m_pItems) {
+	for (auto item : m_Items) {
 		item->Render();
 	} // for
 //	if (m_Item.IsShow()) {
