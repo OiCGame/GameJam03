@@ -101,7 +101,7 @@ void CGame::Collision(void) {
 				m_PlayerBullets[i].Hide();
 
 				enemy.SetFastBulletNo(i);
-				int damage_value = 1;
+				int damage_value = 1 * m_Player.GetBulletShotLevel();
 
 				if (enemy.Damage(damage_value)) {
 					this->EffectStart(enemy.GetPosition());

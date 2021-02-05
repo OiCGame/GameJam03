@@ -24,7 +24,7 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~CItem();
+	virtual ~CItem();
 	/// <summary>
 	/// セッター
 	/// </summary>
@@ -78,5 +78,5 @@ public:
 	/// </summary>
     /// <param name=""></param>
     /// <returns></returns>
-	bool Use(CCharacter& out);
+	virtual bool Use(CCharacter& out) = 0;
 };

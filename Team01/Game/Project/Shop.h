@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <memory>
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -21,15 +22,17 @@ private:
 	//! リソース
 	std::unordered_map<std::string, Mof::CTexture>* m_pResources;
 	//! アイテム
-	std::vector<CShopItem> m_Items;
+	//std::vector<CShopItem> m_Items;
+	std::vector<std::shared_ptr<CShopItem>> m_Items;
 	//! インデックス
 	int m_SelectIndex;
 	//! 選択中
-	CShopItem* m_pSelectItem;
+	std::weak_ptr<CShopItem> m_pSelectItem;
 	//! 表示
 	bool m_bShow;
 	//! スコアを保持
 	UICanvas* m_pCanvas;
+
 	/// <summary>
 	/// アイテム選択
 	/// </summary>

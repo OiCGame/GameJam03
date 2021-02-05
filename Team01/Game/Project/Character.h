@@ -35,6 +35,8 @@ protected:
 	int m_ShotIntervalCount;
 	//! 3Way
 	bool m_b3WayShot;
+	//! 弾の攻撃力
+	uint32_t m_BulletLevel;
 
 	int m_BulletNo;
 
@@ -78,6 +80,10 @@ public:
 	/// ゲッター
 	/// </summary>
 	uint32_t GetRevivalCount(void) const;
+	/// <summary>
+	/// ゲッター
+	/// </summary>
+	uint32_t GetBulletShotLevel(void) const;
 	/// <summary>
 	/// ゲッター
 	/// </summary>
@@ -131,4 +137,7 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	void AddRevivalCount(void);
+	void BulletPowerUp(int level);
+	void AttachAutoShot(void);
+	void Attach3WayShot(void);
 };

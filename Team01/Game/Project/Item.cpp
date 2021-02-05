@@ -50,11 +50,3 @@ bool CItem::Render(void) {
 	} // if
 	return true;
 }
-
-bool CItem::Use(CCharacter & out) {
-	
-	out.AddRevivalCount();
-
-
-	return true;
-}

@@ -40,6 +40,12 @@
     <Filter Include="ヘッダー ファイル\Shop">
       <UniqueIdentifier>{6be6c651-dd9c-45e5-9636-09cc628f25e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Item">
+      <UniqueIdentifier>{6c5ac7a1-9244-448c-b525-a2a9a553a5ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Item">
+      <UniqueIdentifier>{5eba3c14-67b8-4dc6-92fb-276b6aca1a5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -90,9 +96,6 @@
     <ClCompile Include="SceneRanking.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Shop.cpp">
       <Filter>ソース ファイル\Shop</Filter>
     </ClCompile>
@@ -101,6 +104,21 @@
     </ClCompile>
     <ClCompile Include="ShopItem.cpp">
       <Filter>ソース ファイル\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item1Up.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBulletPowerUp1.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item3Way.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemAuto.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +170,6 @@
     <ClInclude Include="SceneRanking.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Shop.h">
       <Filter>ヘッダー ファイル\Shop</Filter>
     </ClInclude>
@@ -163,6 +178,21 @@
     </ClInclude>
     <ClInclude Include="ShopShip.h">
       <Filter>ヘッダー ファイル\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>ヘッダー ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item1Up.h">
+      <Filter>ヘッダー ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBulletPowerUp1.h">
+      <Filter>ヘッダー ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item3Way.h">
+      <Filter>ヘッダー ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemAuto.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
