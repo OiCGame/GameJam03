@@ -11,6 +11,7 @@ class CCharacter {
 protected:
 	//! 位置
 	Mof::CVector2 m_Position;
+	Mof::CVector2 m_InitPos;
 	//! 移動
 	Mof::CVector2 m_Move;
 	//! 移動
@@ -46,36 +47,36 @@ protected:
 	/// <param name=""></param>
 	virtual bool Shot(std::array<CBullet, 256>& bullet_container);
 public:
-    /// <summary>
-    /// コンストラクタ
-    /// </summary>
-    CCharacter();
-    /// <summary>
-    /// デストラクタ
-    /// </summary>
-    virtual ~CCharacter();
-    /// <summary>
-    /// セッター
-    /// </summary>
-    void SetTexture(Mof::CTexture* ptr);
-    void SetBulletTexture(Mof::CTexture* ptr);
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	CCharacter();
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	virtual ~CCharacter();
+	/// <summary>
+	/// セッター
+	/// </summary>
+	void SetTexture(Mof::CTexture* ptr);
+	void SetBulletTexture(Mof::CTexture* ptr);
 	/// <summary>
 	/// ゲッター
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
 	Mof::CVector2 GetPosition(void) const;
-    /// <summary>
-    /// ゲッター
-    /// </summary>
+	/// <summary>
+	/// ゲッター
+	/// </summary>
 	Mof::CRectangle GetCollisionRectangle(void) const;
 	/// <summary>
 	/// ゲッター
 	/// </summary>
 	uint32_t GetRevivalCount(void) const;
 	/// <summary>
-    /// ゲッター
-    /// </summary>
+	/// ゲッター
+	/// </summary>
 	bool IsShow(void) const;
 	/// <summary>
 	/// 初期化
@@ -88,7 +89,7 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	virtual bool Update(std::array<CBullet, 256>& bullet_container);
+	virtual bool Update(std::array<CBullet, 256>& bullet_container, int pha);
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -107,4 +108,6 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	bool Damage(void);
+
+	bool OutTop()const { return m_Position.y + m_pTexture->GetHeight() < 0.0f; }
 };

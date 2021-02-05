@@ -174,10 +174,10 @@ void CEnemy::AddCollisionedEffect(const std::shared_ptr<CEffect>& ptr) {
 
 void CEnemy::Initialize(const InitParam& param) {
 	this->Initialize(param.position, param.move_type, param.move_type_on_pinch, param.pinch_hp_ratio,
-		param.bullet_column, param.bullet_amount, param.amount_set, param.hp_max);
+		param.bullet_column, param.bullet_amount, param.reflect_count, param.amount_set, param.hp_max);
 }
 
-void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp) {
+void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int reflect, int hp) {
 	m_Pos = pos;
 	m_MaxHP = hp;
 	m_HP = m_MaxHP;
@@ -186,11 +186,11 @@ void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio,
 	m_PinchHPRatio = ratio;
 
 
-	//	m_BulletColumn = rand() % 32;
+	//	m_BulletColumn = rand() % 1 + 1;
 	m_BulletColumn = column;
-	//	m_BulletAmount = rand() % 5 + 1;
+	//	m_BulletAmount = rand() % 1 + 1;
 	m_BulletAmount = amount;
-	//	m_BulletSetAmount = rand() % 5 + 5;
+	//	m_BulletSetAmount = rand() % 1 + 6;
 	m_BulletSetAmount = set;
 
 	m_BulletCount = m_BulletColumn * m_BulletAmount * m_BulletSetAmount;
@@ -201,11 +201,11 @@ void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio,
 	int dirpat = 360 / m_BulletColumn;
 	float dirSplit = rand() % dirpat;
 
-	float dir = 270 - (m_BulletColumn - 1) * dirSplit / 2;
+	float dir = 90 - (m_BulletColumn - 1) * dirSplit / 2;
 
 	for (int i = 0; i < m_BulletCount; i++) {
 		int dp = i % m_BulletColumn;
-		m_Bullet[i].Initialize(dir + dp * dirSplit);
+		m_Bullet[i].Initialize(dir + dp * dirSplit,reflect);
 	}
 
 	m_BulletNo = 0;
@@ -229,16 +229,20 @@ void CEnemy::SetTarget(Mof::CVector2 pos) {
 	m_Target = temp;
 }
 
-void CEnemy::Update() {
+void CEnemy::Update(bool end) {
 	m_Move.x = 0.0f;
 	m_Move.y = 0.0f;
 
-
+	m_BulletShowCount = 0;
 	for (int i = 0; i < m_BulletNo; i++) {
 		if (!m_Bullet[i].IsShow()) { continue; }
-		m_Bullet[i].Update();
+		if (end)
+			m_Bullet[i].PopUpdate();
+		else
+			m_Bullet[i].Update();
 		m_BulletShowCount++;
 	}
+
 
 	if (!m_bDrow) { return; }
 
@@ -281,9 +285,12 @@ int CEnemy::CollisionBullet(CRectangle prec) {
 	return col;
 }
 
-void CEnemy::Render() {
+void CEnemy::Render(bool end) {
 	for (int i = 0; i < m_BulletCount; i++) {
-		m_Bullet[i].Render();
+		if (end)
+			m_Bullet[i].PopRender();
+		else
+			m_Bullet[i].Render();
 	}
 	if (!m_bDrow) { return; }
 #ifdef _DEBUG

@@ -28,10 +28,11 @@ public:
         int bullet_column;
         int bullet_amount;
         int amount_set;
+		int reflect_count;
         int hp_max;
 		std::string texture_path;
-        InitParam(Mof::CVector2 pos, int move, int pinch_move, float ratio, float time, int column, int amount, int set, int hp, std::string tex_path) :
-            position(pos), move_type(move), move_type_on_pinch(pinch_move), pinch_hp_ratio(ratio), spawn_time(time), bullet_column(column), bullet_amount(amount), amount_set(set), hp_max(hp), texture_path(tex_path){
+        InitParam(Mof::CVector2 pos, int move, int pinch_move, float ratio, float time, int column, int amount, int reflect, int set, int hp, std::string tex_path) :
+            position(pos), move_type(move), move_type_on_pinch(pinch_move), pinch_hp_ratio(ratio), spawn_time(time), bullet_column(column), bullet_amount(amount), amount_set(set), reflect_count(reflect), hp_max(hp), texture_path(tex_path){
         }
     };
 private:
@@ -105,12 +106,12 @@ public:
     bool IsShow(void) const { return m_bDrow; }
 
     void Initialize(const InitParam& param);
-    void Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int hp);
+    void Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount,int reflect, int set, int hp);
     void SetTexture(Mof::CTexture* ptr);
     void SetTarget(Mof::CVector2 pos);
-    void Update();
+    void Update(bool end);
     int CollisionBullet(CRectangle prec);
-    void Render();
+    void Render(bool end);
     void Release();
 
     /// <summary>

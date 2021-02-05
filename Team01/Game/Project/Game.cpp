@@ -30,10 +30,6 @@ void CGame::EffectStart(Mof::CVector2 position) {
 	auto pos = position;
 	auto effect = std::make_shared<CEffect>();
 	effect->Generate(&effect_tex, m_EffectMotionData);
-
-	pos.x -= effect->GetCollisionRectangle().GetWidth() * 0.5f;
-	pos.y -= effect->GetCollisionRectangle().GetHeight() * 0.5f;
-
 	effect->Start(pos);
 	m_Effects.push_back(effect);
 
@@ -41,7 +37,6 @@ void CGame::EffectStart(Mof::CVector2 position) {
 	m_UICanvas.AddText(std::to_string(100), pos, 60);
 }
 void CGame::Collision(void) {
-	this->CollistionItem();
 	this->CollisionPlayerEnemies();
 
 	struct EffectParam {
@@ -135,25 +130,8 @@ void CGame::CollisionPlayerEnemies(void) {
 	} // if
 }
 
-void CGame::CollistionItem(void) {
-	for (auto item : m_pItems) {
-		if (item->GetRectangle().CollisionRect(m_Player.GetCollisionRectangle())) {
-			item->SetShow(false);
-		} // if
-	} // for
-	/*
-	if (m_Item.IsShow()) {
-		if (m_Item.GetRectangle().CollisionRect(m_Player.GetCollisionRectangle())) {
-			m_Item.SetShow(false);
-		} // if
-	} // if
-	*/
-}
-
 CGame::CGame() :
 	m_UICanvas(),
-	m_Shop(),
-	m_pItems(),
 	m_ElapsedTime(0.0f),
 	m_Textures(),
 	m_PlayerTexturePath("player/Plane1Up.png"),
@@ -169,7 +147,8 @@ CGame::CGame() :
 	m_Effects(),
 	m_bBossExist(false),
 	m_StagePaths({ "stage/test_stage.json", "stage/test_stage1.json" }),
-	m_StagePhaseIndex(0) {
+	m_StagePhaseIndex(0),
+	m_bPhaseChange(0) {
 }
 
 CGame::~CGame() {
@@ -197,7 +176,7 @@ bool CGame::Initialize(void) {
 	m_UICanvas.Initialize();
 	m_ElapsedTime = 0.0f;
 	m_bBossExist = false;
-	//	m_bBossExist = true;
+	m_bPhaseChange = 0;
 
 	rapidjson::Document document;
 	if (!ParseJsonDocument(m_StagePaths.at(m_StagePhaseIndex).c_str(), document)) {
@@ -216,35 +195,16 @@ bool CGame::Initialize(void) {
 		{"enemy/Enemy06.png", Mof::CTexture()},
 		{m_BulletTexturePath, Mof::CTexture()},
 		{m_StageTexturePath, Mof::CTexture()},
-		{m_EffectTexturePath, Mof::CTexture()},
-		{"shop/1Up.png", Mof::CTexture()},
-		{"shop/3way.png", Mof::CTexture()},
-		{"shop/A.png", Mof::CTexture()},
-		{"shop/Lv.1.png", Mof::CTexture()},
-		{"shop/Lv.2.png", Mof::CTexture()},
-		{"shop/Lv.3.png", Mof::CTexture()},
-		{"shop/Lv.4.png", Mof::CTexture()},
-		{"shop/shop-atk-Up.png", Mof::CTexture()},
-		{"shop/shop-atk-Up2.png", Mof::CTexture()},
-		{"shop/shop-atk-Up3.png", Mof::CTexture()},
-		{"shop/shop-atk-Up4.png", Mof::CTexture()},
-		{"shop/shop-auto.png", Mof::CTexture()},
-		{"shop/shop-hart.png", Mof::CTexture()},
-		{"shop/shop-has-auto.png", Mof::CTexture()},
-		{"shop/shop-has-spazer.png", Mof::CTexture()},
-		{"shop/shop-spazer.png", Mof::CTexture()},
-		{"shop/ship.png", Mof::CTexture()},
+		{m_EffectTexturePath, Mof::CTexture()}
 	};
 	for (auto & pair : m_Textures) {
-		if (!pair.second.Load(pair.first.c_str())) {
-			return false;
-		} // if
+		pair.second.Load(pair.first.c_str());
 	} // for
 
 	m_EffectMotionData.Load("motion/explode.json");
 
-	m_Player.Initialize(Mof::CVector2(512.0f, 600.0f));
 	m_Player.SetTexture(&m_Textures.at(m_PlayerTexturePath));
+	m_Player.Initialize(Mof::CVector2(512.0f, 600.0f));
 
 	const auto& info = document["enemies"];
 	for (uint32_t i = 0; i < info.Size(); i++) {
@@ -263,11 +223,12 @@ bool CGame::Initialize(void) {
 		int bullet_column = info[i]["bullet_column"].GetInt();
 		int bullet_amount = info[i]["bullet_amount"].GetInt();
 		int amount_set = info[i]["amount_set"].GetInt();
+		int reflect_count = info[i]["reflect_count"].GetInt();
 		int hp = info[i]["hp"].GetInt();
 		std::string tex_path = info[i]["texture_uri"].GetString();
 
 		m_EnemyDatas.push_back(CEnemy::InitParam(
-			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, hp, tex_path));
+			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set,reflect_count,  hp, tex_path));
 	} // for
 
 
@@ -287,14 +248,18 @@ bool CGame::Initialize(void) {
 		m_UICanvas.AddImage(name.c_str(), &player_tex, pos);
 		pos.x += width;
 	} // for
-
-	//m_Item.SetPlayer(&m_Player);
-	m_Shop.Initialize(&m_Textures);
 	return true;
 }
 
 bool CGame::Update(void) {
-	if (::g_pInput->IsKeyPush(MOFKEY_RETURN)) {
+	if (m_bPhaseChange == 0) {
+		if (::g_pInput->IsKeyPush(MOFKEY_RETURN) || (m_EnemyDatas.empty() && m_EnemyCount == 0))
+		{
+			m_bPhaseChange = 1;
+		}
+	} // if
+	if (m_bPhaseChange == 2)
+	{
 		m_StagePhaseIndex++;
 		if (m_StagePaths.size() - 1 < m_StagePhaseIndex) {
 			m_StagePhaseIndex = m_StagePaths.size() - 1;
@@ -302,15 +267,7 @@ bool CGame::Update(void) {
 
 		this->Release();
 		this->Initialize();
-	} // if
-	if (::g_pInput->IsKeyPush(MOFKEY_X)) {
-		m_Shop.SetShowFlag(true);
-	} // if
-	if (::g_pInput->IsKeyPush(MOFKEY_C)) {
-		m_Shop.SetShowFlag(false);
-	} // if
-
-
+	}
 
 	m_ElapsedTime += 0.0167f;
 	this->SpawnEnemy();
@@ -340,11 +297,18 @@ bool CGame::Update(void) {
 	}
 
 	if (m_Player.IsShow()) {
-		m_Player.Update(m_PlayerBullets);
+		m_Player.Update(m_PlayerBullets, m_bPhaseChange);
+		if (m_Player.OutTop())
+			m_bPhaseChange = 2;
 	} // if
 
+	m_EnemyCount = 0;
 	for (auto& enemy : m_Enemies) {
-		enemy.Update();
+		if (enemy.IsShow())
+			m_EnemyCount += 1;
+	} // for
+	for (auto& enemy : m_Enemies) {
+		enemy.Update(m_EnemyDatas.empty() && m_EnemyCount == 0);
 	} // for
 
 	for (auto& bullet : m_PlayerBullets) {
@@ -359,21 +323,11 @@ bool CGame::Update(void) {
 		} // if
 	} // for
 
+	if (m_bPhaseChange == 0)
+	{
+		this->Collision();
+	}
 
-	this->Collision();
-
-
-	if (m_Shop.IsShow()) {
-		m_Shop.Update(m_pItems, m_Player);
-	} // if
-
-	for (auto item : m_pItems) {
-		item->Update();
-	} // for
-
-//	if (m_Item.IsShow()) {
-//		m_Item.Update();
-//	} // if
 
 	m_UICanvas.Update();
 	return true;
@@ -384,16 +338,12 @@ bool CGame::Render(void) {
 	auto& stage_tex = m_Textures.at(m_StageTexturePath);
 	stage_tex.Render(0.0f, 0.0f);
 
-	if (m_Shop.IsShow()) {
-		m_Shop.Render();
-	} // if
-
 	if (m_Player.IsShow()) {
 		m_Player.Render();
 	} // if
 
 	for (auto& enemy : m_Enemies) {
-		enemy.Render();
+		enemy.Render(m_EnemyDatas.empty() && m_EnemyCount == 0);
 	} // for
 
 	for (auto& bullet : m_PlayerBullets) {
@@ -411,26 +361,19 @@ bool CGame::Render(void) {
 
 
 
-	for (auto item : m_pItems) {
-		item->Render();
-	} // for
-//	if (m_Item.IsShow()) {
-	//	m_Item.Render();
-//	} // if
 	m_UICanvas.Render();
 
-	//	::CGraphicsUtilities::RenderString(700.0f, 0.0f, "elapsed time = %f", m_ElapsedTime);
-	//	::CGraphicsUtilities::RenderString(700.0f, 30.0f, "stage phase = %d", m_StagePhaseIndex);
+	::CGraphicsUtilities::RenderString(700.0f, 0.0f, "elapsed time = %f", m_ElapsedTime);
+	::CGraphicsUtilities::RenderString(700.0f, 30.0f, "stage phase = %d", m_StagePhaseIndex);
 
 	if (!m_Player.IsShow()) {
-		//		::CGraphicsUtilities::RenderString(500.0f, 500.0f, "GameOver");
+		::CGraphicsUtilities::RenderString(500.0f, 500.0f, "GameOver");
 	} // if
 	return true;
 }
 
 bool CGame::Release(void) {
 	m_UICanvas.Release();
-
 	m_EnemyDatas.clear();
 
 	m_Player.Release();

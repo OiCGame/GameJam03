@@ -7,6 +7,9 @@ CEnemyBullet::CEnemyBullet() :
 	m_Speed(3.0f),
 	m_Dir(0.0f),
 	m_ReflectionCount(2),
+	m_PopDirCnt(8),
+	m_PopLen(0),
+	m_PopRad(4),
 	m_bDraw(false) {
 }
 
@@ -14,9 +17,9 @@ CEnemyBullet::~CEnemyBullet() {
 
 }
 
-void CEnemyBullet::Initialize(float dir) {
+void CEnemyBullet::Initialize(float dir, int reflect) {
 	m_Dir = dir;
-	m_ReflectionNo = m_ReflectionCount;
+	m_ReflectionNo = reflect;
 }
 
 void CEnemyBullet::Generation(Vector2 pos) {
@@ -66,6 +69,13 @@ void CEnemyBullet::Update() {
 	}
 }
 
+void CEnemyBullet::PopUpdate() {
+	m_PopLen += 0.5f;
+	m_PopRad -= 0.1f;
+	if (m_PopRad < 0)
+		m_PopRad = 0;
+}
+
 int CEnemyBullet::Collision(CRectangle prec) {
 	if (!m_bDraw) {
 		return 0;
@@ -80,6 +90,19 @@ int CEnemyBullet::Collision(CRectangle prec) {
 void CEnemyBullet::Render() {
 	if (!m_bDraw) { return; }
 	CGraphicsUtilities::RenderFillCircle(m_Pos.x, m_Pos.y, m_Radius, MOF_COLOR_RED);
+}
+
+void CEnemyBullet::PopRender() {
+	if (!m_bDraw) { return; }
+	float dir = 360 / m_PopDirCnt;
+	float x = 0;
+	float y = 0;
+	for (int i = 0; i < m_PopDirCnt; i++)
+	{
+		x = m_Pos.x + cos(MOF_ToRadian(dir * i)) * m_PopLen;
+		y = m_Pos.y + sin(MOF_ToRadian(dir * i)) * m_PopLen;
+		CGraphicsUtilities::RenderFillCircle(x, y, m_PopRad, MOF_COLOR_RED);
+	}
 }
 
 void CEnemyBullet::Release() {
