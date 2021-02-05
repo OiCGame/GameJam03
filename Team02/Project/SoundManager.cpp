@@ -46,19 +46,43 @@ CSoundManager & CSoundManager::GetInstance(void)
 // ********************************************************************************
 void CSoundManager::Load(void)
 {
+    std::string bgm_file[] = 
+    {
+        "タイトル.mp3",
+        "クリア.mp3",
+        "ゲームオーバー.mp3",
+        "ステージ1と2.mp3",
+        "ステージ3.mp3",
+    };
+
+    CUtilities::SetCurrentDirectory("BGM");
     for (int i = 0; i < BGM_Count; i++)
     {
-        //m_BGMBuffer[i].Load();
+        m_BGMBuffer[i].Load(bgm_file[i].c_str());
         m_BGMBuffer[i].SetLoop(TRUE);
     }
+
+    std::string se_file[] =
+    {
+        "パズルがはまった.mp3",
+        "決定.mp3",
+        "キャンセルmp3",
+        "アイテム拾う.mp3",
+        "選択.mp3",
+        "クリア.mp3",
+        "ゲームオーバー.mp3",
+    };
+
+    CUtilities::SetCurrentDirectory("../SE");
 
     for (int i = 0; i < SE_Count; i++)
     {
         for (int j = 0; j < SoundPoolCount; j++)
         {
-            //m_SEBufferPool[i][j].Load();
+            m_SEBufferPool[i][j].Load(se_file[i].c_str());
         }
     }
+    CUtilities::SetCurrentDirectory("../");
 }
 
 // ********************************************************************************

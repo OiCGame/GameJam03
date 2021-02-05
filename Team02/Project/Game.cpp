@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "SoundManager.h"
 
 // ********************************************************************************
 /// <summary>
@@ -14,6 +15,20 @@ CGame::CGame(const InitData & data)
     Load();
     Initialize();
 	DebugEnable = false;
+    switch (data.pData->StageNo)
+    {
+    case 0:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_1)->Play();
+        break;
+    case 1:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_2)->Play();
+        break;
+    case 2:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_3)->Play();
+        break;
+    default:
+        break;
+    }
 }
 
 // ********************************************************************************
@@ -25,6 +40,13 @@ CGame::CGame(const InitData & data)
 // ********************************************************************************
 CGame::~CGame(void)
 {
+    for (int i = BGM_Stage_1; i <= BGM_Stage_3; i++)
+    {
+        if (g_SoundManager.GetBGM(BGM_Name(i))->IsPlay())
+        {
+            g_SoundManager.GetBGM(BGM_Name(i))->Stop();
+        }
+    }
     Release();
 }
 
