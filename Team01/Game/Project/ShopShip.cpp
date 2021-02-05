@@ -9,7 +9,7 @@ CShopShip::CShopShip() :
 	m_pPlayer(),
 	m_Items(),
 	m_TransportDistance(0),
-	m_TransportDistanceCount(0){
+	m_TransportDistanceCount(0) {
 }
 
 CShopShip::~CShopShip() {
@@ -38,11 +38,12 @@ void CShopShip::AddItem(const std::shared_ptr<CItem>& ptr) {
 }
 
 void CShopShip::Start(void) {
-	m_Position.x = 1024.0f;
-	m_Position.y = 300.0f;
-	m_bShow = true;
-	
-	m_TransportDistance = m_Position.x / m_Items.size();
+	if (!m_Items.empty()) {
+		m_Position.x = 1024.0f;
+		m_Position.y = 300.0f;
+		m_bShow = true;
+		m_TransportDistance = m_Position.x / m_Items.size();
+	} // if
 }
 
 bool CShopShip::Update(std::vector<std::shared_ptr<CItem>>& out) {
@@ -50,7 +51,7 @@ bool CShopShip::Update(std::vector<std::shared_ptr<CItem>>& out) {
 	m_Position.x--;
 
 	m_TransportDistanceCount += std::abs(m_Position.x - prev);
-	
+
 	if (m_TransportDistance < m_TransportDistanceCount && !m_Items.empty()) {
 		out.reserve(m_Items.size());
 		std::move(m_Items.end() - 1, m_Items.end(), std::back_inserter(out));
@@ -59,13 +60,13 @@ bool CShopShip::Update(std::vector<std::shared_ptr<CItem>>& out) {
 
 		auto it = std::remove(
 			m_Items.begin(),
-			m_Items.end(), 
+			m_Items.end(),
 			m_Items.at(m_Items.size() - 1));
 		m_Items.erase(it, m_Items.end());
 
 		m_TransportDistanceCount = 0.0f;
 	} // if
-	
+
 
 
 	if (m_Position.x < 0.0f - m_pTexture->GetWidth()) {
@@ -77,7 +78,8 @@ bool CShopShip::Update(std::vector<std::shared_ptr<CItem>>& out) {
 
 bool CShopShip::Render(void) {
 	if (m_pTexture) {
-		m_pTexture->Render(m_Position.x, m_Position.y);
+		//		m_pTexture->Render(m_Position.x, m_Position.y);
+		m_pTexture->RenderRotate(m_Position.x, m_Position.y, MOF_ToRadian(270.0f));
 	} // if
 	return true;
 }

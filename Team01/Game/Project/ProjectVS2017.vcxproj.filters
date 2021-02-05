@@ -118,7 +118,7 @@
       <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="ItemAuto.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -192,7 +192,7 @@
       <Filter>ヘッダー ファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemAuto.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

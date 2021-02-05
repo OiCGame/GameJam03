@@ -7,10 +7,15 @@ CShopItem::CShopItem() :
 	m_DetailsText(),
 	m_Price(0),
 	m_Frame(Mof::CRectangle(0.0f, 0.0f, 384.0f, 160.0f)),
-	m_bSelect(false) {
+	m_bSelect(false),
+	m_bSoldout(false) {
 }
 
 CShopItem::~CShopItem() {
+}
+
+void CShopItem::SetTexture(Mof::CTexture * ptr) {
+	this->m_pTexture = ptr;
 }
 
 void CShopItem::SetSelectFlag(bool flag) {
@@ -30,6 +35,7 @@ bool CShopItem::Initialize(Mof::CFont * font, Mof::CTexture * tex, uint32_t pric
 	m_pFont = font;
 	m_pTexture = tex;
 	m_Price = price;
+	m_bSoldout = false;
 	return true;
 }
 
@@ -57,9 +63,11 @@ bool CShopItem::Render(Mof::CVector2 position) {
 	position.x += 108.0f;
 	position.y += 78.0f;
 
+	if (!m_bSoldout) {
 
-	std::string price_text = std::to_string(m_Price);
-	m_pFont->RenderString(position.x, position.y, price_text.c_str());
+		std::string price_text = std::to_string(m_Price);
+		m_pFont->RenderString(position.x, position.y, price_text.c_str());
+	} // if
 	/*
 	rect.Translation(position);
 	::CGraphicsUtilities::RenderFillRect(rect, m_bSelect ? MOF_COLOR_YELLOW : MOF_COLOR_WHITE);
@@ -96,4 +104,10 @@ bool CShopItem::Render(Mof::CVector2 position) {
 	m_pFont->RenderString(price_rect.Left, price_rect.Top, price_text.c_str());
 	*/
 	return true;
+}
+
+void CShopItem::Soldout(void) {
+	m_DetailsText.clear();
+	m_DetailsText += "”„‚èØ‚ê";
+	m_bSoldout = true;
 }

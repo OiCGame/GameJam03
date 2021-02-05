@@ -32,6 +32,11 @@ private:
 	bool m_bShow;
 	//! スコアを保持
 	UICanvas* m_pCanvas;
+	//! 連射売り切れ
+	bool m_bAutoShotSoldout;
+	//! 3Way売り切れ
+	bool m_b3WayShotSoldout;
+
 
 	/// <summary>
 	/// アイテム選択

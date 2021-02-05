@@ -20,6 +20,8 @@ private:
 	const Mof::CRectangle m_Frame;
 	//! 選択中
 	bool m_bSelect;
+	//! 売れない
+	bool m_bSoldout;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -29,6 +31,12 @@ public:
 	/// デストラクタ
 	/// </summary>
 	~CShopItem();
+	/// <summary>
+	/// セッター
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	void SetTexture(Mof::CTexture* ptr);
 	/// <summary>
 	/// セッター
 	/// </summary>
@@ -60,4 +68,10 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	bool Render(Mof::CVector2 position);
+	/// <summary>
+	/// 売れない
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	void Soldout(void);
 };

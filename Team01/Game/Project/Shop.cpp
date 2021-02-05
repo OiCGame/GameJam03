@@ -7,7 +7,7 @@
 
 
 void CShop::ItemSelect(void) {
-	if (auto ptr  = m_pSelectItem.lock()) {
+	if (auto ptr = m_pSelectItem.lock()) {
 		ptr->SetSelectFlag(false);
 	} // if
 	m_pSelectItem = m_Items.at(m_SelectIndex);
@@ -46,7 +46,9 @@ CShop::CShop() :
 	m_SelectIndex(0),
 	m_pSelectItem(),
 	m_bShow(false),
-	m_pCanvas(){
+	m_pCanvas(),
+	m_bAutoShotSoldout(false),
+	m_b3WayShotSoldout(false){
 }
 
 CShop::~CShop() {
@@ -78,7 +80,7 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 	InitParam params[]{
 		{&m_pResources->at("shop/shop-hart.png"), 1},
 		{&m_pResources->at("shop/shop-atk-Up.png"), 9},
-		{&m_pResources->at("shop/shop-has-auto.png"), 5},
+		{&m_pResources->at("shop/shop-auto.png"), 5},
 		{&m_pResources->at("shop/shop-spazer.png"), 2}
 	};
 	m_Items.reserve(sizeof(params) / sizeof(InitParam));
@@ -89,6 +91,8 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 		m_Items.push_back(ptr);
 	} // for
 	m_pSelectItem.reset();
+
+	m_bAutoShotSoldout = false;
 	return true;
 }
 
@@ -114,17 +118,39 @@ bool CShop::Update(CShopShip& out) {
 		} // if
 		this->ItemSelect();
 	} // else if
-	
-	
+
+	if (m_SelectIndex == 2 && m_bAutoShotSoldout) {
+		return false;
+	} // if
+	if (m_SelectIndex == 3 && m_b3WayShotSoldout) {
+		return false;
+	} // if
+
+
 	// buy
 	if (::g_pInput->IsKeyPush(MOFKEY_X) && !m_pSelectItem.expired()) {
 		auto ptr = m_pSelectItem.lock();
 		if (ptr->GetPrice() < m_pCanvas->GetScore()) {
-			m_pCanvas->SubtractScore(ptr->GetPrice());
 
-//			auto ptr = std::make_shared<CItem>();
+			if (m_SelectIndex == 2) {
+				m_bAutoShotSoldout = true;
+				m_Items.at(m_SelectIndex)->SetTexture(&m_pResources->at("shop/shop-has-auto.png"));
+				m_Items.at(m_SelectIndex)->Soldout();
+			} // if
+			if (m_SelectIndex == 3) {
+				m_b3WayShotSoldout = true;
+				m_Items.at(m_SelectIndex)->SetTexture(&m_pResources->at("shop/shop-has-spazer.png"));
+				m_Items.at(m_SelectIndex)->Soldout();
+			} // if
+
+
+
+
+			m_pCanvas->SubtractScore(ptr->GetPrice());
 			auto ptr = this->CreateItem(m_SelectIndex);
 			out.AddItem(ptr);
+
+
 		} // if
 	} // if
 
