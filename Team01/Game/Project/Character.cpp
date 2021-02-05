@@ -21,15 +21,50 @@ bool CCharacter::Shot(std::array<CBullet, 256>& bullet_container) {
 		m_Position.y);
 
 	for (int i = 0; i < bullet_container.size(); i++) {
+		auto move = Mof::CVector2(0.0f, -5.0f);
+
 		if (bullet_container[i].IsShow()) {
 			continue;
 		} // if
-		bullet_container[i].Shot(pos + offset, CBullet::TeamType::Player);
+		bullet_container[i].Shot(pos + offset, move);
 		bullet_container[i].SetNo(m_BulletNo);
 		m_BulletNo++;
-		return true;
+		break;
 	} // for
-	return false;
+
+
+
+	if (m_b3WayShot) {
+		for (int i = 0; i < bullet_container.size(); i++) {
+			auto move = Mof::CVector2(1.0f, -5.0f);
+
+			if (bullet_container[i].IsShow()) {
+				continue;
+			} // if
+			bullet_container[i].Shot(pos + offset, move);
+			bullet_container[i].SetNo(m_BulletNo);
+			m_BulletNo++;
+			break;
+		} // for
+
+
+		for (int i = 0; i < bullet_container.size(); i++) {
+			auto move = Mof::CVector2(-1.0f, -5.0f);
+
+			if (bullet_container[i].IsShow()) {
+				continue;
+			} // if
+			bullet_container[i].Shot(pos + offset, move);
+			bullet_container[i].SetNo(m_BulletNo);
+			m_BulletNo++;
+			break;
+		} // for
+	} // if
+
+
+
+
+	return true;
 }
 
 CCharacter::CCharacter() :
@@ -41,8 +76,11 @@ CCharacter::CCharacter() :
 	m_HP(4),
 	m_BulletNo(0),
 	m_RevivalCount(1),
-	m_bShow(true) {
-
+	m_bShow(true),
+	m_bAutoShot(false),
+	m_ShotInterval(20),
+	m_ShotIntervalCount(0),
+	m_b3WayShot(false) {
 }
 
 CCharacter::~CCharacter() {
@@ -64,11 +102,11 @@ Mof::CRectangle CCharacter::GetCollisionRectangle(void) const {
 	auto rect = Mof::CRectangle(0.0f, 0.0f,
 		m_pTexture->GetWidth(), m_pTexture->GetHeight());
 	rect.Translation(m_Position);
-	rect.Expansion(-25.0f,-25.0f);
+	rect.Expansion(-25.0f, -25.0f);
 	return rect;
 }
 
-uint32_t CCharacter::GetRevivalCount(void) const{
+uint32_t CCharacter::GetRevivalCount(void) const {
 	return this->m_RevivalCount;
 }
 bool CCharacter::IsShow(void) const {
@@ -88,8 +126,15 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container) {
 	m_Move = Mof::CVector2();
 
 	this->Move();
-	if (::g_pInput->IsKeyPush(MOFKEY_SPACE)) {
+	if (::g_pInput->IsKeyPush(MOFKEY_SPACE) && m_bAutoShot) {
 		this->Shot(bullet_container);
+	} // if
+	if (::g_pInput->IsKeyHold(MOFKEY_SPACE)) {
+		m_ShotIntervalCount++;
+		if (m_ShotInterval < m_ShotIntervalCount) {
+			this->Shot(bullet_container);
+			m_ShotIntervalCount = 0;
+		} // if
 	} // if
 
 

@@ -2,6 +2,28 @@
 
 #include "Character.h"
 
+
+constexpr float kPi = 3.14f;
+static float GenerateRandomF(const float min, const float max) {
+	std::random_device seed;
+	std::mt19937 engine(seed());
+	std::uniform_real_distribution<> random(min, max);
+	return static_cast<float>(random(engine));
+}
+inline void Rotate(float& x, float& y, const float angle,
+	const float center_x, const float center_y) {
+	float rad = kPi * angle / 180.0f;
+
+	float axis_x = x - center_x;
+	float axis_y = y - center_y;
+
+	float translate_x = (axis_x)* std::cosf(rad) - (axis_y)* std::sinf(rad);
+	float translate_y = (axis_x)* std::sinf(rad) + (axis_y)* std::cosf(rad);
+
+	x = center_x + translate_x;
+	y = center_y + translate_y;
+};
+
 CEnemy::CEnemy() :
 	m_HP(3),
 	m_MaxHP(3),
@@ -12,7 +34,12 @@ CEnemy::CEnemy() :
 	m_MoveType(0),
 	m_MoveTypeOnPinch(0),
 	m_PinchHPRatio(0.0f),
-	m_Target() {
+	m_Target(),
+	m_StartPositionY(GenerateRandomF(384.0f, 576.0f)),
+
+	count_(0.0f),
+	count_limit_(360.0f),
+	wave_amplitude_(5.0f) {
 }
 
 CEnemy::~CEnemy() {
@@ -33,7 +60,6 @@ void CEnemy::Move(void) {
 	m_Dir += 0.0f;
 }
 
-
 void CEnemy::Move(int type) {
 	switch (type) {
 	case 0:
@@ -44,12 +70,24 @@ void CEnemy::Move(int type) {
 		break;
 	case 2:
 		m_Pos.y++;
+		if (m_StartPositionY < m_Pos.y) {
+			m_MoveTypeOnPinch = 5;
+			if (m_Pos.x < 512.0f) {
+				m_WaveDirection = 270.0f;
+			} // if
+			else {
+				m_WaveDirection = 90.0f;
+			} // else
+		} // if
 		break;
 	case 3:
 		this->MoveOutOfWindow();
 		break;
 	case 4:
 		this->MoveAssault();
+		break;
+	case 5:
+		this->MoveWave();
 		break;
 	default:
 		break;
@@ -100,6 +138,27 @@ void CEnemy::MoveOutOfWindow(void) {
 
 void CEnemy::MoveAssault(void) {
 	this->Chase(m_Target);
+}
+
+void CEnemy::MoveWave(void) {
+	//float direction = 90.0f;
+
+	float accel = 1.0f;
+
+	m_Move.x = std::cosf(count_ * kPi / 180.0f) * wave_amplitude_;
+
+	m_Move.x = std::cosf(count_ * kPi / 180.0f) * wave_amplitude_;
+	m_Move.y = accel;
+	auto angle = m_WaveDirection;
+
+	Rotate(m_Move.x, m_Move.y,
+		angle,
+		0, 0);
+
+	count_ += 5;
+	if (count_ > count_limit_) {
+		count_ = 0.0f;
+	} // if
 }
 
 Mof::CVector2 CEnemy::GetPosition(void) const {

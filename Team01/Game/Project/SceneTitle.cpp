@@ -8,7 +8,7 @@ CSceneTitle::CSceneTitle() :
 	if (!m_Texture.Load("title.png")) {
 		::OutputDebugString("failed to load title texture");
 	} // if
-	if (!m_ShopTexture.Load("shop.png")) {
+	if (!m_ShopTexture.Load("shop/shop.png")) {
 		::OutputDebugString("failed to load title texture");
 	} // if
 

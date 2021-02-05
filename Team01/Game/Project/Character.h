@@ -4,7 +4,6 @@
 #include <array>
 
 #include "GameDefine.h"
-
 #include "Bullet.h"
 
 
@@ -26,6 +25,14 @@ protected:
 	bool m_bShow;
 	//! 残機
 	uint32_t m_RevivalCount;
+	//! 連射
+	bool m_bAutoShot;
+	//! 発射間隔 アイテム取得時にインターバルを短くする
+	int m_ShotInterval;
+	//! 発射間隔カウント
+	int m_ShotIntervalCount;
+	//! 3Way
+	bool m_b3WayShot;
 
 	int m_BulletNo;
 	/// <summary>
