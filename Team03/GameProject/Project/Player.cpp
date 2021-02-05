@@ -94,6 +94,7 @@ void CPlayer::Initialize(const CVector2& pos)
 	m_TextureArrow = &CResourceManager::Singleton().GetTextureList()->at("PlayerArrow");
 	// SE‚Ìæ“¾
 	m_pSEShot = &CResourceManager::Singleton().GetSoundList()->at("se_PlayerShot");
+	m_pSEShot->SetVolume(0.5f);
 	//‰ŠúÀ•W‚Ìİ’è
 	m_Position = pos;
 	m_MoveVelocity.SetValue(0,0);

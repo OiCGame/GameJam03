@@ -73,6 +73,7 @@ void CSceneGame::Flow_PlayerShooting()
 			if (it->GetCircle().CollisionCircle(CEnemyManager::Singleton().GetEnemy(i)->GetCircle())) {
 				CEnemyManager::Singleton().GetEnemy(i)->SetShow(false);
 				it->SetShow(false);
+				m_pSE_Explosion->Play();
 			}
 		}
 	}
@@ -82,20 +83,18 @@ void CSceneGame::Flow_PlayerShooting()
 	}
 	else {
 		if (m_Player.GetBullet()->size() > 0) { return; }
-		if (CEnemyManager::Singleton().GetEnemyCount() > 0) {
-			// Next Flow
-			m_NowGameFlow = GameFlow::Enemy_SetShot;
-		}
-		else {
-			this->NextWave(++m_WaveNo);
-		}
+		// Next Flow
+		m_NowGameFlow = GameFlow::Enemy_SetShot;
+	}
+	if (CEnemyManager::Singleton().GetEnemyCount() <= 0) {
+		this->NextWave(++m_WaveNo);
 	}
 }
 
 void CSceneGame::Flow_SetEnemyShot()
 {
 	// “G‚Ì’e–‹ƒpƒ^[ƒ“‚ğİ’è & ”­Ë
-	CEnemyManager::Singleton().StartShot(LauncherInit_Polygon{ CVector2(0,0),CVector2(10,10), BulletType::red, 20, 0.2f });
+	CEnemyManager::Singleton().StartShot(LauncherInit_PolygonRotation{ CVector2(300,0),CVector2(5,5), BulletType::red, 60, 0.2f , 5 , 5, 6 });
 	// Next Flow
 	m_NowGameFlow = GameFlow::Enemy_Shots;
 }
@@ -113,6 +112,7 @@ void CSceneGame::Flow_EnemyShots()
 		for (auto it = pBulletList->begin(); it != pBulletList->end(); it++) {
 			if (it->CollisionCircle(m_Player.GetCircle())) {
 				m_Player.TakeDamage();
+				m_pSE_Explosion->Play();
 			}
 		}
 	}
@@ -148,19 +148,39 @@ void CSceneGame::NextWave(int wave_no)
 	}
 
 	// ‰_‚Ì‰æ‘œ‚ğÄİ’è
+	// BGM‚Ìİ’è
 	if (wave_no < 4) {
 		m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
+		auto pS = &CResourceManager::Singleton().GetSoundList()->at("bgm_stage123");
+		if (m_pBGM != pS) {
+			if (m_pBGM) { m_pBGM->Stop(); }
+			m_pBGM = pS; 
+			m_pBGM->SetVolume(0.1f);
+			m_pBGM->SetLoop(true);
+			m_pBGM->Play();
+		}
 	}
 	else {
 		m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_gray_left");
+		auto pS = &CResourceManager::Singleton().GetSoundList()->at("bgm_stage456");
+		if (m_pBGM != pS) {
+			if (m_pBGM) { m_pBGM->Stop(); }
+			m_pBGM = pS; 
+			m_pBGM->SetVolume(0.1f);
+			m_pBGM->SetLoop(true);
+			m_pBGM->Play();
+		}
+
 	}
+
 	// ”wŒi‚ÌÄİ’è
 	m_pBackgroundTexture = &CResourceManager::Singleton().GetTextureList()->at(m_WaveBackground[wave_no]);
 }
 
 void CSceneGame::Initialize()
 {
-
+	m_pSE_Explosion = &CResourceManager::Singleton().GetSoundList()->at("se_explosion");
+	m_pSE_Explosion->SetVolume(0.5);
 	m_Player.Initialize(CVector2(500, 500));
 
 	CEnemyManager::Singleton().Initialize(); // ResetEnemies()“à‚ÉˆÚA‚·‚é‚©‚àH
@@ -222,5 +242,7 @@ void CSceneGame::RenderDebug()
 
 void CSceneGame::Release()
 {
+	CEnemyBulletManager::Singleton().Release();
 	CEnemyManager::Singleton().Release();
+	m_pBGM->Stop();
 }

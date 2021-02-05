@@ -83,6 +83,7 @@ MofBool CGameApp::Update(void){
 	gpSecene->Update();
 
 	if (gpSecene->IsSceneEnd()) {
+		gpSecene->Release();
 		switch (gpSecene->NextScene())
 		{
 		case NextScene::Title:

@@ -110,6 +110,8 @@ private:
 	GameFlow	m_NowGameFlow{GameFlow::Enemy_SetMove};
 	float	m_FlowWiatTime{0};
 
+	CSoundBuffer* m_pBGM;
+	CSoundBuffer* m_pSE_Explosion;
 	CPlayer m_Player;
 	
 	void DebugKey();

@@ -64,7 +64,7 @@ public:
 	int GetLife() { return m_Life; }
 
 	int  GetBulletRemain() { return m_BulletRemain; }
-	void SetBulletRemain(int num) { m_BulletRemain = num; }
+	void SetBulletRemain(int num) { m_BulletRemain = num; m_AttackCooldown = 0; }
 
 	bool ItemCollisionCheck(const CItem& item);
 };

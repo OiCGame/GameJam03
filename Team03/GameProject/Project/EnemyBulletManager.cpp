@@ -138,3 +138,11 @@ void CEnemyBulletManager::Render()
 		bullet.Render();
 	}
 }
+
+void CEnemyBulletManager::Release()
+{
+	for (auto & b : m_BulletList) {
+		
+	}
+	m_BulletList.clear();
+}

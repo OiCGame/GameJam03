@@ -87,5 +87,7 @@ public:
 	// •`‰æ
 	void Render();
 
+	// ŠJ•ú
+	void Release();
 };
 
