@@ -37,9 +37,9 @@ CEnemy::CEnemy() :
 	m_Target(),
 	m_StartPositionY(GenerateRandomF(384.0f, 576.0f)),
 
-	count_(0.0f),
-	count_limit_(360.0f),
-	wave_amplitude_(5.0f) {
+	m_MoveWaveAmplitudeCount(0.0f),
+	m_MoveWaveAmplitudeCountMax(360.0f),
+	m_MoveWaveAmplitude(5.0f) {
 }
 
 CEnemy::~CEnemy() {
@@ -141,13 +141,9 @@ void CEnemy::MoveAssault(void) {
 }
 
 void CEnemy::MoveWave(void) {
-	//float direction = 90.0f;
-
 	float accel = 1.0f;
 
-	m_Move.x = std::cosf(count_ * kPi / 180.0f) * wave_amplitude_;
-
-	m_Move.x = std::cosf(count_ * kPi / 180.0f) * wave_amplitude_;
+	m_Move.x = std::cosf(m_MoveWaveAmplitudeCount* kPi / 180.0f) * m_MoveWaveAmplitude;
 	m_Move.y = accel;
 	auto angle = m_WaveDirection;
 
@@ -155,9 +151,9 @@ void CEnemy::MoveWave(void) {
 		angle,
 		0, 0);
 
-	count_ += 5;
-	if (count_ > count_limit_) {
-		count_ = 0.0f;
+	m_MoveWaveAmplitudeCount += 5;
+	if (m_MoveWaveAmplitudeCount > m_MoveWaveAmplitudeCountMax) {
+		m_MoveWaveAmplitudeCount = 0.0f;
 	} // if
 }
 
@@ -205,7 +201,7 @@ void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio,
 
 	for (int i = 0; i < m_BulletCount; i++) {
 		int dp = i % m_BulletColumn;
-		m_Bullet[i].Initialize(dir + dp * dirSplit,reflect);
+		m_Bullet[i].Initialize(dir + dp * dirSplit, reflect);
 	}
 
 	m_BulletNo = 0;
@@ -255,8 +251,7 @@ void CEnemy::Update(bool end) {
 	} // else
 	m_Pos += m_Move;
 
-	if (m_Pos.x > g_pGraphics->GetTargetWidth() || m_Pos.x +m_pTexture->GetWidth() < 0)
-	{
+	if (m_Pos.x > g_pGraphics->GetTargetWidth() || m_Pos.x + m_pTexture->GetWidth() < 0) {
 		m_bDrow = false;
 	}
 

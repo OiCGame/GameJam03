@@ -127,6 +127,10 @@ public:
 	/// </summary>
 	~UICanvas();
 	/// <summary>
+	/// ゲッター
+	/// </summary>
+	uint32_t GetScore(void) const;
+	/// <summary>
 	/// 初期化
 	/// </summary>
 	bool Initialize(void);
@@ -146,6 +150,7 @@ public:
 	/// スコア追加
 	/// </summary>
 	void AddScore(uint32_t value);
+	void SubtractScore(uint32_t value);
 	/// <summary>
 	/// 表示テキスト追加
 	/// <summary>

@@ -98,6 +98,11 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Item1Up.cpp" />
+    <ClCompile Include="Item3Way.cpp" />
+    <ClCompile Include="ItemAuto.cpp" />
+    <ClCompile Include="ItemBulletPowerUp1.cpp" />
     <ClCompile Include="SceneRanking.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -111,12 +116,19 @@
     <ClCompile Include="SceneGameOver.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="ShopItem.cpp" />
+    <ClCompile Include="ShopShip.cpp" />
     <ClCompile Include="UICanvas.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Item1Up.h" />
+    <ClInclude Include="Item3Way.h" />
+    <ClInclude Include="ItemAuto.h" />
+    <ClInclude Include="ItemBulletPowerUp1.h" />
     <ClInclude Include="SceneRanking.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
@@ -131,6 +143,8 @@
     <ClInclude Include="SceneGameOver.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Shop.h" />
+    <ClInclude Include="ShopItem.h" />
+    <ClInclude Include="ShopShip.h" />
     <ClInclude Include="UICanvas.h" />
   </ItemGroup>
   <ItemGroup>

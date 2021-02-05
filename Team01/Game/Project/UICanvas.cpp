@@ -30,6 +30,10 @@ UICanvas::UICanvas() :
 UICanvas::~UICanvas() {
 }
 
+uint32_t UICanvas::GetScore(void) const {
+	return this->m_Score;
+}
+
 bool UICanvas::Initialize(void) {
     if (!m_Font.Create(64, "ƒƒCƒŠƒI")) {
         return false;
@@ -54,6 +58,11 @@ bool UICanvas::Update(void) {
     if (m_RenderedScore < m_Score) {
         m_RenderedScore++;
     } // if
+	else if (m_Score < m_RenderedScore) {
+		m_RenderedScore--;
+	} // else if
+
+
     for (auto& label : m_Labels) {
         label.Update();
     } // for
@@ -91,6 +100,10 @@ bool UICanvas::Release(void) {
 
 void UICanvas::AddScore(uint32_t value) {
     m_Score += value;
+}
+
+void UICanvas::SubtractScore(uint32_t value) {
+	m_Score -= value;
 }
 
 void UICanvas::AddText(const std::string& text, Mof::CVector2 position, int exist) {
