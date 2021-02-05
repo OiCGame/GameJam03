@@ -46,6 +46,7 @@ void CSceneGame::Flow_SetEnemyMove()
 
 void CSceneGame::Flow_EnemyMoving()
 {
+	m_Player.MoveUpdate();
 	if (!CEnemyManager::Singleton().IsMoveEnd()) { return; }
 	// Next Flow
 	m_NowGameFlow = GameFlow::Player_SetShot;
@@ -155,7 +156,7 @@ void CSceneGame::NextWave(int wave_no)
 		if (m_pBGM != pS) {
 			if (m_pBGM) { m_pBGM->Stop(); }
 			m_pBGM = pS; 
-			m_pBGM->SetVolume(0.1f);
+			m_pBGM->SetVolume(0.05f);
 			m_pBGM->SetLoop(true);
 			m_pBGM->Play();
 		}
@@ -166,7 +167,7 @@ void CSceneGame::NextWave(int wave_no)
 		if (m_pBGM != pS) {
 			if (m_pBGM) { m_pBGM->Stop(); }
 			m_pBGM = pS; 
-			m_pBGM->SetVolume(0.1f);
+			m_pBGM->SetVolume(0.05f);
 			m_pBGM->SetLoop(true);
 			m_pBGM->Play();
 		}
@@ -180,7 +181,7 @@ void CSceneGame::NextWave(int wave_no)
 void CSceneGame::Initialize()
 {
 	m_pSE_Explosion = &CResourceManager::Singleton().GetSoundList()->at("se_explosion");
-	m_pSE_Explosion->SetVolume(0.5);
+	m_pSE_Explosion->SetVolume(0.3f);
 	m_Player.Initialize(CVector2(500, 500));
 
 	CEnemyManager::Singleton().Initialize(); // ResetEnemies()“à‚ÉˆÚA‚·‚é‚©‚àH

@@ -108,24 +108,7 @@ void CPlayer::Initialize(const CVector2& pos)
 
 void CPlayer::Update()
 {
-	//自機からマウスの単位ベクトル
-	float mouseX, mouseY;
-	g_pInput->GetMousePos(mouseX, mouseY);
-	CVector2(mouseX - m_Position.x, mouseY - m_Position.y).Normal(m_MouseVector);
-
-	//表示していない時は処理しない
-	if (!m_bShow) {
-		return;
-	}
-	if (m_DamageWait > 0) {
-		m_DamageWait--;
-	}
-
-
-	//速度計算処理
-	VelocityUpdate();
-	//移動処理
-	PositionUpdate();
+	this->MoveUpdate();
 
 	//攻撃処理
 	if (m_BulletRemain > 0) {
@@ -157,6 +140,28 @@ void CPlayer::Update()
 			m_BulletList.erase(m_BulletList.begin() + i);
 		}
 	}
+}
+
+void CPlayer::MoveUpdate()
+{
+	//自機からマウスの単位ベクトル
+	float mouseX, mouseY;
+	g_pInput->GetMousePos(mouseX, mouseY);
+	CVector2(mouseX - m_Position.x, mouseY - m_Position.y).Normal(m_MouseVector);
+
+	//表示していない時は処理しない
+	if (!m_bShow) {
+		return;
+	}
+	if (m_DamageWait > 0) {
+		m_DamageWait--;
+	}
+
+
+	//速度計算処理
+	VelocityUpdate();
+	//移動処理
+	PositionUpdate();
 }
 
 void CPlayer::Render()

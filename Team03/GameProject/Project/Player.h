@@ -44,6 +44,7 @@ public:
 	//bool Load();
 	void Initialize(const CVector2& pos);
 	void Update();
+	void MoveUpdate();
 	void Render();
 	void RenderDebug(float top, float left);
 	//void Release();

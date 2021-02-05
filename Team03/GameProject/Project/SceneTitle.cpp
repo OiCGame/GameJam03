@@ -9,6 +9,7 @@ void CSceneTitle::Initialize()
 	m_pBGM->SetLoop(true);
 	m_pBGM->SetVolume(0.1f);
 	m_pSE = &CResourceManager::Singleton().GetSoundList()->at("se_decision");
+	m_pSE->SetVolume(0.5f);
 
 	m_pBGM->Play();
 }

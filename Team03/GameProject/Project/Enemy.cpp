@@ -19,7 +19,9 @@ bool CEnemy::Initialize(void)
 	m_EnemyTexture = &CResourceManager::Singleton().GetTextureList()->at("Enemy");
 	m_pSETeleport = &CResourceManager::Singleton().GetSoundList()->at("se_teleport");
 	m_pSEFastMove = &CResourceManager::Singleton().GetSoundList()->at("se_FastMove");
+	m_pSEFastMove->SetVolume(0.1f);
 	m_pSEBarrage = &CResourceManager::Singleton().GetSoundList()->at("se_barrage");
+	m_pSEBarrage->SetVolume(0.1f);
 	m_Position = CVector2(CGraphicsUtilities::GetGraphics()->GetTargetWidth() * 0.5f - m_EnemyTexture->GetWidth() * 0.5f, 0);
 	for (int i = 0; i < 5; i++)
 	{
