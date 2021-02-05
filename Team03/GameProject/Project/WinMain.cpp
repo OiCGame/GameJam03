@@ -11,7 +11,7 @@ int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 	//Info.WindowCreateInfo.py = 0;
 	//Info.WindowCreateInfo.Width = 1920;
 	//Info.WindowCreateInfo.Height = 1080;
-	//Info.WindowCreateInfo.Style = (WS_VISIBLE | WS_POPUP | WS_EX_TRANSPARENT);
+	//Info.WindowCreateInfo.Style = (WS_VISIBLE | WS_POPUP);
 	if ( pFrame->Initialize(&Info) )
 	{
 		pFrame->Run();
