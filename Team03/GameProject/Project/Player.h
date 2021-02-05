@@ -30,6 +30,8 @@ private:
 
 	bool			m_bShow;
 
+	CSoundBuffer* m_pSEShot;
+
 	//‘¬“xXVˆ—
 	void VelocityUpdate();
 	//ˆÚ“®ˆ—

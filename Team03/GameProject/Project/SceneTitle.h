@@ -7,6 +7,7 @@ class CSceneTitle : public CSceneBase
 private:
 	CTexture* m_pTexture;
 	CSoundBuffer* m_pBGM;
+	CSoundBuffer* m_pSE;
 
 public:
 	void Initialize() override;

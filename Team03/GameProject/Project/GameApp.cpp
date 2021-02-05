@@ -34,6 +34,7 @@ MofBool CGameApp::Initialize(void){
 	
 	CResourceManager::Singleton()
 		// ‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+		.LoadTexture("Title", "images/background/Title.png")
 		.LoadTexture("GameClear", "images/background/game_clear.png")
 		.LoadTexture("GameOver", "images/background/game_over.png")
 		.LoadTexture("wave1","images/background/wave1_background.png")
@@ -50,7 +51,18 @@ MofBool CGameApp::Initialize(void){
 		.LoadTexture("cloud_gray_left", "images/cloud/cloud_gray_left.png")
 		.LoadTexture("ItemLife", "images/item/ItemLife.png")
 		// ‰¹‚Ì“Ç‚Ýž‚Ý
-		.LoadSound("bgm_title", "sounds/BGM/title.mp3");
+		.LoadSound("bgm_title", "sounds/BGM/title.mp3")
+		.LoadSound("bgm_clear", "sounds/BGM/gameclear.mp3")
+		.LoadSound("bgm_over", "sounds/BGM/gameover.mp3")
+		.LoadSound("bgm_stage123", "sounds/BGM/stage123.mp3")
+		.LoadSound("bgm_stage456", "sounds/BGM/stage456.mp3")
+
+		.LoadSound("se_barrage", "sounds/SE/Barrage.mp3")
+		.LoadSound("se_decision", "sounds/SE/Decision.mp3")
+		.LoadSound("se_explosion", "sounds/SE/Explosion.mp3")
+		.LoadSound("se_FastMove", "sounds/SE/FastMove.mp3")
+		.LoadSound("se_PlayerShot", "sounds/SE/PlayerShot.mp3")
+		.LoadSound("se_teleport", "sounds/SE/Teleport.mp3");
 
 
 	gpSecene->Initialize();

@@ -92,6 +92,8 @@ void CPlayer::Initialize(const CVector2& pos)
 	//Texture‚ÌŽæ“¾
 	m_TexturePlayer = &CResourceManager::Singleton().GetTextureList()->at("Player");
 	m_TextureArrow = &CResourceManager::Singleton().GetTextureList()->at("PlayerArrow");
+	// SE‚ÌŽæ“¾
+	m_pSEShot = &CResourceManager::Singleton().GetSoundList()->at("se_PlayerShot");
 	//‰ŠúÀ•W‚ÌÝ’è
 	m_Position = pos;
 	m_MoveVelocity.SetValue(0,0);
@@ -136,6 +138,7 @@ void CPlayer::Update()
 		else {
 			if (g_pInput->IsMouseKeyPush(MOFMOUSE_LBUTTON)) {
 				//UŒ‚
+				m_pSEShot->Play();
 				CPlayerBullet bullet;
 				bullet.Initialize(m_Position + m_MouseVector * m_Radius, m_MouseVector);
 

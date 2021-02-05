@@ -24,11 +24,15 @@ private:
 	CVector2 m_MovePos;		// 移動先の位置
 	CVector2 m_OldPos[5];	// 移動した位置の保存
 	CTexture* m_EnemyTexture;// テクスチャ
+	CSoundBuffer* m_pSETeleport;
+	CSoundBuffer* m_pSEFastMove;
+	CSoundBuffer* m_pSEBarrage;
 	int m_Type;
 	bool m_bShow;
 	int m_AfterimageInterval;
 	bool m_MoveEnd;
 	float m_TeleportInterval;
+	bool m_SePlay;
 public:
 	// コンストラクタ
 	CEnemy();

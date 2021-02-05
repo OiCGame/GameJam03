@@ -17,6 +17,9 @@ bool CEnemy::Initialize(void)
 		return false;
 	}*/
 	m_EnemyTexture = &CResourceManager::Singleton().GetTextureList()->at("Enemy");
+	m_pSETeleport = &CResourceManager::Singleton().GetSoundList()->at("se_teleport");
+	m_pSEFastMove = &CResourceManager::Singleton().GetSoundList()->at("se_FastMove");
+	m_pSEBarrage = &CResourceManager::Singleton().GetSoundList()->at("se_barrage");
 	m_Position = CVector2(CGraphicsUtilities::GetGraphics()->GetTargetWidth() * 0.5f - m_EnemyTexture->GetWidth() * 0.5f, 0);
 	for (int i = 0; i < 5; i++)
 	{
@@ -53,11 +56,17 @@ void CEnemy::Update(void)
 	case TYPE_TELEPORT:
 		if (m_TeleportInterval == 0.0f)
 		{
+			m_pSETeleport->Play();
 			m_Position = CVector2(m_MovePos.x - GetRectangle().GetWidth()*0.5f, m_MovePos.y - GetRectangle().GetHeight()*0.5f);
 		}
 		m_TeleportInterval += CUtilities::GetFrameSecond();
 		break;
 	case TYPE_MOVE:
+		if (!m_SePlay)
+		{
+			m_pSEFastMove->Play();
+			m_SePlay = true;
+		}
 		UpdateMove();
 		break;
 	}
@@ -96,6 +105,7 @@ void CEnemy::UpdateMove(void)
 
 void CEnemy::Shot(const LauncherInit_Line & init)
 {
+	m_pSEBarrage->Play();
 	LauncherInit_Line d = init;
 	d.position = GetCenterPos();
 	CEnemyBulletManager::Singleton().SetLauncher(d);
@@ -103,6 +113,7 @@ void CEnemy::Shot(const LauncherInit_Line & init)
 
 void CEnemy::Shot(const LauncherInit_Polygon & init)
 {
+	m_pSEBarrage->Play();
 	LauncherInit_Polygon d = init;
 	d.position = GetCenterPos();
 	CEnemyBulletManager::Singleton().SetLauncher(d);
@@ -110,6 +121,7 @@ void CEnemy::Shot(const LauncherInit_Polygon & init)
 
 void CEnemy::Shot(const LauncherInit_PolygonRotation & init)
 {
+	m_pSEBarrage->Play();
 	LauncherInit_PolygonRotation d = init;
 	d.position = GetCenterPos();
 	CEnemyBulletManager::Singleton().SetLauncher(d);
@@ -131,6 +143,7 @@ void CEnemy::SetMoveParameter(CVector2 mPos, int type, CVector2 speed)
 
 	m_TeleportInterval = 0.0f;
 	m_MoveEnd = false;
+	m_SePlay = false;
 }
 
 CRectangle CEnemy::GetRectangle(void)
