@@ -9,7 +9,7 @@ CPanel::~CPanel() {
 
 void CPanel::SetTexture(CTexture ** pTextureArray)
 {
-    m_pTryangleTexture = pTextureArray[0];
+    m_pTriangleTexture = pTextureArray[0];
     m_pSquareTexture = pTextureArray[1];
 }
 
@@ -20,45 +20,31 @@ void CPanel::Initialize(int stagenum) {
 	case STAGE1:			//取得するpngがすべて同じサイズの場合はこのままでよきが、違う場合Renderの修正が必須
 		m_PanelTexture.Load("UI/ゲーム本編/上枠.png");
 		m_JudgeCnt = STG1JUDGECNT;
-		//各パネルの「弾がはまった」判定をfalse
-		for (int i = 0; i < STG1JUDGECNT; i++) {
-			m_SingleOk[i] = false;
-			m_SingleConfirm[i] = false;
-			//全て四角のためRotate情報はどれでもいい
-			m_Rotate[i][STAGE1] = Up;
-		}
 		break;
 	case STAGE2:
 		m_PanelTexture.Load("UI/ゲーム本編/上枠2.png");
 		m_JudgeCnt = STG2JUDGECNT;
-		for (int i = 0; i < STG1JUDGECNT; i++) {
-			m_SingleOk[i] = false;
-			m_SingleConfirm[i] = false;
-		}
 		break;
 	case STAGE3:
 		m_PanelTexture.Load("UI/ゲーム本編/上枠3.png");
 		m_JudgeCnt = STG3JUDGECNT;
-		for (int i = 0; i < STG1JUDGECNT; i++) {
-			m_SingleOk[i] = false;
-			m_SingleConfirm[i] = false;
-		}
 		break;
 	}
 	m_Clear = false;
-	for (int i = 0; i < STG1JUDGECNT; i++)
-	{
+	//各パネルの「弾がはまった」判定をfalse
+	for (int i = 0; i < JUDGECNT; i++) {
 		m_SingleOk[i] = false;
+		m_SingleConfirm[i] = false;
 	}
 }
 
 void CPanel::Update() {
 	
-	for (int i = 0; i < STG1JUDGECNT; i++) {
-		if (m_SingleOk[i]) {
-			m_SingleConfirm[i] = true;
+		for (int i = 0; i < JUDGECNT; i++) {
+			if (m_SingleOk[i]) {
+				m_SingleConfirm[i] = true;
+			}
 		}
-	}
 
 	//Debug
 	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD1))
@@ -90,8 +76,20 @@ void CPanel::Render(void) {
 		}
 		break;
 	case STAGE2:
+		m_PanelTexture.Render((g_pGraphics->GetTargetWidth() - m_PanelTexture.GetWidth()) * 0.5, 130);
+		for (int i = 0; i < STG2JUDGECNT; i++)
+		{
+			if (m_SingleConfirm[i])
+			{
+				m_pTriangleTexture->RenderRotate(SinglePos_Stg2[i].x + (245 - (float)m_pTriangleTexture->GetWidth()) * 0.5f,
+					SinglePos_Stg2[i].y + (259 - (float)m_pTriangleTexture->GetHeight()) * 0.5f,
+					MOF_ToRadian(90 * m_Rotate[STAGE2][i]) , TEXTUREALIGNMENT_CENTERCENTER);
+			}
+		}
 		break;
 	case STAGE3:
+		m_PanelTexture.Render((g_pGraphics->GetTargetWidth() - m_PanelTexture.GetWidth()) * 0.5, 130);
+
 		break;
 	}
 }
@@ -109,48 +107,88 @@ void CPanel::RenderDebug(void) {
 		break;
 	case STAGE2:
 		for (int i = 0; i < STG2JUDGECNT; i++) {
-			if (m_SingleOk[i]) {
+			if (m_SingleConfirm[i]) {
 				CGraphicsUtilities::RenderFillRect(SingleRect_Stg2[i], MOF_COLOR_BLACK);
 			}
 		}
 		break;
 	case STAGE3:
 		for (int i = 0; i < STG3JUDGECNT; i++) {
-			if (m_SingleOk[i]) {
+			if (m_SingleConfirm[i]) {
 				CGraphicsUtilities::RenderFillRect(SingleRect_Stg3[i], MOF_COLOR_BLACK);
 			}
 		}
 		break;
 	}
 
-	CGraphicsUtilities::RenderString(0,1000, "描画位置 X ： %f", SinglePos_Stg1[0].x + (245 - m_pSquareTexture->GetWidth()) * 0.5f);
+	CGraphicsUtilities::RenderString(0,1000, "描画位置 X ： %f", (g_pGraphics->GetTargetWidth() - m_PanelTexture.GetWidth()) * 0.5);
 }
 
 void CPanel::Release(void) {
 	m_PanelTexture.Release();
 	//一時的なもの、記述変更の後削除すること
     m_pSquareTexture = nullptr;
-	m_pTryangleTexture= nullptr;
+	m_pTriangleTexture= nullptr;
 }
 
 void CPanel::CheckClear()
 {
 	int count = 0;
-	for (int i = 0; i < STG1JUDGECNT; i++)
+	switch (m_StgNum)
 	{
-		if (m_SingleConfirm[i])
+	case STAGE1:
+		for (int i = 0; i < STG1JUDGECNT; i++)
 		{
-			count++;
+			if (m_SingleConfirm[i])
+			{
+				count++;
+			}
 		}
+		if (count == STG1JUDGECNT)
+		{
+			m_Clear = true;
+		}
+		else
+		{
+			m_Clear = false;
+		}
+		break;
+	case STAGE2:
+		for (int i = 0; i < STG2JUDGECNT; i++)
+		{
+			if (m_SingleConfirm[i])
+			{
+				count++;
+			}
+		}
+		if (count == STG2JUDGECNT)
+		{
+			m_Clear = true;
+		}
+		else
+		{
+			m_Clear = false;
+		}
+		break;
+	case STAGE3:
+		for (int i = 0; i < STG3JUDGECNT; i++)
+		{
+			if (m_SingleConfirm[i])
+			{
+				count++;
+			}
+		}
+		if (count == STG3JUDGECNT)
+		{
+			m_Clear = true;
+		}
+		else
+		{
+			m_Clear = false;
+		}
+		break;
 	}
-	if (count == STG1JUDGECNT)
-	{
-		m_Clear = true;
-	}
-	else
-	{
-		m_Clear = false;
-	}
+	
 }
 
 int CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
@@ -159,6 +197,8 @@ int CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 	int ReturnNum = -1;
 	//複数接触判定フラグをfalse
 	m_MultiCollision = false;
+	//複数接触保持変数
+	int HitNum;
 	switch (m_StgNum) {
 	case STAGE1:
 		for (int i = 0; i < STG1JUDGECNT; i++) {
@@ -169,7 +209,7 @@ int CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 				//ネストが深くなりすぎているため対策したい
 				if (SingleState_Stg1[i] != Square)
 				{
-					if (m_Rotate[i][STAGE1] != rotate)
+					if (m_Rotate[STAGE1][i] != rotate)
 					{
 						continue;
 					}
@@ -203,10 +243,42 @@ int CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 		return ReturnNum;
 	case STAGE2:
 		for (int i = 0; i < STG2JUDGECNT; i++) {
-			if (SingleRect_Stg2[i].CollisionRect(rec)/* &&
-				SingleState_Stg2[i] == bt*/) {
+			for (int i = 0; i < STG2JUDGECNT; i++) {
+				if (SingleRect_Stg2[i].CollisionRect(rec) &&
+					SingleState_Stg2[i] == bt) {
 
+					if (SingleState_Stg2[i] != Square)
+					{
+						if (m_Rotate[STAGE2][i] != rotate)
+						{
+							continue;
+						}
+					}
+
+					if (m_SingleConfirm[i])
+					{
+						continue;
+					}
+
+					if (m_MultiCollision && i > 0) {
+						m_JdgA = FrontLine_Stg1[i] - px;
+						m_JdgB = FrontLine_Stg1[HitNum] - px;
+						if (abs(m_JdgA) <= abs(m_JdgB)) {
+							m_SingleOk[i] = true;
+							m_SingleOk[HitNum] = false;	
+							ReturnNum = i;
+						}
+					}
+					else {
+						m_MultiCollision = true;
+						HitNum = i;
+						m_SingleOk[i] = true;
+						ReturnNum = i;
+					}
+
+				}
 			}
+			return ReturnNum;
 		}
 		return ReturnNum;
 	case STAGE3:
@@ -217,5 +289,21 @@ int CPanel::CheckHitCollision(CRectangle rec, float px, int bt , int rotate)
 			}
 		}
 		return ReturnNum;
+	}
+}
+
+CVector2 CPanel::GetPanelPosition(int panelnum)
+{
+	switch (m_StgNum)
+	{
+	case STAGE1:
+		return CVector2(SingleRect_Stg1[panelnum].Left , SingleRect_Stg1[panelnum].Top);
+	case STAGE2:
+		return CVector2(SingleRect_Stg2[panelnum].Left, SingleRect_Stg2[panelnum].Top);
+	case STAGE3:
+		return CVector2(SingleRect_Stg3[panelnum].Left, SingleRect_Stg3[panelnum].Top);
+
+	default:
+		return CVector2(-1,-1);
 	}
 }

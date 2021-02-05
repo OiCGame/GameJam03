@@ -52,7 +52,7 @@ void CPlayer::Update()
 	{
 		
 		ShotBullet(BulletBuffer);
-
+		g_SoundManager.GetSE(SE_Shot)->Play();
 	}
 	if (BulletBuffer < Empty)
 	{

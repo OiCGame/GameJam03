@@ -20,6 +20,7 @@ void CTimer::Initialize(int time, CVector2 position)
 {
 	LimitTime		= time;
 	NowTime			= time;
+	BufferTime		= 0;
 	Position		= position;
 	NumericDisplay.Create(NowTime, CVector2(position.x + Texture.GetWidth() * 0.6, position.y + Texture.GetHeight() * 0.4));
 	StopWatch.Start();
@@ -29,7 +30,7 @@ void CTimer::Update()
 {
 	StopWatch.Update();
 
-	NowTime = LimitTime - (int)StopWatch.GetTime();
+	NowTime = LimitTime - (int)StopWatch.GetTime() + BufferTime;
 
 	if (NowTime <= 0)
 	{

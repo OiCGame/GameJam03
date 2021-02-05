@@ -102,6 +102,11 @@ void CGame::Update(void)
 	{
 		DebugEnable = !DebugEnable;
 	}
+	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD3))
+	{
+		Timer.SetTime(-10);
+	}
+
 
     if (BlockFallTimer.GetTime() > BlockFallIntervalSecond)
     {
@@ -130,7 +135,15 @@ void CGame::Update(void)
 		if (Player.IsBulletBuffer()) { continue; }
 		if (Player.CheckHitCollision(Block[i].GetCollisionCircle()))
 		{
-			Player.SetBullet(Block[i].GetBulletType());
+			int btype = Block[i].GetBulletType();
+			/*if (btype == 3)
+			{
+				Timer.SetTime(-10);
+			}
+			else
+			{
+				Player.SetBullet(btype);
+			}*/
 			Block[i].SetShow(false);
 		}
     }
@@ -145,11 +158,12 @@ void CGame::Update(void)
 			tmpBullet->GetData(i).GetRotate());
 		if (PanelNum != -1)
 		{
-			CVector2 PanelPos = Panel.GetSTG1Position(PanelNum);
+			CVector2 PanelPos = Panel.GetPanelPosition(PanelNum);
 			//パネルの中央にエフェクトが来るように調整
-			PanelPos.x -= 140;
-			PanelPos.y -= 150;
+				PanelPos.x -= 140;
+				PanelPos.y -= 150;						
 			g_EffectManager.Start(Effect_Hit, PanelPos);
+			g_SoundManager.GetSE(SE_PanelSet)->Play();
 			tmpBullet->GetData(i).SetShow(false);
 		}
 	}

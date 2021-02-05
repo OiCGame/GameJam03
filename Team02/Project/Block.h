@@ -16,6 +16,8 @@ private:
     enum BulletType {
         Triangle,
         Square,
+		Damage,
+		BulletCount
     }               m_BulletType;
 
 	CTexture*		m_pBlockTexture;

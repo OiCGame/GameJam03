@@ -1,6 +1,7 @@
 #pragma once
 #include	"Mof.h"
 #include	"Bullet.h"
+#include	"SoundManager.h"
 
 class CPlayer
 {

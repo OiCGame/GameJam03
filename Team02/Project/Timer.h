@@ -14,6 +14,7 @@ private:
 	CVector2			Position;
 	int					NowTime;
 	int					LimitTime;
+	int					BufferTime;
 public:
 	CTimer();
 	~CTimer();
@@ -26,4 +27,5 @@ public:
 	void		Release();
 
 	int			GetTime() { return NowTime; }
+	void		SetTime(int time) { BufferTime += time; }
 };
