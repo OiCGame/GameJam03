@@ -26,6 +26,7 @@ public:
 	void RenderDebug(float top, float left);
 
 	bool IsShow() { return m_bShow; }
+	void SetShow(bool b) { m_bShow = b; }
 
 	CCircle GetCircle() { return CCircle(m_Position.x, m_Position.y, 20); }
 

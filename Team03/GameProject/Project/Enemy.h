@@ -70,6 +70,7 @@ public:
 	CVector2 GetCenterPos(void);
 
 	bool IsShow(void);
+	void SetShow(bool b) { m_bShow = b; }
 
 	bool IsMoveEnd(void);
 };

@@ -4,10 +4,21 @@
 #include	 "EnemyBulletManager.h"
 #include	 "Player.h"
 
+enum class GameFlow {
+	Enemy_SetMove,
+	Enemy_Moving,
+	Player_SetShot,
+	Player_Shooting,
+	Enemy_SetShot,
+	Enemy_Shots,
+};
+
+
 class CSceneGame : public CSceneBase
 {
 private:
-
+	// 最大ウェーブ数
+	int m_MaxWave = 6;
 	// 雲の(大体の)中心座標
 	std::vector<std::vector<std::vector<int>>> m_CloudPositions = {
 		// wave1
@@ -96,8 +107,20 @@ private:
 	CTexture* m_pBackgroundTexture;
 	int m_WaveNo{ 0 };
 
+	GameFlow	m_NowGameFlow{GameFlow::Enemy_SetMove};
+	float	m_FlowWiatTime{0};
+
 	CPlayer m_Player;
 	
+	void DebugKey();
+
+	void Flow_SetEnemyMove();
+	void Flow_EnemyMoving();
+	void Flow_SetPlayerShot();
+	void Flow_PlayerShooting();
+	void Flow_SetEnemyShot();
+	void Flow_EnemyShots();
+
 	void NextWave(int wave_no);
 
 public:

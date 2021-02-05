@@ -125,6 +125,11 @@ int CEnemyManager::GetEnemyCount(void)
 bool CEnemyManager::IsMoveEnd(void)
 {
 	return m_MoveTime <= 0;
+	/*bool f = true;
+	for (auto e : m_pEnemyArray) {
+		f &= e->IsMoveEnd();
+	}
+	return f;*/
 }
 
 bool CEnemyManager::IsShotEnd(void)
