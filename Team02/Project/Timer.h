@@ -4,17 +4,22 @@
 #include	"StopWatch.h"
 #include	"NumericDisplay.h"
 
+constexpr	auto	AlphaIncreaseValue = 5;
+
 class CTimer
 {
 private:
 	CNumericDisplay		NumericDisplay;
 	sip::CStopWatch		StopWatch;
 	
-	CTexture			Texture;
+	CTexture			TimerFrameTexture;
 	CVector2			Position;
 	int					NowTime;
 	int					LimitTime;
 	int					BufferTime;
+
+	CTexture			TimeDamageTexture;
+	int					TimeDamageAlpha;
 public:
 	CTimer();
 	~CTimer();
@@ -28,4 +33,6 @@ public:
 
 	int			GetTime() { return NowTime; }
 	void		SetTime(int time) { BufferTime += time; }
+
+	void StartRenderTimeDamage() { TimeDamageAlpha = 255; }
 };

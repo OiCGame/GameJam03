@@ -12,7 +12,8 @@ CTimer::~CTimer()
 
 void CTimer::Load()
 {
-	Texture.Load("UI/ゲーム本編/TIMEプレート.png");
+	TimerFrameTexture.Load("UI/ゲーム本編/TIMEプレート.png");
+	TimeDamageTexture.Load("UI/ゲーム本編/タイムダメージ.png"),
 	NumericDisplay.Load();
 }
 
@@ -22,8 +23,9 @@ void CTimer::Initialize(int time, CVector2 position)
 	NowTime			= time;
 	BufferTime		= 0;
 	Position		= position;
-	NumericDisplay.Create(NowTime, CVector2(position.x + Texture.GetWidth() * 0.6, position.y + Texture.GetHeight() * 0.4));
+	NumericDisplay.Create(NowTime, CVector2(position.x + TimerFrameTexture.GetWidth() * 0.6, position.y + TimerFrameTexture.GetHeight() * 0.4));
 	StopWatch.Start();
+	TimeDamageAlpha = 0;
 }
 
 void CTimer::Update()
@@ -38,13 +40,23 @@ void CTimer::Update()
 		StopWatch.Stop();
 	}
 
+	if (TimeDamageAlpha > 0)
+	{
+		TimeDamageAlpha -= AlphaIncreaseValue;
+		if (TimeDamageAlpha <= 0)
+		{
+			TimeDamageAlpha = 0;
+		}
+	}
+
 	NumericDisplay.SetNumeric(NowTime);
 }
 
 void CTimer::Render()
 {
-	Texture.Render(Position.x , Position.y);
+	TimerFrameTexture.Render(Position.x , Position.y);
 	NumericDisplay.Render();
+	TimeDamageTexture.Render(Position.x - TimerFrameTexture.GetWidth(), Position.y + 10, MOF_ARGB(TimeDamageAlpha, 255, 255, 255));
 	
 }
 
@@ -56,6 +68,6 @@ void CTimer::RenderDebug()
 
 void CTimer::Release()
 {
-	Texture.Release();
+	TimerFrameTexture.Release();
 	NumericDisplay.Release();
 }

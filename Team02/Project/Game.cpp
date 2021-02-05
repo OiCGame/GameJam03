@@ -169,6 +169,7 @@ void CGame::Update(void)
 			if (btype == 2)
 			{
 				Timer.SetTime(-10);
+				Timer.StartRenderTimeDamage();
 			}
 			else
 			{
