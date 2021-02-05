@@ -2,6 +2,7 @@
 
 CSceneGameOver::CSceneGameOver() :
 	m_Texture() {
+
 	if (!m_Texture.Load("gameover.png")) {
 		::OutputDebugString("failed to load game over texture");
 	} // if

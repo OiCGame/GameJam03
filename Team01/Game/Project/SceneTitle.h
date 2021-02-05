@@ -6,6 +6,7 @@ class CSceneTitle : public CSceneBase {
 private:
 	//! テクスチャ
 	Mof::CTexture m_Texture;
+	Mof::CTexture m_ShopTexture;
 	//! 文字
 	Mof::CFont m_Font;
 

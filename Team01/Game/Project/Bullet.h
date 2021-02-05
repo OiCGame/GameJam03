@@ -4,11 +4,6 @@
 
 
 class CBullet {
-public:
-	enum class TeamType {
-		Player,
-		Enemy,
-	};
 private:
 	//! 位置
 	Mof::CVector2 m_Position;
@@ -18,9 +13,7 @@ private:
 	Mof::CTexture* m_pTexture;
 	//! 表示フラグ
 	bool m_bShow;
-	//! 所属
-	TeamType m_TeamType;
-
+	
 	int m_BulletNo;
 	bool m_bUnDisappear;
 public:
@@ -71,7 +64,7 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	bool Shot(Mof::CVector2 init_pos, TeamType type);
+	bool Shot(Mof::CVector2 init_pos, Mof::CVector2 move);
 
 	void SetNo(int no) { m_BulletNo = no; }
 	int GetNo() { return m_BulletNo; }

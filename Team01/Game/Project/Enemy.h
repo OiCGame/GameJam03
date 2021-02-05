@@ -53,6 +53,16 @@ private:
 	Mof::CVector2 m_Target;
 	//! “–‚½‚Á‚½Effect
 	std::vector<std::weak_ptr<CEffect>> m_CollisionedEffects;
+	//! ”gXˆÚ“®‚ğ‚·‚é‚µn‚ß‚éˆÊ’u
+	float m_StartPositionY;
+	//! right or left
+	float m_WaveDirection;
+
+
+	float count_;
+	float count_limit_;
+	float wave_amplitude_;
+
 	/// <summary>
 	/// ˆÚ“®
 	/// </summary>
@@ -66,6 +76,7 @@ private:
     void Move(int type);
     void MoveOutOfWindow(void);
 	void MoveAssault(void);
+	void MoveWave(void);
 
     CEnemyBullet* m_Bullet;
     int m_BulletColumn;

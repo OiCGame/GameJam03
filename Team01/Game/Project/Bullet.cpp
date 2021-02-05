@@ -7,8 +7,7 @@ CBullet::CBullet() :
 	m_pTexture(),
 	m_bShow(false),
 //	m_bUnDisappear(true),
-	m_bUnDisappear(false),
-	m_TeamType() {
+	m_bUnDisappear(false) {
 }
 
 CBullet::~CBullet() {
@@ -44,6 +43,10 @@ bool CBullet::IsShow(void) const {
 
 bool CBullet::Update(void) {
 	m_Position += m_Move;
+
+	if (m_Position.y < 0.0f) {
+		this->Hide();
+	} // if
 	return true;
 }
 
@@ -62,9 +65,9 @@ bool CBullet::Render(void) {
 	return true;
 }
 
-bool CBullet::Shot(Mof::CVector2 init_pos, CBullet::TeamType type) {
+bool CBullet::Shot(Mof::CVector2 init_pos, Mof::CVector2 move) {
 	m_bShow = true;
 	m_Position = init_pos;
-	m_TeamType = type;
+	m_Move = move;
 	return true;
 }

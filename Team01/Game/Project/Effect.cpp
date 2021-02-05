@@ -26,7 +26,7 @@ uint32_t CEffect::GetChainCount(void) const{
 }
 
 int CEffect::GetDamageValue(bool exist_boss) const{
-	return exist_boss ? 5 : 1;
+	return exist_boss ? 10 : 3;
 }
 
 bool CEffect::IsShow(void) const {

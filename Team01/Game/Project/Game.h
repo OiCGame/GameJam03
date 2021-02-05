@@ -14,13 +14,18 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Effect.h"
+#include "Shop.h"
+
 
 
 class CGame {
 private:
 	UICanvas m_UICanvas;
+	CShop m_Shop;
 	float m_ElapsedTime;
-	
+	//! アイテム配列
+	std::vector<std::shared_ptr<CItem>> m_pItems;
+
 	std::unordered_map<std::string, Mof::CTexture> m_Textures;
 	std::string m_PlayerTexturePath;
 	std::string m_BulletTexturePath;
@@ -61,6 +66,7 @@ private:
     /// <returns></returns>
 	void Collision(void);
 	void CollisionPlayerEnemies(void);
+	void CollistionItem(void);
 public:
 	CGame();
 	~CGame();
