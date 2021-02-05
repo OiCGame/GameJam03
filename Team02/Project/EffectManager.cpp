@@ -182,3 +182,18 @@ void CEffectManager::Start(Effect_Name effect, float x, float y)
 {
     Start(effect, Vector2(x, y));
 }
+
+// ********************************************************************************
+/// <summary>
+/// モーションデータの取得
+/// </summary>
+/// <param name="effect">モーションの種類</param>
+/// <param name="poolNo">プール番号</param>
+/// <returns>モーションデータ</returns>
+/// <created>いのうえ,2021/02/06</created>
+/// <changed>いのうえ,2021/02/06</changed>
+// ********************************************************************************
+CSpriteMotionController & CEffectManager::GetMotion(Effect_Name effect, int poolNo)
+{
+    return m_EffectMotion[(int)effect][poolNo];
+}

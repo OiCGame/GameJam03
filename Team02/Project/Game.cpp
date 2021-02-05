@@ -101,7 +101,7 @@ bool CGame::Load(void)
     {
         "StageData/stage_data1.stage",
         "StageData/stage_data2.stage",
-        "StageData/stage_data2.stage",
+        "StageData/stage_data3.stage",
     };
     Panel.Load(stageFile[GetData().StageNo].c_str());
     return true;
@@ -170,6 +170,7 @@ void CGame::Update(void)
 			{
 				Timer.SetTime(-10);
 				Timer.StartRenderTimeDamage();
+                Player.Damage();
 			}
 			else
 			{
@@ -194,19 +195,30 @@ void CGame::Update(void)
         }
 	}
 
-    // ‚ ‚Æ‚Å•Ï‚¦‚½‚¢‚Ì‚Åƒ_ƒ~[î•ñ‚ğ‘—‚Á‚Ä‚¨‚­
-    Panel.Update(/*CRectangle(), -1, -1*/);
+    Panel.Update();
 
-	Timer.Update();
+    if (!ClearUITimer.IsStart())
+    {
+	    Timer.Update();
+    }
 
 	if (Timer.GetTime() <= 0)
 	{
 		ChangeScene(SceneName::GameOver);
 	}
 
-	if (Panel.IsClear())
+    
+    ClearUITimer.Update();
+    if (ClearUITimer.GetTime() > 1.6f)
+    {
+        ChangeScene(SceneName::GameClear);
+    }
+	if (Panel.IsClear() && !ClearUITimer.IsStart())
 	{
-		ChangeScene(SceneName::GameClear);
+        ClearUITimer.Start();
+        Vector2 size{ 1920, 1080 };
+        g_EffectManager.Start(Effect_Clear, size * 0.5f);
+        g_SoundManager.GetSE(SE_GameClear)->Play();
 	}
 }
 

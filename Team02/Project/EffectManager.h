@@ -123,6 +123,18 @@ public:
     /// <changed>いのうえ,2021/02/02</changed>
     // ********************************************************************************
     void Start(Effect_Name effect, float x, float y);
+
+    // ********************************************************************************
+    /// <summary>
+    /// モーションデータの取得
+    /// </summary>
+    /// <param name="effect">モーションの種類</param>
+    /// <param name="poolNo">プール番号</param>
+    /// <returns>モーションデータ</returns>
+    /// <created>いのうえ,2021/02/06</created>
+    /// <changed>いのうえ,2021/02/06</changed>
+    // ********************************************************************************
+    CSpriteMotionController& GetMotion(Effect_Name effect, int poolNo);
 };
 
 #define g_EffectManager CEffectManager::GetInstance()

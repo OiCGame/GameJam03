@@ -1,4 +1,5 @@
 #include	"Player.h"
+#include    "Periodic.h"
 
 //ˆêŽž“I‚É
 constexpr auto MOVESPEED = 10;
@@ -67,15 +68,6 @@ void CPlayer::Update()
 		}
 	}
 
-	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD7))
-	{
-		BulletBuffer = Triangle;
-	}
-	if (g_pInput->IsKeyPush(MOFKEY_NUMPAD8))
-	{
-		BulletBuffer = Square;
-	}
-
 	if (Bullets.GetArrayCount() >= 1)
 	{
 		for (int i = 0; i < Bullets.GetArrayCount(); i++)
@@ -93,6 +85,13 @@ void CPlayer::Update()
 			Bullets.Delete(i);
 		}
 	}
+
+    DamageTimer.Update();
+    if (DamageTimer.GetTime() > 1.0f)
+    {
+        DamageTimer.Stop();
+        DamageTimer.Reset();
+    }
 
 	Collision = CCircle(position + CollisionPosCorrection, CollisionRadius);
 }
@@ -112,7 +111,14 @@ void CPlayer::ShotBullet(int bullettype)
 
 void CPlayer::Render()
 {
-	Texture.RenderScale(position.x , position.y , 0.5f);
+    int alpha = 255;
+    if (DamageTimer.IsStart())
+    {
+        alpha = sip::CPeriodic::Sine0_1(0.2f) * 255;
+    }
+    MofU32 color = MOF_ALPHA_WHITE(alpha);
+
+	Texture.RenderScale(position.x , position.y, 0.5f, color);
 
 	for (int i = 0; i < Bullets.GetArrayCount(); i++)
 	{

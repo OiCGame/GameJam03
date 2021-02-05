@@ -2,6 +2,7 @@
 #include	"Mof.h"
 #include	"Bullet.h"
 #include	"SoundManager.h"
+#include    "StopWatch.h"
 
 class CPlayer
 {
@@ -31,6 +32,7 @@ private:
 		Left
 	};*/
 	int						BulletRotate;
+    sip::CStopWatch         DamageTimer;
 
 public:
 	CPlayer();
@@ -50,6 +52,7 @@ public:
 	bool		IsBulletBuffer() { return BulletBuffer < Empty ? true : false; }
     int         GetBulletBuffer() { return BulletBuffer; }
     int         GetBulletRotate() { return BulletRotate; }
+    void        Damage() { DamageTimer.Start(); }
 
 	CDynamicArray<CBullet>*	GetBulletArray() { return &Bullets; }
 };

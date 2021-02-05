@@ -25,6 +25,7 @@ private:
     sip::CStopWatch BlockFallTimer;
     CPanel			Panel;
     CGameUI         GameUI;
+    sip::CStopWatch ClearUITimer;
 
 public:
 
