@@ -4,6 +4,7 @@
 #include <array>
 
 #include "GameDefine.h"
+#include "UICanvas.h"
 #include "Bullet.h"
 
 
@@ -36,6 +37,8 @@ protected:
 	bool m_b3WayShot;
 
 	int m_BulletNo;
+
+	UICanvas* m_pCanvas;
 	/// <summary>
 	/// 移動
 	/// </summary>
@@ -60,6 +63,7 @@ public:
 	/// </summary>
 	void SetTexture(Mof::CTexture* ptr);
 	void SetBulletTexture(Mof::CTexture* ptr);
+	void SetCanvas(UICanvas* ptr);
 	/// <summary>
 	/// ゲッター
 	/// </summary>
@@ -108,6 +112,23 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	bool Damage(void);
-
+	/// <summary>
+	/// 復活
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool Revival(void);
 	bool OutTop()const { return m_Position.y + m_pTexture->GetHeight() < 0.0f; }
+	/// <summary>
+	/// アイテム使用
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool OnUses(const std::shared_ptr<class CItem>& ptr);
+	/// <summary>
+	/// 復活数追加
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	void AddRevivalCount(void);
 };

@@ -41,7 +41,7 @@ void CGame::EffectStart(Mof::CVector2 position) {
 	m_UICanvas.AddText(std::to_string(100), pos, 60);
 }
 void CGame::Collision(void) {
-	this->CollistionItem();
+	this->CollisionItem();
 	this->CollisionPlayerEnemies();
 
 	struct EffectParam {
@@ -111,14 +111,23 @@ void CGame::Collision(void) {
 		if (m_Player.IsShow()) {
 			for (int i = 0; i < enemy.CollisionBullet(m_Player.GetCollisionRectangle()); i++) {
 				break;
-
 				if (m_Player.Damage()) {
 					auto name = std::string("image");
-					name += std::to_string(m_Player.GetRevivalCount());
+					name += std::to_string(m_Player.GetRevivalCount() - 1);
 					m_UICanvas.RemoveImage(name);
+
+					if (0 < m_Player.GetRevivalCount()) {
+						m_Player.Revival();
+					} // if
+
+					else {
+						m_bPlayerDead = true;
+					} // else
+
+
 				} // if
 			} // for
-		}
+		} // if
 	} // for
 }
 
@@ -135,25 +144,29 @@ void CGame::CollisionPlayerEnemies(void) {
 	} // if
 }
 
-void CGame::CollistionItem(void) {
+void CGame::CollisionItem(void) {
+	std::shared_ptr<CItem> hitted;
 	for (auto item : m_Items) {
 		if (item->GetRectangle().CollisionRect(m_Player.GetCollisionRectangle())) {
 			item->SetShow(false);
+			hitted = item;
+			break;
 		} // if
 	} // for
-	/*
-	if (m_Item.IsShow()) {
-		if (m_Item.GetRectangle().CollisionRect(m_Player.GetCollisionRectangle())) {
-			m_Item.SetShow(false);
-		} // if
+	if (hitted) {
+		m_Player.OnUses(hitted);
 	} // if
-	*/
+	auto it = std::remove(
+		m_Items.begin(),
+		m_Items.end(), hitted);
+	m_Items.erase(it, m_Items.end());
 }
 
 CGame::CGame() :
 	m_UICanvas(),
-	m_Shop(),
+	//	m_Shop(),
 	m_Items(),
+	m_ShopShip(),
 	m_ElapsedTime(0.0f),
 	m_Textures(),
 	m_PlayerTexturePath("player/Plane1Up.png"),
@@ -170,14 +183,16 @@ CGame::CGame() :
 	m_bBossExist(false),
 	m_StagePaths({ "stage/test_stage.json", "stage/test_stage1.json" }),
 	m_StagePhaseIndex(0),
-	m_bPhaseNo(0) {
+	m_bPhaseNo(0),
+	m_bPlayerDead(false) {
 }
 
 CGame::~CGame() {
 }
 
 bool CGame::IsPlayerDead(void) const {
-	return !m_Player.IsShow();
+	//	return !m_Player.IsShow() && m_Player.GetRevivalCount() == 0;
+	return m_bPlayerDead;
 }
 
 bool CGame::IsAllPhaseEnd(void) const {
@@ -244,6 +259,7 @@ bool CGame::Initialize(void) {
 
 	m_EffectMotionData.Load("motion/explode.json");
 
+	m_Player.SetCanvas(&m_UICanvas);
 	m_Player.SetTexture(&m_Textures.at(m_PlayerTexturePath));
 	m_Player.Initialize(Mof::CVector2(512.0f, 600.0f));
 
@@ -269,7 +285,7 @@ bool CGame::Initialize(void) {
 		std::string tex_path = info[i]["texture_uri"].GetString();
 
 		m_EnemyDatas.push_back(CEnemy::InitParam(
-			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set,reflect_count,  hp, tex_path));
+			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, reflect_count, hp, tex_path));
 	} // for
 
 
@@ -290,20 +306,24 @@ bool CGame::Initialize(void) {
 		pos.x += width;
 	} // for
 
-	//m_Item.SetPlayer(&m_Player);
+	m_ShopShip.SetTexutre(&m_Textures.at("shop/ship.png"));
+	m_ShopShip.SetPlayer(&m_Player);
+	m_ShopShip.SetResources(&m_Textures);
 	m_Shop.Initialize(&m_Textures);
+	m_Shop.SetCanvasPtr(&m_UICanvas);
+
+	m_UICanvas.AddScore(60);
+
 	return true;
 }
 
 bool CGame::Update(void) {
 	if (m_bPhaseNo == 0) {
-		if (::g_pInput->IsKeyPush(MOFKEY_RETURN) || (m_EnemyDatas.empty() && m_EnemyCount == 0))
-		{
+		if (::g_pInput->IsKeyPush(MOFKEY_RETURN) || (m_EnemyDatas.empty() && m_EnemyCount == 0)) {
 			m_bPhaseNo = 1;
 		}
 	} // if
-	if (m_bPhaseNo == 2)
-	{
+	if (m_bPhaseNo == 2) {
 		m_StagePhaseIndex++;
 		if (m_StagePaths.size() - 1 < m_StagePhaseIndex) {
 			m_StagePhaseIndex = m_StagePaths.size() - 1;
@@ -312,13 +332,26 @@ bool CGame::Update(void) {
 		this->Release();
 		this->Initialize();
 	} // if
+
+	m_UICanvas.Update();
+
 	if (::g_pInput->IsKeyPush(MOFKEY_X)) {
 		m_Shop.SetShowFlag(true);
 	} // if
 	if (::g_pInput->IsKeyPush(MOFKEY_C)) {
+		// ショップを閉じてスタート
+		if (m_Shop.IsShow()) {
+			m_ShopShip.Start();
+		} // of
 		m_Shop.SetShowFlag(false);
 	} // if
 
+	if (m_Shop.IsShow()) {
+		m_Shop.Update(m_ShopShip);
+	} // if
+	if (m_Shop.IsShow()) {
+		return true;
+	} // if
 
 
 	m_ElapsedTime += 0.0167f;
@@ -354,6 +387,11 @@ bool CGame::Update(void) {
 			m_bPhaseNo = 2;
 	} // if
 
+	if (m_ShopShip.IsShow()) {
+		m_ShopShip.Update(m_Items);
+	} // if
+
+
 	m_EnemyCount = 0;
 	for (auto& enemy : m_Enemies) {
 		if (enemy.IsShow())
@@ -375,25 +413,15 @@ bool CGame::Update(void) {
 		} // if
 	} // for
 
-	if (m_bPhaseNo == 0)
-	{
+	if (m_bPhaseNo == 0) {
 		this->Collision();
 	}
 
-
-	if (m_Shop.IsShow()) {
-		m_Shop.Update(m_Items, m_Player);
-	} // if
 
 	for (auto item : m_Items) {
 		item->Update();
 	} // for
 
-//	if (m_Item.IsShow()) {
-//		m_Item.Update();
-//	} // if
-
-	m_UICanvas.Update();
 	return true;
 }
 
@@ -401,7 +429,6 @@ bool CGame::Update(void) {
 bool CGame::Render(void) {
 	auto& stage_tex = m_Textures.at(m_StageTexturePath);
 	stage_tex.Render(0.0f, 0.0f);
-
 	if (m_Shop.IsShow()) {
 		m_Shop.Render();
 	} // if
@@ -409,6 +436,12 @@ bool CGame::Render(void) {
 	if (m_Player.IsShow()) {
 		m_Player.Render();
 	} // if
+
+	if (m_ShopShip.IsShow()) {
+		m_ShopShip.Render();
+	} // if
+
+
 
 	for (auto& enemy : m_Enemies) {
 		enemy.Render(m_EnemyDatas.empty() && m_EnemyCount == 0);
@@ -432,9 +465,6 @@ bool CGame::Render(void) {
 	for (auto item : m_Items) {
 		item->Render();
 	} // for
-//	if (m_Item.IsShow()) {
-	//	m_Item.Render();
-//	} // if
 	m_UICanvas.Render();
 
 	//	::CGraphicsUtilities::RenderString(700.0f, 0.0f, "elapsed time = %f", m_ElapsedTime);

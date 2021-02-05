@@ -141,8 +141,6 @@ void CEnemy::MoveAssault(void) {
 }
 
 void CEnemy::MoveWave(void) {
-	//float direction = 90.0f;
-
 	float accel = 1.0f;
 
 	m_Move.x = std::cosf(m_MoveWaveAmplitudeCount* kPi / 180.0f) * m_MoveWaveAmplitude;
@@ -203,7 +201,7 @@ void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio,
 
 	for (int i = 0; i < m_BulletCount; i++) {
 		int dp = i % m_BulletColumn;
-		m_Bullet[i].Initialize(dir + dp * dirSplit,reflect);
+		m_Bullet[i].Initialize(dir + dp * dirSplit, reflect);
 	}
 
 	m_BulletNo = 0;
@@ -253,8 +251,7 @@ void CEnemy::Update(bool end) {
 	} // else
 	m_Pos += m_Move;
 
-	if (m_Pos.x > g_pGraphics->GetTargetWidth() || m_Pos.x +m_pTexture->GetWidth() < 0)
-	{
+	if (m_Pos.x > g_pGraphics->GetTargetWidth() || m_Pos.x + m_pTexture->GetWidth() < 0) {
 		m_bDrow = false;
 	}
 

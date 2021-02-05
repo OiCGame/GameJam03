@@ -19,33 +19,49 @@
 
 class CGame {
 private:
+	//! UI
 	UICanvas m_UICanvas;
-	CShop m_Shop;
+	//! ゲーム空間のアイテム
 	std::vector<std::shared_ptr<CItem>> m_Items;
-
+	//! アイテムを持ってきてくれる
+	CShopShip m_ShopShip;
+	//! ショップ
+	CShop m_Shop;
+	//! ゲーム内経過時間
 	float m_ElapsedTime;
-	
+	//! テクスチャ一元管理する配列
 	std::unordered_map<std::string, Mof::CTexture> m_Textures;
-	std::string m_PlayerTexturePath;
-	std::string m_BulletTexturePath;
-	std::string m_EffectTexturePath;
-	std::string m_StageTexturePath;
+	std::string m_PlayerTexturePath; // 各パス
+	std::string m_BulletTexturePath; // 各パス
+	std::string m_EffectTexturePath; // 各パス
+	std::string m_StageTexturePath;	 // 各パス
+	//! 爆発エフェクトモーションデータ
 	SpriteMotionData m_EffectMotionData;
-
-
+	//! エネミー生成時に渡す初期化パラメータ
 	std::vector<CEnemy::InitParam> m_EnemyDatas;
+	//! 操作するプレイヤー
 	CCharacter m_Player;
+	//! 敵
 	std::vector<CEnemy> m_Enemies;
+	//! ゲーム空間を動く撃たれた弾
 	std::array<CBullet, 256>m_PlayerBullets;
+	//! 発生した爆発エフェクト
 	std::vector<std::shared_ptr<CEffect>> m_Effects;
-	//! 出現中
+	//! ボス出現中フラグ
 	bool m_bBossExist;
+	
+	
 	int m_EnemyCount;
+	//! ステージのフェイズデータのパス配列
 	std::vector<std::string> m_StagePaths;
+	//! 現在の何番目のフェイズかのインデックス
 	uint32_t m_StagePhaseIndex;
-
+	
+	
 	int m_bPhaseNo;
 
+	//! プレイヤー死亡 ゲームオーバー判定用
+	bool m_bPlayerDead;
 	/// <summary>
 	/// エネミー出現
 	/// </summary>
@@ -65,7 +81,7 @@ private:
     /// <returns></returns>
 	void Collision(void);
 	void CollisionPlayerEnemies(void);
-	void CollistionItem(void);
+	void CollisionItem(void);
 public:
 	CGame();
 	~CGame();

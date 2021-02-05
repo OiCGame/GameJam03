@@ -34,6 +34,12 @@
     <Filter Include="リソース ファイル\score">
       <UniqueIdentifier>{768111c9-9871-474b-b704-6e0e3ee5e21f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Shop">
+      <UniqueIdentifier>{3e4e1a5c-99c1-46f0-9726-b450ead89522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Shop">
+      <UniqueIdentifier>{6be6c651-dd9c-45e5-9636-09cc628f25e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -84,8 +90,17 @@
     <ClCompile Include="SceneRanking.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Shop.cpp">
+    <ClCompile Include="Item.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Shop.cpp">
+      <Filter>ソース ファイル\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopShip.cpp">
+      <Filter>ソース ファイル\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopItem.cpp">
+      <Filter>ソース ファイル\Shop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,8 +152,17 @@
     <ClInclude Include="SceneRanking.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Shop.h">
+    <ClInclude Include="Item.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Shop.h">
+      <Filter>ヘッダー ファイル\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopItem.h">
+      <Filter>ヘッダー ファイル\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopShip.h">
+      <Filter>ヘッダー ファイル\Shop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
