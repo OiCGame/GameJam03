@@ -33,6 +33,11 @@ MofBool CGameApp::Initialize(void) {
 
     m_BackTexture.Load("UI/共通/背景.png");
 
+    // サウンドデータの読み込み
+    g_SoundManager.Load();
+    // エフェクトデータの読み込み
+    g_EffectManager.Load();
+
     // SceneManagerに各シーンの追加とフェードカラーの設定
     m_SceneManager
         .Add<CTitle>(SceneName::Title)
@@ -44,13 +49,8 @@ MofBool CGameApp::Initialize(void) {
     m_SceneManager.Initialize(SceneName::Title);
 #ifdef _DEBUG
     // DEBUG : デバッグ用でゲームシーンからスタートする
-    m_SceneManager.Initialize(SceneName::Game);
+    //m_SceneManager.Initialize(SceneName::Game);
 #endif //_DEBUG
-
-    // サウンドデータの読み込み
-    g_SoundManager.Load();
-    // エフェクトデータの読み込み
-    g_EffectManager.Load();
 
 	return TRUE;
 }

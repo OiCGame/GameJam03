@@ -1,5 +1,6 @@
 #include "Title.h"
 #include "Periodic.h"
+#include "SoundManager.h"
 
 // ********************************************************************************
 /// <summary>
@@ -14,6 +15,7 @@ CTitle::CTitle(const InitData & data)
 {
     Load();
     Initialize();
+    g_SoundManager.GetBGM(BGM_Name::BGM_Title)->Play();
 }
 
 // ********************************************************************************
@@ -25,6 +27,7 @@ CTitle::CTitle(const InitData & data)
 // ********************************************************************************
 CTitle::~CTitle(void)
 {
+    g_SoundManager.GetBGM(BGM_Name::BGM_Title)->Stop();
     Release();
 }
 

@@ -187,8 +187,8 @@ void CSetting::Update(void)
         m_SelectNo = (m_SelectNo + 1 > 2) ? (0) : (m_SelectNo + 1);
     }
 
-    // 戻る選択中にエンターで戻る
-    if (m_SelectNo == 0 && g_pInput->IsKeyPull(MOFKEY_RETURN))
+    // 戻る選択中にスペースキーで戻る
+    if (m_SelectNo == 0 && g_pInput->IsKeyPull(MOFKEY_SPACE))
     {
         Hide();
     }

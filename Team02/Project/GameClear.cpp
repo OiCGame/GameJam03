@@ -1,6 +1,7 @@
 #include "GameClear.h"
 #include "GameDefine.h"
 #include "Periodic.h"
+#include "SoundManager.h"
 
 // ********************************************************************************
 /// <summary>
@@ -15,6 +16,7 @@ CGameClear::CGameClear(const InitData & data)
 {
     Load();
     Initialize();
+    g_SoundManager.GetBGM(BGM_Name::BGM_GameClear)->Play();
 }
 
 // ********************************************************************************
@@ -26,6 +28,7 @@ CGameClear::CGameClear(const InitData & data)
 // ********************************************************************************
 CGameClear::~CGameClear(void)
 {
+    g_SoundManager.GetBGM(BGM_Name::BGM_GameClear)->Stop();
     Release();
 }
 

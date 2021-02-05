@@ -1,5 +1,6 @@
 #include "GameOver.h"
 #include "Periodic.h"
+#include "SoundManager.h"
 
 // ********************************************************************************
 /// <summary>
@@ -14,6 +15,7 @@ CGameOver::CGameOver(const InitData & data)
 {
     Load();
     Initialize();
+    g_SoundManager.GetBGM(BGM_Name::BGM_GameOver)->Play();
 }
 
 // ********************************************************************************
@@ -25,6 +27,7 @@ CGameOver::CGameOver(const InitData & data)
 // ********************************************************************************
 CGameOver::~CGameOver(void)
 {
+    g_SoundManager.GetBGM(BGM_Name::BGM_GameOver)->Stop();
     Release();
 }
 

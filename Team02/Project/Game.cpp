@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "SoundManager.h"
 
 // ********************************************************************************
 /// <summary>
@@ -14,6 +15,20 @@ CGame::CGame(const InitData & data)
     Load();
     Initialize();
 	DebugEnable = false;
+    switch (data.pData->StageNo)
+    {
+    case 0:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_1)->Play();
+        break;
+    case 1:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_2)->Play();
+        break;
+    case 2:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_3)->Play();
+        break;
+    default:
+        break;
+    }
 }
 
 // ********************************************************************************
@@ -25,6 +40,13 @@ CGame::CGame(const InitData & data)
 // ********************************************************************************
 CGame::~CGame(void)
 {
+    for (int i = BGM_Stage_1; i <= BGM_Stage_3; i++)
+    {
+        if (g_SoundManager.GetBGM(BGM_Name(i))->IsPlay())
+        {
+            g_SoundManager.GetBGM(BGM_Name(i))->Stop();
+        }
+    }
     Release();
 }
 
@@ -52,7 +74,7 @@ void CGame::Initialize(void)
         Block[i].Initialize();
     }
     BlockFallTimer.Start();
-    int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(2);
+    int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(3);
     CTexture* pBlockTexture = Player.GetBulletTexture(bulletType);
     Block[0].FallStart(pBlockTexture, bulletType);
 	
@@ -117,7 +139,7 @@ void CGame::Update(void)
                 continue;
             }
 
-            int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(2);
+            int       bulletType    = (GetData().StageNo == 0) ? 1 : CUtilities::Random(3);
             CTexture* pBlockTexture = Player.GetBulletTexture(bulletType);
 
             Block[i].FallStart(pBlockTexture, bulletType);
@@ -132,11 +154,12 @@ void CGame::Update(void)
     {
         Block[i].Update();
 
-		if (Player.IsBulletBuffer()) { continue; }
+		int btype = Block[i].GetBulletType();
+
+		if (Player.IsBulletBuffer() && btype != 2) { continue; }
 		if (Player.CheckHitCollision(Block[i].GetCollisionCircle()))
-		{
-			int btype = Block[i].GetBulletType();
-			if (btype == 3)
+		{	
+			if (btype == 2)
 			{
 				Timer.SetTime(-10);
 			}

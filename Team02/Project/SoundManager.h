@@ -9,8 +9,14 @@
 // ********************************************************************************
 enum SE_Name
 {
-	SE_Shot,
 	SE_PanelSet,
+    SE_Enter,
+    SE_Cancel,
+    SE_GetPanel,
+    SE_Select,
+    SE_GameClear,
+    SE_GameOver,
+
     SE_Count,
 };
 
@@ -21,7 +27,14 @@ enum SE_Name
 // ********************************************************************************
 enum BGM_Name
 {
-    BGM_Count = 1,
+    BGM_Title,
+    BGM_GameClear,
+    BGM_GameOver,
+    BGM_Stage_1,
+    BGM_Stage_2 = BGM_Stage_1,
+    BGM_Stage_3,
+
+    BGM_Count,
 };
 
 constexpr int SoundPoolCount = 10; //! ÉvÅ[Éãêî

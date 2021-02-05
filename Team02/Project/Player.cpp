@@ -16,6 +16,7 @@ void CPlayer::Load()
 	Texture.Load("UI/ƒQ[ƒ€–{•Ò/”òs‹@.png");
 	BulletTexture[Triangle].Load("UI/ƒQ[ƒ€–{•Ò/ŽOŠp.png");
 	BulletTexture[Square].Load("UI/ƒQ[ƒ€–{•Ò/ŽlŠp.png");
+	BulletTexture[2].Load("UI/ƒQ[ƒ€–{•Ò/è¦Î.png");
 }
 
 void CPlayer::Initialize()
@@ -52,7 +53,6 @@ void CPlayer::Update()
 	{
 		
 		ShotBullet(BulletBuffer);
-		g_SoundManager.GetSE(SE_Shot)->Play();
 	}
 	if (BulletBuffer < Empty)
 	{
