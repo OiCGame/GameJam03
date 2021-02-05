@@ -1,5 +1,6 @@
 #include	"GameApp.h"
 #include    "MyTime.h"
+#include    "resource.h"
 
 int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow )
 {
@@ -8,6 +9,8 @@ int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 	Mof::LPFramework pFrame = new Mof::CDX11GameFramework(); 
 	Mof::WINDOWSGAMEFRAMEWORKINITIALIZEINFO Info;
 	Info.pApplication = new CGameApp();
+    Info.WindowCreateInfo.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
+    Info.WindowCreateInfo.Title = "シューティングパズル";
     sip::CMyTime::InitTime();
 
     // 初期ウィンドウを仮想フルスクリーンに変更

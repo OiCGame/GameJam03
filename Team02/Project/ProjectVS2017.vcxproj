@@ -45,13 +45,14 @@
     <IncludePath>../../MofLibrary/Include;../../../MofLibrary/Include;$(IncludePath);</IncludePath>
     <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
     <OutDir>$(SolutionDir)\</OutDir>
+    <TargetName>シューティングパズル(debug)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>../../MofLibrary/Include;../../../MofLibrary/Include;$(IncludePath);</IncludePath>
     <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
     <OutDir>$(SolutionDir)\</OutDir>
-    <TargetName>$(ProjectName)_Release</TargetName>
+    <TargetName>シューティングパズル</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -135,6 +136,7 @@
     <ClInclude Include="Panel.h" />
     <ClInclude Include="Periodic.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="RoundRect.h" />
     <ClInclude Include="SceneDefine.h" />
     <ClInclude Include="SceneManager.h" />
@@ -145,10 +147,14 @@
     <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
     <ResourceCompile Include="Version.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Periodic.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
