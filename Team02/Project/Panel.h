@@ -41,7 +41,7 @@ public:
 	void RenderDebug();
 	void Release();
 
-    float GetPanelWidth(void) const;
+    float GetPanelWidth(void);
 
 	void	CheckClear();
 	bool	IsClear() { return m_bClear; }

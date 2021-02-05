@@ -124,7 +124,7 @@ void CPanel::Release(void) {
 	m_PanelTexture[1].Release();
 }
 
-float CPanel::GetPanelWidth(void) const
+float CPanel::GetPanelWidth(void)
 {
     float w = 0;
     int panelArrayCont = m_PanelArray.GetArrayCount();
@@ -173,9 +173,13 @@ int CPanel::CheckHitCollision(CBullet& bullet)
         CCircle cir(posx, PanelCenterY, radius);
         // 弾とパネルの当たり判定
         if (cir.CollisionCircle(bullet.GetCollisionCircle()) &&
-            m_PanelArray[i].rotate == bullet.GetRotate()     &&
             m_PanelArray[i].texNo  == bullet.GetBulletType())
         {
+			if (m_PanelArray[i].rotate != bullet.GetRotate() &&
+				m_PanelArray[i].texNo != Square)
+			{
+				continue;
+			}
             // すでに埋まっているかのチェック
             const int bulletCount = m_BulletArray.GetArrayCount();
             for (int j = 0; j < bulletCount; j++)
