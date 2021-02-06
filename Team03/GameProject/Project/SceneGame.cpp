@@ -59,7 +59,7 @@ void CSceneGame::Flow_SetPlayerShot()
 	// c’e”‚Ìİ’è
 	m_Player.SetBulletRemain(CEnemyManager::Singleton().GetEnemyCount());
 	// “G‚ª’e–‹¶¬‚·‚é‚Ü‚Å‚ÌŠÔ
-	m_FlowWiatTime = 20;
+	m_FlowWaitTime = cm_WaitTime;
 	// Next Flow
 	m_NowGameFlow = GameFlow::Player_Shooting;
 }
@@ -89,8 +89,8 @@ void CSceneGame::Flow_PlayerShooting()
 
 	
 	if (CEnemyManager::Singleton().GetEnemyCount() > 0) {
-		if (m_Player.GetBulletRemain() > 0 && m_FlowWiatTime > 0) {
-			m_FlowWiatTime -= CUtilities::GetFrameSecond();
+		if (m_Player.GetBulletRemain() > 0 && m_FlowWaitTime > 0) {
+			m_FlowWaitTime -= CUtilities::GetFrameSecond();
 		}
 		else {
 			if (m_Player.GetBullet()->size() > 0) { return; }
@@ -154,6 +154,7 @@ void CSceneGame::NextWave(int wave_no)
 	}
 	// GameFlow‚Ì‰Šú‰»
 	m_NowGameFlow = GameFlow::Enemy_SetMove;
+	m_FlowWaitTime = cm_WaitTime;
 	// “GStatus‚ÌÄİ’è
 	CEnemyManager::Singleton().Release();
 	// “G‚Ì—Ê‚ğİ’è
@@ -172,7 +173,8 @@ void CSceneGame::NextWave(int wave_no)
 	// ‰_‚Ì‰æ‘œ‚ğÄİ’è
 	// BGM‚Ìİ’è
 	if (wave_no < 4) {
-		m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
+		m_pCloudTexture_left = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
+		m_pCloudTexture_right = &CResourceManager::Singleton().GetTextureList()->at("cloud_right");
 		auto pS = &CResourceManager::Singleton().GetSoundList()->at("bgm_stage123");
 		if (m_pBGM != pS) {
 			if (m_pBGM) { m_pBGM->Stop(); }
@@ -183,7 +185,8 @@ void CSceneGame::NextWave(int wave_no)
 		}
 	}
 	else {
-		m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_gray_left");
+		m_pCloudTexture_left = &CResourceManager::Singleton().GetTextureList()->at("cloud_gray_left");
+		m_pCloudTexture_right = &CResourceManager::Singleton().GetTextureList()->at("cloud_gray_right");
 		auto pS = &CResourceManager::Singleton().GetSoundList()->at("bgm_stage456");
 		if (m_pBGM != pS) {
 			if (m_pBGM) { m_pBGM->Stop(); }
@@ -260,7 +263,7 @@ void CSceneGame::Render()
 	CEnemyManager::Singleton().Render();
 
 	for (const auto & pos : m_CloudPositions[m_WaveNo]) {
-		m_pCloudTexture->Render(pos[0], pos[1], TextureAlignment::TEXALIGN_CENTERCENTER);
+		m_pCloudTexture_left->Render(pos[0], pos[1], TextureAlignment::TEXALIGN_CENTERCENTER);
 	}
 
 	// effect
@@ -270,7 +273,7 @@ void CSceneGame::Render()
 
 	m_pUI_Life->Render(5, 8);
 	m_pUI_Wave->Render(m_pUI_Life->GetWidth() + 5, 15);
-	font.RenderFormatString(1000, 0, MOF_XRGB(255, 0, 0), "%d", (int)m_FlowWiatTime);
+	font.RenderFormatString(1000, 0, MOF_XRGB(255, 0, 0), "%d", (int)m_FlowWaitTime);
 }
 
 void CSceneGame::RenderDebug()
@@ -280,7 +283,7 @@ void CSceneGame::RenderDebug()
 	CGraphicsUtilities::RenderString(0, 30, "push to F1 => next SecenGameClear");
 	CGraphicsUtilities::RenderString(0, 60, "push to F2 => next SecenGameOver");
 	CGraphicsUtilities::RenderString(0, 90, "push to F3 => next wave");
-	CGraphicsUtilities::RenderString(0, 120, "wait time => %0.3f", m_FlowWiatTime);
+	CGraphicsUtilities::RenderString(0, 120, "wait time => %0.3f", m_FlowWaitTime);
 	CGraphicsUtilities::RenderString(0, 150, "flow NO => %d", m_NowGameFlow);
 
 }

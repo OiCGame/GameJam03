@@ -1,6 +1,8 @@
 #include "Enemy.h"
 #include	"ResourceManager.h"
 
+#include	"EffectManager.h"
+
 CEnemy::CEnemy():
 	m_EnemyTexture()
 {
@@ -18,6 +20,7 @@ bool CEnemy::Initialize(void)
 	}*/
 	m_EnemyTexture = &CResourceManager::Singleton().GetTextureList()->at("Enemy");
 	m_pSETeleport = &CResourceManager::Singleton().GetSoundList()->at("se_teleport");
+	m_pSETeleport->SetVolume(0.1f);
 	m_pSEFastMove = &CResourceManager::Singleton().GetSoundList()->at("se_FastMove");
 	m_pSEFastMove->SetVolume(0.1f);
 	m_pSEBarrage = &CResourceManager::Singleton().GetSoundList()->at("se_barrage");
@@ -60,6 +63,11 @@ void CEnemy::Update(void)
 		{
 			m_pSETeleport->Play();
 			m_Position = CVector2(m_MovePos.x - GetRectangle().GetWidth()*0.5f, m_MovePos.y - GetRectangle().GetHeight()*0.5f);
+			// エフェクト追加
+			//CEffectManager::Singleton().addEffect(
+			//	&CResourceManager::Singleton().GetTextureList()->at(""),
+			//	m_Position
+			//);
 		}
 		m_TeleportInterval += CUtilities::GetFrameSecond();
 		break;

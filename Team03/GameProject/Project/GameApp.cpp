@@ -55,7 +55,9 @@ MofBool CGameApp::Initialize(void){
 		.LoadTexture("bullet_purple", "images/enemy/Bullet_2.png")
 			// Cloud
 		.LoadTexture("cloud_left", "images/cloud/cloud_left.png")
+		.LoadTexture("cloud_right", "images/cloud/cloud_right.png")
 		.LoadTexture("cloud_gray_left", "images/cloud/cloud_gray_left.png")
+		.LoadTexture("cloud_gray_right", "images/cloud/cloud_gray_right.png")
 			// Item
 		.LoadTexture("ItemLife", "images/item/ItemLife.png")
 			// effect
