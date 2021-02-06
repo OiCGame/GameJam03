@@ -41,7 +41,7 @@ void CSceneGame::DebugKey()
 void CSceneGame::Flow_SetEnemyMove()
 {
 	// ˆÚ“®‚ÌÝ’è
-	CEnemyManager::Singleton().StartMove(5.0f, CVector2(10, 10), TYPE_MOVE);
+	CEnemyManager::Singleton().StartMove(5.0f, CVector2(m_EnemySpeed[m_WaveNo], m_EnemySpeed[m_WaveNo]), TYPE_MOVE);
 	// Next Flow
 	m_NowGameFlow = GameFlow::Enemy_Moving;
 }
@@ -197,6 +197,8 @@ void CSceneGame::NextWave(int wave_no)
 
 	// ”wŒi‚ÌÄÝ’è
 	m_pBackgroundTexture = &CResourceManager::Singleton().GetTextureList()->at(m_WaveBackground[wave_no]);
+	// UI‚ÌXV
+	m_pUI_Wave = &CResourceManager::Singleton().GetTextureList()->at(m_UI_WaveTexture[m_WaveNo]);
 }
 
 void CSceneGame::Initialize()
@@ -220,7 +222,6 @@ void CSceneGame::Initialize()
 	m_Player.Initialize(CVector2(500, 500));
 	
 	m_pUI_Life = &CResourceManager::Singleton().GetTextureList()->at(m_UI_LifeTexture[m_Player.GetLife()]);
-	m_pUI_Wave = &CResourceManager::Singleton().GetTextureList()->at(m_UI_WaveTexture[m_WaveNo]);
 
 	CEnemyManager::Singleton().Initialize(); // ResetEnemies()“à‚ÉˆÚA‚·‚é‚©‚àH
 	this->NextWave(m_WaveNo);
