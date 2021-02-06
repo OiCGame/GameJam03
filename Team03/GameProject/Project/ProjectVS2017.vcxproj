@@ -129,6 +129,8 @@
     <ClInclude Include="SceneGameOver.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Stage1.h" />
+    <ClInclude Include="Stage2.h" />
+    <ClInclude Include="Stage3.h" />
     <ClInclude Include="StageData.h" />
   </ItemGroup>
   <ItemGroup>

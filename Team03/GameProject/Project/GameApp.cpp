@@ -17,6 +17,8 @@
 #include	"SceneGameOver.h"
 
 #include	"Stage1.h"
+#include	"Stage2.h"
+#include	"Stage3.h"
 
 std::unique_ptr<CSceneBase> gpSecene(new CSceneTitle());
 
@@ -120,7 +122,7 @@ MofBool CGameApp::Update(void){
 			gpSecene.reset(new CSceneTitle());
 			break;
 		case NextScene::Game:
-			gpSecene.reset(new CSceneGame(stg1));
+			gpSecene.reset(new CSceneGame(stg3));
 			break;
 		case NextScene::GameClear:
 			gpSecene.reset(new CSceneGameClear());
