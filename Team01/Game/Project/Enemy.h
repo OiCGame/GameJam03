@@ -36,8 +36,19 @@ public:
 		int bullet_setgap;
 		float hp_max;
 		std::string texture_path;
-		InitParam(Mof::CVector2 pos, int move, int pinch_move, float ratio, float time, int column, int amount, int set, int reflect, float cdir, float dirrange, float dirrotat, int bgap, int bsetgap, float hp, std::string tex_path) :
-			position(pos), move_type(move), move_type_on_pinch(pinch_move), pinch_hp_ratio(ratio), spawn_time(time), bullet_column(column), bullet_amount(amount), amount_set(set), reflect_count(reflect), central_dir(cdir), dir_range(dirrange), dir_rotation(dirrotat), bullet_gap(bgap), bullet_setgap(bsetgap), hp_max(hp), texture_path(tex_path) {
+		bool boss;
+		InitParam(
+			Mof::CVector2 pos, int move, int pinch_move,
+			float ratio, float time, int column, int amount,
+			int set, int reflect, float cdir, float dirrange,
+			float dirrotat, int bgap, int bsetgap,
+			float hp, std::string tex_path, bool flag) :
+			position(pos), move_type(move), move_type_on_pinch(pinch_move),
+			pinch_hp_ratio(ratio), spawn_time(time), bullet_column(column),
+			bullet_amount(amount), amount_set(set), reflect_count(reflect),
+			central_dir(cdir), dir_range(dirrange), dir_rotation(dirrotat),
+			bullet_gap(bgap), bullet_setgap(bsetgap), hp_max(hp),
+			texture_path(tex_path), boss(flag) {
 		}
 	};
 private:
@@ -104,6 +115,8 @@ private:
 	int m_BulletShowCount;
 
 	int m_EffectHitFrame;
+
+	bool m_bBoss;
 public:
 	CEnemy();
 	~CEnemy();
@@ -116,11 +129,11 @@ public:
 
 	void Initialize(const InitParam& param);
 	void Initialize(
-		Vector2 pos, int move_type, int pinch_move, 
-		float ratio, int column, int amount, 
-		int set, int reflect, float cdir, 
-		float dirrange, float dirrotat, 
-		int bgap, int bsetgap, float hp);
+		Vector2 pos, int move_type, int pinch_move,
+		float ratio, int column, int amount,
+		int set, int reflect, float cdir,
+		float dirrange, float dirrotat,
+		int bgap, int bsetgap, float hp, bool boss);
 	void SetTexture(Mof::CTexture* ptr);
 	void SetTarget(Mof::CVector2 pos);
 	void Update(bool end);
@@ -139,4 +152,6 @@ public:
 	Mof::CRectangle GetCollisionRectangle(void) const;
 	int GetBulletShow() { return m_BulletShowCount; }
 	int GetLastHitFrame() { return m_EffectHitFrame; }
+
+	bool IsBoss(void);
 };

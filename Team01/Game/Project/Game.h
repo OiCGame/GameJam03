@@ -50,7 +50,8 @@ private:
 	std::vector<std::shared_ptr<CEffect>> m_CollisionedEffects;
 	//! ボス出現中フラグ
 	bool m_bBossExist;
-	
+	bool m_bBossDead;
+
 	
 	int m_EnemyCount;
 	//! ステージのフェイズデータのパス配列
@@ -100,6 +101,7 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	bool IsAllPhaseEnd(void) const;
+	bool BossDead(void) const;
 	/// <summary>
 	/// 描画
 	/// </summary>

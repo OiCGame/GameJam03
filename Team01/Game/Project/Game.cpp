@@ -31,8 +31,8 @@ void CGame::EffectStart(Mof::CVector2 position) {
 	auto effect = std::make_shared<CEffect>();
 	effect->Generate(&effect_tex, m_EffectMotionData);
 
-//	pos.x += effect->GetCollisionRectangle().GetWidth() * 0.5f;
-//	pos.y += effect->GetCollisionRectangle().GetHeight() * 0.5f;
+	//	pos.x += effect->GetCollisionRectangle().GetWidth() * 0.5f;
+	//	pos.y += effect->GetCollisionRectangle().GetHeight() * 0.5f;
 
 	effect->Start(pos);
 	m_Effects.push_back(effect);
@@ -85,7 +85,7 @@ void CGame::Collision(void) {
 
 		} // for
 
-		if (break_flag){
+		if (break_flag) {
 			break;
 		} // if
 
@@ -97,9 +97,9 @@ void CGame::Collision(void) {
 		effect->Generate(&effect_tex, m_EffectMotionData, param.chain);
 		auto s = Mof::CVector2(64.0f, 64.0f);
 		effect->Start(pos - s);
-		
 
-		m_Effects.push_back(effect );
+
+		m_Effects.push_back(effect);
 
 		int score = std::pow(2, param.chain) * 100;
 		m_UICanvas.AddScore(score);
@@ -131,6 +131,8 @@ void CGame::Collision(void) {
 		} // for
 		if (m_Player.IsShow() && m_Player.GetInvincible() == 0) {
 			for (int i = 0; i < enemy.CollisionBullet(m_Player.GetCollisionRectangle()); i++) {
+				break;
+
 				if (m_Player.Damage(m_Effects, &m_Textures.at(m_EffectTexturePath), m_EffectMotionData)) {
 					auto name = std::string("image");
 					name += std::to_string(m_Player.GetRevivalCount() - 1);
@@ -223,7 +225,8 @@ CGame::CGame() :
 	m_StagePhaseIndex(0),
 	m_bPhaseNo(0),
 	m_bPlayerDead(false),
-	m_EffectStartFrame(0){
+	m_EffectStartFrame(0),
+	m_bBossDead(false) {
 
 
 	rapidjson::Document document;
@@ -262,6 +265,9 @@ bool CGame::IsAllPhaseEnd(void) const {
 		} // if
 	} // for
 	return m_StagePaths.size() - 1 == m_StagePhaseIndex;
+}
+bool CGame::BossDead(void) const {
+	return m_bBossDead;
 }
 
 bool CGame::Initialize(void) {
@@ -344,8 +350,17 @@ bool CGame::Initialize(void) {
 		float hp = info[i]["hp"].GetInt();
 		std::string tex_path = info[i]["texture_uri"].GetString();
 
+
+		bool boss = false;
+		if (info[i].HasMember("boss")) {
+			boss = true;
+		} // if
+
 		m_EnemyDatas.push_back(CEnemy::InitParam(
-			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, reflect_count, central_dir, dir_range, dir_rotation, bullet_gap, bullet_setgap, hp, tex_path));
+			Mof::CVector2(x, y), move_type, move_type_on_pinch,
+			pinch_hp_ratio, spawn_time, bullet_column, bullet_amount,
+			amount_set, reflect_count, central_dir, dir_range, dir_rotation,
+			bullet_gap, bullet_setgap, hp, tex_path, boss));
 	} // for
 
 
@@ -453,7 +468,10 @@ bool CGame::Update(void) {
 		auto it = std::remove_if(
 			m_Enemies.begin(),
 			m_Enemies.end(),
-			[](CEnemy& enemy) {
+			[&](CEnemy& enemy) {
+			if (!enemy.IsShow() && enemy.IsBoss()) {
+				m_bBossDead = true;
+			} // if
 			if (!enemy.IsShow() && enemy.GetBulletShow() == 0) {
 				enemy.Release();
 				return true;

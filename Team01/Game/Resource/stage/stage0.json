@@ -2,9 +2,6 @@
   "phases": [
     {
       "uri": "stage/phase0.json"
-    },
-    {
-      "uri": "stage/phase1.json"
     }
   ]
 }

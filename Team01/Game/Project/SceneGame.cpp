@@ -23,7 +23,9 @@ void CSceneGame::Update() {
 	{
 		m_Alpha = 255;
 	}
-	if (m_Game.IsAllPhaseEnd()) {
+
+//	if (m_Game.IsAllPhaseEnd()) {
+	if (m_Game.BossDead()) {
 		m_bEndStart = true;
 		m_NextSceneNo = SCENENO_GAMECLEAR;
 	}

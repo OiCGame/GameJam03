@@ -177,10 +177,14 @@ void CEnemy::AddCollisionedEffect(const std::shared_ptr<CEffect>& ptr) {
 
 void CEnemy::Initialize(const InitParam& param) {
 	this->Initialize(param.position, param.move_type, param.move_type_on_pinch, param.pinch_hp_ratio,
-		param.bullet_column, param.bullet_amount, param.amount_set, param.reflect_count, param.central_dir, param.dir_range, param.dir_rotation, param.bullet_gap, param.bullet_setgap, param.hp_max);
+		param.bullet_column, param.bullet_amount, param.amount_set, param.reflect_count, param.central_dir, param.dir_range, param.dir_rotation, param.bullet_gap, param.bullet_setgap, param.hp_max, param.boss);
 }
 
-void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int reflect, float cdir, float dirrange, float dirrotat, int bgap, int bsetgap, float hp) {
+void CEnemy::Initialize(
+	Vector2 pos, int move_type, int pinch_move, 
+	float ratio, int column, int amount, int set, 
+	int reflect, float cdir, float dirrange, float dirrotat, 
+	int bgap, int bsetgap, float hp, bool boss) {
 	m_InitPos = pos;
 	m_Pos = pos;
 	m_MaxHP = hp;
@@ -191,6 +195,7 @@ void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio,
 	m_BulletGap = bgap;
 	m_BulletSetGap = bsetgap;
 	m_EnterCount = 60;
+	m_bBoss = boss;
 
 	//	m_BulletColumn = rand() % 1 + 1;
 	m_BulletColumn = column;
@@ -395,4 +400,8 @@ bool CEnemy::Damage(float damage_value) {
 		return true;
 	} // if
 	return false;
+}
+
+bool CEnemy::IsBoss(void) {
+	return this->m_bBoss;
 }
