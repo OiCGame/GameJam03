@@ -42,9 +42,8 @@ void CSceneGame::Flow_SetEnemyMove()
 {
 	// ˆÚ“®‚Ìİ’è
 	CEnemyManager::Singleton().StartMove(
-		5.0f,
-		CVector2(m_EnemySpeed[m_WaveNo],
-		m_EnemySpeed[m_WaveNo]),
+		m_EnemyMoveTime[m_WaveNo],
+		CVector2(m_EnemySpeed[m_WaveNo],m_EnemySpeed[m_WaveNo]),
 		TYPE_ALL,
 		m_EnemyTeleportInterval[m_WaveNo]
 	);

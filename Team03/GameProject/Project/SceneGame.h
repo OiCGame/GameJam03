@@ -94,9 +94,10 @@ private:
 		}
 };
 
-	int m_EnemyCount[6] = { 1,1,2,2,3,3 };
-	float m_EnemySpeed[6] = { 20, 25, 35, 50, 70, 90};
-	float m_EnemyTeleportInterval[6] = { 0.2f,0.2f, 0.2f, 0.2f, 0.2f, 0.2f };
+	int m_EnemyCount[6] = { 1, 1, 2, 2, 3, 3 };
+	float m_EnemyMoveTime[6] = { 5, 5, 5, 6, 7, 8 };
+	float m_EnemySpeed[6] = { 20, 25, 35, 50, 70, 100};
+	float m_EnemyTeleportInterval[6] = { 0.3f,0.3f, 0.3f, 0.2f, 0.2f, 0.1f };
 	std::string m_WaveBackground[6] = {
 		"wave1",
 		"wave2",

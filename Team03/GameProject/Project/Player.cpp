@@ -102,7 +102,7 @@ void CPlayer::Initialize(const CVector2& pos)
 	//•\Ž¦
 	m_bShow = true;
 
-	m_Life = 4;
+	m_Life = 2;
 	m_DamageWait = 0;
 	m_AttackCooldown = 0;
 }
