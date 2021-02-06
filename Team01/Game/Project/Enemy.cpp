@@ -27,9 +27,11 @@ inline void Rotate(float& x, float& y, const float angle,
 CEnemy::CEnemy() :
 	m_HP(3),
 	m_MaxHP(3),
-	m_Speed(0.0f),
-	m_Dir(90.0f),
+	m_Speed(1.0f),
+	m_Dir(MOF_ToRadian(90)),
+	m_WaveDir(0),
 	m_FastBulletNo(-1),
+	m_bEnter(false),
 	m_bDrow(true),
 	m_MoveType(0),
 	m_MoveTypeOnPinch(0),
@@ -49,30 +51,37 @@ CEnemy::~CEnemy() {
 }
 
 void CEnemy::Chase(Mof::CVector2 target) {
-	Mof::CVector2 direction = target - m_Pos;
-	direction.Normal(direction);
-
-	m_Move += direction;
+	m_Dir = atan2(target.y - m_InitPos.y, target.x - m_InitPos.x);
 }
-void CEnemy::Move(void) {
-	m_Move.y = sin(MOF_ToRadian(m_Dir)) * m_Speed;
-	m_Move.x = cos(MOF_ToRadian(m_Dir)) * m_Speed;
+
+void CEnemy::MainMove(int type) {
+
+	if (type == 5)
+	{
+		m_Move.y = sin(MOF_ToRadian(m_WaveDir)) * 5;
+		m_Move.x = cos(m_Dir) * m_Speed;
+		m_WaveDir += 2;
+	}
+	else
+	{
+		m_Move.y = sin(m_Dir) * m_Speed;
+		m_Move.x = cos(m_Dir) * m_Speed;
+	}
 
 	m_Pos += m_Move;
 
-	m_Dir += 0.0f;
+	//m_Dir += 0.0f;
 }
 
 void CEnemy::Move(int type) {
 	switch (type) {
 	case 0:
-		this->Move();
 		break;
 	case 1:
-		m_Pos.x++;
+		m_Dir = 0;
 		break;
 	case 2:
-		m_Pos.y++;
+		m_Dir = MOF_ToRadian(90);
 		if (m_StartPositionY < m_Pos.y) {
 			m_MoveTypeOnPinch = 5;
 			if (m_Pos.x < 512.0f) {
@@ -90,17 +99,18 @@ void CEnemy::Move(int type) {
 		this->MoveAssault();
 		break;
 	case 5:
-		this->MoveWave();
+		m_Dir = MOF_ToRadian(180);
 		break;
 	case -1:
-		m_Pos.x--;
+		m_Dir = MOF_ToRadian(180);
 		break;
 	case -2:
-		m_Pos.y--;
+		m_Dir = MOF_ToRadian(270);
 		break;
 	default:
 		break;
 	} // switch
+	this->MainMove(type);
 }
 
 void CEnemy::MoveOutOfWindow(void) {
@@ -149,23 +159,6 @@ void CEnemy::MoveAssault(void) {
 	this->Chase(m_Target);
 }
 
-void CEnemy::MoveWave(void) {
-	float accel = 1.0f;
-
-	m_Move.x = std::cosf(m_MoveWaveAmplitudeCount* kPi / 180.0f) * m_MoveWaveAmplitude;
-	m_Move.y = accel;
-	auto angle = m_WaveDirection;
-
-	Rotate(m_Move.x, m_Move.y,
-		angle,
-		0, 0);
-
-	m_MoveWaveAmplitudeCount += 5;
-	if (m_MoveWaveAmplitudeCount > m_MoveWaveAmplitudeCountMax) {
-		m_MoveWaveAmplitudeCount = 0.0f;
-	} // if
-}
-
 Mof::CVector2 CEnemy::GetPosition(void) const {
 	return this->m_Pos;
 }
@@ -183,6 +176,7 @@ void CEnemy::Initialize(const InitParam& param) {
 }
 
 void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int reflect, float cdir, float dirrange, float dirrotat, int bgap, int bsetgap, int hp) {
+	m_InitPos = pos;
 	m_Pos = pos;
 	m_MaxHP = hp;
 	m_HP = m_MaxHP;
@@ -191,6 +185,7 @@ void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio,
 	m_PinchHPRatio = ratio;
 	m_BulletGap = bgap;
 	m_BulletSetGap = bsetgap;
+	m_EnterCount = 60;
 
 	//	m_BulletColumn = rand() % 1 + 1;
 	m_BulletColumn = column;
@@ -254,21 +249,45 @@ void CEnemy::Update(bool end) {
 	if (!m_bDrow) { return; }
 
 	float ratio = m_HP / m_MaxHP;
-	if (m_PinchHPRatio <= ratio) {
+	if (m_PinchHPRatio <= ratio)
+	{
 		this->Move(m_MoveType);
 	} // if
-	else {
+	else
+	{
 		this->Move(m_MoveTypeOnPinch);
 	} // else
-	m_Pos += m_Move;
 
-	if (m_Pos.x > g_pGraphics->GetTargetWidth() || m_Pos.x + m_pTexture->GetWidth() < 0) {
-		m_bDrow = false;
-	} // if
-	if (m_Pos.y > g_pGraphics->GetTargetHeight() || m_Pos.y + m_pTexture->GetHeight() < 0) {
-		m_bDrow = false;
-	} // if
+	float w = g_pGraphics->GetTargetWidth();
+	float h = g_pGraphics->GetTargetHeight();
 
+	float tw = m_pTexture->GetWidth();
+	float th = m_pTexture->GetHeight();
+
+	if (!m_bEnter)
+	{
+		if (m_Pos.x - tw * 0.5f < w && m_Pos.x + tw * 0.5f > 0)
+		{
+			if (m_Pos.y - th * 0.5f < h && m_Pos.y + th * 0.5f > 0)
+			{
+				m_bEnter = true;
+			}
+		}
+	}
+	else
+	{
+		if (m_EnterCount > 0)
+			m_EnterCount--;
+	}
+	if (m_EnterCount <= 0)
+	{
+		if (m_Pos.x - tw * 0.5f > w || m_Pos.x + tw * 0.5 < 0) {
+			m_bDrow = false;
+		} // if
+		else if (m_Pos.y - th * 0.5f > h || m_Pos.y + th * 0.5f < 0) {
+			m_bDrow = false;
+		} // if
+	}
 
 	if (m_BulletNo >= m_BulletCount) { return; }
 	if (m_BulletSetRemGap > 0) {
@@ -306,28 +325,30 @@ void CEnemy::Render(bool end) {
 		else
 			m_Bullet[i].Render();
 	}
-	if (!m_bDrow) { return; }
-	
+	if (!m_bDrow) {
+		return;
+	}
+
 #ifdef _DEBUG
-//	::CGraphicsUtilities::RenderRect(
-//		this->GetCollisionRectangle(),
-//		MOF_ARGB(100, 100, 100, 100)
-//	);
-//	auto pos = m_Pos;
-//	auto size = Mof::CVector2(::g_pFramework->GetWindow()->GetWidth(),
-//		::g_pFramework->GetWindow()->GetHeight());
-//	auto top = Mof::CVector2(pos.x, 0.0f);
-//	auto bottom = Mof::CVector2(pos.x, size.y);
-//	auto left = Mof::CVector2(0.0f, pos.y);
-//	auto right = Mof::CVector2(size.x, pos.y);
-//	std::vector<Mof::CVector2> points = {
-//		top, bottom, left, right
-//	};
-//	for (auto& point : points) {
-//		int color = MOF_ARGB(200, 0, 100, 100);
-//		::CGraphicsUtilities::RenderFillCircle(
-//			Mof::Circle(point, 10), color);
-//	} // for
+	//	::CGraphicsUtilities::RenderRect(
+	//		this->GetCollisionRectangle(),
+	//		MOF_ARGB(100, 100, 100, 100)
+	//	);
+	//	auto pos = m_Pos;
+	//	auto size = Mof::CVector2(::g_pFramework->GetWindow()->GetWidth(),
+	//		::g_pFramework->GetWindow()->GetHeight());
+	//	auto top = Mof::CVector2(pos.x, 0.0f);
+	//	auto bottom = Mof::CVector2(pos.x, size.y);
+	//	auto left = Mof::CVector2(0.0f, pos.y);
+	//	auto right = Mof::CVector2(size.x, pos.y);
+	//	std::vector<Mof::CVector2> points = {
+	//		top, bottom, left, right
+	//	};
+	//	for (auto& point : points) {
+	//		int color = MOF_ARGB(200, 0, 100, 100);
+	//		::CGraphicsUtilities::RenderFillCircle(
+	//			Mof::Circle(point, 10), color);
+	//	} // for
 #endif // _DEBUG
 
 	m_pTexture->Render(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y - m_pTexture->GetHeight() / 2);

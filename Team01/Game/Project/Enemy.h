@@ -43,12 +43,16 @@ public:
 private:
 	int m_HP;
 	int m_MaxHP;
+	Vector2 m_InitPos;
 	Vector2 m_Pos;
 	Vector2 m_Move;
 	float m_Dir;
+	float m_WaveDir;
 	float m_Speed;
 	CTexture* m_pTexture;
 	bool m_bDrow;
+	bool m_bEnter;
+	int m_EnterCount;
 	int m_FastBulletNo;
 	//! ˆÚ“®ƒ^ƒCƒv
 	int m_MoveType;
@@ -77,7 +81,7 @@ private:
 	/// ˆÚ“®
 	/// </summary>
 	/// <param name=""></param>
-	virtual void Move(void);
+	void MainMove(int type);
 	void Move(int type);
 	void MoveOutOfWindow(void);
 	void MoveAssault(void);

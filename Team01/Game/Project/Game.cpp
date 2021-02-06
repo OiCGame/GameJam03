@@ -214,8 +214,8 @@ CGame::CGame() :
 
 
 	rapidjson::Document document;
-	//	if (!ParseJsonDocument("stage/stage0.json", document)) {
-	if (!ParseJsonDocument("stage/test_stage0.json", document)) {
+	if (!ParseJsonDocument("stage/stage0.json", document)) {
+	//if (!ParseJsonDocument("stage/phase0.json", document)) {
 		return;
 	} // if
 
