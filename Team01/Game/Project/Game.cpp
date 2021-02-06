@@ -66,7 +66,9 @@ void CGame::Collision(void) {
 				continue;
 			} // if
 			auto enemy_rect = enemy.GetCollisionRectangle();
-			if (enemy_rect.CollisionRect(effect->GetCollisionRectangle())) {
+			if (enemy_rect.CollisionRect(effect->GetCollisionRectangle()) &&
+				m_EffectStartFrame <= 0) {
+				m_EffectStartFrame = 6;
 				break_flag = true;
 				enemy.AddCollisionedEffect(effect);
 
@@ -220,7 +222,8 @@ CGame::CGame() :
 	m_StagePaths(),
 	m_StagePhaseIndex(0),
 	m_bPhaseNo(0),
-	m_bPlayerDead(false) {
+	m_bPlayerDead(false),
+	m_EffectStartFrame(0){
 
 
 	rapidjson::Document document;
@@ -430,6 +433,11 @@ bool CGame::Update(void) {
 
 	m_ElapsedTime += 0.0167f;
 	this->SpawnEnemy();
+
+	m_EffectStartFrame--;
+	if (m_EffectStartFrame <= 0) {
+		m_EffectStartFrame = 0;
+	} // if
 
 	// ”ñ•\Ž¦‚Ì‚à‚Ì‚Ííœ
 	{
