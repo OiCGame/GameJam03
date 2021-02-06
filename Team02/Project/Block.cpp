@@ -13,9 +13,10 @@ void CBlock::SetTexture(CTexture* pTexture) {
 }
 
 void CBlock::Initialize(void) {
-	m_Pos   = Vector2(0, 0);
-	m_Timer = 0;
-	m_bShow = false;
+	m_Pos				= Vector2(0, 0);
+	m_Timer				= 0;
+	m_bShow				= false;
+	m_bIsBossMeteorite	= false;
 }
 
 void CBlock::FallStart(CTexture* pTexture, int bullettype) {
@@ -44,7 +45,7 @@ void CBlock::Render(void) {
     if (!m_bShow) {
         return;
     }
-    m_pBlockTexture->RenderScaleRotate(m_Pos.x, m_Pos.y, 0.5f, MOF_ToRadian(m_DegreeAngle), TEXALIGN_CENTERCENTER);
+    m_pBlockTexture->RenderScaleRotate(m_Pos.x, m_Pos.y, (m_bIsBossMeteorite ? 1.0f :  0.5f), MOF_ToRadian(m_DegreeAngle), TEXALIGN_CENTERCENTER);
 }
 
 void CBlock::RenderDebug() {

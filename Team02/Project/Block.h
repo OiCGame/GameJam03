@@ -26,6 +26,8 @@ private:
 	int				m_Timer;
 	int				m_FlameTime;
 	int				m_DegreeAngle;
+
+	bool			m_bIsBossMeteorite;
 public:
 	CBlock();
 	~CBlock();
@@ -45,4 +47,6 @@ public:
 
 	//ŠÖ”Œã‚É‚Â‚¢‚Ä‚¢‚é const ‚ÌˆÓ–¡‚ğ—‰ğ‚µ‚Ä‚¢‚È‚¢‚Ì‚ÅA“K’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
 	void SetShow(bool isShow) { m_bShow = isShow; }
+
+	void SetIsBossMeteorite(bool YesNo) { m_bIsBossMeteorite = YesNo; }
 };

@@ -150,6 +150,7 @@ void CGame::Update(void)
             CTexture* pBlockTexture = Player.GetBulletTexture(bulletType);
 
             Block[i].FallStart(pBlockTexture, bulletType);
+			Block[i].SetIsBossMeteorite(GetData().StageNo == 2 && bulletType == 2 ? true : false);
             BlockFallTimer.Reset();
             break;
         }
@@ -206,6 +207,7 @@ void CGame::Update(void)
 
 	if (Timer.GetTime() <= 0)
 	{
+		
 		ChangeScene(SceneName::GameOver);
 	}
 
@@ -220,6 +222,11 @@ void CGame::Update(void)
         ClearUITimer.Start();
         Vector2 size{ 1920, 1080 };
         g_EffectManager.Start(Effect_Clear, size * 0.5f);
+		//以下、現在のステージの取り方がわからなかったため、修正お願いします。
+		g_SoundManager.GetBGM(BGM_Stage_1)->Stop();
+		g_SoundManager.GetBGM(BGM_Stage_2)->Stop();
+		g_SoundManager.GetBGM(BGM_Stage_3)->Stop();
+
         g_SoundManager.GetSE(SE_GameClear)->Play();
 	}
 }
