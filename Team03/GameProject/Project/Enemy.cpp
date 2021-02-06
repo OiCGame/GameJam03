@@ -168,6 +168,8 @@ bool CEnemy::IsShow(void)
 	return m_bShow;
 }
 
+
+
 bool CEnemy::IsMoveEnd(void)
 {
 	return m_MoveEnd;

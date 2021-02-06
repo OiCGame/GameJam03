@@ -3,6 +3,8 @@
 #include	"EnemyManager.h"
 #include	"Enemy.h"
 
+#include	"EffectManager.h"
+
 void CSceneGame::DebugKey()
 {
 	if (g_pInput->IsKeyPush(MOFKEY_F1)) {
@@ -39,7 +41,7 @@ void CSceneGame::DebugKey()
 void CSceneGame::Flow_SetEnemyMove()
 {
 	// 移動の設定
-	CEnemyManager::Singleton().StartMove(5.0f, CVector2(3.5f, 3.5f), TYPE_MOVE);
+	CEnemyManager::Singleton().StartMove(5.0f, CVector2(10, 10), TYPE_MOVE);
 	// Next Flow
 	m_NowGameFlow = GameFlow::Enemy_Moving;
 }
@@ -68,34 +70,46 @@ void CSceneGame::Flow_PlayerShooting()
 	m_Player.Update();
 
 	// 敵の撃墜判定
-	for (auto it = m_Player.GetBullet()->begin(); it != m_Player.GetBullet()->end(); it++) {
+	for (auto pPlayer = m_Player.GetBullet()->begin(); pPlayer != m_Player.GetBullet()->end(); pPlayer++) {
 		for (int i = CEnemyManager::Singleton().GetEnemyCount() - 1; i >= 0 ; i--)
 		{
-			if (it->GetCircle().CollisionCircle(CEnemyManager::Singleton().GetEnemy(i)->GetCircle())) {
-				CEnemyManager::Singleton().GetEnemy(i)->SetShow(false);
-				it->SetShow(false);
+			auto pEnemy = CEnemyManager::Singleton().GetEnemy(i);
+			if (pPlayer->GetCircle().CollisionCircle(pEnemy->GetCircle())) {
+				pEnemy->SetShow(false);
+				pPlayer->SetShow(false);
 				m_pSE_Explosion->Play();
+				// エフェクト追加
+				CEffectManager::Singleton().addEffect(
+					&CResourceManager::Singleton().GetTextureList()->at("effect_explosion"),
+					pEnemy->GetCenterPos()
+				);
 			}
 		}
 	}
 
-	if (m_Player.GetBulletRemain() > 0 && m_FlowWiatTime > 0) {
-		m_FlowWiatTime -= CUtilities::GetFrameSecond();
+	
+	if (CEnemyManager::Singleton().GetEnemyCount() > 0) {
+		if (m_Player.GetBulletRemain() > 0 && m_FlowWiatTime > 0) {
+			m_FlowWiatTime -= CUtilities::GetFrameSecond();
+		}
+		else {
+			if (m_Player.GetBullet()->size() > 0) { return; }
+			// Next Flow
+			m_NowGameFlow = GameFlow::Enemy_SetShot;
+		}
 	}
 	else {
-		if (m_Player.GetBullet()->size() > 0) { return; }
-		// Next Flow
-		m_NowGameFlow = GameFlow::Enemy_SetShot;
+		if (CEffectManager::Singleton().FinishedAll()) {
+			this->NextWave(++m_WaveNo);
+		}
 	}
-	if (CEnemyManager::Singleton().GetEnemyCount() <= 0) {
-		this->NextWave(++m_WaveNo);
-	}
+
 }
 
 void CSceneGame::Flow_SetEnemyShot()
 {
 	// 敵の弾幕パターンを設定 & 発射
-	CEnemyManager::Singleton().StartShot(LauncherInit_PolygonRotation{ CVector2(300,0),CVector2(5,5), BulletType::red, 60, 0.2f , 5 , 5, 6 });
+	CEnemyManager::Singleton().StartShot(LauncherInit_PolygonRotation{ CVector2(300,0),CVector2(5,5), BulletType::purple, 60, 0.2f , 5 , 5, 6 });
 	// Next Flow
 	m_NowGameFlow = GameFlow::Enemy_Shots;
 }
@@ -229,6 +243,7 @@ void CSceneGame::Update()
 	}
 
 	CEnemyManager::Singleton().Update();
+	CEffectManager::Singleton().Update();
 }
 
 void CSceneGame::Render()
@@ -239,11 +254,11 @@ void CSceneGame::Render()
 	CEnemyManager::Singleton().Render();
 
 	for (const auto & pos : m_CloudPositions[m_WaveNo]) {
-		m_pCloudTexture->Render(
-			pos[0] - m_pCloudTexture->GetWidth()*0.5f,
-			pos[1] - m_pCloudTexture->GetHeight() * 0.5f
-		);
+		m_pCloudTexture->Render(pos[0], pos[1], TextureAlignment::TEXALIGN_CENTERCENTER);
 	}
+
+	// effect
+	CEffectManager::Singleton().Render();
 
 	m_Player.Render();
 
@@ -269,6 +284,7 @@ void CSceneGame::Release()
 	font.Release();
 	DESIGNVECTOR design;
 	RemoveFontResourceEx(TEXT("LightNovelPOPv2.otf"), FR_PRIVATE,&design);
+	CEffectManager::Singleton().Release();
 	CEnemyBulletManager::Singleton().Release();
 	CEnemyManager::Singleton().Release();
 	m_pBGM->Stop();
