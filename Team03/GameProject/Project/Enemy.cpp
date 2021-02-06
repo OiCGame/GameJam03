@@ -66,7 +66,7 @@ void CEnemy::Update(void)
 			// エフェクト追加
 			CEffectManager::Singleton().addEffect(
 				&CResourceManager::Singleton().GetTextureList()->at("effect_cloud_left_highlight"),
-				m_Position
+				m_MovePos
 			);
 		}
 		m_TeleportInterval += CUtilities::GetFrameSecond();
