@@ -511,16 +511,9 @@ bool CGame::Update(void) {
 bool CGame::Render(void) {
 	auto& stage_tex = m_Textures.at(m_StageTexturePath);
 	stage_tex.Render(0.0f, 0.0f);
-	if (m_Shop.IsShow()) {
-		m_Shop.Render();
-	} // if
 
 	if (m_Player.IsShow()) {
 		m_Player.Render();
-	} // if
-
-	if (m_ShopShip.IsShow()) {
-		m_ShopShip.Render();
 	} // if
 
 
@@ -547,6 +540,13 @@ bool CGame::Render(void) {
 	for (auto item : m_Items) {
 		item->Render();
 	} // for
+
+	if (m_ShopShip.IsShow()) {
+		m_ShopShip.Render();
+	} // if
+	if (m_Shop.IsShow()) {
+		m_Shop.Render();
+	} // if
 	m_UICanvas.Render();
 
 	//	::CGraphicsUtilities::RenderString(700.0f, 0.0f, "elapsed time = %f", m_ElapsedTime);
