@@ -17,11 +17,11 @@ void CSceneGameClear::Initialize()
 void CSceneGameClear::Update()
 {
 	CSceneBase::Update();
-	if (g_pInput->IsKeyPush(MOFKEY_F1)) {
-		m_pBGM->Stop();
-		this->SetNextScene(NextScene::Title);
-		this->SceneEnd();
-	}
+	//if (g_pInput->IsKeyPush(MOFKEY_F1)) {
+	//	m_pBGM->Stop();
+	//	this->SetNextScene(NextScene::Title);
+	//	this->SceneEnd();
+	//}
 
 	if (g_pInput->IsKeyPush(MOFKEY_SPACE)) {
 		m_pBGM->Stop();
