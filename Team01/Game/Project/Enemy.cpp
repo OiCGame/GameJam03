@@ -92,6 +92,9 @@ void CEnemy::Move(int type) {
 	case -1:
 		m_Pos.x--;
 		break;
+	case -2:
+		m_Pos.y--;
+		break;
 	default:
 		break;
 	} // switch
@@ -256,7 +259,11 @@ void CEnemy::Update(bool end) {
 
 	if (m_Pos.x > g_pGraphics->GetTargetWidth() || m_Pos.x + m_pTexture->GetWidth() < 0) {
 		m_bDrow = false;
-	}
+	} // if
+	if (m_Pos.y > g_pGraphics->GetTargetHeight() || m_Pos.y + m_pTexture->GetHeight() < 0) {
+		m_bDrow = false;
+	} // if
+
 
 	if (m_BulletNo >= m_BulletCount) { return; }
 	if (m_BulletSetRemGap > 0) {

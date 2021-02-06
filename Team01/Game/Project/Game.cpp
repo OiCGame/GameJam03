@@ -332,8 +332,7 @@ bool CGame::Initialize(void) {
 
 bool CGame::Update(void) {
 	if (m_bPhaseNo == 0) {
-		if (CInputManager::GetInstance().GetPush(8) || (m_EnemyDatas.empty() && m_EnemyCount == 0))
-		{
+		if (CInputManager::GetInstance().GetPush(8) || (m_EnemyDatas.empty() && m_EnemyCount == 0)) {
 			m_bPhaseNo = 1;
 		}
 	} // if
@@ -351,13 +350,15 @@ bool CGame::Update(void) {
 	} // if
 	if (CInputManager::GetInstance().GetPush(5)) {
 		if (m_Shop.IsShow()) {
-			m_ShopShip.Start();
+			if (!m_ShopShip.IsShow()) {
+				m_ShopShip.Start();
+			} // if
 		} // if
 		m_Shop.SetShowFlag(false);
 	} // if
 
 	m_UICanvas.Update();
-	
+
 	if (m_Shop.IsShow()) {
 		m_Shop.Update(m_ShopShip);
 	} // if
@@ -491,6 +492,7 @@ bool CGame::Render(void) {
 bool CGame::Release(void) {
 	m_UICanvas.Release();
 
+	m_Items.clear();
 	m_EnemyDatas.clear();
 
 	m_Player.Release();
