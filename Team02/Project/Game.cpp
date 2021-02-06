@@ -80,6 +80,7 @@ void CGame::Initialize(void)
 	
 	//207はタイマーUI枠の幅、textureの読み込み位置を再検討？
 	Timer.Initialize(GameTime, CVector2(((int)g_pGraphics->GetTargetWidth() * 0.5) - 207,0));
+	if(GetData().StageNo == 2){ Timer.SetTime(-10); }
 
     GameUI.Initialize();
     Vector2 size(1920, 1080);
