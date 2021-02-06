@@ -131,8 +131,6 @@ void CGame::Collision(void) {
 		} // for
 		if (m_Player.IsShow() && m_Player.GetInvincible() == 0) {
 			for (int i = 0; i < enemy.CollisionBullet(m_Player.GetCollisionRectangle()); i++) {
-				break;
-
 				if (m_Player.Damage(m_Effects, &m_Textures.at(m_EffectTexturePath), m_EffectMotionData)) {
 					auto name = std::string("image");
 					name += std::to_string(m_Player.GetRevivalCount() - 1);
