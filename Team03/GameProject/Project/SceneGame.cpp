@@ -238,7 +238,7 @@ void CSceneGame::Initialize()
 	m_pSE_Explosion = &CResourceManager::Singleton().GetSoundList()->at("se_explosion");
 	m_pSE_Explosion->SetVolume(0.3f);
 	
-	m_Player.Initialize(CVector2(500, 500));
+	m_Player.Initialize(CVector2(g_pGraphics->GetTargetWidth()*0.5f, g_pGraphics->GetTargetHeight()*0.5f));
 	
 	m_pUI_Life = &CResourceManager::Singleton().GetTextureList()->at(m_UI_LifeTexture[m_Player.GetLife()]);
 
