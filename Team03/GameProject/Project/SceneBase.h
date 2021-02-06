@@ -4,7 +4,9 @@
 
 enum class NextScene {
 	Title,
-	Game,
+	Game1,
+	Game2,
+	Game3,
 	GameClear,
 	GameOver,
 };

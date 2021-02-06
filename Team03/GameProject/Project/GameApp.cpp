@@ -40,6 +40,9 @@ MofBool CGameApp::Initialize(void){
 		// âÊëúÇÃì«Ç›çûÇ›
 			// Secen
 		.LoadTexture("Title", "images/background/Title.png")
+		.LoadTexture("Level1", "images/background/level1.png")
+		.LoadTexture("Level2", "images/background/level2.png")
+		.LoadTexture("Level3", "images/background/level3.png")
 		.LoadTexture("GameClear", "images/background/game_clear.png")
 		.LoadTexture("GameOver", "images/background/game_over.png")
 			// Background
@@ -125,8 +128,14 @@ MofBool CGameApp::Update(void){
 		case NextScene::Title:
 			gpSecene.reset(new CSceneTitle());
 			break;
-		case NextScene::Game:
+		case NextScene::Game1:
 			gpSecene.reset(new CSceneGame(stg1));
+			break;
+		case NextScene::Game2:
+			gpSecene.reset(new CSceneGame(stg2));
+			break;
+		case NextScene::Game3:
+			gpSecene.reset(new CSceneGame(stg3));
 			break;
 		case NextScene::GameClear:
 			gpSecene.reset(new CSceneGameClear());
