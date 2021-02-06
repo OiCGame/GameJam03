@@ -9,6 +9,6 @@ CItemBulletPowerUp3::~CItemBulletPowerUp3() {
 }
 
 bool CItemBulletPowerUp3::Use(CCharacter & out) {
-	out.BulletPowerUp(8);
+	out.BulletPowerUp(4);
 	return true;
 }

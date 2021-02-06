@@ -31,8 +31,8 @@ void CGame::EffectStart(Mof::CVector2 position) {
 	auto effect = std::make_shared<CEffect>();
 	effect->Generate(&effect_tex, m_EffectMotionData);
 
-	pos.x -= effect->GetCollisionRectangle().GetWidth() * 0.5f;
-	pos.y -= effect->GetCollisionRectangle().GetHeight() * 0.5f;
+//	pos.x += effect->GetCollisionRectangle().GetWidth() * 0.5f;
+//	pos.y += effect->GetCollisionRectangle().GetHeight() * 0.5f;
 
 	effect->Start(pos);
 	m_Effects.push_back(effect);
@@ -44,7 +44,13 @@ void CGame::Collision(void) {
 	this->CollisionItem();
 	this->CollisionPlayerEnemies();
 
-	std::vector<EffectParam> m_EffectParam;
+	struct EffectParam {
+		Mof::CVector2 position;
+		uint32_t chain;
+		EffectParam(Mof::CVector2 pos, uint32_t count) : position(pos), chain(count) {
+		}
+	};
+	std::vector<EffectParam> effect_param;
 	for (auto& enemy : m_Enemies) {
 		if (!enemy.IsShow()) { continue; }
 		for (auto effect : m_Effects) {
@@ -64,36 +70,26 @@ void CGame::Collision(void) {
 				int damage_value = effect->GetDamageValue(m_bBossExist);
 				if (enemy.Damage(damage_value)) {
 					effect->Chain();
-					m_EffectParam.push_back(EffectParam(enemy.GetPosition(), effect->GetChainCount()));
+					effect_param.push_back(EffectParam(enemy.GetPosition(), effect->GetChainCount()));
 				} // if
-				break;
 			} // if
 		} // for
 	} // for
 	auto& effect_tex = m_Textures.at(m_EffectTexturePath);
-	for (auto& param : m_EffectParam) {
+	for (auto& param : effect_param) {
 		auto pos = param.position;
 		auto effect = std::make_shared<CEffect>();
 		effect->Generate(&effect_tex, m_EffectMotionData, param.chain);
-		effect->Start(pos);
-		m_Effects.push_back(effect);
+		auto s = Mof::CVector2(64.0f, 64.0f);
+		effect->Start(pos - s);
+		
+
+		m_Effects.push_back(effect );
 
 		int score = std::pow(2, param.chain) * 100;
 		m_UICanvas.AddScore(score);
 		m_UICanvas.AddText(std::to_string(score), pos, 60);
-		break;
 	} // for
-
-	if (!m_EffectParam.empty()) {
-		auto& e = m_EffectParam.at(0);
-		auto it = std::remove(
-			m_EffectParam.begin(),
-			m_EffectParam.end(),
-			e);
-//		m_EffectParam.erase(it, m_EffectParam.end());
-	} // if
-
-
 
 	for (auto& enemy : m_Enemies) {
 		for (int i = 0; i < m_PlayerBullets.size(); i++) {
@@ -105,13 +101,16 @@ void CGame::Collision(void) {
 				continue;
 			}
 			if (enemy.GetCollisionRectangle().CollisionRect(m_PlayerBullets[i].GetCollisionRectangle())) {
+
 				m_PlayerBullets[i].Hide();
 
 				enemy.SetFastBulletNo(i);
 				int damage_value = 1 * m_Player.GetBulletShotLevel();
 
 				if (enemy.Damage(damage_value)) {
-					this->EffectStart(enemy.GetPosition());
+					auto pos = Mof::CVector2(enemy.GetPosition());
+					auto s = Mof::CVector2(64.0f, 64.0f);
+					this->EffectStart(pos - s);
 				} // if
 			} // if
 		} // for
@@ -145,11 +144,11 @@ void CGame::CollisionPlayerEnemies(void) {
 	for (auto& enemy : m_Enemies) {
 		if (player_rect.CollisionRect(enemy.GetCollisionRectangle())) {
 
-			if (m_Player.Damage(m_Effects, &m_Textures.at(m_EffectTexturePath),m_EffectMotionData)) {
+			if (m_Player.Damage(m_Effects, &m_Textures.at(m_EffectTexturePath), m_EffectMotionData)) {
 				auto name = std::string("image");
 				name += std::to_string(m_Player.GetRevivalCount() - 1);
 				m_UICanvas.RemoveImage(name);
-				
+
 
 				if (0 < m_Player.GetRevivalCount()) {
 					m_Player.Revival();
@@ -213,7 +212,7 @@ CGame::CGame() :
 
 	rapidjson::Document document;
 	if (!ParseJsonDocument("stage/stage0.json", document)) {
-	//if (!ParseJsonDocument("stage/phase0.json", document)) {
+		//if (!ParseJsonDocument("stage/phase0.json", document)) {
 		return;
 	} // if
 

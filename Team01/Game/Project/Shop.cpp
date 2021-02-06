@@ -99,10 +99,10 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 		uint32_t price;
 	};
 	InitParam params[]{
-		{&m_pResources->at("shop/shop-hart.png"), 1},
-		{&m_pResources->at("shop/shop-atk-Up.png"), 2},
-		{&m_pResources->at("shop/shop-auto.png"), 5},
-		{&m_pResources->at("shop/shop-spazer.png"), 3}
+		{&m_pResources->at("shop/shop-hart.png"), 500},
+		{&m_pResources->at("shop/shop-atk-Up.png"), 700},
+		{&m_pResources->at("shop/shop-auto.png"), 1000},
+		{&m_pResources->at("shop/shop-spazer.png"), 200}
 	};
 	
 	m_Items.reserve(sizeof(params) / sizeof(InitParam));

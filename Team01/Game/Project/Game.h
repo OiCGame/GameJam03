@@ -62,7 +62,7 @@ private:
 	int m_bPhaseNo;
 
 
-
+	/*
 	struct EffectParam {
 		Mof::CVector2 position;
 		uint32_t chain;
@@ -75,8 +75,10 @@ private:
 			return this->position == param.position;
 		}
 	};
-	std::vector<EffectParam> m_EffectParam;
-	int m_EffectFrameCount;
+	*/
+
+//	std::vector<EffectParam> m_EffectParam;
+//	int m_EffectFrameCount;
 
 	//! プレイヤー死亡 ゲームオーバー判定用
 	bool m_bPlayerDead;

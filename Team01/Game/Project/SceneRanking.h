@@ -10,7 +10,8 @@ private:
 	static const int m_ScoreCount = 10;
 	int		m_Score[m_ScoreCount];
 
-	std::string		m_RankingMessage[2] = { "ランキング","PRESS ENTER KEY : タイトルに戻る" };
+//	std::string		m_RankingMessage[2] = { "ランキング","PRESS ENTER KEY : タイトルに戻る" };
+	std::string		m_RankingMessage[2] = { "ランキング(未実装)","PRESS SPACE KEY : タイトルに戻る" };
 public:
 	CSceneRanking();
 	~CSceneRanking();

@@ -70,7 +70,8 @@ bool UICanvas::Update(void) {
     return true;
 }
 bool UICanvas::Render(void) {
-    auto text = std::string("score " + std::to_string(m_RenderedScore));
+//    auto text = std::string("score " + std::to_string(m_RenderedScore));
+	auto text = std::string("score " + std::to_string(m_Score));
 
 	auto pos = Mof::CVector2(0.0f, 0.0f);
 	for (int i = 0; i < text.size() ; i++) {

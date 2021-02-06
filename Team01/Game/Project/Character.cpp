@@ -199,10 +199,11 @@ bool CCharacter::Damage(std::vector<std::shared_ptr<CEffect>>& out,Mof::CTexture
 		auto effect = std::make_shared<CEffect>();
 		effect->Generate(effect_tex, motion);
 
-		pos.x -= effect->GetCollisionRectangle().GetWidth() * 0.5f;
-		pos.y -= effect->GetCollisionRectangle().GetHeight() * 0.5f;
+//		pos.x += effect->GetCollisionRectangle().GetWidth() * 0.5f;
+//		pos.y += effect->GetCollisionRectangle().GetHeight() * 0.5f;
+		auto s = Mof::CVector2(64.0f, 64.0f);
 
-		effect->Start(pos);
+		effect->Start(pos - s);
 		out.push_back(effect);
 		return true;
 	} // if
