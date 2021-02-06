@@ -94,6 +94,7 @@ private:
 };
 
 	int m_EnemyCount[6] = { 1,1,2,2,3,3 };
+	float m_EnemySpeed[6] = { 20,20,20,20,20,20 };
 	std::string m_WaveBackground[6] = {
 		"wave1",
 		"wave2",
@@ -103,12 +104,14 @@ private:
 		"wave6",
 	};
 
-	CTexture* m_pCloudTexture;
+	CTexture* m_pCloudTexture_left;
+	CTexture* m_pCloudTexture_right;
 	CTexture* m_pBackgroundTexture;
 	int m_WaveNo{ 0 };
 
 	GameFlow	m_NowGameFlow{GameFlow::Enemy_SetMove};
-	float	m_FlowWiatTime{0};
+	const float cm_WaitTime{ 20 };
+	float	m_FlowWaitTime{0};
 
 	// ‰¹
 	CSoundBuffer* m_pBGM;

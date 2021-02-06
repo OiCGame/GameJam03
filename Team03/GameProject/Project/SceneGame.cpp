@@ -3,6 +3,8 @@
 #include	"EnemyManager.h"
 #include	"Enemy.h"
 
+#include	"EffectManager.h"
+
 void CSceneGame::DebugKey()
 {
 	if (g_pInput->IsKeyPush(MOFKEY_F1)) {
@@ -39,7 +41,7 @@ void CSceneGame::DebugKey()
 void CSceneGame::Flow_SetEnemyMove()
 {
 	// 移動の設定
-	CEnemyManager::Singleton().StartMove(5.0f, CVector2(3.5f, 3.5f), TYPE_MOVE);
+	CEnemyManager::Singleton().StartMove(5.0f, CVector2(m_EnemySpeed[m_WaveNo], m_EnemySpeed[m_WaveNo]), TYPE_MOVE);
 	// Next Flow
 	m_NowGameFlow = GameFlow::Enemy_Moving;
 }
@@ -57,7 +59,7 @@ void CSceneGame::Flow_SetPlayerShot()
 	// 残弾数の設定
 	m_Player.SetBulletRemain(CEnemyManager::Singleton().GetEnemyCount());
 	// 敵が弾幕生成するまでの時間
-	m_FlowWiatTime = 20;
+	m_FlowWaitTime = cm_WaitTime;
 	// Next Flow
 	m_NowGameFlow = GameFlow::Player_Shooting;
 }
@@ -68,34 +70,46 @@ void CSceneGame::Flow_PlayerShooting()
 	m_Player.Update();
 
 	// 敵の撃墜判定
-	for (auto it = m_Player.GetBullet()->begin(); it != m_Player.GetBullet()->end(); it++) {
+	for (auto pPlayer = m_Player.GetBullet()->begin(); pPlayer != m_Player.GetBullet()->end(); pPlayer++) {
 		for (int i = CEnemyManager::Singleton().GetEnemyCount() - 1; i >= 0 ; i--)
 		{
-			if (it->GetCircle().CollisionCircle(CEnemyManager::Singleton().GetEnemy(i)->GetCircle())) {
-				CEnemyManager::Singleton().GetEnemy(i)->SetShow(false);
-				it->SetShow(false);
+			auto pEnemy = CEnemyManager::Singleton().GetEnemy(i);
+			if (pPlayer->GetCircle().CollisionCircle(pEnemy->GetCircle())) {
+				pEnemy->SetShow(false);
+				pPlayer->SetShow(false);
 				m_pSE_Explosion->Play();
+				// エフェクト追加
+				CEffectManager::Singleton().addEffect(
+					&CResourceManager::Singleton().GetTextureList()->at("effect_explosion"),
+					pEnemy->GetCenterPos()
+				);
 			}
 		}
 	}
 
-	if (m_Player.GetBulletRemain() > 0 && m_FlowWiatTime > 0) {
-		m_FlowWiatTime -= CUtilities::GetFrameSecond();
+	
+	if (CEnemyManager::Singleton().GetEnemyCount() > 0) {
+		if (m_Player.GetBulletRemain() > 0 && m_FlowWaitTime > 0) {
+			m_FlowWaitTime -= CUtilities::GetFrameSecond();
+		}
+		else {
+			if (m_Player.GetBullet()->size() > 0) { return; }
+			// Next Flow
+			m_NowGameFlow = GameFlow::Enemy_SetShot;
+		}
 	}
 	else {
-		if (m_Player.GetBullet()->size() > 0) { return; }
-		// Next Flow
-		m_NowGameFlow = GameFlow::Enemy_SetShot;
+		if (CEffectManager::Singleton().FinishedAll()) {
+			this->NextWave(++m_WaveNo);
+		}
 	}
-	if (CEnemyManager::Singleton().GetEnemyCount() <= 0) {
-		this->NextWave(++m_WaveNo);
-	}
+
 }
 
 void CSceneGame::Flow_SetEnemyShot()
 {
 	// 敵の弾幕パターンを設定 & 発射
-	CEnemyManager::Singleton().StartShot(LauncherInit_PolygonRotation{ CVector2(300,0),CVector2(5,5), BulletType::red, 60, 0.2f , 5 , 5, 6 });
+	CEnemyManager::Singleton().StartShot(LauncherInit_PolygonRotation{ CVector2(300,0),CVector2(5,5), BulletType::purple, 60, 0.2f , 5 , 5, 6 });
 	// Next Flow
 	m_NowGameFlow = GameFlow::Enemy_Shots;
 }
@@ -112,10 +126,15 @@ void CSceneGame::Flow_EnemyShots()
 		// 弾幕とプレイヤーの当たり判定
 		if (!m_Player.IsDamageableable()) { return; }
 		auto pBulletList = CEnemyBulletManager::Singleton().GetBulletList();
-		for (auto it = pBulletList->begin(); it != pBulletList->end(); it++) {
-			if (it->CollisionCircle(m_Player.GetCircle())) {
+		for (auto pEnemyBullet = pBulletList->begin(); pEnemyBullet != pBulletList->end(); pEnemyBullet++) {
+			if (pEnemyBullet->CollisionCircle(m_Player.GetCircle())) {
 				m_Player.TakeDamage();
 				m_pSE_Explosion->Play();
+				// エフェクト追加
+				CEffectManager::Singleton().addEffect(
+					&CResourceManager::Singleton().GetTextureList()->at("effect_explosion"),
+					m_Player.GetPostion()
+				);
 			}
 		}
 	}
@@ -135,6 +154,7 @@ void CSceneGame::NextWave(int wave_no)
 	}
 	// GameFlowの初期化
 	m_NowGameFlow = GameFlow::Enemy_SetMove;
+	m_FlowWaitTime = cm_WaitTime;
 	// 敵Statusの再設定
 	CEnemyManager::Singleton().Release();
 	// 敵の量を設定
@@ -153,7 +173,8 @@ void CSceneGame::NextWave(int wave_no)
 	// 雲の画像を再設定
 	// BGMの設定
 	if (wave_no < 4) {
-		m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
+		m_pCloudTexture_left = &CResourceManager::Singleton().GetTextureList()->at("cloud_left");
+		m_pCloudTexture_right = &CResourceManager::Singleton().GetTextureList()->at("cloud_right");
 		auto pS = &CResourceManager::Singleton().GetSoundList()->at("bgm_stage123");
 		if (m_pBGM != pS) {
 			if (m_pBGM) { m_pBGM->Stop(); }
@@ -164,7 +185,8 @@ void CSceneGame::NextWave(int wave_no)
 		}
 	}
 	else {
-		m_pCloudTexture = &CResourceManager::Singleton().GetTextureList()->at("cloud_gray_left");
+		m_pCloudTexture_left = &CResourceManager::Singleton().GetTextureList()->at("cloud_gray_left");
+		m_pCloudTexture_right = &CResourceManager::Singleton().GetTextureList()->at("cloud_gray_right");
 		auto pS = &CResourceManager::Singleton().GetSoundList()->at("bgm_stage456");
 		if (m_pBGM != pS) {
 			if (m_pBGM) { m_pBGM->Stop(); }
@@ -178,6 +200,8 @@ void CSceneGame::NextWave(int wave_no)
 
 	// 背景の再設定
 	m_pBackgroundTexture = &CResourceManager::Singleton().GetTextureList()->at(m_WaveBackground[wave_no]);
+	// UIの更新
+	m_pUI_Wave = &CResourceManager::Singleton().GetTextureList()->at(m_UI_WaveTexture[m_WaveNo]);
 }
 
 void CSceneGame::Initialize()
@@ -202,7 +226,6 @@ void CSceneGame::Initialize()
 	m_Player.Initialize(CVector2(500, 500));
 	
 	m_pUI_Life = &CResourceManager::Singleton().GetTextureList()->at(m_UI_LifeTexture[m_Player.GetLife()]);
-	m_pUI_Wave = &CResourceManager::Singleton().GetTextureList()->at(m_UI_WaveTexture[m_WaveNo]);
 
 	CEnemyManager::Singleton().Initialize(); // ResetEnemies()内に移植するかも？
 	this->NextWave(m_WaveNo);
@@ -231,6 +254,7 @@ void CSceneGame::Update()
 	}
 
 	CEnemyManager::Singleton().Update();
+	CEffectManager::Singleton().Update();
 }
 
 void CSceneGame::Render()
@@ -241,11 +265,11 @@ void CSceneGame::Render()
 	CEnemyManager::Singleton().Render();
 
 	for (const auto & pos : m_CloudPositions[m_WaveNo]) {
-		m_pCloudTexture->Render(
-			pos[0] - m_pCloudTexture->GetWidth()*0.5f,
-			pos[1] - m_pCloudTexture->GetHeight() * 0.5f
-		);
+		m_pCloudTexture_left->Render(pos[0], pos[1], TextureAlignment::TEXALIGN_CENTERCENTER);
 	}
+
+	// effect
+	CEffectManager::Singleton().Render();
 
 	m_Player.Render();
 
@@ -262,7 +286,7 @@ void CSceneGame::RenderDebug()
 	CGraphicsUtilities::RenderString(0, 30, "push to F1 => next SecenGameClear");
 	CGraphicsUtilities::RenderString(0, 60, "push to F2 => next SecenGameOver");
 	CGraphicsUtilities::RenderString(0, 90, "push to F3 => next wave");
-	CGraphicsUtilities::RenderString(0, 120, "wait time => %0.3f", m_FlowWiatTime);
+	CGraphicsUtilities::RenderString(0, 120, "wait time => %0.3f", m_FlowWaitTime);
 	CGraphicsUtilities::RenderString(0, 150, "flow NO => %d", m_NowGameFlow);
 
 }
@@ -272,6 +296,7 @@ void CSceneGame::Release()
 	font.Release();
 	DESIGNVECTOR design;
 	RemoveFontResourceEx(TEXT("LightNovelPOPv2.otf"), FR_PRIVATE,&design);
+	CEffectManager::Singleton().Release();
 	CEnemyBulletManager::Singleton().Release();
 	CEnemyManager::Singleton().Release();
 	m_pBGM->Stop();
