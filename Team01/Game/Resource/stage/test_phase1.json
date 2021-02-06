@@ -17,6 +17,11 @@
       "bullet_amount": 5,
       "amount_set": 10,
       "reflect_count": 4,
+      "central_dir": 30,
+      "dir_range": 360,
+      "dir_rotation": -1,
+      "bullet_gap": 4,
+      "bullet_setgap": 30,
       "hp": 3,
       "texture_uri": "enemy/Enemy06.png"
 

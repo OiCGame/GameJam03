@@ -13,6 +13,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy01.png"
       },
@@ -29,6 +34,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy01.png"
       },
@@ -45,6 +55,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy01.png"
       },
@@ -61,6 +76,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy01.png"
       },
@@ -77,12 +97,17 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy01.png"
       },
-  
-  
-  
+
+
+
       {
         "spawn_time": 7.0,
         "initPosX": 512,
@@ -96,6 +121,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy02.png"
       },
@@ -112,6 +142,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy02.png"
       },
@@ -128,6 +163,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy02.png"
       },
@@ -144,6 +184,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy02.png"
       },
@@ -160,12 +205,17 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy02.png"
       },
-  
-  
-  
+
+
+
       {
         "spawn_time": 14.0,
         "initPosX": -32,
@@ -179,6 +229,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy03.png"
       },
@@ -195,6 +250,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy03.png"
       },
@@ -211,6 +271,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy03.png"
       },
@@ -227,6 +292,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy03.png"
       },
@@ -243,6 +313,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy03.png"
       },
@@ -259,6 +334,11 @@
         "bullet_amount": 1,
         "amount_set": 50,
         "reflect_count": 0,
+        "central_dir": 30,
+        "dir_range": 360,
+        "dir_rotation": -1,
+        "bullet_gap": 4,
+        "bullet_setgap": 30,
         "hp": 3,
         "texture_uri": "enemy/Enemy03.png"
       },
