@@ -249,7 +249,7 @@ void CSceneGame::Render()
 
 	m_pUI_Life->Render(5, 8);
 	m_pUI_Wave->Render(m_pUI_Life->GetWidth() + 5, 15);
-	font.RenderString(1000,0,"‚Å‚ª");
+	font.RenderFormatString(1000, 0, MOF_XRGB(255, 0, 0), "%d", (int)m_FlowWiatTime);
 }
 
 void CSceneGame::RenderDebug()
@@ -266,6 +266,9 @@ void CSceneGame::RenderDebug()
 
 void CSceneGame::Release()
 {
+	font.Release();
+	DESIGNVECTOR design;
+	RemoveFontResourceEx(TEXT("LightNovelPOPv2.otf"), FR_PRIVATE,&design);
 	CEnemyBulletManager::Singleton().Release();
 	CEnemyManager::Singleton().Release();
 	m_pBGM->Stop();
