@@ -31,7 +31,8 @@ private:
 	bool m_bShow;
 	int m_AfterimageInterval;
 	bool m_MoveEnd;
-	float m_TeleportInterval;
+	float m_TeleportTime;
+	bool m_bTeleport;
 	bool m_SePlay;
 public:
 	// コンストラクタ
@@ -62,7 +63,7 @@ public:
 	
 
 	// 移動に必要なパラメーターを設定
-	void SetMoveParameter(CVector2 mPos, int type, CVector2 speed);
+	void SetMoveParameter(CVector2 mPos, int type, CVector2 speed,float TeleportInterval);
 
 	// 矩形の取得
 	CRectangle GetRectangle(void);
