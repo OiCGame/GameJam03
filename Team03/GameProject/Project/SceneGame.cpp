@@ -275,7 +275,7 @@ void CSceneGame::Render()
 
 	m_pUI_Life->Render(5, 8);
 	m_pUI_Wave->Render(m_pUI_Life->GetWidth() + 5, 15);
-	font.RenderFormatString(1000, 0, MOF_XRGB(255, 0, 0), "%d", (int)m_FlowWiatTime);
+	font.RenderFormatString(1000, 0, MOF_XRGB(255, 0, 0), "%d", (int)m_FlowWaitTime);
 	CSceneBase::Render();
 }
 
