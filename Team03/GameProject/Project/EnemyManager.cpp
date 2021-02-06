@@ -2,7 +2,7 @@
 
 CEnemyManager::CEnemyManager() :
 	m_pEnemyArray() ,
-	m_MovePosArray(),
+	m_MoveCloudArray(),
 	m_MoveTime(0.0f)
 {
 }
@@ -43,7 +43,7 @@ void CEnemyManager::Update(void)
 			while (!end)
 			{
 				end = true;
-				Rnd = CUtilities::Random(m_MovePosArray.size());
+				Rnd = CUtilities::Random(m_MoveCloudArray.size());
 				for (int i = 0; i < CEnemyManager::Singleton().GetEnemyCount(); i++)
 				{
 					if (m_EnemyMovePosArray[i] == Rnd)
@@ -53,7 +53,7 @@ void CEnemyManager::Update(void)
 				}
 			}
 			m_EnemyMovePosArray[enemy->GetEnemyNum()] = Rnd;
-			enemy->SetMoveParameter(m_MovePosArray[Rnd], m_MoveType, m_MoveSpeed, m_TeleportInterval);
+			enemy->SetMoveParameter(m_MoveCloudArray[Rnd].Pos,m_MoveCloudArray[Rnd].Right , m_MoveType, m_MoveSpeed, m_TeleportInterval);
 		}
 		enemy->Update();
 	}
@@ -75,7 +75,7 @@ void CEnemyManager::Release(void)
 		enemy.reset();
 	}
 	m_pEnemyArray.clear();
-	m_MovePosArray.clear();
+	m_MoveCloudArray.clear();
 }
 
 void CEnemyManager::StartMove(float Time, CVector2 speed, int type, float TeleportInterval)
@@ -126,9 +126,9 @@ void CEnemyManager::AddEnemy(const std::shared_ptr<CEnemy>& penemy)
 	m_pEnemyArray.push_back(penemy);
 }
 
-void CEnemyManager::AddMovePos(CVector2 mPos)
+void CEnemyManager::AddMoveCloud(Cloud cloud)
 {
-	m_MovePosArray.push_back(mPos);
+	m_MoveCloudArray.push_back(cloud);
 }
 
 std::shared_ptr<CEnemy> CEnemyManager::GetEnemy(int i) const

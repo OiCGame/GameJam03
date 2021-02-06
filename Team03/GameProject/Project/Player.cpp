@@ -8,6 +8,10 @@ constexpr float DECELERATE = 0.5f;
 // –³“GŽžŠÔ’è”
 constexpr int INVINCIBLE_FRAME = 120;
 
+constexpr float limit = (MAX_SPEED - ACCELERATION) / MAX_SPEED;
+constexpr float limitHalf = (MAX_SPEED * 0.5f - ACCELERATION) / (MAX_SPEED * 0.5f);
+
+
 constexpr float ATTACK_COOLDOWN_TIME = 2.0f;
 
 void CPlayer::VelocityUpdate()
@@ -32,8 +36,12 @@ void CPlayer::VelocityUpdate()
 		vector /= length;
 		vector *= ACCELERATION;
 		//‘¬“x§ŒÀˆ—
-		constexpr float limit = (MAX_SPEED - ACCELERATION) / MAX_SPEED;
-		m_MoveVelocity *= limit;
+		if (g_pInput->IsKeyHold(MOFKEY_LSHIFT)) {
+			m_MoveVelocity *= limitHalf;
+		}
+		else {
+			m_MoveVelocity *= limit;
+		}
 		m_MoveVelocity += vector;
 	}
 	else {
@@ -105,6 +113,8 @@ void CPlayer::Initialize(const CVector2& pos)
 	m_Life = 2;
 	m_DamageWait = 0;
 	m_AttackCooldown = 0;
+
+	m_Radius = m_TexturePlayer->GetHeight() * 0.25f;
 }
 
 void CPlayer::Update()

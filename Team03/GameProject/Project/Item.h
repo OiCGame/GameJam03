@@ -20,6 +20,11 @@ private:
 	ItemType		type;
 public:
 	bool			m_bShow;
+	
+	CItem() :
+		type(ItemType::ITEM_LIFE),
+		m_bShow(false)
+	{};
 
 	void Initialize(const CVector2& pos, ItemType type = ItemType::ITEM_LIFE);
 	void Update();

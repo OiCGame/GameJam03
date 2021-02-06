@@ -35,6 +35,8 @@ private:
 	bool m_bTeleport;
 	bool m_SePlay;
 	int m_EnemyNum;
+
+	bool m_CloudRight;
 public:
 	// コンストラクタ
 	CEnemy();
@@ -64,7 +66,7 @@ public:
 	
 
 	// 移動に必要なパラメーターを設定
-	void SetMoveParameter(CVector2 mPos, int type, CVector2 speed,float TeleportInterval);
+	void SetMoveParameter(CVector2 mPos,bool cloudRight, int type, CVector2 speed,float TeleportInterval);
 
 	// 矩形の取得
 	CRectangle GetRectangle(void);

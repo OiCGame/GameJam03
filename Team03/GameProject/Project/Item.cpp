@@ -23,7 +23,7 @@ void CItem::Update()
 
 void CItem::Render()
 {
-	if (!m_bShow) {
+	if (!m_bShow || m_Texture == NULL) {
 		return;
 	}
 

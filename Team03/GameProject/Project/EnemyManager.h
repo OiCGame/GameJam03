@@ -3,12 +3,13 @@
 #include <memory>
 #include "Enemy.h"
 #include "EnemyBulletManager.h"
+#include "StageData.h"
 
 class CEnemyManager
 {
 private:
 	std::vector<std::shared_ptr<CEnemy>> m_pEnemyArray;
-	std::vector<CVector2> m_MovePosArray;
+	std::vector<Cloud> m_MoveCloudArray;
 	std::vector<int> m_EnemyMovePosArray;
 
 	float m_MoveTime;
@@ -48,8 +49,8 @@ public:
 	// “o˜^
 	void AddEnemy(const std::shared_ptr<CEnemy> & penemy);
 
-	// ˆÚ“®ˆÊ’u‚Ì“o˜^
-	void AddMovePos(CVector2 mPos);
+	// ˆÚ“®ˆÊ’u‚Ì“o˜^i‰_j
+	void AddMoveCloud(Cloud cloud);
 
 	// æ“¾
 	std::shared_ptr<CEnemy> GetEnemy(int i) const;

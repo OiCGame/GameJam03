@@ -64,10 +64,18 @@ void CEnemy::Update(void)
 			m_pSETeleport->Play();
 			m_Position = CVector2(m_MovePos.x - GetRectangle().GetWidth()*0.5f, m_MovePos.y - GetRectangle().GetHeight()*0.5f);
 			// エフェクト追加
-			CEffectManager::Singleton().addEffect(
-				&CResourceManager::Singleton().GetTextureList()->at("effect_cloud_right_highlight"),
-				m_MovePos
-			);
+			if (m_CloudRight){
+				CEffectManager::Singleton().addEffect(
+					&CResourceManager::Singleton().GetTextureList()->at("effect_cloud_right_highlight"),
+					m_MovePos
+				);
+			}
+			else {
+				CEffectManager::Singleton().addEffect(
+					&CResourceManager::Singleton().GetTextureList()->at("effect_cloud_left_highlight"),
+					m_MovePos
+				);
+			}
 			m_bTeleport = true;
 		}
 		m_TeleportTime -= CUtilities::GetFrameSecond();
@@ -139,8 +147,9 @@ void CEnemy::Shot(const LauncherInit_PolygonRotation & init)
 }
 
 
-void CEnemy::SetMoveParameter(CVector2 mPos, int type, CVector2 speed, float TeleportInterval)
+void CEnemy::SetMoveParameter(CVector2 mPos,bool cloudRight, int type, CVector2 speed, float TeleportInterval)
 {
+	m_CloudRight = cloudRight;
 	m_MovePos = mPos;
 	m_MoveSpeed = speed;
 	if (type == TYPE_ALL)

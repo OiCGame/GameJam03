@@ -16,6 +16,10 @@
 #include	"SceneGameClear.h"
 #include	"SceneGameOver.h"
 
+#include	"Stage1.h"
+#include	"Stage2.h"
+#include	"Stage3.h"
+
 std::unique_ptr<CSceneBase> gpSecene(new CSceneTitle());
 
 /*************************************************************************//*!
@@ -63,6 +67,7 @@ MofBool CGameApp::Initialize(void){
 			// effect
 		.LoadTexture("effect_explosion", "images/effect/explosion.png")
 		.LoadTexture("effect_cloud_right_highlight", "images/effect/cloud_right_highlight.png")
+		.LoadTexture("effect_cloud_left_highlight", "images/effect/cloud_left_highlight.png")
 			// UI
 				// tutorial
 		.LoadTexture("tutorial_AttackText","images/ui/tutorial/AttackText.png")
@@ -121,7 +126,7 @@ MofBool CGameApp::Update(void){
 			gpSecene.reset(new CSceneTitle());
 			break;
 		case NextScene::Game:
-			gpSecene.reset(new CSceneGame());
+			gpSecene.reset(new CSceneGame(stg3));
 			break;
 		case NextScene::GameClear:
 			gpSecene.reset(new CSceneGameClear());

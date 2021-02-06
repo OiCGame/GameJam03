@@ -41,12 +41,14 @@ void CSceneGame::DebugKey()
 void CSceneGame::Flow_SetEnemyMove()
 {
 	// ˆÚ“®‚Ìİ’è
+
 	CEnemyManager::Singleton().StartMove(
 		m_EnemyMoveTime[m_WaveNo],
-		CVector2(m_EnemySpeed[m_WaveNo],m_EnemySpeed[m_WaveNo]),
+		CVector2(stageData[m_WaveNo].EnemySpeed, stageData[m_WaveNo].EnemySpeed),
 		TYPE_ALL,
 		m_EnemyTeleportInterval[m_WaveNo]
 	);
+
 	// Next Flow
 	m_NowGameFlow = GameFlow::Enemy_Moving;
 }
@@ -164,16 +166,16 @@ void CSceneGame::NextWave(int wave_no)
 	// “GStatus‚ÌÄİ’è
 	CEnemyManager::Singleton().Release();
 	// “G‚Ì—Ê‚ğİ’è
-	for (int i = 0; i < m_EnemyCount[wave_no]; i++)
+	for (int i = 0; i < stageData[m_WaveNo].EnemyAmount; i++)
 	{
 		auto enemy = std::make_shared<CEnemy>();
 		enemy->Initialize();
 		CEnemyManager::Singleton().AddEnemy(enemy);
 	}
 	//ˆÚ“®ˆÊ’u‚Ì“o˜^
-	for (const auto & pos : m_CloudPositions[wave_no])
+	for (const auto & cloud : stageData[m_WaveNo].CloudPositions)
 	{
-		CEnemyManager::Singleton().AddMovePos(CVector2(pos[0], pos[1]));
+		CEnemyManager::Singleton().AddMoveCloud(cloud);
 	}
 
 	// ‰_‚Ì‰æ‘œ‚ğÄİ’è
@@ -244,6 +246,8 @@ void CSceneGame::Initialize()
 
 	CEnemyManager::Singleton().Initialize(); // ResetEnemies()“à‚ÉˆÚA‚·‚é‚©‚àH
 	this->NextWave(m_WaveNo);
+
+
 }
 
 void CSceneGame::Update()
@@ -290,8 +294,9 @@ void CSceneGame::Render()
 
 	m_Item.Render();
 
-	for (const auto & pos : m_CloudPositions[m_WaveNo]) {
-		m_pCloudTexture_right->Render(pos[0], pos[1], TextureAlignment::TEXALIGN_CENTERCENTER);
+	for (const auto & cloud : stageData[m_WaveNo].CloudPositions) {
+		auto texture = cloud.Right ? m_pCloudTexture_right : m_pCloudTexture_left;
+		texture->Render(cloud.Pos.x, cloud.Pos.y, TextureAlignment::TEXALIGN_CENTERCENTER);
 	}
 
 	// effect

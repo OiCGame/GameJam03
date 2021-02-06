@@ -4,6 +4,7 @@
 #include	 "EnemyBulletManager.h"
 #include	 "Player.h"
 #include	"Item.h"
+#include	"StageData.h"
 
 enum class GameFlow {
 	Enemy_SetMove,
@@ -20,6 +21,9 @@ class CSceneGame : public CSceneBase
 private:
 	// 最大ウェーブ数
 	int m_MaxWave = 5;
+
+	StageData stageData;
+
 	// 雲の(大体の)中心座標
 	std::vector<std::vector<std::vector<int>>> m_CloudPositions = {
 		// wave1
@@ -92,12 +96,13 @@ private:
 			{1729,	561},
 			{1605,	189}
 		}
-};
+	};
 
 	int m_EnemyCount[6] = { 1, 1, 2, 2, 3, 3 };
 	float m_EnemyMoveTime[6] = { 5, 5, 5, 6, 7, 8 };
 	float m_EnemySpeed[6] = { 20, 25, 35, 50, 70, 100};
 	float m_EnemyTeleportInterval[6] = { 0.3f,0.3f, 0.3f, 0.2f, 0.2f, 0.1f };
+
 	std::string m_WaveBackground[6] = {
 		"wave1",
 		"wave2",
@@ -159,6 +164,13 @@ private:
 	void NextWave(int wave_no);
 
 public:
+	CSceneGame(const StageData& stgData) :
+		m_pBGM(NULL),
+		m_pSE_Explosion(NULL),
+		stageData(stgData)
+	{
+	};
+
 	void Initialize() override;
 	void Update()  override;
 	void Render()  override;
