@@ -11,6 +11,8 @@ enum Effect_Name
 {
     Effect_Hit,
     Effect_Clear,
+    Effect_GameOver,
+    Effect_ReadyGo,
     Effect_Count,
 };
 

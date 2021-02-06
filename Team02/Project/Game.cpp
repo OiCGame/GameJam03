@@ -82,6 +82,9 @@ void CGame::Initialize(void)
 	Timer.Initialize(GameTime, CVector2(((int)g_pGraphics->GetTargetWidth() * 0.5) - 207,0));
 
     GameUI.Initialize();
+    Vector2 size(1920, 1080);
+    g_EffectManager.Start(Effect_ReadyGo, size * 0.5f);
+    StartTimer.Start();
 }
 
 // ********************************************************************************
@@ -116,13 +119,15 @@ bool CGame::Load(void)
 // ********************************************************************************
 void CGame::Update(void)
 {
+    // 開始1秒間はレディゴーアニメーションのため操作させない。
+    StartTimer.Update();
+    if (StartTimer.GetTime() < 1.0f)
+    {
+        return;
+    }
     // タイマーの更新
     BlockFallTimer.Update();
-    // DEBUG : １キーでタイトルへ
-    if (g_pInput->IsKeyPush(MOFKEY_1))
-    {
-        ChangeScene(SceneName::Title);
-    }
+#ifdef _DEBUG
     if (g_pInput->IsKeyPush(MOFKEY_0))
     {
         ChangeScene(SceneName::GameClear);
@@ -135,6 +140,7 @@ void CGame::Update(void)
 	{
 		Timer.SetTime(-10);
 	}
+#endif
 
 
     if (BlockFallTimer.GetTime() > BlockFallIntervalSecond)
@@ -205,10 +211,18 @@ void CGame::Update(void)
 	    Timer.Update();
     }
 
-	if (Timer.GetTime() <= 0)
-	{
-		
+    GameOverUITimer.Update();
+    if (GameOverUITimer.GetTime() > 1.6f)
+    {
 		ChangeScene(SceneName::GameOver);
+    }
+	if (Timer.GetTime() <= 0 && !GameOverUITimer.IsStart())
+	{
+        Vector2 size{ 1920, 1080 };
+        GameOverUITimer.Start();
+        g_EffectManager.Start(Effect_GameOver, size * 0.5f);
+        StopBGM();
+        g_SoundManager.GetSE(SE_GameOver)->Play();
 	}
 
     
@@ -222,11 +236,7 @@ void CGame::Update(void)
         ClearUITimer.Start();
         Vector2 size{ 1920, 1080 };
         g_EffectManager.Start(Effect_Clear, size * 0.5f);
-		//以下、現在のステージの取り方がわからなかったため、修正お願いします。
-		g_SoundManager.GetBGM(BGM_Stage_1)->Stop();
-		g_SoundManager.GetBGM(BGM_Stage_2)->Stop();
-		g_SoundManager.GetBGM(BGM_Stage_3)->Stop();
-
+        StopBGM();
         g_SoundManager.GetSE(SE_GameClear)->Play();
 	}
 }
@@ -286,4 +296,40 @@ void CGame::Release(void)
     }
 	Timer.Release();
     GameUI.Release();
+}
+
+void CGame::StartBGM(void)
+{
+    switch (GetData().StageNo)
+    {
+    case 0:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_1)->Play();
+        break;
+    case 1:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_2)->Play();
+        break;
+    case 2:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_3)->Play();
+        break;
+    default:
+        break;
+    }
+}
+
+void CGame::StopBGM(void)
+{
+    switch (GetData().StageNo)
+    {
+    case 0:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_1)->Stop();
+        break;
+    case 1:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_2)->Stop();
+        break;
+    case 2:
+        g_SoundManager.GetBGM(BGM_Name::BGM_Stage_3)->Stop();
+        break;
+    default:
+        break;
+    }
 }

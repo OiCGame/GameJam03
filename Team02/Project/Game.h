@@ -26,6 +26,8 @@ private:
     CPanel			Panel;
     CGameUI         GameUI;
     sip::CStopWatch ClearUITimer;
+    sip::CStopWatch GameOverUITimer;
+    sip::CStopWatch StartTimer;
 
 public:
 
@@ -93,5 +95,10 @@ public:
     /// <changed>‚¢‚Ì‚¤‚¦,2021/02/01</changed>
     // ********************************************************************************
     void Release(void);
+
+private:
+
+    void StartBGM(void);
+    void StopBGM(void);
 };
 

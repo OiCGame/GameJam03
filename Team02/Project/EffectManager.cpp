@@ -49,6 +49,8 @@ void CEffectManager::Load(void)
     {
         "Effect/ヒットエフェクト/hit.anim",
         "Effect/CLEAR　連番/clear.anim",
+        "Effect/GAME OVER　連番/gameover.anim",
+        "Effect/READYGO　連番/readygo.anim",
     };
     for (int i = 0; i < Effect_Count; i++)
     {
@@ -58,6 +60,8 @@ void CEffectManager::Load(void)
     {
         "Effect/ヒットエフェクト/effect.png",
         "Effect/CLEAR　連番/1-29.png",
+        "Effect/GAME OVER　連番/t1-29.png",
+        "Effect/READYGO　連番/tt1-28.png",
     };
     for (int i = 0; i < Effect_Count; i++)
     {
