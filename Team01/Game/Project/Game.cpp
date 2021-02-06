@@ -517,7 +517,7 @@ bool CGame::Release(void) {
 
 	m_Items.clear();
 	m_EnemyDatas.clear();
-
+	m_ShopShip.Reset();
 	m_Player.Release();
 
 	for (auto &e : m_Enemies) {

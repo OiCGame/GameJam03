@@ -92,11 +92,8 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 	} // if
 	m_pResources = resources;
 
-	if (!m_Items.empty()) {
-		return false;
-	} // if
-	
 
+	m_Items.clear();
 	struct InitParam {
 		Mof::CTexture* texture;
 		uint32_t price;
@@ -107,6 +104,7 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 		{&m_pResources->at("shop/shop-auto.png"), 5},
 		{&m_pResources->at("shop/shop-spazer.png"), 3}
 	};
+	
 	m_Items.reserve(sizeof(params) / sizeof(InitParam));
 
 	for (auto& param : params) {
@@ -116,8 +114,24 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 	} // for
 	m_pSelectItem.reset();
 
-	m_bAutoShotSoldout = false;
-	m_b3WayShotSoldout = false;
+	if (m_BulletLevel == 1) {
+		m_Items[1]->SetTexture(&m_pResources->at("shop/shop-atk-Up2.png"));
+	} // if
+	else if (m_BulletLevel == 2) {
+		m_Items[1]->SetTexture(&m_pResources->at("shop/shop-atk-Up3.png"));
+	} // else if
+	else if (m_BulletLevel == 3) {
+		m_Items[1]->SetTexture(&m_pResources->at("shop/shop-atk-Up4.png"));
+		m_Items[1]->Soldout();
+	} // else if
+	if (m_bAutoShotSoldout) {
+		m_Items[2]->SetTexture(&m_pResources->at("shop/shop-has-auto.png"));
+		m_Items[2]->Soldout();
+	} // if
+	if (m_b3WayShotSoldout) {
+		m_Items[3]->SetTexture(&m_pResources->at("shop/shop-has-spazer.png"));
+		m_Items[3]->Soldout();
+	} // if
 	return true;
 }
 
@@ -180,13 +194,10 @@ bool CShop::Update(CShopShip& out) {
 				else if (m_BulletLevel == 3) {
 					m_Items.at(m_SelectIndex)->SetTexture(&m_pResources->at("shop/shop-atk-Up4.png"));
 				} // else if
-
-
 				if (m_BulletLevelMax <= m_BulletLevel) {
 					m_BulletLevel = m_BulletLevelMax;
 					m_Items.at(m_SelectIndex)->Soldout();
 				} // if
-
 			} // if
 			if (m_SelectIndex == 2) {
 				m_bAutoShotSoldout = true;

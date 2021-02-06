@@ -50,6 +50,8 @@ void CShopShip::Reset(void){
 	m_Items.clear();
 	m_bShow = false;
 	m_TransportDistanceCount = 0.0f;
+	m_Position.x = -1024.0f;
+	m_Position.y = 300.0f;
 }
 
 bool CShopShip::Update(std::vector<std::shared_ptr<CItem>>& out) {
