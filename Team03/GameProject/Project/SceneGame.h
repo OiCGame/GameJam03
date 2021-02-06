@@ -94,7 +94,7 @@ private:
 };
 
 	int m_EnemyCount[6] = { 1,1,2,2,3,3 };
-	float m_EnemySpeed[6] = { 20,20,20,20,20,20 };
+	float m_EnemySpeed[6] = { 20, 25, 35, 50, 70, 90};
 	std::string m_WaveBackground[6] = {
 		"wave1",
 		"wave2",
