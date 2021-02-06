@@ -15,6 +15,7 @@
 #include    "Game.h"
 #include    "GameClear.h"
 #include    "GameOver.h"
+#include	"GameDescription.h"
 
 //MANAGER
 #include    "SoundManager.h"
@@ -44,6 +45,7 @@ MofBool CGameApp::Initialize(void) {
         .Add<CGame>(SceneName::Game)
         .Add<CGameClear>(SceneName::GameClear)
         .Add<CGameOver>(SceneName::GameOver)
+		.Add<CGameDescription>(SceneName::GameDescription)
         .SetFadeColor(MOF_COLOR_WHITE);
 
     m_SceneManager.Initialize(SceneName::Title);

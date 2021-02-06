@@ -8,6 +8,7 @@ enum class SceneName
     Game,
     GameOver,
     GameClear,
+	GameDescription,
 };
 
 // シーン共通データ

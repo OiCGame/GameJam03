@@ -142,7 +142,7 @@ void CTitle::Update(void)
             switch (m_SelectNo)
             {
             case 0: // 始める
-                ChangeScene(SceneName::Game);
+                ChangeScene(SceneName::GameDescription);
                 break;
             case 1: // オプション開く
                 m_OptionWindow.Show();
