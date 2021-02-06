@@ -72,7 +72,7 @@ void CGame::Collision(void) {
 				break_flag = true;
 				enemy.AddCollisionedEffect(effect);
 
-				int damage_value = effect->GetDamageValue(m_bBossExist);
+				float damage_value = effect->GetDamageValue(m_bBossExist);
 				if (enemy.Damage(damage_value)) {
 					effect->Chain();
 					effect_param.push_back(EffectParam(enemy.GetPosition(), effect->GetChainCount()));
@@ -120,7 +120,7 @@ void CGame::Collision(void) {
 				m_PlayerBullets[i].Hide();
 
 				enemy.SetFastBulletNo(i);
-				int damage_value = 1 * m_Player.GetBulletShotLevel();
+				float damage_value = 1.0f * m_Player.GetBulletDamageValue();
 
 				if (enemy.Damage(damage_value)) {
 					auto pos = Mof::CVector2(enemy.GetPosition());
@@ -341,7 +341,7 @@ bool CGame::Initialize(void) {
 		float dir_rotation = info[i]["dir_rotation"].GetFloat();
 		int bullet_gap = info[i]["bullet_gap"].GetInt();
 		int bullet_setgap = info[i]["bullet_setgap"].GetInt();
-		int hp = info[i]["hp"].GetInt();
+		float hp = info[i]["hp"].GetInt();
 		std::string tex_path = info[i]["texture_uri"].GetString();
 
 		m_EnemyDatas.push_back(CEnemy::InitParam(

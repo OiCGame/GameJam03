@@ -25,8 +25,8 @@ inline void Rotate(float& x, float& y, const float angle,
 };
 
 CEnemy::CEnemy() :
-	m_HP(3),
-	m_MaxHP(3),
+	m_HP(3.0f),
+	m_MaxHP(3.0f),
 	m_Speed(1.0f),
 	m_Dir(MOF_ToRadian(90)),
 	m_WaveDir(0),
@@ -180,7 +180,7 @@ void CEnemy::Initialize(const InitParam& param) {
 		param.bullet_column, param.bullet_amount, param.amount_set, param.reflect_count, param.central_dir, param.dir_range, param.dir_rotation, param.bullet_gap, param.bullet_setgap, param.hp_max);
 }
 
-void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int reflect, float cdir, float dirrange, float dirrotat, int bgap, int bsetgap, int hp) {
+void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int reflect, float cdir, float dirrange, float dirrotat, int bgap, int bsetgap, float hp) {
 	m_InitPos = pos;
 	m_Pos = pos;
 	m_MaxHP = hp;
@@ -388,9 +388,9 @@ Mof::CRectangle CEnemy::GetCollisionRectangle(void) const {
 	return rect;
 }
 
-bool CEnemy::Damage(int damage_value) {
+bool CEnemy::Damage(float damage_value) {
 	m_HP -= damage_value;
-	if (m_HP <= 0) {
+	if (m_HP <= 0.0f) {
 		m_bDrow = false;
 		return true;
 	} // if

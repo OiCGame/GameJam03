@@ -39,7 +39,7 @@ protected:
 	//! 3Way
 	bool m_b3WayShot;
 	//! íeÇÃçUåÇóÕ
-	uint32_t m_BulletLevel;
+	float m_BulletLevel;
 
 	int m_BulletNo;
 
@@ -89,7 +89,7 @@ public:
 	/// <summary>
 	/// ÉQÉbÉ^Å[
 	/// </summary>
-	uint32_t GetBulletShotLevel(void) const;
+	float GetBulletDamageValue(void) const;
 	/// <summary>
 	/// ÉQÉbÉ^Å[
 	/// </summary>
@@ -143,7 +143,7 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	void AddRevivalCount(void);
-	void BulletPowerUp(int level);
+	void BulletPowerUp(float level);
 	void AttachAutoShot(void);
 	void Attach3WayShot(void);
 

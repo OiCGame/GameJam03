@@ -85,7 +85,7 @@ CCharacter::CCharacter() :
 	m_ShotInterval(20),
 	m_ShotIntervalCount(m_ShotInterval),
 	m_b3WayShot(false),
-	m_BulletLevel(1) {
+	m_BulletLevel(0.6f) {
 
 }
 
@@ -119,7 +119,7 @@ Mof::CRectangle CCharacter::GetCollisionRectangle(void) const {
 uint32_t CCharacter::GetRevivalCount(void) const {
 	return this->m_RevivalCount;
 }
-uint32_t CCharacter::GetBulletShotLevel(void) const {
+float CCharacter::GetBulletDamageValue(void) const {
 	return this->m_BulletLevel;
 }
 bool CCharacter::IsShow(void) const {
@@ -236,7 +236,7 @@ void CCharacter::AddRevivalCount(void) {
 	m_pCanvas->AddImage(name.c_str(), &player_tex, pos);
 }
 
-void CCharacter::BulletPowerUp(int level) {
+void CCharacter::BulletPowerUp(float level) {
 	if (m_BulletLevel < level) {
 		m_BulletLevel = level;
 	} // if
