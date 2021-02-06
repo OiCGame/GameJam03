@@ -3,7 +3,7 @@
     {
       "spawn_time": 1.0,
       "id": "enemyID",
-      "initPosX": 150,
+      "initPosX": 450,
       "initPosY": 200,
       "movement": {
         "default": 0,
@@ -11,10 +11,15 @@
         "pinch_hp_ratio": 0.8
       },
       "atack": "random",
-      "bullet_column": 10,
-      "bullet_amount": 4,
-      "amount_set": 5,
-      "reflect_count": 2,
+      "bullet_column": 8,
+      "bullet_amount": 10,
+      "amount_set": 20,
+      "reflect_count": 0,
+      "central_dir": 30,
+      "dir_range": 360,
+      "dir_rotation": -1,
+      "bullet_gap": 4,
+      "bullet_setgap": 30,
       "hp": 3,
       "texture_uri": "enemy/Enemy01.png"
     },
@@ -29,10 +34,15 @@
         "pinch_hp_ratio": 0.8
       },
       "atack": "random",
-      "bullet_column": 1,
-      "bullet_amount": 1,
+      "bullet_column": 3,
+      "bullet_amount": 4,
       "amount_set": 6,
-      "reflect_count": 2,
+      "reflect_count": 0,
+      "central_dir": 90,
+      "dir_range": 180,
+      "dir_rotation": 0,
+      "bullet_gap": 10,
+      "bullet_setgap": 60,
       "hp": 3,
       "texture_uri": "enemy/Enemy02.png"
 
@@ -50,10 +60,15 @@
       },
 
       "atack": "random",
-      "bullet_column": 15,
+      "bullet_column": 2,
       "bullet_amount": 5,
       "amount_set": 10,
-      "reflect_count": 2,
+      "reflect_count": 0,
+      "central_dir": 90,
+      "dir_range": 90,
+      "dir_rotation": 0,
+      "bullet_gap": 10,
+      "bullet_setgap": 60,
       "hp": 3,
       "texture_uri": "enemy/Enemy03.png"
 

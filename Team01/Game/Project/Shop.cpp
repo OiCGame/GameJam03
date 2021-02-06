@@ -48,7 +48,9 @@ CShop::CShop() :
 	m_bShow(false),
 	m_pCanvas(),
 	m_bAutoShotSoldout(false),
-	m_b3WayShotSoldout(false){
+	m_b3WayShotSoldout(false),
+	m_ShotLvUpMaxCount(3),
+	m_ShotLvUpCount(0) {
 }
 
 CShop::~CShop() {
@@ -93,19 +95,22 @@ bool CShop::Initialize(std::unordered_map<std::string, Mof::CTexture>* resources
 	m_pSelectItem.reset();
 
 	m_bAutoShotSoldout = false;
+	m_b3WayShotSoldout = false;
+	m_ShotLvUpCount = 0;
+
 	return true;
 }
 
 bool CShop::Update(CShopShip& out) {
 	// index
-	if (::g_pInput->IsKeyPush(MOFKEY_UP)) {
+	if (CInputManager::GetInstance().GetVertical() > 0.25f) {
 		m_SelectIndex--;
 		if (m_SelectIndex < 0) {
 			m_SelectIndex = 0;
 		} // if
 		this->ItemSelect();
 	} // if
-	else if (::g_pInput->IsKeyPush(MOFKEY_DOWN)) {
+	else if (CInputManager::GetInstance().GetVertical() < -0.25f) {
 		if (m_pSelectItem.expired()) {
 			m_SelectIndex = 0;
 		} // if
@@ -119,16 +124,36 @@ bool CShop::Update(CShopShip& out) {
 		this->ItemSelect();
 	} // else if
 
-	if (m_SelectIndex == 2 && m_bAutoShotSoldout) {
-		return false;
-	} // if
-	if (m_SelectIndex == 3 && m_b3WayShotSoldout) {
-		return false;
-	} // if
+
+	switch (m_SelectIndex)
+	{
+	case 0:
+		// 一機アップ
+		break;
+	case 1:
+		if (m_ShotLvUpCount < m_ShotLvUpMaxCount)
+		{
+			return false;
+		}
+		break;
+	case 2:
+		if (m_bAutoShotSoldout)
+		{
+			return false;
+		}
+		break;
+	case 3:
+		if (m_b3WayShotSoldout)
+		{
+			return false;
+		}
+	default:
+		break;
+	}
 
 
 	// buy
-	if (::g_pInput->IsKeyPush(MOFKEY_X) && !m_pSelectItem.expired()) {
+	if (CInputManager::GetInstance().GetPush(0) && !m_pSelectItem.expired()) {
 		auto ptr = m_pSelectItem.lock();
 		if (ptr->GetPrice() < m_pCanvas->GetScore()) {
 

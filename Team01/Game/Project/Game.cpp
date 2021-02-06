@@ -281,11 +281,16 @@ bool CGame::Initialize(void) {
 		int bullet_amount = info[i]["bullet_amount"].GetInt();
 		int amount_set = info[i]["amount_set"].GetInt();
 		int reflect_count = info[i]["reflect_count"].GetInt();
+		float central_dir = info[i]["central_dir"].GetFloat();
+		float dir_range = info[i]["dir_range"].GetFloat();
+		float dir_rotation = info[i]["dir_rotation"].GetFloat();
+		int bullet_gap = info[i]["bullet_gap"].GetInt();
+		int bullet_setgap = info[i]["bullet_setgap"].GetInt();
 		int hp = info[i]["hp"].GetInt();
 		std::string tex_path = info[i]["texture_uri"].GetString();
 
 		m_EnemyDatas.push_back(CEnemy::InitParam(
-			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, reflect_count, hp, tex_path));
+			Mof::CVector2(x, y), move_type, move_type_on_pinch, pinch_hp_ratio, spawn_time, bullet_column, bullet_amount, amount_set, reflect_count, central_dir, dir_range, dir_rotation, bullet_gap, bullet_setgap, hp, tex_path));
 	} // for
 
 

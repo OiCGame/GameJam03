@@ -37,6 +37,8 @@ private:
 	//! 3Way売り切れ
 	bool m_b3WayShotSoldout;
 
+	int m_ShotLvUpMaxCount;
+	int m_ShotLvUpCount;
 
 	/// <summary>
 	/// アイテム選択

@@ -37,6 +37,9 @@ CEnemy::CEnemy() :
 	m_Target(),
 	m_StartPositionY(GenerateRandomF(384.0f, 576.0f)),
 
+	m_BulletGap(10),
+	m_BulletSetGap(60),
+
 	m_MoveWaveAmplitudeCount(0.0f),
 	m_MoveWaveAmplitudeCountMax(360.0f),
 	m_MoveWaveAmplitude(5.0f) {
@@ -170,17 +173,18 @@ void CEnemy::AddCollisionedEffect(const std::shared_ptr<CEffect>& ptr) {
 
 void CEnemy::Initialize(const InitParam& param) {
 	this->Initialize(param.position, param.move_type, param.move_type_on_pinch, param.pinch_hp_ratio,
-		param.bullet_column, param.bullet_amount, param.reflect_count, param.amount_set, param.hp_max);
+		param.bullet_column, param.bullet_amount, param.amount_set, param.reflect_count, param.central_dir, param.dir_range, param.dir_rotation, param.bullet_gap, param.bullet_setgap, param.hp_max);
 }
 
-void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int reflect, int hp) {
+void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int reflect, float cdir, float dirrange, float dirrotat, int bgap, int bsetgap, int hp) {
 	m_Pos = pos;
 	m_MaxHP = hp;
 	m_HP = m_MaxHP;
 	m_MoveType = move_type;
 	m_MoveTypeOnPinch = pinch_move;
 	m_PinchHPRatio = ratio;
-
+	m_BulletGap = bgap;
+	m_BulletSetGap = bsetgap;
 
 	//	m_BulletColumn = rand() % 1 + 1;
 	m_BulletColumn = column;
@@ -194,14 +198,15 @@ void CEnemy::Initialize(Vector2 pos, int move_type, int pinch_move, float ratio,
 	m_Bullet = new CEnemyBullet[m_BulletCount];
 
 
-	int dirpat = 360 / m_BulletColumn;
-	float dirSplit = rand() % dirpat;
+	int bcolu = (dirrange == 360) ? m_BulletColumn : m_BulletColumn - 1;
+	float dirSplit = (m_BulletColumn <= 1) ? 0 : dirrange / bcolu;
 
-	float dir = 90 - (m_BulletColumn - 1) * dirSplit / 2;
+
+	float bldir = cdir - bcolu * dirSplit / 2;
 
 	for (int i = 0; i < m_BulletCount; i++) {
 		int dp = i % m_BulletColumn;
-		m_Bullet[i].Initialize(dir + dp * dirSplit, reflect);
+		m_Bullet[i].Initialize(bldir + dp * dirSplit + dirrotat * i, reflect);
 	}
 
 	m_BulletNo = 0;

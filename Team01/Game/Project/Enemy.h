@@ -17,38 +17,43 @@ static int GenerateRandom(const int min, const int max) {
 
 
 class CEnemy {
-    using super = CCharacter;
+	using super = CCharacter;
 public:
-    struct InitParam {
-        Mof::CVector2 position;
-        int move_type;
-        int move_type_on_pinch;
-        float pinch_hp_ratio;
-        float spawn_time;
-        int bullet_column;
-        int bullet_amount;
-        int amount_set;
+	struct InitParam {
+		Mof::CVector2 position;
+		int move_type;
+		int move_type_on_pinch;
+		float pinch_hp_ratio;
+		float spawn_time;
+		int bullet_column;
+		int bullet_amount;
+		int amount_set;
 		int reflect_count;
-        int hp_max;
+		float central_dir;
+		float dir_range;
+		float dir_rotation;
+		int bullet_gap;
+		int bullet_setgap;
+		int hp_max;
 		std::string texture_path;
-        InitParam(Mof::CVector2 pos, int move, int pinch_move, float ratio, float time, int column, int amount, int reflect, int set, int hp, std::string tex_path) :
-            position(pos), move_type(move), move_type_on_pinch(pinch_move), pinch_hp_ratio(ratio), spawn_time(time), bullet_column(column), bullet_amount(amount), amount_set(set), reflect_count(reflect), hp_max(hp), texture_path(tex_path){
-        }
-    };
+		InitParam(Mof::CVector2 pos, int move, int pinch_move, float ratio, float time, int column, int amount, int set, int reflect, float cdir, float dirrange, float dirrotat, int bgap, int bsetgap, int hp, std::string tex_path) :
+			position(pos), move_type(move), move_type_on_pinch(pinch_move), pinch_hp_ratio(ratio), spawn_time(time), bullet_column(column), bullet_amount(amount), amount_set(set), reflect_count(reflect), central_dir(cdir), dir_range(dirrange), dir_rotation(dirrotat), bullet_gap(bgap), bullet_setgap(bsetgap), hp_max(hp), texture_path(tex_path) {
+		}
+	};
 private:
-    int m_HP;
-    int m_MaxHP;
-    Vector2 m_Pos;
-    Vector2 m_Move;
-    float m_Dir;
-    float m_Speed;
-    CTexture* m_pTexture;
-    bool m_bDrow;
-    int m_FastBulletNo;
-    //! 移動タイプ
-    int m_MoveType;
-    int m_MoveTypeOnPinch;
-    float m_PinchHPRatio;
+	int m_HP;
+	int m_MaxHP;
+	Vector2 m_Pos;
+	Vector2 m_Move;
+	float m_Dir;
+	float m_Speed;
+	CTexture* m_pTexture;
+	bool m_bDrow;
+	int m_FastBulletNo;
+	//! 移動タイプ
+	int m_MoveType;
+	int m_MoveTypeOnPinch;
+	float m_PinchHPRatio;
 	//! 突撃位置
 	Mof::CVector2 m_Target;
 	//! 当たったEffect
@@ -68,60 +73,60 @@ private:
 	/// </summary>
 	/// <param name=""></param>
 	void Chase(Mof::CVector2 pos);
-    /// <summary>
-    /// 移動
-    /// </summary>
-    /// <param name=""></param>
-    virtual void Move(void);
-    void Move(int type);
-    void MoveOutOfWindow(void);
+	/// <summary>
+	/// 移動
+	/// </summary>
+	/// <param name=""></param>
+	virtual void Move(void);
+	void Move(int type);
+	void MoveOutOfWindow(void);
 	void MoveAssault(void);
 	void MoveWave(void);
 
-    CEnemyBullet* m_Bullet;
-    int m_BulletColumn;
-    int m_BulletAmount;
-    int m_BulletSetAmount;
-    int m_BulletCount;
+	CEnemyBullet* m_Bullet;
+	int m_BulletColumn;
+	int m_BulletAmount;
+	int m_BulletSetAmount;
+	int m_BulletCount;
 
-    int m_BulletNo;
-    int m_BulletSetNo;
+	int m_BulletNo;
+	int m_BulletSetNo;
 
-    int m_BulletGap = 10;
-    int m_BulletRemGap;
-    int m_BulletSetGap = 60;
-    int m_BulletSetRemGap;
+	int m_BulletGap;
+	int m_BulletRemGap;
+	int m_BulletSetGap;
+	int m_BulletSetRemGap;
 
 	int m_BulletShowCount;
 
 
 public:
-    CEnemy();
-    ~CEnemy();
+	CEnemy();
+	~CEnemy();
 
-    Mof::CVector2 GetPosition(void) const;
+	Mof::CVector2 GetPosition(void) const;
 	std::vector<std::weak_ptr<CEffect>> & GetCollisionedEffects(void);
 	void AddCollisionedEffect(const std::shared_ptr<CEffect>& ptr);
 
-    bool IsShow(void) const { return m_bDrow; }
+	bool IsShow(void) const { return m_bDrow; }
 
-    void Initialize(const InitParam& param);
-    void Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount,int reflect, int set, int hp);
-    void SetTexture(Mof::CTexture* ptr);
-    void SetTarget(Mof::CVector2 pos);
-    void Update(bool end);
-    int CollisionBullet(CRectangle prec);
-    void Render(bool end);
-    void Release();
+	void Initialize(const InitParam& param);
+	void Initialize(Vector2 pos, int move_type, int pinch_move, float ratio, int column, int amount, int set, int reflect, float cdir, float dirrange, float dirrotat, int bgap, int bsetgap, int hp);
+	void SetTexture(Mof::CTexture* ptr);
+	void SetTarget(Mof::CVector2 pos);
+	void Update(bool end);
+	int CollisionBullet(CRectangle prec);
+	void Render(bool end);
+	void Release();
 
-    /// <summary>
-    /// 死亡したらtrueを返す
-    /// </summary>
-    /// <param name=""></param>
-    /// <returns></returns>
-    bool Damage(int damage_value);
-    int GetFastBulletNo() { return m_FastBulletNo; }
-    void SetFastBulletNo(int no) { m_FastBulletNo = no; }
-    Mof::CRectangle GetCollisionRectangle(void) const;
+	/// <summary>
+	/// 死亡したらtrueを返す
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool Damage(int damage_value);
+	int GetFastBulletNo() { return m_FastBulletNo; }
+	void SetFastBulletNo(int no) { m_FastBulletNo = no; }
+	Mof::CRectangle GetCollisionRectangle(void) const;
 	int GetBulletShow() { return m_BulletShowCount; }
 };
