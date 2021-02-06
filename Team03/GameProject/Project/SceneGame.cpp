@@ -41,7 +41,7 @@ void CSceneGame::DebugKey()
 void CSceneGame::Flow_SetEnemyMove()
 {
 	// ˆÚ“®‚ÌÝ’è
-	CEnemyManager::Singleton().StartMove(5.0f, CVector2(m_EnemySpeed[m_WaveNo], m_EnemySpeed[m_WaveNo]), TYPE_MOVE);
+	CEnemyManager::Singleton().StartMove(5.0f, CVector2(m_EnemySpeed[m_WaveNo], m_EnemySpeed[m_WaveNo]), TYPE_ALL);
 	// Next Flow
 	m_NowGameFlow = GameFlow::Enemy_Moving;
 }
@@ -147,7 +147,8 @@ void CSceneGame::Flow_EnemyShots()
 void CSceneGame::NextWave(int wave_no)
 {
 	// GameClear”»’è
-	if (wave_no >= m_MaxWave) {
+	if (wave_no > m_MaxWave) {
+		m_WaveNo = m_MaxWave;
 		this->SetNextScene(NextScene::GameClear);
 		this->SceneEnd();
 		return;
@@ -265,7 +266,7 @@ void CSceneGame::Render()
 	CEnemyManager::Singleton().Render();
 
 	for (const auto & pos : m_CloudPositions[m_WaveNo]) {
-		m_pCloudTexture_left->Render(pos[0], pos[1], TextureAlignment::TEXALIGN_CENTERCENTER);
+		m_pCloudTexture_right->Render(pos[0], pos[1], TextureAlignment::TEXALIGN_CENTERCENTER);
 	}
 
 	// effect

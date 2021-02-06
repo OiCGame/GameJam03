@@ -64,10 +64,10 @@ void CEnemy::Update(void)
 			m_pSETeleport->Play();
 			m_Position = CVector2(m_MovePos.x - GetRectangle().GetWidth()*0.5f, m_MovePos.y - GetRectangle().GetHeight()*0.5f);
 			// エフェクト追加
-			//CEffectManager::Singleton().addEffect(
-			//	&CResourceManager::Singleton().GetTextureList()->at(""),
-			//	m_Position
-			//);
+			CEffectManager::Singleton().addEffect(
+				&CResourceManager::Singleton().GetTextureList()->at("effect_cloud_left_highlight"),
+				m_Position
+			);
 		}
 		m_TeleportInterval += CUtilities::GetFrameSecond();
 		break;

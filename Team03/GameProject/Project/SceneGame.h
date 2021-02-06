@@ -18,7 +18,7 @@ class CSceneGame : public CSceneBase
 {
 private:
 	// 最大ウェーブ数
-	int m_MaxWave = 6;
+	int m_MaxWave = 5;
 	// 雲の(大体の)中心座標
 	std::vector<std::vector<std::vector<int>>> m_CloudPositions = {
 		// wave1
