@@ -6,6 +6,7 @@
 #include "GameDefine.h"
 #include "UICanvas.h"
 #include "Bullet.h"
+#include "Effect.h"
 
 
 class CCharacter {
@@ -21,6 +22,8 @@ protected:
 	Mof::CTexture* m_pTexture;
 	//! Bulletテクスチャ
 	Mof::CTexture* m_pBulletTexture;
+	//! HP初期値
+	int m_HPMax;
 	//! HP
 	int m_HP;
 	//! 表示
@@ -120,7 +123,7 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	bool Damage(void);
+	bool Damage(std::vector<std::shared_ptr<CEffect>>& out, Mof::CTexture* effect_tex, SpriteMotionData& motion);
 	/// <summary>
 	/// 復活
 	/// </summary>

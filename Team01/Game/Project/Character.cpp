@@ -74,7 +74,8 @@ CCharacter::CCharacter() :
 	m_Speed(2.0f, 0.0f),
 	m_pTexture(nullptr),
 	m_pBulletTexture(nullptr),
-	m_HP(3),
+	m_HPMax(1),
+	m_HP(m_HPMax),
 	m_BulletNo(0),
 	m_RevivalCount(2),
 	m_Invincible(180),
@@ -188,11 +189,21 @@ bool CCharacter::Release(void) {
 	return true;
 }
 
-bool CCharacter::Damage(void) {
+bool CCharacter::Damage(std::vector<std::shared_ptr<CEffect>>& out,Mof::CTexture* effect_tex, SpriteMotionData& motion) {	
 	m_HP--;
 	m_RemInvincible = m_Invincible;
 	if (m_HP <= 0) {
 		m_bShow = false;
+		
+		auto pos = this->GetPosition();
+		auto effect = std::make_shared<CEffect>();
+		effect->Generate(effect_tex, motion);
+
+		pos.x -= effect->GetCollisionRectangle().GetWidth() * 0.5f;
+		pos.y -= effect->GetCollisionRectangle().GetHeight() * 0.5f;
+
+		effect->Start(pos);
+		out.push_back(effect);
 		return true;
 	} // if
 	return false;
@@ -201,7 +212,7 @@ bool CCharacter::Damage(void) {
 bool CCharacter::Revival(void) {
 	m_RevivalCount--;
 	m_bShow = true;
-	m_HP = (4);
+	m_HP = m_HPMax;
 	return true;
 }
 

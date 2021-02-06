@@ -110,7 +110,7 @@ void CGame::Collision(void) {
 		} // for
 		if (m_Player.IsShow() && m_Player.GetInvincible() == 0) {
 			for (int i = 0; i < enemy.CollisionBullet(m_Player.GetCollisionRectangle()); i++) {
-				if (m_Player.Damage()) {
+				if (m_Player.Damage(m_Effects, &m_Textures.at(m_EffectTexturePath), m_EffectMotionData)) {
 					auto name = std::string("image");
 					name += std::to_string(m_Player.GetRevivalCount() - 1);
 					m_UICanvas.RemoveImage(name);
@@ -138,10 +138,11 @@ void CGame::CollisionPlayerEnemies(void) {
 	for (auto& enemy : m_Enemies) {
 		if (player_rect.CollisionRect(enemy.GetCollisionRectangle())) {
 
-			if (m_Player.Damage()) {
+			if (m_Player.Damage(m_Effects, &m_Textures.at(m_EffectTexturePath),m_EffectMotionData)) {
 				auto name = std::string("image");
 				name += std::to_string(m_Player.GetRevivalCount() - 1);
 				m_UICanvas.RemoveImage(name);
+				
 
 				if (0 < m_Player.GetRevivalCount()) {
 					m_Player.Revival();
@@ -152,16 +153,6 @@ void CGame::CollisionPlayerEnemies(void) {
 				} // else
 			} // if
 
-			auto& effect_tex = m_Textures.at(m_EffectTexturePath);
-			auto pos = m_Player.GetPosition();
-			auto effect = std::make_shared<CEffect>();
-			effect->Generate(&effect_tex, m_EffectMotionData);
-
-			pos.x -= effect->GetCollisionRectangle().GetWidth() * 0.5f;
-			pos.y -= effect->GetCollisionRectangle().GetHeight() * 0.5f;
-
-			effect->Start(pos);
-			m_Effects.push_back(effect);
 
 			//				m_UICanvas.AddScore(100);
 			//				m_UICanvas.AddText(std::to_string(100), pos, 60);
