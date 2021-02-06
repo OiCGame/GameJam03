@@ -110,7 +110,6 @@ void CGame::Collision(void) {
 		} // for
 		if (m_Player.IsShow()) {
 			for (int i = 0; i < enemy.CollisionBullet(m_Player.GetCollisionRectangle()); i++) {
-				break;
 				if (m_Player.Damage()) {
 					auto name = std::string("image");
 					name += std::to_string(m_Player.GetRevivalCount() - 1);
@@ -123,9 +122,9 @@ void CGame::Collision(void) {
 					else {
 						m_bPlayerDead = true;
 					} // else
-
-
 				} // if
+				break;
+
 			} // for
 		} // if
 	} // for
@@ -136,7 +135,22 @@ void CGame::CollisionPlayerEnemies(void) {
 		auto player_rect = m_Player.GetCollisionRectangle();
 		for (auto& enemy : m_Enemies) {
 			if (player_rect.CollisionRect(enemy.GetCollisionRectangle())) {
-				m_Player.Damage();
+
+				if (m_Player.Damage()) {
+					auto name = std::string("image");
+					name += std::to_string(m_Player.GetRevivalCount() - 1);
+					m_UICanvas.RemoveImage(name);
+
+					if (0 < m_Player.GetRevivalCount()) {
+						m_Player.Revival();
+					} // if
+
+					else {
+						m_bPlayerDead = true;
+					} // else
+				} // if
+
+
 				this->EffectStart(m_Player.GetPosition());
 				break;
 			} // if
@@ -313,7 +327,6 @@ bool CGame::Initialize(void) {
 	m_Shop.SetCanvasPtr(&m_UICanvas);
 
 	m_UICanvas.AddScore(10);
-
 	return true;
 }
 

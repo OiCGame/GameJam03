@@ -1,65 +1,514 @@
 {
-  "enemies": [
-    {
-      "spawn_time": 1.0,
-      "id": "enemyID",
-      "initPosX": 150,
-      "initPosY": 200,
-      "movement": {
-        "default": 0,
-        "pinch": 2,
-        "pinch_hp_ratio": 0.8
+    "enemies": [
+      {
+        "spawn_time": 1.0,
+        "initPosX": 512,
+        "initPosY": 0,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
       },
-      "atack": "random",
-      "bullet_column": 10,
-      "bullet_amount": 4,
-      "amount_set": 5,
-      "reflect_count": 2,
-      "hp": 3,
-      "texture_uri": "enemy/Enemy01.png"
-    },
-    {
-      "spawn_time": 2.0,
-      "id": "enemyID",
-      "initPosX": 400,
-      "initPosY": 200,
-      "movement": {
-        "default": 0,
-        "pinch": 1,
-        "pinch_hp_ratio": 0.8
+      {
+        "spawn_time": 1.0,
+        "initPosX": 424,
+        "initPosY": -32,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
       },
-      "atack": "random",
-      "bullet_column": 1,
-      "bullet_amount": 1,
-      "amount_set": 6,
-      "reflect_count": 2,
-      "hp": 3,
-      "texture_uri": "enemy/Enemy02.png"
-
-    },
-    {
-      "spawn_time": 4.0,
-      "id": "enemyID",
-      "initPosX": 850,
-      "initPosY": 500,
-
-      "movement": {
-        "default": 0,
-        "pinch": 1,
-        "pinch_hp_ratio": 0.2
+      {
+        "spawn_time": 1.0,
+        "initPosX": 600,
+        "initPosY": -32,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
       },
-
-      "atack": "random",
-      "bullet_column": 15,
-      "bullet_amount": 5,
-      "amount_set": 10,
-      "reflect_count": 2,
-      "hp": 3,
-      "texture_uri": "enemy/Enemy03.png"
-
+      {
+        "spawn_time": 1.0,
+        "initPosX": 336,
+        "initPosY": -64,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 1.0,
+        "initPosX": 688,
+        "initPosY": -64,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+  
+  
+  
+      {
+        "spawn_time": 7.0,
+        "initPosX": 512,
+        "initPosY": 0,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy02.png"
+      },
+      {
+        "spawn_time": 7.0,
+        "initPosX": 424,
+        "initPosY": -32,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy02.png"
+      },
+      {
+        "spawn_time": 7.0,
+        "initPosX": 600,
+        "initPosY": -32,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy02.png"
+      },
+      {
+        "spawn_time": 7.0,
+        "initPosX": 336,
+        "initPosY": -64,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy02.png"
+      },
+      {
+        "spawn_time": 7.0,
+        "initPosX": 688,
+        "initPosY": -64,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy02.png"
+      },
+  
+  
+  
+      {
+        "spawn_time": 14.0,
+        "initPosX": -32,
+        "initPosY": 234,
+        "movement": {
+          "default": 1,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy03.png"
+      },
+      {
+        "spawn_time": 14.0,
+        "initPosX": -32,
+        "initPosY": 268,
+        "movement": {
+          "default": 1,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy03.png"
+      },
+      {
+        "spawn_time": 14.0,
+        "initPosX": -32,
+        "initPosY": 300,
+        "movement": {
+          "default": 1,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy03.png"
+      },
+      {
+        "spawn_time": 25.0,
+        "initPosX": 1024,
+        "initPosY": 234,
+        "movement": {
+          "default": 5,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy03.png"
+      },
+      {
+        "spawn_time": 25.0,
+        "initPosX": 1024,
+        "initPosY": 268,
+        "movement": {
+          "default": 5,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy03.png"
+      },
+      {
+        "spawn_time": 25.0,
+        "initPosX": 1024,
+        "initPosY": 300,
+        "movement": {
+          "default": 5,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy03.png"
+      },
+      
+  
+  
+      {
+        "spawn_time": 35.0,
+        "initPosX": 512,
+        "initPosY": 0,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 35.0,
+        "initPosX": 424,
+        "initPosY": -32,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 35.0,
+        "initPosX": 600,
+        "initPosY": -32,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 35.0,
+        "initPosX": 336,
+        "initPosY": -64,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 35.0,
+        "initPosX": 688,
+        "initPosY": -64,
+        "movement": {
+          "default": 4,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+  
+  
+      {
+        "spawn_time": 42.0,
+        "initPosX": 512,
+        "initPosY": 0,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 42.0,
+        "initPosX": 416,
+        "initPosY": -32,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 42.0,
+        "initPosX": 480,
+        "initPosY": -32,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 42.0,
+        "initPosX": 544,
+        "initPosY": -32,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 42.0,
+        "initPosX": 608,
+        "initPosY": -32,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 42.0,
+        "initPosX": 448,
+        "initPosY": -64,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 42.0,
+        "initPosX": 512,
+        "initPosY": -64,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 42.0,
+        "initPosX": 576,
+        "initPosY": -64,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 42.0,
+        "initPosX": 480,
+        "initPosY": -96,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      },
+      {
+        "spawn_time": 42.0,
+        "initPosX": 544,
+        "initPosY": -96,
+        "movement": {
+          "default": 2,
+          "pinch": 0,
+          "pinch_hp_ratio": 0.0
+        },
+        "bullet_column": 2,
+        "bullet_amount": 1,
+        "amount_set": 50,
+        "reflect_count": 0,
+        "hp": 3,
+        "texture_uri": "enemy/Enemy01.png"
+      }
+    ],
+    "texture": {
+      "uri": "stage/test_stage.jpg"
     }
-  ],
-  "texture": {
-    "uri": "stage/test_stage.jpg"
   }
-}

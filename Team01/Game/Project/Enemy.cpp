@@ -89,6 +89,9 @@ void CEnemy::Move(int type) {
 	case 5:
 		this->MoveWave();
 		break;
+	case -1:
+		m_Pos.x--;
+		break;
 	default:
 		break;
 	} // switch
