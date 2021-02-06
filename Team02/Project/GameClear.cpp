@@ -108,16 +108,19 @@ void CGameClear::Update(void)
     {
         if (g_pInput->IsKeyPush(MOFKEY_UP))
         {
+			g_SoundManager.GetSE(SE_Select)->Play();
             m_SelectNo = (m_SelectNo == 0) ? (1) : (0);
         }
         if (g_pInput->IsKeyPush(MOFKEY_DOWN))
         {
+			g_SoundManager.GetSE(SE_Select)->Play();
             m_SelectNo = (m_SelectNo == 1) ? (0) : (1);
         }
     }
 
     if (g_pInput->IsKeyPush(MOFKEY_SPACE))
     {
+		g_SoundManager.GetSE(SE_Enter)->Play();
         switch (m_SelectNo)
         {
         case 0:

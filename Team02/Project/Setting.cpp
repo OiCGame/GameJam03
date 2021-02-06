@@ -181,15 +181,19 @@ void CSetting::Update(void)
     if (g_pInput->IsKeyPush(MOFKEY_UP))
     {
         m_SelectNo = (m_SelectNo - 1 < 0) ? (2) : (m_SelectNo - 1);
+		g_SoundManager.GetSE(SE_Select)->Play();
+		
     }
     if (g_pInput->IsKeyPush(MOFKEY_DOWN))
     {
         m_SelectNo = (m_SelectNo + 1 > 2) ? (0) : (m_SelectNo + 1);
+		g_SoundManager.GetSE(SE_Select)->Play();
     }
 
     // 戻る選択中にスペースキーで戻る
     if (m_SelectNo == 0 && g_pInput->IsKeyPull(MOFKEY_SPACE))
     {
+		g_SoundManager.GetSE(SE_Cancel)->Play();
         Hide();
     }
 

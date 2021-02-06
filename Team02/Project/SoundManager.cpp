@@ -66,7 +66,7 @@ void CSoundManager::Load(void)
     {
         "パズルがはまった.mp3",
         "決定.mp3",
-        "キャンセルmp3",
+        "キャンセル.mp3",
         "アイテム拾う.mp3",
         "選択.mp3",
         "クリア.mp3",

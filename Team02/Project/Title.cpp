@@ -113,6 +113,7 @@ void CTitle::Update(void)
     {
         if (g_pInput->IsKeyPush(MOFKEY_ESCAPE))
         {
+			g_SoundManager.GetSE(SE_Cancel)->Play();
             m_OptionWindow.Hide();
         }
         m_OptionWindow.Update();
@@ -122,16 +123,22 @@ void CTitle::Update(void)
         // 選択やつ移動処理
         if (g_pInput->IsKeyPush(MOFKEY_UP))
         {
+			g_SoundManager.GetSE(SE_Select)->Play();
+
             m_SelectNo = (m_SelectNo - 1 < 0) ? (2) : (m_SelectNo - 1);
         }
         if (g_pInput->IsKeyPush(MOFKEY_DOWN))
         {
+			g_SoundManager.GetSE(SE_Select)->Play();
+
             m_SelectNo = (m_SelectNo + 1 > 2) ? (0) : (m_SelectNo + 1);
         }
 
         // Enterキーで決定 <- スペースのほうが操作よかったので変更 b y深山 2021/02/05/16:53
         if (g_pInput->IsKeyPull(MOFKEY_SPACE))
         {
+			g_SoundManager.GetSE(SE_Enter)->Play();
+
             switch (m_SelectNo)
             {
             case 0: // 始める

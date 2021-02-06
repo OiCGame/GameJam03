@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneDefine.h"
 #include "Button.h"
+#include "SoundManager.h"
 
 // ********************************************************************************
 /// <summary>

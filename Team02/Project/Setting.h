@@ -1,6 +1,7 @@
 #pragma once
 #include "Mof.h"
 #include "Button.h"
+#include "SoundManager.h"
 
 // ********************************************************************************
 /// <summary>

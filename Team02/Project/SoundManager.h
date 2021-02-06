@@ -12,7 +12,7 @@ enum SE_Name
 	SE_PanelSet,
     SE_Enter,
     SE_Cancel,
-    SE_GetPanel,
+    SE_GetBullet,
     SE_Select,
     SE_GameClear,
     SE_GameOver,

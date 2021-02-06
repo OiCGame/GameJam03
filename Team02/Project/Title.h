@@ -2,6 +2,7 @@
 #include "SceneDefine.h"
 #include "Button.h"
 #include "Setting.h"
+#include "SoundManager.h"
 
 // ********************************************************************************
 /// <summary>

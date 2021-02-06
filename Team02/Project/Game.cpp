@@ -176,6 +176,7 @@ void CGame::Update(void)
 			else
 			{
 				Player.SetBullet(btype);
+				g_SoundManager.GetSE(SE_GetBullet)->Play();
 			}
 			Block[i].SetShow(false);
 		}
