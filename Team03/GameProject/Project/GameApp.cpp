@@ -156,7 +156,7 @@ MofBool CGameApp::Render(void){
 	g_pGraphics->ClearTarget(0.0f,0.0f,1.0f,0.0f,1.0f,0);
 
 	gpSecene->Render();
-	gpSecene->RenderDebug();
+	//gpSecene->RenderDebug();
 
 	//•`‰æ‚ÌI—¹
 	g_pGraphics->RenderEnd();
