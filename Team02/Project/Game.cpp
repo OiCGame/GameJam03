@@ -171,6 +171,7 @@ void CGame::Update(void)
 				Timer.SetTime(-10);
 				Timer.StartRenderTimeDamage();
                 Player.Damage();
+				g_SoundManager.GetSE(SE_Damage)->Play();
 			}
 			else
 			{

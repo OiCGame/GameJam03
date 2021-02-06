@@ -16,6 +16,7 @@ enum SE_Name
     SE_Select,
     SE_GameClear,
     SE_GameOver,
+	SE_Damage,
 
     SE_Count,
 };

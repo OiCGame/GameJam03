@@ -71,6 +71,7 @@ void CSoundManager::Load(void)
         "選択.mp3",
         "クリア.mp3",
         "ゲームオーバー.mp3",
+		"被弾.mp3",
     };
 
     CUtilities::SetCurrentDirectory("../SE");
