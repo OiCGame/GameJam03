@@ -35,7 +35,7 @@ const StageData stg1 =
 	//“G‚ÌoŒ»”
 	1,
 	//“G‚ÌˆÚ“®‘¬“x
-	20
+	25
 	},
 
 	// Wave3
@@ -55,7 +55,7 @@ const StageData stg1 =
 	//“G‚ÌoŒ»”
 	2,
 	//“G‚ÌˆÚ“®‘¬“x
-	20
+	35
 	},
 
 	// Wave4
@@ -74,7 +74,7 @@ const StageData stg1 =
 	//“G‚ÌoŒ»”
 	2,
 	//“G‚ÌˆÚ“®‘¬“x
-	20
+	50
 	},
 
 	// Wave5
@@ -95,7 +95,7 @@ const StageData stg1 =
 	//“G‚ÌoŒ»”
 	3,
 	//“G‚ÌˆÚ“®‘¬“x
-	20
+	70
 	},
 
 	// Wave6
@@ -117,6 +117,6 @@ const StageData stg1 =
 	//“G‚ÌoŒ»”
 	3,
 	//“G‚ÌˆÚ“®‘¬“x
-	20
+	100
 	},
 };

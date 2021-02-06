@@ -126,7 +126,7 @@ MofBool CGameApp::Update(void){
 			gpSecene.reset(new CSceneTitle());
 			break;
 		case NextScene::Game:
-			gpSecene.reset(new CSceneGame(stg3));
+			gpSecene.reset(new CSceneGame(stg1));
 			break;
 		case NextScene::GameClear:
 			gpSecene.reset(new CSceneGameClear());
