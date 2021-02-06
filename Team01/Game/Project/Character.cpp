@@ -77,6 +77,8 @@ CCharacter::CCharacter() :
 	m_HP(3),
 	m_BulletNo(0),
 	m_RevivalCount(2),
+	m_Invincible(180),
+	m_RemInvincible(0),
 	m_bShow(true),
 	m_bAutoShot(false),
 	m_ShotInterval(20),
@@ -126,6 +128,7 @@ bool CCharacter::IsShow(void) const {
 bool CCharacter::Initialize(Mof::CVector2 init_pos) {
 	m_InitPos = init_pos;
 	m_Position = Vector2(m_InitPos.x, g_pGraphics->GetTargetHeight());
+	m_RemInvincible = 0;
 	return true;
 }
 
@@ -158,6 +161,8 @@ bool CCharacter::Update(std::array<CBullet, 256>& bullet_container, int pha) {
 		m_Position.x = std::clamp(m_Position.x + m_Move.x, 0.0f, 1024.0f - m_pTexture->GetWidth());
 
 	} // else
+	if (m_RemInvincible > 0)
+		m_RemInvincible--;
 	return true;
 }
 
@@ -165,7 +170,10 @@ bool CCharacter::Render(void) {
 	if (!this->m_bShow) {
 		return false;
 	} // if
-
+	if (m_RemInvincible % 6 > 2)
+	{
+		return false;
+	}
 	m_pTexture->Render(m_Position.x, m_Position.y);
 #ifdef _DEBUG
 	::CGraphicsUtilities::RenderFillRect(
@@ -182,6 +190,7 @@ bool CCharacter::Release(void) {
 
 bool CCharacter::Damage(void) {
 	m_HP--;
+	m_RemInvincible = m_Invincible;
 	if (m_HP <= 0) {
 		m_bShow = false;
 		return true;
