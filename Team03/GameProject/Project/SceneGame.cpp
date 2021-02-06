@@ -253,7 +253,7 @@ void CSceneGame::Initialize()
 void CSceneGame::Update()
 {
 	CSceneBase::Update();
-	this->DebugKey();
+	//this->DebugKey();
 
 	// Gameover”»’è
 	if (m_Player.GetLife() < 0) {
