@@ -81,4 +81,10 @@ public:
 	/// <param name=""></param>
 	/// <returns></returns>
 	bool Render(void);
+	/// <summary>
+	/// “]‘—
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool Transport(std::vector<std::shared_ptr<CItem>>& out);
 };

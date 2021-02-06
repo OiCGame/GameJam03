@@ -74,7 +74,7 @@ CCharacter::CCharacter() :
 	m_Speed(2.0f, 0.0f),
 	m_pTexture(nullptr),
 	m_pBulletTexture(nullptr),
-	m_HP(4),
+	m_HP(3),
 	m_BulletNo(0),
 	m_RevivalCount(2),
 	m_bShow(true),

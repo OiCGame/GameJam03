@@ -150,8 +150,19 @@ void CGame::CollisionPlayerEnemies(void) {
 					} // else
 				} // if
 
+				auto& effect_tex = m_Textures.at(m_EffectTexturePath);
+				auto pos = m_Player.GetPosition();
+				auto effect = std::make_shared<CEffect>();
+				effect->Generate(&effect_tex, m_EffectMotionData);
 
-				this->EffectStart(m_Player.GetPosition());
+				pos.x -= effect->GetCollisionRectangle().GetWidth() * 0.5f;
+				pos.y -= effect->GetCollisionRectangle().GetHeight() * 0.5f;
+
+				effect->Start(pos);
+				m_Effects.push_back(effect);
+
+//				m_UICanvas.AddScore(100);
+//				m_UICanvas.AddText(std::to_string(100), pos, 60);
 				break;
 			} // if
 		} // for
@@ -350,10 +361,21 @@ bool CGame::Update(void) {
 	if (m_bPhaseNo == 0) {
 		if (CInputManager::GetInstance().GetPush(8) || (m_EnemyDatas.empty() && m_EnemyCount == 0)) {
 			m_bPhaseNo = 1;
+
+			if (m_ShopShip.IsShow()) {
+				m_ShopShip.Transport(m_Items);
+				m_ShopShip.Reset();
+			} // if
+			for (auto item : m_Items) {
+				m_Player.OnUses(item);
+			} // for
+			m_Items.clear();
 		}
+		
 	} // if
 	if (m_bPhaseNo == 2) {
 		m_StagePhaseIndex++;
+
 		if (m_StagePaths.size() - 1 < m_StagePhaseIndex) {
 			m_StagePhaseIndex = m_StagePaths.size() - 1;
 		} // if

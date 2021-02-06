@@ -91,3 +91,10 @@ bool CShopShip::Render(void) {
 	} // if
 	return true;
 }
+
+bool CShopShip::Transport(std::vector<std::shared_ptr<CItem>>& out) {
+	out.reserve(m_Items.size());
+	std::move(m_Items.begin(), m_Items.end(), std::back_inserter(out));
+	m_Items.clear();
+	return true;
+}
