@@ -83,6 +83,7 @@ CCharacter::CCharacter() :
 	m_ShotIntervalCount(m_ShotInterval),
 	m_b3WayShot(false),
 	m_BulletLevel(1) {
+
 }
 
 CCharacter::~CCharacter() {
