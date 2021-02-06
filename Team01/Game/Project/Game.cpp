@@ -51,6 +51,8 @@ void CGame::Collision(void) {
 		}
 	};
 	std::vector<EffectParam> effect_param;
+
+	bool break_flag = false;;
 	for (auto& enemy : m_Enemies) {
 		if (!enemy.IsShow()) { continue; }
 		for (auto effect : m_Effects) {
@@ -65,6 +67,7 @@ void CGame::Collision(void) {
 			} // if
 			auto enemy_rect = enemy.GetCollisionRectangle();
 			if (enemy_rect.CollisionRect(effect->GetCollisionRectangle())) {
+				break_flag = true;
 				enemy.AddCollisionedEffect(effect);
 
 				int damage_value = effect->GetDamageValue(m_bBossExist);
@@ -73,7 +76,17 @@ void CGame::Collision(void) {
 					effect_param.push_back(EffectParam(enemy.GetPosition(), effect->GetChainCount()));
 				} // if
 			} // if
+
+			if (break_flag) {
+				break;
+			} // if
+
 		} // for
+
+		if (break_flag){
+			break;
+		} // if
+
 	} // for
 	auto& effect_tex = m_Textures.at(m_EffectTexturePath);
 	for (auto& param : effect_param) {
