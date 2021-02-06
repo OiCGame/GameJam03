@@ -51,12 +51,6 @@ bool CBullet::Update(void) {
 }
 
 bool CBullet::Render(void) {
-#ifdef
-//	::CGraphicsUtilities::RenderRect(
-//		this->GetCollisionRectangle(),
-//		MOF_ARGB(100, 100, 100, 100)
-//	);
-#endif // _DEBUG
 
 	auto tex = m_pTexture;
 	if (tex) {
