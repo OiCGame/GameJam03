@@ -108,9 +108,8 @@ void CGame::Collision(void) {
 				} // if
 			} // if
 		} // for
-		if (m_Player.IsShow()) {
+		if (m_Player.IsShow() && m_Player.GetInvincible() == 0) {
 			for (int i = 0; i < enemy.CollisionBullet(m_Player.GetCollisionRectangle()); i++) {
-				break;
 				if (m_Player.Damage()) {
 					auto name = std::string("image");
 					name += std::to_string(m_Player.GetRevivalCount() - 1);
@@ -132,16 +131,17 @@ void CGame::Collision(void) {
 }
 
 void CGame::CollisionPlayerEnemies(void) {
-	if (m_Player.IsShow()) {
-		auto player_rect = m_Player.GetCollisionRectangle();
-		for (auto& enemy : m_Enemies) {
-			if (player_rect.CollisionRect(enemy.GetCollisionRectangle())) {
-				m_Player.Damage();
-				this->EffectStart(m_Player.GetPosition());
-				break;
-			} // if
-		} // for
-	} // if
+	if (!m_Player.IsShow() || m_Player.GetInvincible() > 0) {
+		return;
+	}
+	auto player_rect = m_Player.GetCollisionRectangle();
+	for (auto& enemy : m_Enemies) {
+		if (player_rect.CollisionRect(enemy.GetCollisionRectangle())) {
+			m_Player.Damage();
+			this->EffectStart(m_Player.GetPosition());
+			break;
+		} // if
+	} // for
 }
 
 void CGame::CollisionItem(void) {

@@ -40,6 +40,9 @@ protected:
 
 	int m_BulletNo;
 
+	int m_Invincible;
+	int m_RemInvincible;
+
 	UICanvas* m_pCanvas;
 	/// <summary>
 	/// ˆÚ“®
@@ -140,4 +143,6 @@ public:
 	void BulletPowerUp(int level);
 	void AttachAutoShot(void);
 	void Attach3WayShot(void);
+
+	int GetInvincible() { return m_RemInvincible; }
 };
