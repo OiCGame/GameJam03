@@ -182,7 +182,19 @@ void CSceneGame::NextWave(int wave_no)
 
 void CSceneGame::Initialize()
 {
-	font.Create(32, "LightNovelPOPv2.otf");
+	DESIGNVECTOR design;
+	AddFontResourceEx(TEXT("LightNovelPOPv2.otf"), FR_PRIVATE, &design);
+	LOGFONT lf = {
+	64,0,0,0,0,0,0,0,
+	SHIFTJIS_CHARSET,
+	OUT_TT_ONLY_PRECIS,
+	CLIP_DEFAULT_PRECIS,
+	PROOF_QUALITY,
+	FIXED_PITCH | FF_MODERN,
+	TEXT("ƒ‰ƒmƒxPOP v2")
+	};
+	HFONT hFont = CreateFontIndirect(&lf);
+	font.Create(hFont);
 	m_pSE_Explosion = &CResourceManager::Singleton().GetSoundList()->at("se_explosion");
 	m_pSE_Explosion->SetVolume(0.3f);
 	
@@ -237,6 +249,7 @@ void CSceneGame::Render()
 
 	m_pUI_Life->Render(5, 8);
 	m_pUI_Wave->Render(m_pUI_Life->GetWidth() + 5, 15);
+	font.RenderString(1000,0,"‚Å‚ª");
 }
 
 void CSceneGame::RenderDebug()
