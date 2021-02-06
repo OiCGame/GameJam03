@@ -34,22 +34,32 @@ MofBool CGameApp::Initialize(void){
 	
 	CResourceManager::Singleton()
 		// âÊëúÇÃì«Ç›çûÇ›
+			// Secen
 		.LoadTexture("Title", "images/background/Title.png")
 		.LoadTexture("GameClear", "images/background/game_clear.png")
 		.LoadTexture("GameOver", "images/background/game_over.png")
+			// Background
 		.LoadTexture("wave1","images/background/wave1_background.png")
 		.LoadTexture("wave2","images/background/wave2_background.png")
 		.LoadTexture("wave3","images/background/wave3_background.png")
 		.LoadTexture("wave4","images/background/wave4_background.png")
 		.LoadTexture("wave5","images/background/wave5_background.png")
 		.LoadTexture("wave6","images/background/wave6_background.png")
+			// Player
 		.LoadTexture("Player", "images/player/PlayerUFO.png")
 		.LoadTexture("PlayerBullet", "images/player/PlayerBullet.png")
 		.LoadTexture("PlayerArrow", "images/player/PlayerArrow.png")
+			// Enemy
 		.LoadTexture("Enemy", "images/enemy/Enemyufo.png")
+		.LoadTexture("bullet_blue", "images/enemy/Bullet_1.png")
+		.LoadTexture("bullet_purple", "images/enemy/Bullet_2.png")
+			// Cloud
 		.LoadTexture("cloud_left", "images/cloud/cloud_left.png")
 		.LoadTexture("cloud_gray_left", "images/cloud/cloud_gray_left.png")
+			// Item
 		.LoadTexture("ItemLife", "images/item/ItemLife.png")
+			// effect
+		.LoadTexture("effect_explosion", "images/effect/explosion.png")
 			// UI
 				// Life
 		.LoadTexture("ui_life_0","images/ui/life/ui_zannki0.png")

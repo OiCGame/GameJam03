@@ -6,6 +6,7 @@ enum class BulletType
 {
 	red,
 	purple,
+	blue,
 	yellow,
 	orange,
 };

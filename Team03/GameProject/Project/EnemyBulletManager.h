@@ -23,7 +23,7 @@ struct LauncherInit_Polygon {
 	// 発射ベクトル
 	CVector2 vector;
 	// テクスチャータイプ
-	BulletType type{ BulletType::yellow };
+	BulletType type{ BulletType::blue };
 	//発射回数
 	int count{ 1 };
 	// 発射間隔 [s]
@@ -39,7 +39,7 @@ struct LauncherInit_PolygonRotation {
 	// 発射ベクトル
 	CVector2 vector;
 	// テクスチャータイプ
-	BulletType type{ BulletType::yellow };
+	BulletType type{ BulletType::purple };
 	//発射回数
 	int count{ 1 };
 	// 発射間隔 [s]
