@@ -44,7 +44,8 @@ CEnemy::CEnemy() :
 
 	m_MoveWaveAmplitudeCount(0.0f),
 	m_MoveWaveAmplitudeCountMax(360.0f),
-	m_MoveWaveAmplitude(5.0f) {
+	m_MoveWaveAmplitude(5.0f) ,
+	m_EffectHitFrame(0){
 }
 
 CEnemy::~CEnemy() {
@@ -62,12 +63,15 @@ void CEnemy::MainMove(int type) {
 		m_Move.x = cos(m_Dir) * m_Speed;
 		m_WaveDir += 2;
 	}
+	else if (type == 0) {
+		m_Move.y = 0.0f;
+		m_Move.x = 0.0f; 
+	} // else if
 	else
 	{
 		m_Move.y = sin(m_Dir) * m_Speed;
 		m_Move.x = cos(m_Dir) * m_Speed;
 	}
-
 	m_Pos += m_Move;
 
 	//m_Dir += 0.0f;
@@ -168,6 +172,7 @@ std::vector<std::weak_ptr<CEffect>>& CEnemy::GetCollisionedEffects(void) {
 }
 void CEnemy::AddCollisionedEffect(const std::shared_ptr<CEffect>& ptr) {
 	m_CollisionedEffects.push_back(ptr);
+	m_EffectHitFrame = 30;
 }
 
 void CEnemy::Initialize(const InitParam& param) {
@@ -234,6 +239,10 @@ void CEnemy::SetTarget(Mof::CVector2 pos) {
 void CEnemy::Update(bool end) {
 	m_Move.x = 0.0f;
 	m_Move.y = 0.0f;
+	m_EffectHitFrame--;
+	if (m_EffectHitFrame < 0) {
+		m_EffectHitFrame = 0;
+	} // if
 
 	m_BulletShowCount = 0;
 	for (int i = 0; i < m_BulletNo; i++) {

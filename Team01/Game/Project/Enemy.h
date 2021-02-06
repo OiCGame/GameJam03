@@ -103,7 +103,7 @@ private:
 
 	int m_BulletShowCount;
 
-
+	int m_EffectHitFrame;
 public:
 	CEnemy();
 	~CEnemy();
@@ -133,4 +133,5 @@ public:
 	void SetFastBulletNo(int no) { m_FastBulletNo = no; }
 	Mof::CRectangle GetCollisionRectangle(void) const;
 	int GetBulletShow() { return m_BulletShowCount; }
+	int GetLastHitFrame() { return m_EffectHitFrame; }
 };

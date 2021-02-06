@@ -1,7 +1,7 @@
 {
   "phases": [
     {
-      "uri": "stage/test_phase0.json"
+      "uri": "stage/phase0.json"
     },
     {
       "uri": "stage/test_phase1.json"

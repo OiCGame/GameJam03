@@ -56,10 +56,10 @@ bool CEffect::Render(void) {
     } // if
 
 #ifdef _DEBUG
-	::CGraphicsUtilities::RenderFillRect(
-		this->GetCollisionRectangle(),
-		MOF_ARGB(100, 100, 100, 100)
-	);
+//	::CGraphicsUtilities::RenderFillRect(
+//		this->GetCollisionRectangle(),
+//		MOF_ARGB(100, 100, 100, 100)
+//	);
 #endif // _DEBUG
     auto pos = m_Position;
     m_pTexture->Render(pos.x, pos.y, m_Motion.GetSrcRect());

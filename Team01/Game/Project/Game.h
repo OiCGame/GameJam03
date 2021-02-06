@@ -47,6 +47,7 @@ private:
 	std::array<CBullet, 256>m_PlayerBullets;
 	//! 発生した爆発エフェクト
 	std::vector<std::shared_ptr<CEffect>> m_Effects;
+	std::vector<std::shared_ptr<CEffect>> m_CollisionedEffects;
 	//! ボス出現中フラグ
 	bool m_bBossExist;
 	
@@ -59,6 +60,23 @@ private:
 	
 	
 	int m_bPhaseNo;
+
+
+
+	struct EffectParam {
+		Mof::CVector2 position;
+		uint32_t chain;
+		EffectParam(Mof::CVector2 pos, uint32_t count) : position(pos), chain(count) {
+		}
+		bool operator==(const EffectParam& param) {
+			return this->position == param.position;
+		}
+		bool operator!=(const EffectParam& param) {
+			return this->position == param.position;
+		}
+	};
+	std::vector<EffectParam> m_EffectParam;
+	int m_EffectFrameCount;
 
 	//! プレイヤー死亡 ゲームオーバー判定用
 	bool m_bPlayerDead;

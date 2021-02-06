@@ -44,13 +44,7 @@ void CGame::Collision(void) {
 	this->CollisionItem();
 	this->CollisionPlayerEnemies();
 
-	struct EffectParam {
-		Mof::CVector2 position;
-		uint32_t chain;
-		EffectParam(Mof::CVector2 pos, uint32_t count) : position(pos), chain(count) {
-		}
-	};
-	std::vector<EffectParam> effect_param;
+	std::vector<EffectParam> m_EffectParam;
 	for (auto& enemy : m_Enemies) {
 		if (!enemy.IsShow()) { continue; }
 		for (auto effect : m_Effects) {
@@ -70,13 +64,14 @@ void CGame::Collision(void) {
 				int damage_value = effect->GetDamageValue(m_bBossExist);
 				if (enemy.Damage(damage_value)) {
 					effect->Chain();
-					effect_param.push_back(EffectParam(enemy.GetPosition(), effect->GetChainCount()));
+					m_EffectParam.push_back(EffectParam(enemy.GetPosition(), effect->GetChainCount()));
 				} // if
+				break;
 			} // if
 		} // for
 	} // for
 	auto& effect_tex = m_Textures.at(m_EffectTexturePath);
-	for (auto& param : effect_param) {
+	for (auto& param : m_EffectParam) {
 		auto pos = param.position;
 		auto effect = std::make_shared<CEffect>();
 		effect->Generate(&effect_tex, m_EffectMotionData, param.chain);
@@ -86,7 +81,19 @@ void CGame::Collision(void) {
 		int score = std::pow(2, param.chain) * 100;
 		m_UICanvas.AddScore(score);
 		m_UICanvas.AddText(std::to_string(score), pos, 60);
+		break;
 	} // for
+
+	if (!m_EffectParam.empty()) {
+		auto& e = m_EffectParam.at(0);
+		auto it = std::remove(
+			m_EffectParam.begin(),
+			m_EffectParam.end(),
+			e);
+//		m_EffectParam.erase(it, m_EffectParam.end());
+	} // if
+
+
 
 	for (auto& enemy : m_Enemies) {
 		for (int i = 0; i < m_PlayerBullets.size(); i++) {
