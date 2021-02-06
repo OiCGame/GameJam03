@@ -9,6 +9,7 @@ class CEnemyManager
 private:
 	std::vector<std::shared_ptr<CEnemy>> m_pEnemyArray;
 	std::vector<CVector2> m_MovePosArray;
+	std::vector<int> m_EnemyMovePosArray;
 
 	float m_MoveTime;
 	CVector2 m_MoveSpeed;

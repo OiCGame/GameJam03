@@ -184,3 +184,13 @@ bool CEnemy::IsMoveEnd(void)
 {
 	return m_MoveEnd;
 }
+
+void CEnemy::SetEnemyNum(int num)
+{
+	m_EnemyNum = num;
+}
+
+int CEnemy::GetEnemyNum(void)
+{
+	return m_EnemyNum;
+}

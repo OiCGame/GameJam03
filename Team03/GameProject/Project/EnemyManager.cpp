@@ -38,7 +38,22 @@ void CEnemyManager::Update(void)
 	{
 		if (enemy->IsMoveEnd() && m_MoveTime > 0)
 		{
-			enemy->SetMoveParameter(m_MovePosArray[CUtilities::Random(m_MovePosArray.size())], m_MoveType, m_MoveSpeed, m_TeleportInterval);
+			bool end = false;
+			int Rnd = 0;
+			while (!end)
+			{
+				end = true;
+				Rnd = CUtilities::Random(m_MovePosArray.size());
+				for (int i = 0; i < CEnemyManager::Singleton().GetEnemyCount(); i++)
+				{
+					if (m_EnemyMovePosArray[i] == Rnd)
+					{
+						end = false;
+					}
+				}
+			}
+			m_EnemyMovePosArray[enemy->GetEnemyNum()] = Rnd;
+			enemy->SetMoveParameter(m_MovePosArray[Rnd], m_MoveType, m_MoveSpeed, m_TeleportInterval);
 		}
 		enemy->Update();
 	}
@@ -65,6 +80,17 @@ void CEnemyManager::Release(void)
 
 void CEnemyManager::StartMove(float Time, CVector2 speed, int type, float TeleportInterval)
 {
+	m_EnemyMovePosArray.resize(CEnemyManager::Singleton().GetEnemyCount());
+	for (int i = 0; i < CEnemyManager::Singleton().GetEnemyCount(); i++)
+	{
+		m_EnemyMovePosArray[i] = -1;
+	}
+	int num = 0;
+	for (auto enemy : m_pEnemyArray)
+	{
+		enemy->SetEnemyNum(num);
+		num++;
+	}
 	m_MoveTime = Time;
 	m_MoveSpeed = speed;
 	m_MoveType = type;

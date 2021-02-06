@@ -34,6 +34,7 @@ private:
 	float m_TeleportTime;
 	bool m_bTeleport;
 	bool m_SePlay;
+	int m_EnemyNum;
 public:
 	// コンストラクタ
 	CEnemy();
@@ -78,5 +79,8 @@ public:
 	void SetShow(bool b) { m_bShow = b; }
 
 	bool IsMoveEnd(void);
+
+	void SetEnemyNum(int num);
+	int GetEnemyNum(void);
 };
 
