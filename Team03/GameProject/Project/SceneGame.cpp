@@ -126,10 +126,15 @@ void CSceneGame::Flow_EnemyShots()
 		// 弾幕とプレイヤーの当たり判定
 		if (!m_Player.IsDamageableable()) { return; }
 		auto pBulletList = CEnemyBulletManager::Singleton().GetBulletList();
-		for (auto it = pBulletList->begin(); it != pBulletList->end(); it++) {
-			if (it->CollisionCircle(m_Player.GetCircle())) {
+		for (auto pEnemyBullet = pBulletList->begin(); pEnemyBullet != pBulletList->end(); pEnemyBullet++) {
+			if (pEnemyBullet->CollisionCircle(m_Player.GetCircle())) {
 				m_Player.TakeDamage();
 				m_pSE_Explosion->Play();
+				// エフェクト追加
+				CEffectManager::Singleton().addEffect(
+					&CResourceManager::Singleton().GetTextureList()->at("effect_explosion"),
+					m_Player.GetPostion()
+				);
 			}
 		}
 	}
