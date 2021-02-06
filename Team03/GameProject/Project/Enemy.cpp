@@ -100,7 +100,6 @@ void CEnemy::Render(void)
 	}
 	m_EnemyTexture->Render(m_Position.x, m_Position.y);
 	
-	CGraphicsUtilities::RenderCircle(GetCircle(), MOF_COLOR_CWHITE);
 }
 
 void CEnemy::Release(void)
