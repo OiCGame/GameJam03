@@ -22,7 +22,7 @@ void CSceneGame::DebugKey()
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_RETURN))
 	{
-		CEnemyManager::Singleton().StartMove(5.0f, CVector2(3.5f, 3.5f), TYPE_ALL,1.0f);
+		CEnemyManager::Singleton().StartMove(5.0f, CVector2(3.5f, 3.5f), TYPE_ALL, 1.0f);
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_1))
 	{
@@ -41,7 +41,13 @@ void CSceneGame::DebugKey()
 void CSceneGame::Flow_SetEnemyMove()
 {
 	// à⁄ìÆÇÃê›íË
-	CEnemyManager::Singleton().StartMove(5.0f, CVector2(m_EnemySpeed[m_WaveNo], m_EnemySpeed[m_WaveNo]), TYPE_ALL,0.2f);
+	CEnemyManager::Singleton().StartMove(
+		5.0f,
+		CVector2(m_EnemySpeed[m_WaveNo],
+		m_EnemySpeed[m_WaveNo]),
+		TYPE_ALL,
+		m_EnemyTeleportInterval[m_WaveNo]
+	);
 	// Next Flow
 	m_NowGameFlow = GameFlow::Enemy_Moving;
 }
