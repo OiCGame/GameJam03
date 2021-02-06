@@ -38,7 +38,7 @@ void CEnemyManager::Update(void)
 	{
 		if (enemy->IsMoveEnd() && m_MoveTime > 0)
 		{
-			enemy->SetMoveParameter(m_MovePosArray[CUtilities::Random(m_MovePosArray.size())], m_MoveType, m_MoveSpeed);
+			enemy->SetMoveParameter(m_MovePosArray[CUtilities::Random(m_MovePosArray.size())], m_MoveType, m_MoveSpeed, m_TeleportInterval);
 		}
 		enemy->Update();
 	}
@@ -63,11 +63,12 @@ void CEnemyManager::Release(void)
 	m_MovePosArray.clear();
 }
 
-void CEnemyManager::StartMove(float Time, CVector2 speed, int type)
+void CEnemyManager::StartMove(float Time, CVector2 speed, int type, float TeleportInterval)
 {
 	m_MoveTime = Time;
 	m_MoveSpeed = speed;
 	m_MoveType = type;
+	m_TeleportInterval = TeleportInterval;
 }
 
 void CEnemyManager::StartShot(const LauncherInit_Line & init)

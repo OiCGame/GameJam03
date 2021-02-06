@@ -33,14 +33,14 @@ bool CEnemy::Initialize(void)
 	m_bShow = true;
 	m_MoveEnd = true;
 	m_AfterimageInterval = AFTERIMAGE_INTERVAL;
-	m_TeleportInterval = 0.0f;
+	m_TeleportTime = 0.0f;
 
 	return true;
 }
 
 void CEnemy::Update(void)
 {
-	if (m_TeleportInterval >= 1.0f)
+	if (m_TeleportTime <= 0)
 	{
 		m_MoveEnd = true;
 	}
@@ -59,7 +59,7 @@ void CEnemy::Update(void)
 	switch (m_Type)
 	{
 	case TYPE_TELEPORT:
-		if (m_TeleportInterval == 0.0f)
+		if (!m_bTeleport)
 		{
 			m_pSETeleport->Play();
 			m_Position = CVector2(m_MovePos.x - GetRectangle().GetWidth()*0.5f, m_MovePos.y - GetRectangle().GetHeight()*0.5f);
@@ -68,8 +68,9 @@ void CEnemy::Update(void)
 				&CResourceManager::Singleton().GetTextureList()->at("effect_cloud_right_highlight"),
 				m_MovePos
 			);
+			m_bTeleport = true;
 		}
-		m_TeleportInterval += CUtilities::GetFrameSecond();
+		m_TeleportTime -= CUtilities::GetFrameSecond();
 		break;
 	case TYPE_MOVE:
 		if (!m_SePlay)
@@ -138,7 +139,7 @@ void CEnemy::Shot(const LauncherInit_PolygonRotation & init)
 }
 
 
-void CEnemy::SetMoveParameter(CVector2 mPos, int type, CVector2 speed)
+void CEnemy::SetMoveParameter(CVector2 mPos, int type, CVector2 speed, float TeleportInterval)
 {
 	m_MovePos = mPos;
 	m_MoveSpeed = speed;
@@ -151,7 +152,8 @@ void CEnemy::SetMoveParameter(CVector2 mPos, int type, CVector2 speed)
 		m_Type = type;
 	}
 
-	m_TeleportInterval = 0.0f;
+	m_TeleportTime = TeleportInterval;
+	m_bTeleport = false;
 	m_MoveEnd = false;
 	m_SePlay = false;
 }

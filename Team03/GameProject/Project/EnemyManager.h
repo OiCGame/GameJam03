@@ -13,6 +13,7 @@ private:
 	float m_MoveTime;
 	CVector2 m_MoveSpeed;
 	int m_MoveType;
+	float m_TeleportInterval;
 
 	// コンストラクタ
 	CEnemyManager();
@@ -36,7 +37,7 @@ public:
 	void Release(void);
 
 	// 移動の開始
-	void StartMove(float Time,CVector2 speed,int type);
+	void StartMove(float Time,CVector2 speed,int type, float TeleportInterval);
 
 	// 弾の発射
 	void StartShot(const LauncherInit_Line & init);
