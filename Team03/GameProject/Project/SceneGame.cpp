@@ -296,7 +296,7 @@ void CSceneGame::Render()
 
 	for (const auto & cloud : stageData[m_WaveNo].CloudPositions) {
 		auto texture = cloud.Right ? m_pCloudTexture_right : m_pCloudTexture_left;
-		texture->Render(cloud.Pos.x, cloud.Pos.y, TextureAlignment::TEXALIGN_CENTERCENTER);
+		texture->RenderScale(cloud.Pos.x, cloud.Pos.y, 0.9f ,TextureAlignment::TEXALIGN_CENTERCENTER);
 	}
 
 	// effect

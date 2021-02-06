@@ -43,9 +43,10 @@ void CEffectManager::Render()
 {
 	for (const auto & effect : m_EffectList) {
 		int alpha = 255 * (-abs(effect.t * 0.001f - 0.5f) * 2 + 1);
-		effect.texture->Render(
+		effect.texture->RenderScale(
 			effect.position.x,
 			effect.position.y,
+			0.9f,
 			MOF_ARGB(alpha, 255, 255, 255),
 			TextureAlignment::TEXALIGN_CENTERCENTER
 		);
