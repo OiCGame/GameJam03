@@ -3,6 +3,7 @@
 #include	 "SceneBase.h"
 #include	 "EnemyBulletManager.h"
 #include	 "Player.h"
+#include	"Item.h"
 
 enum class GameFlow {
 	Enemy_SetMove,
@@ -141,6 +142,8 @@ private:
 	CFont font;
 
 	CPlayer m_Player;
+
+	CItem	m_Item;
 	
 	void DebugKey();
 

@@ -4,7 +4,7 @@
 void CItem::Initialize(const CVector2 & pos, ItemType type)
 {
 	m_Position = pos;
-	type = ItemType::ITEM_LIFE;
+
 	switch (type)
 	{
 	case ITEM_LIFE:
@@ -14,6 +14,11 @@ void CItem::Initialize(const CVector2 & pos, ItemType type)
 	}
 
 	m_bShow = true;
+}
+
+void CItem::Update()
+{
+	m_Position.y += 3;
 }
 
 void CItem::Render()

@@ -21,7 +21,8 @@ private:
 public:
 	bool			m_bShow;
 
-	void Initialize(const CVector2& pos, ItemType type);
+	void Initialize(const CVector2& pos, ItemType type = ItemType::ITEM_LIFE);
+	void Update();
 	void Render();
 
 	bool IsShow() const { return m_bShow; }
@@ -30,12 +31,10 @@ public:
 	CCircle GetCircle() const{
 		float width = m_Texture->GetWidth() * 0.5f;
 		float height = m_Texture->GetHeight() * 0.5f;
-		return CCircle(m_Position, min(width, height));
+		return CCircle(this->GetRectangle().GetCenter(), min(width, height));
 	}
 	CRectangle GetRectangle() const {
-		float width = m_Texture->GetWidth() * 0.5f;
-		float height = m_Texture->GetHeight() * 0.5f;
-		return CRectangle(m_Position.x - width, m_Position.y - height, m_Position.x + width, m_Position.y + height);
+		return CRectangle(m_Position.x, m_Position.y, m_Position.x + m_Texture->GetWidth(), m_Position.y + m_Texture->GetHeight());
 	}
 	ItemType GetItemType() const { return type; }
 };

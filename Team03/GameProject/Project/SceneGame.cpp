@@ -199,6 +199,15 @@ void CSceneGame::NextWave(int wave_no)
 
 	}
 
+	// Item‚ÌÄÝ’è
+	if (wave_no >= 3 && m_Player.GetLife() < 5) {
+		m_Item.Initialize(CVector2(
+			CUtilities::Random(g_pGraphics->GetTargetWidth() * 0.1, g_pGraphics->GetTargetWidth() * 0.9),
+			-30
+		));
+	}
+
+
 	// ”wŒi‚ÌÄÝ’è
 	m_pBackgroundTexture = &CResourceManager::Singleton().GetTextureList()->at(m_WaveBackground[wave_no]);
 	// UI‚ÌXV
@@ -254,6 +263,15 @@ void CSceneGame::Update()
 	case GameFlow::Enemy_Shots:		this->Flow_EnemyShots();		break;
 	}
 
+	m_Item.Update();
+	if (m_Item.IsShow()) {
+		if (m_Player.ItemCollisionCheck(m_Item)) {
+			m_pUI_Life = &CResourceManager::Singleton().GetTextureList()->at(m_UI_LifeTexture[m_Player.GetLife()]);
+			m_Item.m_bShow = false;
+		}
+	}
+	
+
 	CEnemyManager::Singleton().Update();
 	CEffectManager::Singleton().Update();
 }
@@ -264,6 +282,8 @@ void CSceneGame::Render()
 
 	CEnemyBulletManager::Singleton().Render();
 	CEnemyManager::Singleton().Render();
+
+	m_Item.Render();
 
 	for (const auto & pos : m_CloudPositions[m_WaveNo]) {
 		m_pCloudTexture_right->Render(pos[0], pos[1], TextureAlignment::TEXALIGN_CENTERCENTER);
@@ -296,7 +316,6 @@ void CSceneGame::RenderDebug()
 	CGraphicsUtilities::RenderString(0, 90, "push to F3 => next wave");
 	CGraphicsUtilities::RenderString(0, 120, "wait time => %0.3f", m_FlowWaitTime);
 	CGraphicsUtilities::RenderString(0, 150, "flow NO => %d", m_NowGameFlow);
-
 }
 
 void CSceneGame::Release()
