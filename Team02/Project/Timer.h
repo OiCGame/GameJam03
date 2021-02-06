@@ -32,6 +32,7 @@ public:
 	void		Release();
 
 	int			GetTime() { return NowTime; }
+	//ŽÀ‚Í–¼‘O‚ª‚ ‚Ü‚è‚æ‚­‚È‚¢
 	void		SetTime(int time) { BufferTime += time; }
 
 	void StartRenderTimeDamage() { TimeDamageAlpha = 255; }
