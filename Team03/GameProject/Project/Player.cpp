@@ -5,7 +5,8 @@ constexpr float MAX_SPEED = 10.0f;
 constexpr float ACCELERATION = 3.0f;
 constexpr float DECELERATE = 0.5f;
 
-constexpr int INVINCIBLE_FRAME = 60;
+// ñ≥ìGéûä‘íËêî
+constexpr int INVINCIBLE_FRAME = 120;
 
 constexpr float ATTACK_COOLDOWN_TIME = 2.0f;
 

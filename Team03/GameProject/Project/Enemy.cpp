@@ -65,7 +65,7 @@ void CEnemy::Update(void)
 			m_Position = CVector2(m_MovePos.x - GetRectangle().GetWidth()*0.5f, m_MovePos.y - GetRectangle().GetHeight()*0.5f);
 			// エフェクト追加
 			CEffectManager::Singleton().addEffect(
-				&CResourceManager::Singleton().GetTextureList()->at("effect_cloud_left_highlight"),
+				&CResourceManager::Singleton().GetTextureList()->at("effect_cloud_right_highlight"),
 				m_MovePos
 			);
 		}

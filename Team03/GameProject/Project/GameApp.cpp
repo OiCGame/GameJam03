@@ -62,8 +62,10 @@ MofBool CGameApp::Initialize(void){
 		.LoadTexture("ItemLife", "images/item/ItemLife.png")
 			// effect
 		.LoadTexture("effect_explosion", "images/effect/explosion.png")
-		.LoadTexture("effect_cloud_left_highlight", "images/effect/cloud_left_highlight.png")
+		.LoadTexture("effect_cloud_right_highlight", "images/effect/cloud_right_highlight.png")
 			// UI
+				// tutorial
+		.LoadTexture("tutorial_AttackText","images/ui/tutorial/AttackText.png")
 				// Life
 		.LoadTexture("ui_life_0","images/ui/life/ui_zannki0.png")
 		.LoadTexture("ui_life_1","images/ui/life/ui_zannki1.png")

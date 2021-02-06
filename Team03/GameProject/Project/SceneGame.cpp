@@ -277,6 +277,13 @@ void CSceneGame::Render()
 	m_pUI_Life->Render(5, 8);
 	m_pUI_Wave->Render(m_pUI_Life->GetWidth() + 5, 15);
 	font.RenderFormatString(1000, 0, MOF_XRGB(255, 0, 0), "%d", (int)m_FlowWaitTime);
+
+	if (m_WaveNo == 0) {
+		if (m_NowGameFlow == GameFlow::Player_Shooting) {
+			CResourceManager::Singleton().GetTextureList()->at("tutorial_AttackText").Render(g_pGraphics->GetTargetWidth()*0.5, 100, TextureAlignment::TEXALIGN_TOPCENTER);
+		}
+	}
+
 	CSceneBase::Render();
 }
 
