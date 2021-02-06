@@ -28,10 +28,10 @@ MofProcResult CMyWindowProc::WindowProc(MofWindowHandle hWnd, MofUInt msg, MofPr
         case ID_NEWFILE:
             break;
         case ID_OPENFILE:
-            LoadMapData(hWnd);				//マップ読み込み
+            //LoadMapData(hWnd);				//マップ読み込み
             break;
         case ID_EXITFILE:
-            CloseData(hWnd);
+            //CloseData(hWnd);
             break;
         case ID_SAVE:
             SaveMapData(hWnd);				//マップ保存
@@ -41,10 +41,10 @@ MofProcResult CMyWindowProc::WindowProc(MofWindowHandle hWnd, MofUInt msg, MofPr
             break;
 
         case ID_EDITBACKTEXTURE:
-            LoadBackTexture(hWnd);			//背景画像読み込み
+            //LoadBackTexture(hWnd);			//背景画像読み込み
             break;
         case ID_EDITPANELTEXTURE:
-            LoadChipTexture(hWnd);			//チップ画像読み込み
+            //LoadChipTexture(hWnd);			//チップ画像読み込み
             break;
 
         case ID_SHOWBLOCKINFO:
