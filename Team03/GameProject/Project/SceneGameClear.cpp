@@ -4,6 +4,7 @@
 
 void CSceneGameClear::Initialize()
 {
+	CSceneBase::Initialize();
 	m_pBackground = &CResourceManager::Singleton().GetTextureList()->at("GameClear");
 	m_pBGM = &CResourceManager::Singleton().GetSoundList()->at("bgm_clear");
 	m_pBGM->SetLoop(true);
@@ -15,6 +16,7 @@ void CSceneGameClear::Initialize()
 
 void CSceneGameClear::Update()
 {
+	CSceneBase::Update();
 	if (g_pInput->IsKeyPush(MOFKEY_F1)) {
 		m_pBGM->Stop();
 		this->SetNextScene(NextScene::Title);
@@ -30,11 +32,12 @@ void CSceneGameClear::Update()
 
 void CSceneGameClear::Render()
 {
+	m_pBackground->Render(0, 0);
+	CSceneBase::Render();
 }
 
 void CSceneGameClear::RenderDebug()
 {
-	m_pBackground->Render(0, 0);
 
 	CGraphicsUtilities::RenderString(0, 0, "GameClear");
 	CGraphicsUtilities::RenderString(0, 30, "push to F1 => next SecenTitle");

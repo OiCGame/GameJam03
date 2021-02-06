@@ -15,17 +15,19 @@ private:
 	bool m_EndFlag{ false };
 	NextScene m_NextScene;
 
+	bool			m_bSceneEnd;
+	BYTE			m_FadeAlpha;
 public:
 
 	virtual ~CSceneBase() {}
-	virtual void Initialize() {}
-	virtual void Update() {}
-	virtual void Render() {}
+	virtual void Initialize();
+	virtual void Update();
+	virtual void Render();
 	virtual void RenderDebug() {}
 	virtual void Release() {}
 
 	void SceneEnd() {
-		m_EndFlag = true;
+		m_bSceneEnd = true;
 	}
 	bool IsSceneEnd() {
 		return m_EndFlag;

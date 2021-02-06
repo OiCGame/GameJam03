@@ -4,18 +4,19 @@
 
 void CSceneTitle::Initialize()
 {
+	CSceneBase::Initialize();
 	m_pTexture = &CResourceManager::Singleton().GetTextureList()->at("Title");
 	m_pBGM = &CResourceManager::Singleton().GetSoundList()->at("bgm_title");
 	m_pBGM->SetLoop(true);
 	m_pBGM->SetVolume(0.1f);
 	m_pSE = &CResourceManager::Singleton().GetSoundList()->at("se_decision");
 	m_pSE->SetVolume(0.5f);
-
 	m_pBGM->Play();
 }
 
 void CSceneTitle::Update()
 {
+	CSceneBase::Update();
 	if (g_pInput->IsKeyPush(MOFKEY_F1)) {
 		m_pBGM->Stop();
 
@@ -35,6 +36,7 @@ void CSceneTitle::Update()
 void CSceneTitle::Render()
 {
 	m_pTexture->Render(0, 0);
+	CSceneBase::Render();
 }
 
 void CSceneTitle::RenderDebug()

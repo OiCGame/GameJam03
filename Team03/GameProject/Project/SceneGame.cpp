@@ -182,6 +182,7 @@ void CSceneGame::NextWave(int wave_no)
 
 void CSceneGame::Initialize()
 {
+	CSceneBase::Initialize();
 	DESIGNVECTOR design;
 	AddFontResourceEx(TEXT("LightNovelPOPv2.otf"), FR_PRIVATE, &design);
 	LOGFONT lf = {
@@ -209,6 +210,7 @@ void CSceneGame::Initialize()
 
 void CSceneGame::Update()
 {
+	CSceneBase::Update();
 	this->DebugKey();
 
 	// Gameover”»’è
@@ -250,6 +252,7 @@ void CSceneGame::Render()
 	m_pUI_Life->Render(5, 8);
 	m_pUI_Wave->Render(m_pUI_Life->GetWidth() + 5, 15);
 	font.RenderFormatString(1000, 0, MOF_XRGB(255, 0, 0), "%d", (int)m_FlowWiatTime);
+	CSceneBase::Render();
 }
 
 void CSceneGame::RenderDebug()
