@@ -131,42 +131,43 @@ void CGame::Collision(void) {
 }
 
 void CGame::CollisionPlayerEnemies(void) {
-	if (m_Player.IsShow()) {
-		auto player_rect = m_Player.GetCollisionRectangle();
-		for (auto& enemy : m_Enemies) {
-			if (player_rect.CollisionRect(enemy.GetCollisionRectangle())) {
+	if (!m_Player.IsShow() || m_Player.GetInvincible() > 0) {
+		return;
+	}
+	auto player_rect = m_Player.GetCollisionRectangle();
+	for (auto& enemy : m_Enemies) {
+		if (player_rect.CollisionRect(enemy.GetCollisionRectangle())) {
 
-				if (m_Player.Damage()) {
-					auto name = std::string("image");
-					name += std::to_string(m_Player.GetRevivalCount() - 1);
-					m_UICanvas.RemoveImage(name);
+			if (m_Player.Damage()) {
+				auto name = std::string("image");
+				name += std::to_string(m_Player.GetRevivalCount() - 1);
+				m_UICanvas.RemoveImage(name);
 
-					if (0 < m_Player.GetRevivalCount()) {
-						m_Player.Revival();
-					} // if
-
-					else {
-						m_bPlayerDead = true;
-					} // else
+				if (0 < m_Player.GetRevivalCount()) {
+					m_Player.Revival();
 				} // if
 
-				auto& effect_tex = m_Textures.at(m_EffectTexturePath);
-				auto pos = m_Player.GetPosition();
-				auto effect = std::make_shared<CEffect>();
-				effect->Generate(&effect_tex, m_EffectMotionData);
-
-				pos.x -= effect->GetCollisionRectangle().GetWidth() * 0.5f;
-				pos.y -= effect->GetCollisionRectangle().GetHeight() * 0.5f;
-
-				effect->Start(pos);
-				m_Effects.push_back(effect);
-
-//				m_UICanvas.AddScore(100);
-//				m_UICanvas.AddText(std::to_string(100), pos, 60);
-				break;
+				else {
+					m_bPlayerDead = true;
+				} // else
 			} // if
-		} // for
-	} // if
+
+			auto& effect_tex = m_Textures.at(m_EffectTexturePath);
+			auto pos = m_Player.GetPosition();
+			auto effect = std::make_shared<CEffect>();
+			effect->Generate(&effect_tex, m_EffectMotionData);
+
+			pos.x -= effect->GetCollisionRectangle().GetWidth() * 0.5f;
+			pos.y -= effect->GetCollisionRectangle().GetHeight() * 0.5f;
+
+			effect->Start(pos);
+			m_Effects.push_back(effect);
+
+			//				m_UICanvas.AddScore(100);
+			//				m_UICanvas.AddText(std::to_string(100), pos, 60);
+			break;
+		} // if
+	} // for
 }
 
 void CGame::CollisionItem(void) {
@@ -205,7 +206,7 @@ CGame::CGame() :
 	m_PlayerBullets(),
 	m_Effects(),
 	m_bBossExist(false),
-//	m_StagePaths({ "stage/phase0.json", "stage/phase1.json" }),
+	//	m_StagePaths({ "stage/phase0.json", "stage/phase1.json" }),
 	m_StagePaths(),
 	m_StagePhaseIndex(0),
 	m_bPhaseNo(0),
@@ -213,15 +214,15 @@ CGame::CGame() :
 
 
 	rapidjson::Document document;
-//	if (!ParseJsonDocument("stage/stage0.json", document)) {
+	//	if (!ParseJsonDocument("stage/stage0.json", document)) {
 	if (!ParseJsonDocument("stage/test_stage0.json", document)) {
 		return;
 	} // if
-	
+
 	const auto& info = document["phases"];
 	for (uint32_t i = 0; i < info.Size(); i++) {
 		assert(info[i].HasMember("uri"));
-		
+
 		std::string uri = info[i]["uri"].GetString();
 		m_StagePaths.push_back(uri);
 	} // for
@@ -376,7 +377,7 @@ bool CGame::Update(void) {
 			} // for
 			m_Items.clear();
 		}
-		
+
 	} // if
 	if (m_bPhaseNo == 2) {
 		m_StagePhaseIndex++;
@@ -389,7 +390,7 @@ bool CGame::Update(void) {
 		this->Initialize();
 	} // if
 //	if (CInputManager::GetInstance().GetPush(0)) {
-	if (::g_pInput->IsKeyPush(MOFKEY_Z) ) {
+	if (::g_pInput->IsKeyPush(MOFKEY_Z)) {
 		if (!m_Shop.IsShow()) {
 			m_Shop.SetShowFlag(true);
 		} // if
