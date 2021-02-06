@@ -302,29 +302,27 @@ void CEnemy::Render(bool end) {
 			m_Bullet[i].Render();
 	}
 	if (!m_bDrow) { return; }
+	
 #ifdef _DEBUG
-	::CGraphicsUtilities::RenderRect(
-		this->GetCollisionRectangle(),
-		MOF_ARGB(100, 100, 100, 100)
-	);
-
-	auto pos = m_Pos;
-	auto size = Mof::CVector2(::g_pFramework->GetWindow()->GetWidth(),
-		::g_pFramework->GetWindow()->GetHeight());
-	auto top = Mof::CVector2(pos.x, 0.0f);
-	auto bottom = Mof::CVector2(pos.x, size.y);
-	auto left = Mof::CVector2(0.0f, pos.y);
-	auto right = Mof::CVector2(size.x, pos.y);
-	std::vector<Mof::CVector2> points = {
-		top, bottom, left, right
-	};
-
-	for (auto& point : points) {
-		int color = MOF_ARGB(200, 0, 100, 100);
-		::CGraphicsUtilities::RenderFillCircle(
-			Mof::Circle(point, 10), color);
-	} // for
-
+//	::CGraphicsUtilities::RenderRect(
+//		this->GetCollisionRectangle(),
+//		MOF_ARGB(100, 100, 100, 100)
+//	);
+//	auto pos = m_Pos;
+//	auto size = Mof::CVector2(::g_pFramework->GetWindow()->GetWidth(),
+//		::g_pFramework->GetWindow()->GetHeight());
+//	auto top = Mof::CVector2(pos.x, 0.0f);
+//	auto bottom = Mof::CVector2(pos.x, size.y);
+//	auto left = Mof::CVector2(0.0f, pos.y);
+//	auto right = Mof::CVector2(size.x, pos.y);
+//	std::vector<Mof::CVector2> points = {
+//		top, bottom, left, right
+//	};
+//	for (auto& point : points) {
+//		int color = MOF_ARGB(200, 0, 100, 100);
+//		::CGraphicsUtilities::RenderFillCircle(
+//			Mof::Circle(point, 10), color);
+//	} // for
 #endif // _DEBUG
 
 	m_pTexture->Render(m_Pos.x - m_pTexture->GetWidth() / 2, m_Pos.y - m_pTexture->GetHeight() / 2);

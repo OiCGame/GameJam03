@@ -178,7 +178,7 @@ void CGame::CollisionItem(void) {
 
 CGame::CGame() :
 	m_UICanvas(),
-	//	m_Shop(),
+	m_Shop(),
 	m_Items(),
 	m_ShopShip(),
 	m_ElapsedTime(0.0f),
@@ -188,17 +188,33 @@ CGame::CGame() :
 	m_EffectTexturePath("effect/effect00.png"),
 	m_StageTexturePath("pipo-bg001.jpg"),
 	m_EffectMotionData(),
-
 	m_EnemyDatas(),
 	m_Player(),
 	m_Enemies(),
 	m_PlayerBullets(),
 	m_Effects(),
 	m_bBossExist(false),
-	m_StagePaths({ "stage/test_stage.json", "stage/test_stage1.json" }),
+//	m_StagePaths({ "stage/phase0.json", "stage/phase1.json" }),
+	m_StagePaths(),
 	m_StagePhaseIndex(0),
 	m_bPhaseNo(0),
 	m_bPlayerDead(false) {
+
+
+	rapidjson::Document document;
+//	if (!ParseJsonDocument("stage/stage0.json", document)) {
+	if (!ParseJsonDocument("stage/test_stage0.json", document)) {
+		return;
+	} // if
+	
+	const auto& info = document["phases"];
+	for (uint32_t i = 0; i < info.Size(); i++) {
+		assert(info[i].HasMember("uri"));
+		
+		std::string uri = info[i]["uri"].GetString();
+		m_StagePaths.push_back(uri);
+	} // for
+
 }
 
 CGame::~CGame() {
@@ -345,17 +361,24 @@ bool CGame::Update(void) {
 		this->Release();
 		this->Initialize();
 	} // if
-	if (CInputManager::GetInstance().GetPush(0)) {
-		m_Shop.SetShowFlag(true);
-	} // if
-	if (CInputManager::GetInstance().GetPush(5)) {
-		if (m_Shop.IsShow()) {
+//	if (CInputManager::GetInstance().GetPush(0)) {
+	if (::g_pInput->IsKeyPush(MOFKEY_Z) ) {
+		if (!m_Shop.IsShow()) {
+			m_Shop.SetShowFlag(true);
+		} // if
+		else {
 			if (!m_ShopShip.IsShow()) {
 				m_ShopShip.Start();
 			} // if
-		} // if
-		m_Shop.SetShowFlag(false);
+			m_Shop.SetShowFlag(false);
+		} // else
 	} // if
+	//if (CInputManager::GetInstance().GetPush(5)) {
+	//if (::g_pInput->IsKeyPush(MOFKEY_Z)) {
+	//	if (m_Shop.IsShow()) {
+	//	} // if
+	//	m_Shop.SetShowFlag(false);
+	//} // if
 
 	m_UICanvas.Update();
 

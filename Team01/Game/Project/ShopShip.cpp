@@ -46,6 +46,12 @@ void CShopShip::Start(void) {
 	} // if
 }
 
+void CShopShip::Reset(void){
+	m_Items.clear();
+	m_bShow = false;
+	m_TransportDistanceCount = 0.0f;
+}
+
 bool CShopShip::Update(std::vector<std::shared_ptr<CItem>>& out) {
 	auto prev = m_Position.x;
 	m_Position.x--;

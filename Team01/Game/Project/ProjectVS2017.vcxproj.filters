@@ -222,14 +222,26 @@
     <None Include="..\Resource\motion\explode.json">
       <Filter>リソース ファイル\motion</Filter>
     </None>
-    <None Include="..\Resource\stage\test_stage.json">
-      <Filter>リソース ファイル\stage</Filter>
-    </None>
-    <None Include="..\Resource\stage\test_stage1.json">
-      <Filter>リソース ファイル\stage</Filter>
-    </None>
     <None Include="..\Resource\Score\Score.dat">
       <Filter>リソース ファイル\score</Filter>
+    </None>
+    <None Include="..\Resource\stage\stage0.json">
+      <Filter>リソース ファイル\stage</Filter>
+    </None>
+    <None Include="..\Resource\stage\phase0.json">
+      <Filter>リソース ファイル\stage</Filter>
+    </None>
+    <None Include="..\Resource\stage\phase1.json">
+      <Filter>リソース ファイル\stage</Filter>
+    </None>
+    <None Include="..\Resource\stage\test_phase1.json">
+      <Filter>リソース ファイル\stage</Filter>
+    </None>
+    <None Include="..\Resource\stage\test_stage0.json">
+      <Filter>リソース ファイル\stage</Filter>
+    </None>
+    <None Include="..\Resource\stage\test_phase0.json">
+      <Filter>リソース ファイル\stage</Filter>
     </None>
   </ItemGroup>
 </Project>

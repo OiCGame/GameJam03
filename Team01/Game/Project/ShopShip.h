@@ -58,11 +58,17 @@ public:
 	/// <returns></returns>
 	void AddItem(const std::shared_ptr<CItem>& ptr);
 	/// <summary>
-	/// セッター
+	/// スタート
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
 	void Start(void);
+	/// <summary>
+	/// リセット
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	void Reset(void);
 	/// <summary>
 	/// 更新
 	/// </summary>

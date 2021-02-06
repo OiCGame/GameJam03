@@ -82,7 +82,6 @@ void CShop::SetCanvasPtr(UICanvas * ptr) {
 	this->m_pCanvas = ptr;
 }
 
-
 bool CShop::IsShow(void) const {
 	return this->m_bShow;
 }
@@ -166,7 +165,7 @@ bool CShop::Update(CShopShip& out) {
 	} // switch
 
 	// buy
-	if (::g_pInput->IsKeyPush(MOFKEY_X) && !m_pSelectItem.expired()) {
+	if (::g_pInput->IsKeyPush(MOFKEY_SPACE) && !m_pSelectItem.expired()) {
 		auto ptr = m_pSelectItem.lock();
 		if (ptr->GetPrice() <= m_pCanvas->GetScore()) {
 
